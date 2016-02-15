@@ -2,10 +2,12 @@
 
 public class Player : MonoBehaviour
 {
-    public float Acceleration = 10.0f;
-    public float Deceleration = 20.0f;
-    public float MaxSpeed = 100.0f;
-    public float MaxJumpTime = 0.25f; // Max time before jump accelerating stops
+    public float Acceleration = 3500.0f;
+    public float Deceleration = 3000.0f;
+    public float MaxSpeed = 500.0f;
+    public float MaxJumpTime = 0.25f;                   // Max time before jump accelerating stops
+    [Tooltip("This is a modifier applied to the player acceleration when the player is moving in the air.")]
+    public float JumpAccelerationModifier = 0.25f;
 
     // Controls
     public KeyCode MoveLeftKey = KeyCode.A;
@@ -13,12 +15,12 @@ public class Player : MonoBehaviour
     public KeyCode JumpKey = KeyCode.Space;
 
     // Movement
-    private Vector2 prevDirection = Vector2.zero;
+    private Vector2 prevDirection = Vector2.zero;       // Determines the direction that was last pressed  
 
     // Jump
-    private bool jumped = false; // Used to determine if player has jumped
-    private bool jumpKeyPressed = false; // Register jump key being pressed
-    private float jumpTimer = 0.0f; // Timer to allow player to choose how high they jump based on how long they press
+    private bool jumped = false;                        // Used to determine if player has jumped
+    private bool jumpKeyPressed = false;                // Register jump key being pressed
+    private float jumpTimer = 0.0f;                     // Timer to allow player to choose how high they jump based on how long they press
 
     // Components
     private Rigidbody2D rigidBody;
@@ -93,8 +95,15 @@ public class Player : MonoBehaviour
         // Ensure that the direction passed in is a direction
         direction.Normalize();
 
+        // If we are jumping, we should move slower
+        float totalAccel = Acceleration;
+        if (jumped)
+        {
+            totalAccel *= JumpAccelerationModifier;
+        }
+
         // Calculate the new velocity
-        Vector2 newVelocity = rigidBody.velocity + direction * Acceleration * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+        Vector2 newVelocity = rigidBody.velocity + direction * totalAccel * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
 
         // Clamp the velocity
         newVelocity.x = Mathf.Clamp(newVelocity.x, -MaxSpeed, MaxSpeed);
