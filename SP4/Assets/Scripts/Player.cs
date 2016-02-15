@@ -150,16 +150,22 @@ public class Player : MonoBehaviour
         jumpTimer += (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
         if (jumpTimer >= MaxJumpTime)
         {
-            jumped = true;
+            endJump();
         }
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.position.y <= transform.position.y)
+        if (collision.gameObject.tag == "Floor" && collision.transform.position.y <= transform.position.y)
         {
             resetJump(); // Reset jump when landed
         }
+    }
+
+    private void endJump()
+    {
+        jumped = true;
+        jumpTimer = 0.0f;
     }
 
     private void resetJump()
