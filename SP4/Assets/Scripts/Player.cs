@@ -154,7 +154,7 @@ public class Player : MonoBehaviour
     private void jump()
     {
         Vector2 newVel = rigidBody.velocity;
-        newVel.y += 5000.0f * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+        newVel.y += 6000.0f * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
         rigidBody.velocity = newVel;
         jumpTimer += (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
         if (jumpTimer >= MaxJumpTime)
