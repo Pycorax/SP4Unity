@@ -145,8 +145,19 @@ public class RPGPlayer : MonoBehaviour
         }
         decelerationDir.Normalize();
 
+        // Calculate the deceleration this frame
+        Vector2 currDecel = (decelerationDir * Deceleration * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game));
+        if (currDecel.x > Mathf.Abs(rigidBody.velocity.x))
+        {
+            currDecel.x = -rigidBody.velocity.x;
+        }
+        if (currDecel.y > Mathf.Abs(rigidBody.velocity.y))
+        {
+            currDecel.y = -rigidBody.velocity.y;
+        }
+
         // Calculate the new velocity
-        Vector2 newVelocity = rigidBody.velocity + (decelerationDir * Deceleration * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game));
+        Vector2 newVelocity = rigidBody.velocity + currDecel;
         rigidBody.velocity = newVelocity;
     }
 
