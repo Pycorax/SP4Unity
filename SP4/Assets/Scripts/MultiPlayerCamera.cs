@@ -22,9 +22,10 @@ public class MultiPlayerCamera : MonoBehaviour
 
     // Static Constants
     private const int PLAYER_COUNT = 2;
+    private const float DEADZONE_STOP_MOVEMENT_ACCURACY = 12.5f;
 
-    // Camera Snapping
-    private float cameraSnapTimer = 0.0f;
+    // Dead Zone
+    private bool moveTowardsCenterPoint = false;        // Set to true when it leaves the dead zone for the first time.
 
     // Components
     private new Camera camera;
@@ -54,7 +55,7 @@ public class MultiPlayerCamera : MonoBehaviour
         // Calculate the center point
         Vector3 centerPoint = (Vector2)PlayerList[0].transform.position + deltaPos;
 
-        if (DeadZoneEnabled)
+        if (DeadZoneEnabled && !moveTowardsCenterPoint)
         {
             // Check if this point is outside the deadzone, if so, then we move
             Vector2 topLeftBound = new Vector2(transform.position.x - camera.orthographicSize * camera.aspect + LeftDeadZonePadding, transform.position.y + camera.orthographicSize - TopDeadZonePadding);
@@ -76,48 +77,41 @@ public class MultiPlayerCamera : MonoBehaviour
                     &&
                     topLeftBound.y > centerPoint.y && botRightBound.y < centerPoint.y
                  )
-                 &&
-                 cameraSnapTimer <= 0.0f
                 )
             {
-                // Increment the snapping timer
-                cameraSnapTimer += (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
-
-                // Do not change the Z-axis
-                centerPoint.z = transform.position.z;
-                // Set the camera's position as a result
-                transform.position = Vector3.Lerp(transform.position, centerPoint, cameraSnapTimer / CameraSnapTime);
-            }
-            else
-            {
-                // Reset the snap timer since we are not snapping
-                cameraSnapTimer = 0.0f;
+                moveTowardsCenterPoint = true;
             }
         }
-        else
+        
+        if (!DeadZoneEnabled || moveTowardsCenterPoint)
         {
-            // If we are not at the center point, move towards it
-            if (transform.position != centerPoint)
+            // Get direction to the center point
+            Vector2 posDelta = centerPoint - transform.position;
+
+            // Get the distance we travel this frame
+            Vector3 moveDelta = posDelta.normalized * CameraSnapSpeed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+            // Clamp the values
+            if (Mathf.Abs(moveDelta.x) > Mathf.Abs(posDelta.x))
             {
-                // Get direction to the center point
-                Vector2 posDelta = centerPoint - transform.position;
+                moveDelta.x = posDelta.x;
+            }
+            if (Mathf.Abs(moveDelta.y) > Mathf.Abs(posDelta.y))
+            {
+                moveDelta.y = posDelta.y;
+            }
 
-                // Get the distance we travel this frame
-                Vector3 moveDelta = posDelta.normalized * CameraSnapSpeed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
-                // Clamp the values
-                if (Mathf.Abs(moveDelta.x) > Mathf.Abs(posDelta.x))
-                {
-                    moveDelta.x = posDelta.x;
-                }
-                if (Mathf.Abs(moveDelta.y) > Mathf.Abs(posDelta.y))
-                {
-                    moveDelta.y = posDelta.y;
-                }
+            // Get the distance we travel this frame and hence our new position
+            Vector3 newPos = transform.position + moveDelta;
+            transform.position = newPos;
 
-
-                // Get the distance we travel this frame and hence our new position
-                Vector3 newPos = transform.position + moveDelta;
-                transform.position = newPos;
+            if (
+                    moveTowardsCenterPoint
+                    &&
+                    (transform.position - centerPoint).sqrMagnitude < DEADZONE_STOP_MOVEMENT_ACCURACY * DEADZONE_STOP_MOVEMENT_ACCURACY
+                )
+            {
+                moveTowardsCenterPoint = false;
+                Debug.Log("Stop");
             }
         }
     }
