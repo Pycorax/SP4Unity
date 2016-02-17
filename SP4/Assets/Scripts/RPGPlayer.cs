@@ -2,6 +2,7 @@
 
 public class RPGPlayer : MonoBehaviour
 {
+    Inventory inventory = new Inventory();
     public float Acceleration = 3500.0f;
     public float Deceleration = 3000.0f;
     public float MaxSpeed = 500.0f;
@@ -194,6 +195,7 @@ public class RPGPlayer : MonoBehaviour
         rigidBody.velocity = newVel;
     }
 
+
     #endregion
 
     #region Attack / Weapons
@@ -204,4 +206,20 @@ public class RPGPlayer : MonoBehaviour
     } 
 
     #endregion
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        string name = other.gameObject.name;
+
+        if (other.gameObject.GetComponent<Weapon>() != null)
+        {
+            other.gameObject.SetActive(false);
+            Weapon w = other.gameObject.GetComponent<Weapon>();
+            if (w != null)
+            {
+                inventory.AddItem(w);
+            }
+        }
+    }
 }
