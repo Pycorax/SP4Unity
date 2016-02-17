@@ -158,6 +158,7 @@ public abstract class Weapon : MonoBehaviour {
              */
             //============================//
             Name = "Impale";
+            //Set Enemy HP->0
         }
     }
 }
