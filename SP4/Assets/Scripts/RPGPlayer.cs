@@ -16,27 +16,46 @@ public class RPGPlayer : MonoBehaviour
     public KeyCode MoveRightKey = KeyCode.D;
     public KeyCode MoveUpKey = KeyCode.W;
     public KeyCode MoveDownKey = KeyCode.S;
+    public KeyCode LeftAttacKey = KeyCode.Q;
+    public KeyCode RightAttackKey = KeyCode.E;
 
     // Movement
     private Vector2 prevHoriDir = Vector2.zero;         // Determines the direction that was last pressed in the horizontal
     private Vector2 prevVertDir = Vector2.zero;         // Determines the direction that was last pressed in the vertical         
+    private Vector2 previousDir = Vector2.up;           // Stores the current direction of the player
+
+    // Weapons
+    private Weapon LeftWeapon;
+    private Weapon RightWeapon;
 
     // Components
     private Rigidbody2D rigidBody;
+    private SpriteRenderer spriteRenderer;
 
     // Use this for initialization
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        controlUpdate();
+        movementUpdate();
+
+        // Update the direction of the player
+        if (rigidBody.velocity != Vector2.zero)
+        {
+            previousDir = rigidBody.velocity.normalized;
+            transform.localEulerAngles = new Vector3(0.0f, 0.0f, Vector2.Angle(Vector2.up, previousDir));
+            Debug.Log(previousDir);
+        }
     }
 
-    private void controlUpdate()
+    #region Movement
+
+    private void movementUpdate()
     {
         bool horiMoved = false;
         bool vertMoved = false;
@@ -174,4 +193,15 @@ public class RPGPlayer : MonoBehaviour
         }
         rigidBody.velocity = newVel;
     }
+
+    #endregion
+
+    #region Attack / Weapons
+        
+    private void attackUpdate()
+    {
+        
+    } 
+
+    #endregion
 }
