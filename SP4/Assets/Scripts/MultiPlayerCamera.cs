@@ -33,8 +33,15 @@ public class MultiPlayerCamera : MonoBehaviour
     // Debug
     public GameObject TestObject;
 
-	// Use this for initialization
-	void Start ()
+    // Getters
+
+    public float TopBound { get { return transform.position.y + camera.orthographicSize; } }
+    public float BottomBound { get { return transform.position.y - camera.orthographicSize; } }
+    public float LeftBound { get { return transform.position.x - camera.orthographicSize * camera.aspect; } }
+    public float RightBound { get { return transform.position.x + camera.orthographicSize * camera.aspect; } }
+
+    // Use this for initialization
+    void Start ()
     {
         camera = GetComponent<Camera>();
 	}
@@ -58,8 +65,8 @@ public class MultiPlayerCamera : MonoBehaviour
         if (DeadZoneEnabled && !moveTowardsCenterPoint)
         {
             // Check if this point is outside the deadzone, if so, then we move
-            Vector2 topLeftBound = new Vector2(transform.position.x - camera.orthographicSize * camera.aspect + LeftDeadZonePadding, transform.position.y + camera.orthographicSize - TopDeadZonePadding);
-            Vector2 botRightBound = new Vector2(transform.position.x + camera.orthographicSize * camera.aspect - RightDeadZonePadding, transform.position.y - camera.orthographicSize + BottomDeadZonePadding);
+            Vector2 topLeftBound = new Vector2(LeftBound + LeftDeadZonePadding, TopBound - TopDeadZonePadding);
+            Vector2 botRightBound = new Vector2(RightBound - RightDeadZonePadding, BottomBound + BottomDeadZonePadding);
 
             #region Debugging Code: Displays Deadzone on Scene
 
@@ -111,7 +118,6 @@ public class MultiPlayerCamera : MonoBehaviour
                 )
             {
                 moveTowardsCenterPoint = false;
-                Debug.Log("Stop");
             }
         }
     }
