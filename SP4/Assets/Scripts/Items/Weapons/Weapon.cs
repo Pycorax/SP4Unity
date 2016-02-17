@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Weapon : MonoBehaviour {
+public abstract class Weapon : Item {
 
     //Weapon Damage
     public int wDamage;
-    //Weapon Name
-    public string wName;
     //Weapon Attack Range (In Tiles)
     public int wRange;
     //Weapon Width (In Tiles)
@@ -15,9 +13,8 @@ public abstract class Weapon : MonoBehaviour {
     public int wFireRate;
 
 
-    //GETTERS AND SETTERS LMAOKAI
+    //GETTERS AND SETTERS LMAOKA1
     public int Damage { get { return wDamage; } set { wDamage = value; } }
-    public string Name { get { return wName; } set { wName = value; } }
     public int Range { get { return wRange; } set { wRange = value; } }
     public int Width { get { return wWidth; } set { wWidth = value; } }
     public int FireRate { get { return wFireRate; } set { wFireRate = value; } }
@@ -44,7 +41,7 @@ public abstract class Weapon : MonoBehaviour {
 	
 	}
 
-    public abstract void Use(Vector2 direction);
+    public override void Use(Vector2 direction);
 
     public virtual void CombineUse(Weapon weapon)
     {
