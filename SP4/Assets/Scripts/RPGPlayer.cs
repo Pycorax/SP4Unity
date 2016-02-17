@@ -17,7 +17,7 @@ public class RPGPlayer : MonoBehaviour
     public KeyCode MoveRightKey = KeyCode.D;
     public KeyCode MoveUpKey = KeyCode.W;
     public KeyCode MoveDownKey = KeyCode.S;
-    public KeyCode LeftAttacKey = KeyCode.Q;
+    public KeyCode LeftAttackKey = KeyCode.Q;
     public KeyCode RightAttackKey = KeyCode.E;
 
     // Movement
@@ -37,6 +37,9 @@ public class RPGPlayer : MonoBehaviour
     private Weapon weapon_1; //Left Hand
     private Weapon weapon_2; //Right Hand
 
+    // Getters
+    public int Health { get { return health; } }
+
     // Use this for initialization
     void Start()
     {
@@ -48,6 +51,7 @@ public class RPGPlayer : MonoBehaviour
     void Update()
     {
         movementUpdate();
+        attackUpdate();
 
         // Update the direction of the player
         if (rigidBody.velocity != Vector2.zero)
@@ -206,23 +210,54 @@ public class RPGPlayer : MonoBehaviour
         
     private void attackUpdate()
     {
-        
-    } 
-
-    #endregion
-
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        string name = other.gameObject.name;
-
-        if (other.gameObject.GetComponent<Weapon>() != null)
+        if (Input.GetKeyDown(LeftAttackKey))
         {
-            Weapon w = other.gameObject.GetComponent<Weapon>();
-            if (w != null)
+            if (LeftWeapon != null)
             {
-                inventory.AddItem(w);
+                // TODO: Left Attack
+            }
+        }
+
+        if (Input.GetKeyDown(RightAttackKey))
+        {
+            if (RightWeapon != null)
+            {
+                // TODO: Right Attack
             }
         }
     }
+
+    #endregion
+
+    #region Health
+
+    void Injure(int damage)
+    {
+        // Error checks
+        if (damage < 0)
+        {
+            throw new UnityException("Please don't use Injure() to heal!");
+        }
+
+        health -= damage;
+
+        // Clamp the health so we don't go crazy with the health accidentally
+        Mathf.Clamp(health, 0, MaxHealth);
+    }
+
+    void Heal(int healing)
+    {
+        // Error checks
+        if (healing < 0)
+        {
+            throw new UnityException("Please don't use Heal() to injure!");
+        }
+
+        health += healing;
+
+        // Clamp the health so we don't go crazy with the health accidentally
+        Mathf.Clamp(health, 0, MaxHealth);
+    }
+
+    #endregion
 }
