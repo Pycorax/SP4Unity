@@ -27,12 +27,13 @@ public class Inventory : MonoBehaviour
         if (inventory.Count <= 4)
         {
             inventory.Add(weapon);
+            weapon.gameObject.SetActive(false);
         }
     }
 
     public void RemoveItem(Weapon weapon)
     {
-        if (inventory.Count == null)
+        if (inventory.Count < 0)
         {
             return;
         }

@@ -218,7 +218,6 @@ public class RPGPlayer : MonoBehaviour
 
         if (other.gameObject.GetComponent<Weapon>() != null)
         {
-            other.gameObject.SetActive(false);
             Weapon w = other.gameObject.GetComponent<Weapon>();
             if (w != null)
             {
