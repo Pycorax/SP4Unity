@@ -7,7 +7,7 @@ public abstract class Item : MonoBehaviour {
 
     public string Name { get { return ItemName; } set { ItemName = value; } }
 
-    public virtual Animation animation;
+    public Animation animation;
 
     // Use this for initialization
     protected virtual void Start()

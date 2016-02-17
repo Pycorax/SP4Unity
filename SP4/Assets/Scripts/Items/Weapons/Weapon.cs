@@ -41,7 +41,10 @@ public abstract class Weapon : Item {
 	
 	}
 
-    public override void Use(Vector2 direction);
+    public override void Use(Vector2 direction)
+    {
+
+    }
 
     public virtual void CombineUse(Weapon weapon)
     {
