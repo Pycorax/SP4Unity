@@ -3,8 +3,17 @@ using System;
 using System.Collections;
 using System.IO;
 
+/**********
+Multi-layer tile system
+NOTE: Writing format is from top to bottom. No spaces allowed
+Example: Tile A is supposed to be rendered above Tile B, writing format is "A|B"
+**********/
+
 public class TileMap : MonoBehaviour
 {
+    public static char TILE_SPLIT = ',';
+    public static char TILE_MULTIPLE_LAYER_SPLIT = '|';
+
 	public enum TILEMAP_ORIGIN // Origin is always at 0,0
 	{
 		TILEMAP_TOP_LEFT, // Starts at 0,0 and expands left down
@@ -92,7 +101,7 @@ public class TileMap : MonoBehaviour
 		{
 			// Data
 			string line = (string)sMap[rowIndex];
-			string[] tokens = line.Split(','); // Split each tile with ','
+			string[] tokens = line.Split(TILE_SPLIT); // Split each tile with ','
 
 			ArrayList rowOfData = new ArrayList(); // One row of tile
 
@@ -101,21 +110,42 @@ public class TileMap : MonoBehaviour
 				GameObject tile;
 				if (colIndex < tokens.Length) // Use data from file
 				{
-					// TODO Bonus: Split tokens for multiple layers and add them into an ArrayList of tiles instead a tile
-					int tileType = Int32.Parse(tokens[colIndex]);
-					tile = Instantiate(TileBlueprints[tileType]);
-					rowOfData.Add(tile);
-				}
-				else // Data not within file, empty tile
-				{
-					tile = Instantiate(TileBlueprints[(int)DefaultTile]);
-				}
+                    // Split different layer tiles
+                    string combinedLayerTiles = tokens[colIndex];
+                    string[] layers = combinedLayerTiles.Split(TILE_MULTIPLE_LAYER_SPLIT);
+                    
+                    ArrayList multiLayerTile = new ArrayList();
 
-				// Set common data for each tile
-				tile.SetActive(true);
-				tile.transform.position = startPos; // CHECK: Copy by value or reference
-				tile.transform.localScale = size; // CHECK: Copy by value or reference
-				rowOfData.Add(tile); // Add tile to row of data
+                    for (int layerIndex = 0; layerIndex < layers.Length; ++layerIndex)
+                    {
+                        int tileType = Int32.Parse(layers[layerIndex]);
+                        tile = Instantiate(TileBlueprints[tileType]);
+                        
+                        // Set common data for each tile
+                        tile.SetActive(true);
+                        tile.transform.position = startPos; // CHECK: Copy by value or reference
+                        tile.transform.localScale = size; // CHECK: Copy by value or reference
+
+                        // Add to multi-layer
+                        multiLayerTile.Add(tile);
+                    }
+
+                    // Add to row of data
+                    rowOfData.Add(multiLayerTile);
+                }
+				else // Data not within file, empty tile
+                {
+                    ArrayList multiLayerTile = new ArrayList();
+                    tile = Instantiate(TileBlueprints[(int)DefaultTile]);
+
+                    // Set common data for each tile
+                    tile.SetActive(true);
+                    tile.transform.position = startPos; // CHECK: Copy by value or reference
+                    tile.transform.localScale = size; // CHECK: Copy by value or reference
+
+                    multiLayerTile.Add(tile);
+                    rowOfData.Add(multiLayerTile);
+				}
 
 				// Next col startPos
 				startPos = generateStartPos(numRow, numCol, rowIndex, ++colIndex);
