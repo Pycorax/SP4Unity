@@ -51,16 +51,11 @@
      <Compile Include="Assets\Scripts\Enemy\FSMState.cs" />
      <Compile Include="Assets\Scripts\Enemy\States\ChaseState.cs" />
      <Compile Include="Assets\Scripts\GameGrid.cs" />
-     <Compile Include="Assets\Scripts\Inventory.cs" />
-     <Compile Include="Assets\Scripts\Items\Destructibles\Destroyables.cs" />
-     <Compile Include="Assets\Scripts\Items\Destructibles\Heart.cs" />
-     <Compile Include="Assets\Scripts\Items\Item.cs" />
-     <Compile Include="Assets\Scripts\Items\Weapons\Crossbow.cs" />
-     <Compile Include="Assets\Scripts\Items\Weapons\Shield.cs" />
-     <Compile Include="Assets\Scripts\Items\Weapons\Sword.cs" />
-     <Compile Include="Assets\Scripts\Items\Weapons\Wand.cs" />
-     <Compile Include="Assets\Scripts\Items\Weapons\Weapon.cs" />
+<<<<<<< HEAD
+     <Compile Include="Assets\Scripts\Player.cs" />
+=======
      <Compile Include="Assets\Scripts\MultiPlayerCamera.cs" />
+>>>>>>> d74071f2d05a046e8515179788ebb53d1fa4d7ad
      <Compile Include="Assets\Scripts\RPGPlayer.cs" />
      <Compile Include="Assets\Scripts\SceneManager.cs" />
      <Compile Include="Assets\Scripts\ScoreManager.cs" />
@@ -70,6 +65,11 @@
      <Compile Include="Assets\Scripts\TileMap\Tile.cs" />
      <Compile Include="Assets\Scripts\TileMap\TileMap.cs" />
      <Compile Include="Assets\Scripts\TimeManager.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Crossbow.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Shield.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Sword.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Wand.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
