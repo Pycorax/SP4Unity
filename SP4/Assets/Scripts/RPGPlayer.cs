@@ -2,6 +2,7 @@
 
 public class RPGPlayer : MonoBehaviour
 {
+    Inventory inventory = new Inventory();
     public float Acceleration = 3500.0f;
     public float Deceleration = 3000.0f;
     public float MaxSpeed = 500.0f;
@@ -16,13 +17,21 @@ public class RPGPlayer : MonoBehaviour
     public KeyCode MoveRightKey = KeyCode.D;
     public KeyCode MoveUpKey = KeyCode.W;
     public KeyCode MoveDownKey = KeyCode.S;
+    public KeyCode LeftAttacKey = KeyCode.Q;
+    public KeyCode RightAttackKey = KeyCode.E;
 
     // Movement
     private Vector2 prevHoriDir = Vector2.zero;         // Determines the direction that was last pressed in the horizontal
     private Vector2 prevVertDir = Vector2.zero;         // Determines the direction that was last pressed in the vertical         
+    private Vector2 previousDir = Vector2.up;           // Stores the current direction of the player
+
+    // Weapons
+    private Weapon LeftWeapon;
+    private Weapon RightWeapon;
 
     // Components
     private Rigidbody2D rigidBody;
+    private SpriteRenderer spriteRenderer;
 
     //Weapon
     private Weapon weapon_1; //Left Hand
@@ -32,15 +41,26 @@ public class RPGPlayer : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        controlUpdate();
+        movementUpdate();
+
+        // Update the direction of the player
+        if (rigidBody.velocity != Vector2.zero)
+        {
+            previousDir = rigidBody.velocity.normalized;
+            transform.localEulerAngles = new Vector3(0.0f, 0.0f, Vector2.Angle(Vector2.up, previousDir));
+            Debug.Log(previousDir);
+        }
     }
 
-    private void controlUpdate()
+    #region Movement
+
+    private void movementUpdate()
     {
         bool horiMoved = false;
         bool vertMoved = false;
@@ -149,8 +169,19 @@ public class RPGPlayer : MonoBehaviour
         }
         decelerationDir.Normalize();
 
+        // Calculate the deceleration this frame
+        Vector2 currDecel = (decelerationDir * Deceleration * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game));
+        if (currDecel.x > Mathf.Abs(rigidBody.velocity.x))
+        {
+            currDecel.x = -rigidBody.velocity.x;
+        }
+        if (currDecel.y > Mathf.Abs(rigidBody.velocity.y))
+        {
+            currDecel.y = -rigidBody.velocity.y;
+        }
+
         // Calculate the new velocity
-        Vector2 newVelocity = rigidBody.velocity + (decelerationDir * Deceleration * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game));
+        Vector2 newVelocity = rigidBody.velocity + currDecel;
         rigidBody.velocity = newVelocity;
     }
 
@@ -166,5 +197,33 @@ public class RPGPlayer : MonoBehaviour
             newVel.y = 0.0f;
         }
         rigidBody.velocity = newVel;
+    }
+
+
+    #endregion
+
+    #region Attack / Weapons
+        
+    private void attackUpdate()
+    {
+        
+    } 
+
+    #endregion
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        string name = other.gameObject.name;
+
+        if (other.gameObject.GetComponent<Weapon>() != null)
+        {
+            other.gameObject.SetActive(false);
+            Weapon w = other.gameObject.GetComponent<Weapon>();
+            if (w != null)
+            {
+                inventory.AddItem(w);
+            }
+        }
     }
 }

@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class ScreenData : MonoBehaviour
 {
-	public static Vector2 GetAspectRatio()
+	public static Vector2 GetScreenSpaceAspectRatio()
 	{
 		float f = (float)Screen.width / (float)Screen.height;
 		int i = 0;
@@ -27,7 +26,7 @@ public class ScreenData : MonoBehaviour
 		b.min = -b.max;
 		return b;*/
 
-		Vector2 aspect = GetAspectRatio();
+		Vector2 aspect = GetScreenSpaceAspectRatio();
 		float orthoSize = Camera.main.orthographicSize;
 		return new Vector2(
 			(orthoSize / aspect.y * aspect.x * 2),
@@ -43,7 +42,7 @@ public class ScreenData : MonoBehaviour
 		b.max = new Vector3(, orthoSize);
 		b.min = -b.max;*/
 
-		Vector2 aspect = GetAspectRatio();
+		Vector2 aspect = GetScreenSpaceAspectRatio();
 		float orthoSize = Camera.main.orthographicSize;
 		return new Vector2(
 			(orthoSize / aspect.y * aspect.x * 2) / (origSize.x / pixelPerUnit),
