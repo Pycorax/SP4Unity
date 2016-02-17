@@ -24,6 +24,10 @@ public class RPGPlayer : MonoBehaviour
     // Components
     private Rigidbody2D rigidBody;
 
+    //Weapon
+    private Weapon weapon_1; //Left Hand
+    private Weapon weapon_2; //Right Hand
+
     // Use this for initialization
     void Start()
     {

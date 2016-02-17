@@ -1,23 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Sword : Weapon {
-
-    public Sprite SwordSprite;
+public class Wand : Weapon {
+ 
+    public Sprite wandSprite;
 
 	// Use this for initialization
 	void Start () {
-
-        Name = "Sword";
-        Damage = 10;
+        Name = "Wand";
+        Damage = 3;
 
         //1 Tile
-        Range = 1;
+        Range = 5;
         Width = 1;
 
         //1 per second
         FireRate = 1;
-
 	}
 	
 	// Update is called once per frame
@@ -27,8 +25,7 @@ public class Sword : Weapon {
 
     public override void Use(Vector2 direction)
     {
-        //Play Attack Animation
-        //Attack whatever is in the grid in front of player
-        //Reduce the hp of that thing by Damage
+        //Fire a Lightning Bolt Projectile
+
     }
 }
