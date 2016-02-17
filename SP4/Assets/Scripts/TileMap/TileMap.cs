@@ -27,9 +27,9 @@ public class TileMap : MonoBehaviour
 	public TILEMAP_ORIGIN TileMapOrigin = TILEMAP_ORIGIN.TILEMAP_CENTER;
 	public TILE_ORIGIN TileOrigin = TILE_ORIGIN.TILE_CENTER;
 	public string Filepath = "";
-    public int NumOfTiles = 9;
-    private Vector2 NumOfScreenTiles = new Vector2();
-    private int TileSize = 32;
+	public int NumOfTiles = 9;
+	private Vector2 NumOfScreenTiles = new Vector2();
+	private int TileSize = 32;
 
 	// Map
 	private ArrayList map = new ArrayList();
@@ -42,7 +42,7 @@ public class TileMap : MonoBehaviour
 		{
 			loadFile();
 		}
-        
+		
 	}
 	
 	// Update is called once per frame
@@ -81,7 +81,7 @@ public class TileMap : MonoBehaviour
 
 	private bool generateMap(ArrayList sMap, int numRow, int numCol)
 	{
-        TileSize = calculateTileSize();
+		TileSize = calculateTileSize();
 
 		// Calculate data needed
 		Vector3 size = new Vector3(TileSize, TileSize, 1); // Size of tile (Scale)
@@ -211,14 +211,14 @@ public class TileMap : MonoBehaviour
 		return startPos;
 	}
 
-    private int calculateTileSize()
-    {
-        Vector2 screenSize = ScreenData.GetScreenSize();
-        NumOfScreenTiles.y = NumOfTiles;
+	private int calculateTileSize()
+	{
+		Vector2 screenSize = ScreenData.GetScreenSize();
+		NumOfScreenTiles.y = NumOfTiles;
 
-        TileSize = (int)Math.Ceiling(screenSize.y / NumOfScreenTiles.y);
-        NumOfScreenTiles.x = (int)Math.Ceiling(screenSize.x / TileSize);
+		TileSize = (int)Math.Ceiling(screenSize.y / NumOfScreenTiles.y);
+		NumOfScreenTiles.x = (int)Math.Ceiling(screenSize.x / TileSize);
 
-        return TileSize;
-    }
+		return TileSize;
+	}
 }
