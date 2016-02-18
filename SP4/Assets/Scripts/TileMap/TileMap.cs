@@ -53,8 +53,8 @@ public class TileMap : MonoBehaviour
 		TILE_CENTER,
 		TILE_BOTTOM_LEFT,  
 	};
-	
-	[Tooltip("Tiles blueprint for instantiating.")]
+
+    [Tooltip("Tiles blueprint for instantiating.")]
 	public GameObject[] TileBlueprints = new GameObject[(int)Tile.TILE_TYPE.NUM_TILE];
 	[Tooltip("Default tile if no tile is specified.")]
 	public Tile.TILE_TYPE DefaultTile = Tile.TILE_TYPE.TILE_EMPTY;
@@ -530,6 +530,15 @@ public class TileMap : MonoBehaviour
                     tile.transform.position = pos;
                     tile.transform.localScale = size;
                     tile.transform.parent = this.transform;
+                }
+                break;
+            case Tile.TILE_TYPE.TILE_WAYPOINT:
+                {
+                    WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponent<WaypointManager>();
+                    if (refWaypointManager)
+                    {
+                        // Create waypoint
+                    }
                 }
                 break;
             default:

@@ -9,6 +9,7 @@ public class Tile : MonoBehaviour
 		TILE_FLOOR,     // Floor tile
 		TILE_LAYER,     // Layer tile test
         TILE_ENEMY,     // Tile that spawns an enemy
+        TILE_WAYPOINT,  // Enemy's waypoint
 
 		NUM_TILE,       // Total number of tiles
 	};
