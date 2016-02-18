@@ -37,6 +37,8 @@ public class TileMap : MonoBehaviour
 {
 	public static char TILE_SPLIT = ',';
 	public static char TILE_MULTIPLE_LAYER_SPLIT = '|';
+    public static string MAP_DIRECTORY = "Assets\\Maps\\";
+    public static string MAP_EXTENSION = ".map";
 
 	public enum TILEMAP_ORIGIN // Origin is always at 0,0
 	{
@@ -62,8 +64,8 @@ public class TileMap : MonoBehaviour
 	public TILEMAP_ORIGIN TileMapOrigin = TILEMAP_ORIGIN.TILEMAP_CENTER;
 	[Tooltip("Origin point of Tile.")]
 	public TILE_ORIGIN TileOrigin = TILE_ORIGIN.TILE_CENTER;
-	[Tooltip("Path to map file.")]
-	public string Filepath = "";
+	[Tooltip("Name of map file.")]
+	public string Name = "";
 	[Tooltip("Number of tile(s) vertically.")]
 	public int NumOfTiles = 9;
 
@@ -83,7 +85,7 @@ public class TileMap : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		if (Filepath != "")
+		if (Name != "")
 		{
 			loadFile();
 		}
@@ -160,7 +162,7 @@ public class TileMap : MonoBehaviour
 	{
 		int numRow = 0, numCol= 0;
 		ArrayList sMap = new ArrayList(); // Write data into
-		StreamReader file = new StreamReader(File.OpenRead(Filepath)); // Open file
+		StreamReader file = new StreamReader(File.OpenRead(MAP_DIRECTORY + Name + MAP_EXTENSION)); // Open file
 		while (!file.EndOfStream)
 		{
 			string line = file.ReadLine();
