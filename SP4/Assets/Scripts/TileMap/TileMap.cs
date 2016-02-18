@@ -113,9 +113,6 @@ public class TileMap : MonoBehaviour
         {
             return null;
         }
-
-		List<GameObject> result = new List<GameObject>();
-
 		Row row = map[rowIndex];
 		MultiLayerTile tiles = row.column[colIndex];
 		return tiles;
@@ -141,14 +138,14 @@ public class TileMap : MonoBehaviour
 
     private void ActivateTiles(int rowIndexMin, int rowIndexMax, int colIndexMin, int colIndexMax)
     {
-        if (!isActivated()) // Check if first update is required
+        //if (!isActivated()) // Check if first update is required
         {
             // First tile update is required (Full activation)
-            /*IEnumerable<Tile> activeTiles = from tile in tiles where tile.gameObject.activeSelf select tile;
+            IEnumerable<Tile> activeTiles = from tile in tiles where tile.gameObject.activeSelf select tile;
             foreach (Tile singleTile in activeTiles)
             {
                 singleTile.gameObject.SetActive(false);
-            }*/
+            }
 
             for (int rowIndex = rowIndexMin; rowIndex <= rowIndexMax; ++rowIndex)
             {
@@ -170,16 +167,16 @@ public class TileMap : MonoBehaviour
             minColIndex = colIndexMin;
             maxColIndex = colIndexMax;
         }
-        else
+        /*else
         {
             runtimeActivateTiles(rowIndexMin, rowIndexMax, colIndexMin, colIndexMax);
-        }
+        }*/
     }
 
     private void runtimeActivateTiles(int rowIndexMin, int rowIndexMax, int colIndexMin, int colIndexMax)
     {
-        int xDiff = rowIndexMin - minRowIndex; // New - Old
-        int yDiff = colIndexMin - minColIndex; // New - Old
+        int xDiff = colIndexMin - minColIndex; // New - Old
+        int yDiff = rowIndexMin - minRowIndex; // New - Old
 
         if (xDiff == 0 || yDiff == 0)
         {
