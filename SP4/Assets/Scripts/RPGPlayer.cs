@@ -35,10 +35,6 @@ public class RPGPlayer : MonoBehaviour
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
 
-    //Weapon
-    private Weapon weapon_1; //Left Hand
-    private Weapon weapon_2; //Right Hand
-
     // Boolean to control objective
     private bool ObjectiveStarted = false;
 
@@ -65,6 +61,15 @@ public class RPGPlayer : MonoBehaviour
             transform.localEulerAngles = new Vector3(0.0f, 0.0f, Vector2.Angle(Vector2.up, previousDir));
             //Debug.Log(previousDir);
         }
+    }
+
+    /// <summary>
+    /// Initialization function for a RPGPlayer
+    /// </summary>
+    /// <param name="startPosition"></param>
+    public void Init(Vector3 startPosition)
+    {
+        transform.position = startPosition;
     }
 
     #region Movement
@@ -254,7 +259,114 @@ public class RPGPlayer : MonoBehaviour
     #endregion
 
     #region Attack / Weapons
-        
+
+    /// <summary>
+    /// Use this function to equip weapons on the left hand
+    /// </summary>
+    /// <param name="weap">The weapon to equip</param>
+    /// <returns>Whether the equip process was successful</returns>
+    public bool EquipLeftHand(Weapon weap)
+    {
+        // Store the weapon on the right hand
+        storeWeapon(ref LeftWeapon);
+
+        // If we can store the item
+        if (LeftWeapon == null)
+        {
+            LeftWeapon = weap;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Use this function to equip weapons on the right hand
+    /// </summary>
+    /// <param name="weap">The weapon to equip</param>
+    /// <returns>Whether the equip process was successful</returns>
+    public bool EquipRightHand(Weapon weap)
+    {
+        // Store the weapon on the right hand
+        storeWeapon(ref RightWeapon);
+
+        // If we can store the item
+        if (RightWeapon == null)
+        {
+            RightWeapon = weap;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Use this function to equip weapons on a free hand. It will find a hand that is free and equip the item on it. Right hand is prioritized.
+    /// </summary>
+    /// <param name="weap">The weapon to equip</param>
+    /// <returns>Whether the equip process was successful</returns>
+    public bool EquipHand(Weapon weap)
+    {
+        // Try to equip right
+        if (RightWeapon == null)
+        {
+            return EquipRightHand(weap);
+        }
+        // Try to equip left
+        else if (LeftWeapon == null)
+        {
+            return EquipLeftHand(weap);
+        }
+
+        // Nope, both hands are filled
+        return false;
+    }
+    /// <summary>
+    /// Store the weapon on the Left Hand
+    /// </summary>
+    /// <returns>Whether storing was successful.</returns>
+    public bool StoreLeftHand()
+    {
+        return storeWeapon(ref LeftWeapon);
+    }
+
+    /// <summary>
+    /// Store the weapon on the Right Hand
+    /// </summary>
+    /// <returns>Whether storing was successful.</returns>
+    public bool StoreRightHand()
+    {
+        return storeWeapon(ref RightWeapon);
+    }
+
+    /// <summary>
+    /// Use this function to store weapons. It is a helper function for EquipLeftHand() and EquipRightHand().
+    /// </summary>
+    /// <param name="weap">The "hand" holding the weapon to store</param>
+    private bool storeWeapon(ref Weapon hand)
+    {
+        // Attempt to store existing weapon if currently holding one
+        if (hand != null)
+        {
+            // Store the item in
+            if (inventory.AddItem(hand))
+            {
+                // Clear the hand
+                hand = null;
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
     private void attackUpdate()
     {
         if (Input.GetKeyDown(LeftAttackKey))
