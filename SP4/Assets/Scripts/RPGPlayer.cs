@@ -39,6 +39,9 @@ public class RPGPlayer : MonoBehaviour
     private Weapon weapon_1; //Left Hand
     private Weapon weapon_2; //Right Hand
 
+    // Boolean to control objective
+    private bool ObjectiveStarted = false;
+
     // Getters
     public int Health { get { return health; } }
 
@@ -60,7 +63,7 @@ public class RPGPlayer : MonoBehaviour
         {
             previousDir = rigidBody.velocity.normalized;
             transform.localEulerAngles = new Vector3(0.0f, 0.0f, Vector2.Angle(Vector2.up, previousDir));
-            Debug.Log(previousDir);
+            //Debug.Log(previousDir);
         }
     }
 
@@ -316,6 +319,17 @@ public class RPGPlayer : MonoBehaviour
             {
                 inventory.AddItem(w);
             }
+        }
+
+        if (other.gameObject.GetComponent<ObjectiveStart>() != null && ObjectiveStarted == false)
+        {
+            Debug.Log("Objective Start");
+            ObjectiveStarted = true;
+        }
+
+        else if (other.gameObject.GetComponent<ObjectiveEnd>() != null && ObjectiveStarted == true)
+        {
+            Debug.Log("Objective End");
         }
     }
 }
