@@ -5,6 +5,8 @@ public class MultiPlayerCamera : MonoBehaviour
 {
     [Tooltip("List of GameObjects that the camera focus on.")]
     public List<GameObject> PlayerList;
+    [Tooltip("Reference to the tile map.")]
+    public TileMap TileMapReference;
     [Tooltip("Are we using a deadzone?")]
     public bool DeadZoneEnabled = true;
     [Tooltip("Left deadzone for the camera to start moving. This value is padding from the edge.")]
@@ -120,5 +122,8 @@ public class MultiPlayerCamera : MonoBehaviour
                 moveTowardsCenterPoint = false;
             }
         }
+
+        // Send tile map the info for activating/deactivating tiles that are (not)in view
+        TileMapReference.ActivateTiles(new Vector2(LeftBound, TopBound), new Vector2(RightBound, BottomBound));
     }
 }
