@@ -3,6 +3,15 @@ using UnityEngine;
 
 public class MultiPlayerCamera : MonoBehaviour
 {
+    enum BOUNDS_TYPE
+    {
+        BOUNDS_TOP = 0,
+        BOUNDS_BOTTOM,
+        BOUNDS_LEFT,
+        BOUNDS_RIGHT,
+        NUM_BOUNDS,
+    }
+
     [Tooltip("List of GameObjects that the camera focus on.")]
     public List<GameObject> PlayerList;
     [Tooltip("Reference to the tile map.")]
@@ -21,6 +30,9 @@ public class MultiPlayerCamera : MonoBehaviour
     public float CameraSnapTime = 0.2f;
     [Tooltip("The speed of the camera to snap to the center point of the player.")]
     public float CameraSnapSpeed = 100.0f;
+    [Tooltip("Bounds of the camera.")]
+    public GameObject[] Bounds = new GameObject[(int)BOUNDS_TYPE.NUM_BOUNDS];
+
 
     // Static Constants
     private const int PLAYER_COUNT = 2;
@@ -37,16 +49,17 @@ public class MultiPlayerCamera : MonoBehaviour
 
     // Getters
 
-    public float TopBound { get { return transform.position.y + camera.orthographicSize; } }
-    public float BottomBound { get { return transform.position.y - camera.orthographicSize; } }
-    public float LeftBound { get { return transform.position.x - camera.orthographicSize * camera.aspect; } }
-    public float RightBound { get { return transform.position.x + camera.orthographicSize * camera.aspect; } }
+    public float TopBound { get { return transform.position.y + ScreenData.GetScreenSize().y * 0.5f; } }
+    public float BottomBound { get { return transform.position.y - ScreenData.GetScreenSize().y * 0.5f; } }
+    public float LeftBound { get { return transform.position.x - ScreenData.GetScreenSize().x * 0.5f; } }
+    public float RightBound { get { return transform.position.x + ScreenData.GetScreenSize().x * 0.5f; } }
 
     // Use this for initialization
     void Start ()
     {
         camera = GetComponent<Camera>();
-	}
+        updateBounds();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -125,5 +138,40 @@ public class MultiPlayerCamera : MonoBehaviour
 
         // Send tile map the info for activating/deactivating tiles that are (not)in view
         TileMapReference.ActivateTiles(new Vector2(LeftBound, TopBound), new Vector2(RightBound, BottomBound));
+    }
+
+    private void updateBounds()
+    {
+        // Top
+        Vector3 pos = Bounds[(int)BOUNDS_TYPE.BOUNDS_TOP].transform.position;
+        Vector3 scale = Bounds[(int)BOUNDS_TYPE.BOUNDS_TOP].transform.localScale;
+        pos.y = TopBound;
+        scale.x = ScreenData.GetScreenSize().x;
+        Bounds[(int)BOUNDS_TYPE.BOUNDS_TOP].transform.position = pos;
+        Bounds[(int)BOUNDS_TYPE.BOUNDS_TOP].transform.localScale = scale;
+
+        // Bottom
+        pos = Bounds[(int)BOUNDS_TYPE.BOUNDS_BOTTOM].transform.position;
+        scale = Bounds[(int)BOUNDS_TYPE.BOUNDS_BOTTOM].transform.localScale;
+        pos.y = BottomBound;
+        scale.x = ScreenData.GetScreenSize().x;
+        Bounds[(int)BOUNDS_TYPE.BOUNDS_BOTTOM].transform.position = pos;
+        Bounds[(int)BOUNDS_TYPE.BOUNDS_BOTTOM].transform.localScale = scale;
+
+        // Left
+        pos = Bounds[(int)BOUNDS_TYPE.BOUNDS_LEFT].transform.position;
+        scale = Bounds[(int)BOUNDS_TYPE.BOUNDS_LEFT].transform.localScale;
+        pos.x = LeftBound;
+        scale.y = ScreenData.GetScreenSize().y * 0.5f;
+        Bounds[(int)BOUNDS_TYPE.BOUNDS_LEFT].transform.position = pos;
+        Bounds[(int)BOUNDS_TYPE.BOUNDS_LEFT].transform.localScale = scale;
+
+        // Right
+        pos = Bounds[(int)BOUNDS_TYPE.BOUNDS_RIGHT].transform.position;
+        scale = Bounds[(int)BOUNDS_TYPE.BOUNDS_RIGHT].transform.localScale;
+        pos.x = RightBound;
+        scale.y = ScreenData.GetScreenSize().y * 0.5f;
+        Bounds[(int)BOUNDS_TYPE.BOUNDS_RIGHT].transform.position = pos;
+        Bounds[(int)BOUNDS_TYPE.BOUNDS_RIGHT].transform.localScale = scale;
     }
 }
