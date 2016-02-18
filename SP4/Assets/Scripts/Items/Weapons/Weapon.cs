@@ -51,6 +51,8 @@ public abstract class Weapon : Item {
     {
 
         //=======WAND USED ON SWORD======//
+        //===================WAYNE===================//
+        //============WAND USED ON SWORD============//
         if(projectile is Lightning && weapon is Sword)
         {
             //=======BUFFED SWORD=======//
