@@ -5,7 +5,7 @@ using UnityEngine;
 public class Waypoint : MonoBehaviour
 {
     // Storage of Connected Way Points
-    private List<Waypoint> Neighbours;
+    private List<Waypoint> neighbours;
 
     // Neighbour Selection
     private const float NEIGHBOURING_DIST = 1000.0f;
@@ -14,6 +14,9 @@ public class Waypoint : MonoBehaviour
     // Component
     private new Collider2D collider;
     private SpriteRenderer spriteRenderer;
+
+    // Getters
+    public List<Waypoint> Neighbours { get { return neighbours; } }
 
 #if RAYCAST_DEBUG
     // Debugging
@@ -38,9 +41,9 @@ public class Waypoint : MonoBehaviour
 #if RAYCAST_DEBUG
         if (waypoint)
         {
-            if(HaveLineOfSight(this, waypoint, 1.0f))
+            if(HaveLineOfSight(this, waypoint, transform.localScale.x))
             {
-                GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 1.0f);
+                GetComponent<SpriteRenderer>().color = new Color(0.0f, 1.0f, 0.0f);
             }
             else
             {
@@ -68,7 +71,7 @@ public class Waypoint : MonoBehaviour
                    select waypoint;
 
         // Store this list of neighbours
-        Neighbours = list.ToList();
+        neighbours = list.ToList();
     }
 
     public List<Waypoint> GetDistanceNeighbours(List<Waypoint> allWaypoints)
@@ -151,6 +154,10 @@ public class Waypoint : MonoBehaviour
         {
             w1.collider.enabled = colliderEnabled;
         }
+
+#if RAYCAST_DEBUG
+        Debug.DrawLine(w1.transform.position, castInfo.collider.transform.position, Color.yellow, 5.0f, false);
+#endif
 
         // If we are able to collide with w2, means we have a straight line towards it
         return castInfo.collider == w2.GetComponent<Collider2D>();
