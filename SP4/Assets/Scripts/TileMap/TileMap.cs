@@ -93,10 +93,12 @@ public class TileMap : MonoBehaviour
 		if (Name != "")
 		{
 			loadFile();
-		}
+        }
+        WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
+        refWaypointManager.SyncWaypoints();
         /*MultiPlayerCamera cam = Camera.main.GetComponent<MultiPlayerCamera>();
         ActivateTiles(new Vector3(cam.LeftBound, cam.TopBound), new Vector3(cam.RightBound, cam.BottomBound));*/
-	}
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -513,6 +515,7 @@ public class TileMap : MonoBehaviour
             // TODO: Add special case for tile creation like enemy
             case Tile.TILE_TYPE.TILE_ENEMY:
                 {
+                    // Create enemy
                     GameObject enemy = Instantiate(TileBlueprints[(int)type]);
                     // Set enemy data
                     Vector3 enemyPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
@@ -523,7 +526,7 @@ public class TileMap : MonoBehaviour
                     enemy.transform.localScale = enemySize;
                     enemyList.Add(enemy);
 
-                    // Spawn enemy and floor tile
+                    // Create floor tile
                     tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR]);
                     // Set data for each tile
                     tile.SetActive(false);
@@ -534,11 +537,25 @@ public class TileMap : MonoBehaviour
                 break;
             case Tile.TILE_TYPE.TILE_WAYPOINT:
                 {
-                    WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponent<WaypointManager>();
+                    WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
                     if (refWaypointManager)
                     {
                         // Create waypoint
+                        GameObject waypoint = Instantiate(TileBlueprints[(int)type]);
+                        Vector3 waypointPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
+                        Vector3 waypointSize = size * 2.0f;
+                        waypoint.transform.position = waypointPos;
+                        waypoint.transform.localScale = waypointSize;
+                        refWaypointManager.Add(waypoint.GetComponent<Waypoint>());
                     }
+
+                    // Create floor tile
+                    tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR]);
+                    // Set data for each tile
+                    tile.SetActive(false);
+                    tile.transform.position = pos;
+                    tile.transform.localScale = size;
+                    tile.transform.parent = this.transform;
                 }
                 break;
             default:
