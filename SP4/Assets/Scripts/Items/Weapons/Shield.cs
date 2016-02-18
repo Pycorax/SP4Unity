@@ -28,9 +28,7 @@ public class Shield : Weapon {
     //Redirects the missile in the player holding the Shield current Direction//
     public override void Use(Vector2 direction)
     {
-        throw new System.NotImplementedException();
+        //Destroy EnemyProjectiles Upon Collision
     }
-    
-
-    //Destroy EnemyProjectiles Upon Collision
+   
 }

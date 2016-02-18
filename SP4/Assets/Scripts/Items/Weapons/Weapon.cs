@@ -46,11 +46,12 @@ public abstract class Weapon : Item {
 
     }
 
-    public virtual void CombineUse(Weapon weapon)
+    //UPON Collision, assign weapon hit as 'weapon'
+    public override void CombineUse(Projectile projectile, Weapon weapon)
     {
 
         //=======WAND USED ON SWORD======//
-        if(this is Wand && weapon is Sword)
+        if(projectile is Lightning && weapon is Sword)
         {
             //=======BUFFED SWORD=======//
             /*
@@ -63,13 +64,11 @@ public abstract class Weapon : Item {
             Range = 2;
             FireRate = 2;
 
-            //Increase Sprite size for sword
-
-            //Maybe Load Another Sprite?
+            //Load another Sprite here
         }
 
         //==========WAND USED ON SHIELD=========//
-        else if(this is Wand && weapon is Shield)
+        else if (projectile is Lightning && weapon is Shield)
         {
             //=======BUFFED SHIELD=======//
             /*
@@ -83,14 +82,14 @@ public abstract class Weapon : Item {
         }
         
         //=========CROSSBOW USED ON WAND=========//
-        else if(this is Crossbow && weapon is Wand)
+        else if(projectile is Arrow && weapon is Wand)
         {
             //=======EXPLOSIVE ARCANE SHOT=======//
             /*
              * Deals increased damage
              * Larger Range
              * Explodes in an AOE around
-             * first faggot it collides with
+             * first enemy it collides with
              */
             //===================================//
             Name = "EXPLOSIVE AKBAR SHOT";
@@ -100,7 +99,7 @@ public abstract class Weapon : Item {
         }
 
         //==========CROSSBOW USED ON SWORD==========//
-        else if (this is Crossbow && weapon is Sword)
+        else if (projectile is Arrow && weapon is Sword)
         {
             //=======Piercing Flying Blade=======//
             /*
@@ -122,7 +121,7 @@ public abstract class Weapon : Item {
         }
 
         //==========CROSSBOW USED ON SHIELD==========//
-        else if (this is Crossbow && weapon is Shield)
+        else if (projectile is Arrow && weapon is Shield)
         {
             //===========Arrow Barrage===========//
             /*

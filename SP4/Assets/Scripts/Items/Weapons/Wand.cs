@@ -5,6 +5,7 @@ public class Wand : Weapon {
  
     public Sprite wandSprite;
 
+    public Lightning lightning;
 	// Use this for initialization
 	void Start () {
         Name = "Wand";
@@ -26,6 +27,7 @@ public class Wand : Weapon {
     public override void Use(Vector2 direction)
     {
         //Fire a Lightning Bolt Projectile
-
+        //Check for Collision with any other weapons
+        lightning.MoveTowards(direction);
     }
 }
