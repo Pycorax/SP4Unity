@@ -69,8 +69,10 @@ public class TileMap : MonoBehaviour
 	[Tooltip("Number of tile(s) vertically.")]
 	public int NumOfTiles = 9;
 
-	private Vector2 NumOfScreenTiles = new Vector2();
-	private int TileSize = 32;
+    public int TileSize { get { return tileSize; } }
+
+    private Vector2 NumOfScreenTiles = new Vector2();
+	private int tileSize = 32;
 	private Vector3 tileMapDistToTopLeft = new Vector3();
 	private int rowCount, colCount;
 
@@ -96,8 +98,6 @@ public class TileMap : MonoBehaviour
         }
         WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
         refWaypointManager.SyncWaypoints();
-        /*MultiPlayerCamera cam = Camera.main.GetComponent<MultiPlayerCamera>();
-        ActivateTiles(new Vector3(cam.LeftBound, cam.TopBound), new Vector3(cam.RightBound, cam.BottomBound));*/
     }
 	
 	// Update is called once per frame
@@ -128,8 +128,8 @@ public class TileMap : MonoBehaviour
 		Vector3 posFromTopRight = position + tileMapDistToTopLeft;
 		posFromTopRight.y = -(posFromTopRight.y);
 
-		int rowIndex = (int)(posFromTopRight.y / TileSize);//(rowCount * TileSize / posFromTopRight.y);
-		int colIndex = (int)(posFromTopRight.x / TileSize);//(colCount * TileSize / posFromTopRight.x);
+		int rowIndex = (int)(posFromTopRight.y / tileSize);
+		int colIndex = (int)(posFromTopRight.x / tileSize);
 
         if (rowIndex < 0)
         {
@@ -311,13 +311,13 @@ public class TileMap : MonoBehaviour
 
 	private bool generateMap(ArrayList sMap, int numRow, int numCol)
 	{
-		TileSize = calculateTileSize();
+		tileSize = calculateTileSize();
 		tileMapDistToTopLeft = generateDistToTopLeft(numRow, numCol);
 		rowCount = numRow;
 		colCount = numCol;
 
 		// Calculate data needed
-		Vector3 size = new Vector3(TileSize, TileSize, 1); // Size of tile (Scale)
+		Vector3 size = new Vector3(tileSize, tileSize, 1); // Size of tile (Scale)
 		Vector3 startPos = generateStartPos(numRow, numCol); // Calculate start position
 
 		// Generate map
@@ -394,7 +394,7 @@ public class TileMap : MonoBehaviour
 	private Vector3 generateStartPos(int numRow, int numCol, int rowIndex = 0, int colIndex = 0)
 	{
 		Vector3 startPos = Vector3.zero;
-		startPos += new Vector3(TileSize * colIndex, -TileSize * rowIndex, 2.0f);
+		startPos += new Vector3(tileSize * colIndex, -tileSize * rowIndex, 2.0f);
 
 		switch (TileMapOrigin)
 		{
@@ -409,12 +409,12 @@ public class TileMap : MonoBehaviour
 							break;
 						case TILE_ORIGIN.TILE_CENTER:
 							{
-								startPos += new Vector3(TileSize * 0.5f, -TileSize * 0.5f);
+								startPos += new Vector3(tileSize * 0.5f, -tileSize * 0.5f);
 							}
 							break;
 						case TILE_ORIGIN.TILE_BOTTOM_LEFT:
 							{
-								startPos += new Vector3(0, -TileSize);
+								startPos += new Vector3(0, -tileSize);
 							}
 							break;
 					}
@@ -422,8 +422,8 @@ public class TileMap : MonoBehaviour
 				break;
 			case TILEMAP_ORIGIN.TILEMAP_CENTER:
 				{
-					float halfWidth = numCol * TileSize * 0.5f;
-					float halfHeight = numRow * TileSize * 0.5f;
+					float halfWidth = numCol * tileSize * 0.5f;
+					float halfHeight = numRow * tileSize * 0.5f;
 					startPos += new Vector3(-halfWidth, halfHeight, 0);
 					switch (TileOrigin)
 					{
@@ -434,12 +434,12 @@ public class TileMap : MonoBehaviour
 							break;
 						case TILE_ORIGIN.TILE_CENTER:
 							{
-								startPos += new Vector3(TileSize * 0.5f, -TileSize * 0.5f);
+								startPos += new Vector3(tileSize * 0.5f, -tileSize * 0.5f);
 							}
 							break;
 						case TILE_ORIGIN.TILE_BOTTOM_LEFT:
 							{
-								startPos += new Vector3(0, -TileSize);
+								startPos += new Vector3(0, -tileSize);
 							}
 							break;
 					}
@@ -451,12 +451,12 @@ public class TileMap : MonoBehaviour
 					{
 						case TILE_ORIGIN.TILE_TOP_LEFT:
 							{
-								startPos += new Vector3(0, TileSize);
+								startPos += new Vector3(0, tileSize);
 							}
 							break;
 						case TILE_ORIGIN.TILE_CENTER:
 							{
-								startPos += new Vector3(TileSize * 0.5f, TileSize * 0.5f);
+								startPos += new Vector3(tileSize * 0.5f, tileSize * 0.5f);
 							}
 							break;
 						case TILE_ORIGIN.TILE_BOTTOM_LEFT:
@@ -484,12 +484,12 @@ public class TileMap : MonoBehaviour
 				break;
 			case TILEMAP_ORIGIN.TILEMAP_CENTER:
 				{
-					topLeft.Set(numCol * TileSize * 0.5f, -(numRow * TileSize * 0.5f), 0.0f);
+					topLeft.Set(numCol * tileSize * 0.5f, -(numRow * tileSize * 0.5f), 0.0f);
 				}
 				break;
 			case TILEMAP_ORIGIN.TILEMAP_BOTTOM_LEFT:
 				{
-					topLeft.Set(0.0f, -(numRow * TileSize), 0.0f);
+					topLeft.Set(0.0f, -(numRow * tileSize), 0.0f);
 				}
 				break;
 		}
@@ -501,10 +501,10 @@ public class TileMap : MonoBehaviour
 		Vector2 screenSize = ScreenData.GetScreenSize();
 		NumOfScreenTiles.y = NumOfTiles;
 
-		TileSize = (int)Math.Ceiling(screenSize.y / NumOfScreenTiles.y);
-		NumOfScreenTiles.x = (int)Math.Ceiling(screenSize.x / TileSize);
+		tileSize = (int)Math.Ceiling(screenSize.y / NumOfScreenTiles.y);
+		NumOfScreenTiles.x = (int)Math.Ceiling(screenSize.x / tileSize);
 
-		return TileSize;
+		return tileSize;
 	}
 
 	private GameObject createTile(Tile.TILE_TYPE type, Vector3 pos, Vector3 size)
