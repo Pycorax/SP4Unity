@@ -49,8 +49,8 @@
      <Compile Include="Assets\Scripts\AI\Custom States\ChaseState.cs" />
      <Compile Include="Assets\Scripts\AI\Enemy.cs" />
      <Compile Include="Assets\Scripts\AI\FSMState.cs" />
+     <Compile Include="Assets\Scripts\AI\Waypoint.cs" />
      <Compile Include="Assets\Scripts\BackgroundScroller.cs" />
-     <Compile Include="Assets\Scripts\GameGrid.cs" />
      <Compile Include="Assets\Scripts\Inventory.cs" />
      <Compile Include="Assets\Scripts\Items\Destructibles\Destroyables.cs" />
      <Compile Include="Assets\Scripts\Items\Destructibles\Heart.cs" />
@@ -61,6 +61,8 @@
      <Compile Include="Assets\Scripts\Items\Weapons\Wand.cs" />
      <Compile Include="Assets\Scripts\Items\Weapons\Weapon.cs" />
      <Compile Include="Assets\Scripts\MultiPlayerCamera.cs" />
+     <Compile Include="Assets\Scripts\Objective\ObjectiveEnd.cs" />
+     <Compile Include="Assets\Scripts\Objective\ObjectiveStart.cs" />
      <Compile Include="Assets\Scripts\RPGPlayer.cs" />
      <Compile Include="Assets\Scripts\SceneManager.cs" />
      <Compile Include="Assets\Scripts\ScoreManager.cs" />
