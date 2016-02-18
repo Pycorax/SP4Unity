@@ -61,9 +61,9 @@ public class TileMap : MonoBehaviour
 
 	// Tile map data
 	[Tooltip("Origin point of Tile Map.")]
-	public TILEMAP_ORIGIN TileMapOrigin = TILEMAP_ORIGIN.TILEMAP_CENTER;
+	private TILEMAP_ORIGIN TileMapOrigin = TILEMAP_ORIGIN.TILEMAP_CENTER;
 	[Tooltip("Origin point of Tile.")]
-	public TILE_ORIGIN TileOrigin = TILE_ORIGIN.TILE_CENTER;
+	private TILE_ORIGIN TileOrigin = TILE_ORIGIN.TILE_CENTER;
 	[Tooltip("Name of map file.")]
 	public string Name = "";
 	[Tooltip("Number of tile(s) vertically.")]
