@@ -456,6 +456,7 @@ public class RPGPlayer : MonoBehaviour
         else if (other.gameObject.GetComponent<ObjectiveEnd>() != null && ObjectiveStarted == true)
         {
             Debug.Log("Objective End");
+            ObjectiveStarted = false;
         }
     }
 }
