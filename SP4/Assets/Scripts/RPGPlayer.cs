@@ -13,6 +13,7 @@ public class RPGPlayer : MonoBehaviour
     private int health;
 
     // Controls
+    public bool UseMouseControl = false;
     public KeyCode MoveLeftKey = KeyCode.A;
     public KeyCode MoveRightKey = KeyCode.D;
     public KeyCode MoveUpKey = KeyCode.W;
@@ -24,6 +25,7 @@ public class RPGPlayer : MonoBehaviour
     private Vector2 prevHoriDir = Vector2.zero;         // Determines the direction that was last pressed in the horizontal
     private Vector2 prevVertDir = Vector2.zero;         // Determines the direction that was last pressed in the vertical         
     private Vector2 previousDir = Vector2.up;           // Stores the current direction of the player
+    private const float MOUSE_CONTROL_DEADZONE = 5.0f;
 
     // Weapons
     private Weapon LeftWeapon;
@@ -68,6 +70,45 @@ public class RPGPlayer : MonoBehaviour
     {
         bool horiMoved = false;
         bool vertMoved = false;
+
+        if (UseMouseControl)
+        {
+
+            mouseMovementInput(out horiMoved, out vertMoved);
+        }
+        else
+        {
+            keyboardMovementInput(out horiMoved, out vertMoved);
+        }
+
+        deceleration(horiMoved, vertMoved);
+
+        // Clamp the velocity
+        if (rigidBody.velocity.SqrMagnitude() > MaxSpeed * MaxSpeed)
+        {
+            Vector2 newVel = rigidBody.velocity;
+            newVel = newVel.normalized * MaxSpeed;
+            rigidBody.velocity = newVel;
+        }
+        else
+        {
+            // If the new velocity in either axis is now 0, we reset the last recorded direction in that axis
+            if (rigidBody.velocity.x == 0.0f)
+            {
+                prevHoriDir = Vector2.zero;
+            }
+
+            if (rigidBody.velocity.y == 0.0f)
+            {
+                prevVertDir = Vector2.zero;
+            }
+        }
+    }
+
+    private void keyboardMovementInput(out bool horiMoved, out bool vertMoved)
+    {
+        // Set default values
+        horiMoved = vertMoved = false;
 
         /*
          * Horizontal Movement
@@ -124,29 +165,32 @@ public class RPGPlayer : MonoBehaviour
             prevVertDir = Vector2.down;
             vertMoved = true;
         }
+    }
 
-        deceleration(horiMoved, vertMoved);
+    private void mouseMovementInput(out bool horiMoved, out bool vertMoved)
+    {
+        // Set default values
+        horiMoved = vertMoved = false;
 
-        // Clamp the velocity
-        if (rigidBody.velocity.SqrMagnitude() > MaxSpeed * MaxSpeed)
+        // Get the direction to move in
+        Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+
+        // Only move if we are outside the dead zone
+        if (dir.sqrMagnitude > MOUSE_CONTROL_DEADZONE * MOUSE_CONTROL_DEADZONE)
         {
-            Vector2 newVel = rigidBody.velocity;
-            newVel = newVel.normalized * MaxSpeed;
-            rigidBody.velocity = newVel;
-        }
-        else
-        {
-            // If the new velocity in either axis is now 0, we reset the last recorded direction in that axis
-            if (rigidBody.velocity.x == 0.0f)
-            {
-                prevHoriDir = Vector2.zero;
-            }
+            moveTowards(dir);
 
-            if (rigidBody.velocity.y == 0.0f)
+            // Check for horizontal movement
+            if (Mathf.Abs(dir.x) > 0.0f)
             {
-                prevVertDir = Vector2.zero;
+                horiMoved = true;
             }
-        }
+            // Check for vertical movement
+            if (Mathf.Abs(dir.y) > 0.0f)
+            {
+                vertMoved = true;
+            }
+        }        
     }
 
     private void moveTowards(Vector2 direction)
