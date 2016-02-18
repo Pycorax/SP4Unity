@@ -304,4 +304,18 @@ public class RPGPlayer : MonoBehaviour
     }
 
     #endregion
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        string name = other.gameObject.name;
+
+        if (other.gameObject.GetComponent<Weapon>() != null)
+        {
+            Weapon w = other.gameObject.GetComponent<Weapon>();
+            if (w != null)
+            {
+                inventory.AddItem(w);
+            }
+        }
+    }
 }
