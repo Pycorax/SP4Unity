@@ -191,8 +191,11 @@ public class Waypoint : MonoBehaviour
             w1.collider.enabled = false;
         }
 
+        // Define the LayerMask for Circle Cast checking to only check Waypoint and Environment masks
+        int layerMask = (1 << LayerMask.NameToLayer("Waypoint")) | (1 << LayerMask.NameToLayer("Environment"));
+
         // Circle Cast check for Line of Sight
-        RaycastHit2D castInfo = Physics2D.CircleCast(w1.transform.position, lineOfSightWidth, GetDirection(w1, w2), NEIGHBOURING_DIST);
+        RaycastHit2D castInfo = Physics2D.CircleCast(w1.transform.position, lineOfSightWidth, GetDirection(w1, w2), NEIGHBOURING_DIST, layerMask);
 
         // Reset the origin object's collider back to original
         if (w1.collider)

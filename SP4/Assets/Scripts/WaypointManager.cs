@@ -119,59 +119,13 @@ public class WaypointManager : MonoBehaviour
         // Find the waypoint nearest to the target
         Waypoint target = FindNearestWaypoint(targetPos);
 
-        // Recursively attempt to reach the target
-        return getWaypointToGetTo(current, target);
+        // Calculate and return the next point to go to
+        return GetNearestWaypointToGoTo(current, target);
     }
 
-    private Waypoint getWaypointToGetTo(Waypoint current, Waypoint target)
+    public Waypoint GetNearestWaypointToGoTo(Waypoint currentPos, Waypoint targetPos)
     {
-        // Go to the shortest delta pos waypoint that is not a backtrack until no more routes can be found
-        List<Waypoint> path = new List<Waypoint>();
-        if (getWaypointToGetTo(current, target, ref path) && path.Count > 2/**/)
-        {
-            // Return the path
-            return path[1];
-        }       
-        else
-        {
-            // There is no path there
-            return null;
-        }
-    }
-
-    private bool getWaypointToGetTo(Waypoint current, Waypoint target, ref List<Waypoint> backStack)
-    {
-        // Keep track of our back path
-        backStack.Add(current);
-
-        // Try with all children
-        foreach (Transform t in current.transform)
-        {
-            // Check if it is a Waypoint
-            Waypoint w = t.GetComponent<Waypoint>();
-            if (w == null)
-            {
-                continue;
-            }
-
-            // Check if we've been to this place before
-
-            // Is this the result?
-            if (w == target)
-            {
-                return true;
-            }
-
-            // We managed to find it!
-            if (getWaypointToGetTo(w, target, ref backStack))
-            {
-                return true;
-            }
-        }
-
-        // If we reached this point, it means this node's children has nothing, so let's clear the backStack of us
-        backStack.Remove(current);
-
-        return false;
+        // Calculate and return the next point to go to
+        return Pathfinding.Dijkstra(waypointList, currentPos, targetPos).Peek();
     }
 }
