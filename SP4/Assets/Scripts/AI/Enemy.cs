@@ -19,6 +19,7 @@ namespace Enemy
 
         // AI
         FSMState currentState;                      // Stores the current game state
+        Waypoint currentTargetWaypoint;             // Stores a reference to the current target waypoint
 
         // Getters
         public int Health { get { return health; } }
