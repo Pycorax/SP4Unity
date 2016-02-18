@@ -83,6 +83,9 @@ public class TileMap : MonoBehaviour
 	// Map
 	private List<Row> map = new List<Row>();
 
+    // TODO: Delete this when enemy pool is available
+    private List<GameObject> enemyList = new List<GameObject>();
+
 
 	// Use this for initialization
 	void Start ()
@@ -121,10 +124,15 @@ public class TileMap : MonoBehaviour
 	public Vector2 FetchTileIndex(Vector3 position)
 	{
 		Vector3 posFromTopRight = position + tileMapDistToTopLeft;
-		posFromTopRight.y = Math.Abs(posFromTopRight.y);
+		posFromTopRight.y = -(posFromTopRight.y);
 
 		int rowIndex = (int)(posFromTopRight.y / TileSize);//(rowCount * TileSize / posFromTopRight.y);
 		int colIndex = (int)(posFromTopRight.x / TileSize);//(colCount * TileSize / posFromTopRight.x);
+
+        if (rowIndex < 0)
+        {
+            rowIndex = 0;
+        }
 
 		return new Vector2(rowIndex, colIndex);
 	}
@@ -335,16 +343,10 @@ public class TileMap : MonoBehaviour
 					for (int layerIndex = 0; layerIndex < layers.Length; ++layerIndex)
 					{
 						int tileType = Int32.Parse(layers[layerIndex]);
-						tile = createTile((Tile.TILE_TYPE)tileType);
+						tile = createTile((Tile.TILE_TYPE)tileType, startPos, size);
 
                         if (tile)
                         {
-                            // Set common data for each tile
-                            tile.SetActive(false);
-                            tile.transform.position = startPos; // CHECK: Copy by value or reference
-                            tile.transform.localScale = size; // CHECK: Copy by value or reference
-                            tile.transform.parent = this.transform;
-
                             // Add to multi-layer
                             multiLayerTile.multiLayerTile.Add(tile);
 
@@ -359,16 +361,10 @@ public class TileMap : MonoBehaviour
 				else // Data not within file, empty tile
 				{
 					MultiLayerTile multiLayerTile = new MultiLayerTile();
-					tile = createTile(DefaultTile);
+					tile = createTile(DefaultTile, startPos, size);
 
                     if (tile)
                     {
-                        // Set common data for each tile
-                        tile.SetActive(false);
-                        tile.transform.position = startPos; // CHECK: Copy by value or reference
-                        tile.transform.localScale = size; // CHECK: Copy by value or reference
-                        tile.transform.parent = this.transform;
-
                         // Add to multi-layer
                         multiLayerTile.multiLayerTile.Add(tile);
 
@@ -396,7 +392,7 @@ public class TileMap : MonoBehaviour
 	private Vector3 generateStartPos(int numRow, int numCol, int rowIndex = 0, int colIndex = 0)
 	{
 		Vector3 startPos = Vector3.zero;
-		startPos += new Vector3(TileSize * colIndex, -TileSize * rowIndex);
+		startPos += new Vector3(TileSize * colIndex, -TileSize * rowIndex, 2.0f);
 
 		switch (TileMapOrigin)
 		{
@@ -509,15 +505,42 @@ public class TileMap : MonoBehaviour
 		return TileSize;
 	}
 
-	private GameObject createTile(Tile.TILE_TYPE type)
+	private GameObject createTile(Tile.TILE_TYPE type, Vector3 pos, Vector3 size)
 	{
         GameObject tile = null;
 		switch (type)
 		{
             // TODO: Add special case for tile creation like enemy
+            case Tile.TILE_TYPE.TILE_ENEMY:
+                {
+                    GameObject enemy = Instantiate(TileBlueprints[(int)type]);
+                    // Set enemy data
+                    Vector3 enemyPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
+                    enemyPos.z = 0.0f;
+                    Vector3 enemySize = size * 2.0f;
+                    enemy.SetActive(true);
+                    enemy.GetComponent<Enemy.Enemy>().Init(enemyPos);// = pos + new Vector3(size.x, -size.y);
+                    enemy.transform.localScale = enemySize;
+                    enemyList.Add(enemy);
+
+                    // Spawn enemy and floor tile
+                    tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR]);
+                    // Set data for each tile
+                    tile.SetActive(false);
+                    tile.transform.position = pos;
+                    tile.transform.localScale = size;
+                    tile.transform.parent = this.transform;
+                }
+                break;
             default:
                 {
                     tile = Instantiate(TileBlueprints[(int)type]);
+
+                    // Set data for each tile
+                    tile.SetActive(false);
+                    tile.transform.position = pos;
+                    tile.transform.localScale = size;
+                    tile.transform.parent = this.transform;
                 }
                 break;
 		}

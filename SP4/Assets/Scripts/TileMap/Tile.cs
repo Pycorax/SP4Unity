@@ -7,7 +7,8 @@ public class Tile : MonoBehaviour
 	{
 		TILE_EMPTY = 0, // Empty tile
 		TILE_FLOOR,     // Floor tile
-        TILE_LAYER,     // Layer tile test
+		TILE_LAYER,     // Layer tile test
+        TILE_ENEMY,     // Tile that spawns an enemy
 
 		NUM_TILE,       // Total number of tiles
 	};
@@ -26,18 +27,18 @@ public class Tile : MonoBehaviour
 
 	public bool IsWalkable()
 	{
-        if (!GetComponent<Collider2D>())
-        {
-            if (!IsEmpty())
-            {
-                return true;
-            }
-        }
-        return false;
+		if (!GetComponent<Collider2D>())
+		{
+			if (!IsEmpty())
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
-    public bool IsEmpty()
-    {
-        return Type == TILE_TYPE.TILE_EMPTY;
-    }
+	public bool IsEmpty()
+	{
+		return Type == TILE_TYPE.TILE_EMPTY;
+	}
 }
