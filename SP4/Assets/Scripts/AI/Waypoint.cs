@@ -13,6 +13,7 @@ public class Waypoint : MonoBehaviour
 
     // Component
     private new Collider2D collider;
+    private SpriteRenderer spriteRenderer;
 
 #if RAYCAST_DEBUG
     // Debugging
@@ -23,7 +24,13 @@ public class Waypoint : MonoBehaviour
     void Start ()
     {
         collider = GetComponent<Collider2D>();
-	}
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Hide the sprite rendering if we are going to play
+#if !WAYPOINT_DEBUG
+        spriteRenderer.enabled = false;
+#endif
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -91,7 +98,7 @@ public class Waypoint : MonoBehaviour
         // Do not compare with the same object
         if (w1 == w2)
         {
-            throw new UnityException("Please don't be silly, the distance between oneself is always 0.0f.");
+            return 0.0f;
         }
         
         // Calculate the distance
@@ -106,7 +113,7 @@ public class Waypoint : MonoBehaviour
         // Do not compare with the same object
         if (w1 == w2)
         {
-            throw new UnityException("Please don't be silly, the direction between oneself is nothing.");
+            return Vector2.zero;
         }
 
         // Calculate the direction
