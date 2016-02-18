@@ -58,6 +58,12 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -72,12 +78,18 @@
     <Compile Include="Assets\Scripts\AI\Custom States\ChaseState.cs" />
     <Compile Include="Assets\Scripts\AI\Enemy.cs" />
     <Compile Include="Assets\Scripts\AI\FSMState.cs" />
+    <Compile Include="Assets\Scripts\AI\Waypoint.cs" />
     <Compile Include="Assets\Scripts\BackgroundScroller.cs" />
-    <Compile Include="Assets\Scripts\GameGrid.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\Items\Destructibles\Destroyables.cs" />
     <Compile Include="Assets\Scripts\Items\Destructibles\Heart.cs" />
     <Compile Include="Assets\Scripts\Items\Item.cs" />
+    <Compile Include="Assets\Scripts\Items\Projectiles\Arrow.cs" />
+    <Compile Include="Assets\Scripts\Items\Projectiles\Empowered Arrow.cs" />
+    <Compile Include="Assets\Scripts\Items\Projectiles\Flying Sword.cs" />
+    <Compile Include="Assets\Scripts\Items\Projectiles\Lightning.cs" />
+    <Compile Include="Assets\Scripts\Items\Projectiles\Projectile.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\Crossbow.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\Shield.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\Sword.cs" />
@@ -95,6 +107,7 @@
     <Compile Include="Assets\Scripts\TileMap\Tile.cs" />
     <Compile Include="Assets\Scripts\TileMap\TileMap.cs" />
     <Compile Include="Assets\Scripts\TimeManager.cs" />
+    <Compile Include="Assets\Scripts\WaypointManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>

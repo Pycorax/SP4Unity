@@ -49,8 +49,9 @@ public abstract class Weapon : Item {
     //UPON Collision, assign weapon hit as 'weapon'
     public override void CombineUse(Projectile projectile, Weapon weapon)
     {
-
         //=======WAND USED ON SWORD======//
+        //===================WAYNE===================//
+        //============WAND USED ON SWORD============//
         if(projectile is Lightning && weapon is Sword)
         {
             //=======BUFFED SWORD=======//
