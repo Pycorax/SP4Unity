@@ -38,6 +38,19 @@ namespace Enemy
             }
         }
 
+        /// <summary>
+        /// Function to initialize the player position.
+        /// </summary>
+        /// <param name="position">The position on the map to spawn the enemy.</param>
+        public void Init(Vector3 position)
+        {
+            // Set the enemy position
+            transform.position = position;
+
+            // TODO: Reset the current state
+            // changeCurrentState(new IdleState());
+        }
+
         // Function to change the state of this Enemy
         internal void changeCurrentState(FSMState state)
         {
