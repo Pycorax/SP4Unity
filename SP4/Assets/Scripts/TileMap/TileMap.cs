@@ -74,11 +74,13 @@ public class TileMap : MonoBehaviour
 	private Vector3 tileMapDistToTopLeft = new Vector3();
 	private int rowCount, colCount;
 
+    // For tile map activation optimisation
+    private int minRowIndex = -1, maxRowIndex = -1, minColIndex = -1, maxColIndex = -1;
+
 
 	private List<Tile> tiles = new List<Tile>();
 
 	// Map
-	//private ArrayList map = new ArrayList();
 	private List<Row> map = new List<Row>();
 
 
@@ -89,9 +91,8 @@ public class TileMap : MonoBehaviour
 		{
 			loadFile();
 		}
-		//ActivateTiles(0, rowCount - 1, 0, colCount - 1);
-		//ActivateTiles(1, 13, 5, 26);
-		ActivateTiles(map[1].column[5].multiLayerTile[0].transform.position - new Vector3(TileSize * 0.5f, 0.0f), map[13].column[26].multiLayerTile[0].transform.position - new Vector3(TileSize * 0.5f, 0.0f));
+        /*MultiPlayerCamera cam = Camera.main.GetComponent<MultiPlayerCamera>();
+        ActivateTiles(new Vector3(cam.LeftBound, cam.TopBound), new Vector3(cam.RightBound, cam.BottomBound));*/
 	}
 	
 	// Update is called once per frame
@@ -108,10 +109,12 @@ public class TileMap : MonoBehaviour
 
 	public MultiLayerTile FetchTile(int rowIndex, int colIndex)
 	{
-		List<GameObject> result = new List<GameObject>();
+        if (rowIndex < 0 || rowIndex >= map.Count || colIndex < 0 || colIndex >= map[0].column.Count)
+        {
+            return null;
+        }
 
-		//ArrayList row = (ArrayList)map[rowIndex];
-		//ArrayList multiLayerTile = (ArrayList)row[colIndex];
+		List<GameObject> result = new List<GameObject>();
 
 		Row row = map[rowIndex];
 		MultiLayerTile tiles = row.column[colIndex];
@@ -129,34 +132,147 @@ public class TileMap : MonoBehaviour
 		return new Vector2(rowIndex, colIndex);
 	}
 
-	public void ActivateTiles(int rowIndexMin, int rowIndexMax, int colIndexMin, int colIndexMax)
-	{
-		IEnumerable<Tile> activeTiles = from tile in tiles where tile.gameObject.activeSelf select tile;
-		foreach (Tile singleTile in activeTiles)
-		{
-			singleTile.gameObject.SetActive(false);
-		}
-
-		for (int rowIndex = rowIndexMin; rowIndex <= rowIndexMax; ++rowIndex)
-		{
-			for (int colIndex = colIndexMin; colIndex <= colIndexMax; ++colIndex)
-			{
-				MultiLayerTile multiTiles = FetchTile(rowIndex, colIndex);
-				for (int multiIndex = 0; multiIndex < multiTiles.multiLayerTile.Count; ++multiIndex)
-				{
-					GameObject goTile = multiTiles.multiLayerTile[multiIndex];
-					goTile.SetActive(true);
-				}
-			}
-		}
-	}
-
 	public void ActivateTiles(Vector3 topLeftPos, Vector3 bottomRightPos)
 	{
 		Vector2 topLeftIndex = FetchTileIndex(topLeftPos);
 		Vector2 bottomRightIndex = FetchTileIndex(bottomRightPos);
 		ActivateTiles((int)topLeftIndex.x, (int)bottomRightIndex.x, (int)topLeftIndex.y, (int)bottomRightIndex.y);
-	}
+    }
+
+    private void ActivateTiles(int rowIndexMin, int rowIndexMax, int colIndexMin, int colIndexMax)
+    {
+        if (!isActivated()) // Check if first update is required
+        {
+            // First tile update is required (Full activation)
+            /*IEnumerable<Tile> activeTiles = from tile in tiles where tile.gameObject.activeSelf select tile;
+            foreach (Tile singleTile in activeTiles)
+            {
+                singleTile.gameObject.SetActive(false);
+            }*/
+
+            for (int rowIndex = rowIndexMin; rowIndex <= rowIndexMax; ++rowIndex)
+            {
+                for (int colIndex = colIndexMin; colIndex <= colIndexMax; ++colIndex)
+                {
+                    MultiLayerTile multiTiles = FetchTile(rowIndex, colIndex);
+                    if (multiTiles != null)
+                    {
+                        for (int multiIndex = 0; multiIndex < multiTiles.multiLayerTile.Count; ++multiIndex)
+                        {
+                            GameObject goTile = multiTiles.multiLayerTile[multiIndex];
+                            goTile.SetActive(true);
+                        }
+                    }
+                }
+            }
+            minRowIndex = rowIndexMin;
+            maxRowIndex = rowIndexMax;
+            minColIndex = colIndexMin;
+            maxColIndex = colIndexMax;
+        }
+        else
+        {
+            runtimeActivateTiles(rowIndexMin, rowIndexMax, colIndexMin, colIndexMax);
+        }
+    }
+
+    private void runtimeActivateTiles(int rowIndexMin, int rowIndexMax, int colIndexMin, int colIndexMax)
+    {
+        int xDiff = rowIndexMin - minRowIndex; // New - Old
+        int yDiff = colIndexMin - minColIndex; // New - Old
+
+        if (xDiff == 0 || yDiff == 0)
+        {
+            // No update needed
+            return;
+        }
+
+        int startRow, endRow, startCol, endCol;     // Activation
+        int dStartRow, dEndRow, dStartCol, dEndCol; // De-activation
+
+        // Note: min and max in front = Old
+        // Note: min and max behind = New
+
+        // Updating x-axis
+        if (xDiff < 0)
+        {
+            // Move left
+            startCol = colIndexMin;
+            endCol = minColIndex;
+            dStartCol = colIndexMax + 1;
+            dEndCol = maxColIndex + 1;
+
+            startRow = minRowIndex;
+            endRow = maxRowIndex;
+            ActivateTilesByIndex(startRow, endRow, startCol, endCol, true);
+            ActivateTilesByIndex(startRow, endRow, dStartCol, dEndCol, false);
+
+        }
+        else if (xDiff > 0)
+        {
+            // Move right
+            startCol = maxColIndex + 1;
+            endCol = colIndexMax + 1;
+            dStartCol = minColIndex;
+            dEndCol = colIndexMin;
+
+            startRow = minRowIndex;
+            endRow = maxRowIndex;
+            ActivateTilesByIndex(startRow, endRow, startCol, endCol, true);
+            ActivateTilesByIndex(startRow, endRow, dStartCol, dEndCol, false);
+        }
+        minColIndex = colIndexMin;
+        maxColIndex = colIndexMax;
+
+        // Updating y-axis
+        if (yDiff < 0)
+        {
+            // Move up
+            startRow = rowIndexMin;
+            endRow = minRowIndex;
+            dStartRow = rowIndexMax + 1;
+            dEndRow = maxRowIndex + 1;
+
+            startCol = minColIndex;
+            endCol = maxColIndex;
+            ActivateTilesByIndex(startRow, endRow, startCol, endCol, true);
+            ActivateTilesByIndex(dStartRow, dEndRow, startCol, endCol, false);
+        }
+        else if (yDiff > 0)
+        {
+            // Move down
+            startRow = maxRowIndex + 1;
+            endRow = rowIndexMax + 1;
+            dStartRow = minRowIndex;
+            dEndRow = rowIndexMin;
+
+            startCol = minColIndex;
+            endCol = maxColIndex;
+            ActivateTilesByIndex(startRow, endRow, startCol, endCol, true);
+            ActivateTilesByIndex(dStartRow, dEndRow, startCol, endCol, false);
+        }
+        minRowIndex = rowIndexMin;
+        maxRowIndex = rowIndexMax;
+    }
+
+    private void ActivateTilesByIndex(int startRow, int endRow, int startCol, int endCol, bool activation)
+    {
+        for (int rowIndex = startRow; rowIndex < endRow; ++rowIndex)
+        {
+            for (int colIndex = startCol; colIndex < endCol; ++colIndex)
+            {
+                MultiLayerTile mTile = FetchTile(rowIndex, colIndex);
+                if (mTile != null)
+                {
+                    for (int tileIndex = 0; tileIndex < mTile.multiLayerTile.Count; ++tileIndex)
+                    {
+                        GameObject tile = mTile.multiLayerTile[tileIndex];
+                        tile.SetActive(activation);
+                    }
+                }
+            }
+        }
+    }
 
 	private bool loadFile()
 	{
@@ -410,4 +526,10 @@ public class TileMap : MonoBehaviour
 		}
         return tile;
 	}
+
+    private bool isActivated()
+    {
+        return !(minRowIndex == -1 || maxRowIndex == -1 || minColIndex == -1 || maxColIndex == -1);
+        
+    }
 }
