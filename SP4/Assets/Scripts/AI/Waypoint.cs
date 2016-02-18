@@ -30,7 +30,7 @@ public class Waypoint : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         // Hide the sprite rendering if we are going to play
-#if !WAYPOINT_DEBUG
+#if  !WAYPOINT_DEBUG
         spriteRenderer.enabled = false;
 #endif
     }
@@ -74,6 +74,11 @@ public class Waypoint : MonoBehaviour
         neighbours = list.ToList();
     }
 
+    /// <summary>
+    /// Get the neighbours within the range of NEIGHBOURING_DIST in a list of allWaypoints
+    /// </summary>
+    /// <param name="allWaypoints">List of all the waypoints in the scene.</param>
+    /// <returns>List of all waypoints withint he range of NEIGHBOURING_DIST</returns>
     public List<Waypoint> GetDistanceNeighbours(List<Waypoint> allWaypoints)
     {
         // Look for distance-neighbours
@@ -91,6 +96,46 @@ public class Waypoint : MonoBehaviour
         {
             return null;
         }
+    }
+
+    /// <summary>
+    /// Function to go through all neighbour waypoints and return a reference to the nearest waypoint
+    /// </summary>
+    /// <param name="exceptions">The list of Waypoints you wish to exclude from checking.</param>
+    /// <returns>The waypoint that is the nearest to this waypoint.</returns>
+    public Waypoint GetNearestNeighbour(List<Waypoint> exceptions = null)
+    {
+        Waypoint nearestWaypoint = null;
+        float nearestDist = float.MaxValue;
+
+        foreach (Waypoint w in neighbours)
+        {
+            // Check for exceptions if exceptions are provided
+            if (exceptions != null)
+            {
+                // Check if this waypoint is supposed to be exempted
+                foreach (Waypoint exception in exceptions)
+                {
+                    // If this is an exception, skip to the next one
+                    if (w == exception)
+                    {
+                        continue;
+                    }
+                }
+            }
+
+            // Calculate the distance to the waypoint
+            float dist = (w.transform.position - transform.position).sqrMagnitude;
+
+            // Check if this is lower than the previous nearest
+            if (nearestWaypoint == null || dist < nearestDist)
+            {
+                nearestWaypoint = w;
+                nearestDist = (w.transform.position - transform.position).sqrMagnitude;
+            }
+        }
+
+        return nearestWaypoint;
     }
 
     /// <summary>
