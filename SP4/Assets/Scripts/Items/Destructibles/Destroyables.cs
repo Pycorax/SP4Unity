@@ -18,6 +18,11 @@ public class Destroyables : Item {
 
 	}
 
+    public override void CombineUse(Projectile projectile, Weapon weapon)
+    {
+        throw new System.NotImplementedException();
+    }
+
 	//Animation
 	public virtual void DestroyItem()
 	{
