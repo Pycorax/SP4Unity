@@ -94,6 +94,7 @@
     <Compile Include="Assets\Scripts\TileMap\Tile.cs" />
     <Compile Include="Assets\Scripts\TileMap\TileMap.cs" />
     <Compile Include="Assets\Scripts\TimeManager.cs" />
+    <Compile Include="Assets\Scripts\WaypointManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
