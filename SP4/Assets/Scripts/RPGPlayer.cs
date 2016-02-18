@@ -30,6 +30,7 @@ public class RPGPlayer : MonoBehaviour
     // Weapons
     private Weapon LeftWeapon;
     private Weapon RightWeapon;
+    private Weapon currentWeapon;
 
     // Components
     private Rigidbody2D rigidBody;
@@ -374,6 +375,7 @@ public class RPGPlayer : MonoBehaviour
             if (LeftWeapon != null)
             {
                 // TODO: Left Attack
+                currentWeapon = LeftWeapon;
             }
         }
 
@@ -382,10 +384,19 @@ public class RPGPlayer : MonoBehaviour
             if (RightWeapon != null)
             {
                 // TODO: Right Attack
+                currentWeapon = RightWeapon;
             }
+        }
+        else
+        {
+            currentWeapon = null;
         }
     }
 
+    public Weapon getCurrentActiveWeapon()
+    {
+        return currentWeapon;
+    }
     #endregion
 
     #region Health
