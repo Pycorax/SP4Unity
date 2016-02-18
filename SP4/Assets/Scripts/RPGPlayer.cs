@@ -12,6 +12,10 @@ public class RPGPlayer : MonoBehaviour
     // Player Attributes
     private int health;
 
+    // Weapons
+    public Weapon LeftWeapon;
+    public Weapon RightWeapon;
+
     // Controls
     public bool UseMouseControl = false;
     public KeyCode MoveLeftKey = KeyCode.A;
@@ -28,9 +32,7 @@ public class RPGPlayer : MonoBehaviour
     private const float MOUSE_CONTROL_DEADZONE = 5.0f;
 
     // Weapons
-    private Weapon LeftWeapon;
-    private Weapon RightWeapon;
-    private Weapon currentWeapon;
+    private Weapon currentWeapon;                       // Stores a reference to the last weapon used by the player. For use with combo attacks.
 
     // Components
     private Rigidbody2D rigidBody;
@@ -41,6 +43,7 @@ public class RPGPlayer : MonoBehaviour
 
     // Getters
     public int Health { get { return health; } }
+    public Weapon CurrentWeapon { get { return currentWeapon; } }
 
     // Use this for initialization
     void Start()

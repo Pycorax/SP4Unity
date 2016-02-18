@@ -1,29 +1,29 @@
 fileFormatVersion: 2
-guid: 8bce1ef474acb7345916ea7b21d88d75
-timeCreated: 1455776986
+guid: 3318be43c60ec5a4f97b9cfc4c0b9f48
+timeCreated: 1455784402
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: player_0
-    21300002: player_1
-    21300004: player_2
-    21300006: player_3
-    21300008: player_4
-    21300010: player_5
-    21300012: player_6
-    21300014: player_7
-    21300016: player_8
-    21300018: player_9
-    21300020: player_10
-    21300022: player_11
-    21300024: player_12
-    21300026: player_13
-    21300028: player_14
-    21300030: player_15
+    21300000: SpriteSheet_MC_0
+    21300002: SpriteSheet_MC_1
+    21300004: SpriteSheet_MC_2
+    21300006: SpriteSheet_MC_3
+    21300008: SpriteSheet_MC_4
+    21300010: SpriteSheet_MC_5
+    21300012: SpriteSheet_MC_6
+    21300014: SpriteSheet_MC_7
+    21300016: SpriteSheet_MC_8
+    21300018: SpriteSheet_MC_9
+    21300020: SpriteSheet_MC_10
+    21300022: SpriteSheet_MC_11
+    21300024: SpriteSheet_MC_12
+    21300026: SpriteSheet_MC_13
+    21300028: SpriteSheet_MC_14
+    21300030: SpriteSheet_MC_15
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -60,13 +60,13 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: player_0
+    - name: SpriteSheet_MC_0
       rect:
         serializedVersion: 2
         x: 0
@@ -76,7 +76,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_1
+    - name: SpriteSheet_MC_1
       rect:
         serializedVersion: 2
         x: 64
@@ -86,7 +86,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_2
+    - name: SpriteSheet_MC_2
       rect:
         serializedVersion: 2
         x: 0
@@ -96,7 +96,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_3
+    - name: SpriteSheet_MC_3
       rect:
         serializedVersion: 2
         x: 64
@@ -106,7 +106,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_4
+    - name: SpriteSheet_MC_4
       rect:
         serializedVersion: 2
         x: 0
@@ -116,7 +116,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_5
+    - name: SpriteSheet_MC_5
       rect:
         serializedVersion: 2
         x: 64
@@ -126,7 +126,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_6
+    - name: SpriteSheet_MC_6
       rect:
         serializedVersion: 2
         x: 0
@@ -136,7 +136,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_7
+    - name: SpriteSheet_MC_7
       rect:
         serializedVersion: 2
         x: 64
@@ -146,7 +146,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_8
+    - name: SpriteSheet_MC_8
       rect:
         serializedVersion: 2
         x: 0
@@ -156,7 +156,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_9
+    - name: SpriteSheet_MC_9
       rect:
         serializedVersion: 2
         x: 64
@@ -166,7 +166,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_10
+    - name: SpriteSheet_MC_10
       rect:
         serializedVersion: 2
         x: 0
@@ -176,7 +176,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_11
+    - name: SpriteSheet_MC_11
       rect:
         serializedVersion: 2
         x: 64
@@ -186,7 +186,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_12
+    - name: SpriteSheet_MC_12
       rect:
         serializedVersion: 2
         x: 0
@@ -196,7 +196,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_13
+    - name: SpriteSheet_MC_13
       rect:
         serializedVersion: 2
         x: 64
@@ -206,7 +206,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_14
+    - name: SpriteSheet_MC_14
       rect:
         serializedVersion: 2
         x: 0
@@ -216,7 +216,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: player_15
+    - name: SpriteSheet_MC_15
       rect:
         serializedVersion: 2
         x: 64
