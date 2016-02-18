@@ -24,16 +24,16 @@ public class Tile : MonoBehaviour
 	
 	}
 
-	public bool IsCollidable()
+	public bool IsWalkable()
 	{
         if (!GetComponent<Collider2D>())
         {
             if (!IsEmpty())
             {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
 	}
 
     public bool IsEmpty()

@@ -14,6 +14,18 @@ Example: Tile A is supposed to be rendered above Tile B, writing format is "A|B"
 public class MultiLayerTile
 {
 	public List<GameObject> multiLayerTile = new List<GameObject>();
+
+	public bool IsWalkable()
+	{
+		foreach (GameObject tile in multiLayerTile)
+		{
+			if (!tile.GetComponent<Tile>().IsWalkable())
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 }
 
 public class Row
@@ -208,19 +220,22 @@ public class TileMap : MonoBehaviour
 					for (int layerIndex = 0; layerIndex < layers.Length; ++layerIndex)
 					{
 						int tileType = Int32.Parse(layers[layerIndex]);
-						tile = Instantiate(TileBlueprints[tileType]);
-						
-						// Set common data for each tile
-						tile.SetActive(false);
-						tile.transform.position = startPos; // CHECK: Copy by value or reference
-						tile.transform.localScale = size; // CHECK: Copy by value or reference
-						tile.transform.parent = this.transform;
+						tile = createTile((Tile.TILE_TYPE)tileType);
 
-						// Add to multi-layer
-						multiLayerTile.multiLayerTile.Add(tile);
+                        if (tile)
+                        {
+                            // Set common data for each tile
+                            tile.SetActive(false);
+                            tile.transform.position = startPos; // CHECK: Copy by value or reference
+                            tile.transform.localScale = size; // CHECK: Copy by value or reference
+                            tile.transform.parent = this.transform;
 
-						// Add to tile list
-						tiles.Add(tile.GetComponent<Tile>());
+                            // Add to multi-layer
+                            multiLayerTile.multiLayerTile.Add(tile);
+
+                            // Add to tile list
+                            tiles.Add(tile.GetComponent<Tile>());
+                        }
 					}
 
 					// Add to row of data
@@ -229,19 +244,22 @@ public class TileMap : MonoBehaviour
 				else // Data not within file, empty tile
 				{
 					MultiLayerTile multiLayerTile = new MultiLayerTile();
-					tile = Instantiate(TileBlueprints[(int)DefaultTile]);
+					tile = createTile(DefaultTile);
 
-					// Set common data for each tile
-					tile.SetActive(false);
-					tile.transform.position = startPos; // CHECK: Copy by value or reference
-					tile.transform.localScale = size; // CHECK: Copy by value or reference
-					tile.transform.parent = this.transform;
+                    if (tile)
+                    {
+                        // Set common data for each tile
+                        tile.SetActive(false);
+                        tile.transform.position = startPos; // CHECK: Copy by value or reference
+                        tile.transform.localScale = size; // CHECK: Copy by value or reference
+                        tile.transform.parent = this.transform;
 
-					// Add to multi-layer
-					multiLayerTile.multiLayerTile.Add(tile);
+                        // Add to multi-layer
+                        multiLayerTile.multiLayerTile.Add(tile);
 
-					// Add to tile list
-					tiles.Add(tile.GetComponent<Tile>());
+                        // Add to tile list
+                        tiles.Add(tile.GetComponent<Tile>());
+                    }
 
 					// Add to row of data
 					rowOfData.column.Add(multiLayerTile);
@@ -374,5 +392,20 @@ public class TileMap : MonoBehaviour
 		NumOfScreenTiles.x = (int)Math.Ceiling(screenSize.x / TileSize);
 
 		return TileSize;
+	}
+
+	private GameObject createTile(Tile.TILE_TYPE type)
+	{
+        GameObject tile = null;
+		switch (type)
+		{
+            // TODO: Add special case for tile creation like enemy
+            default:
+                {
+                    tile = Instantiate(TileBlueprints[(int)type]);
+                }
+                break;
+		}
+        return tile;
 	}
 }
