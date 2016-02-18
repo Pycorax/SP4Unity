@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Crossbow : Weapon {
 
-    private Sprite CrossbowSprite;
+    public Sprite CrossbowSprite;
     public Arrow arrow;
     public EmpoweredArrow empoweredArrow;
 
