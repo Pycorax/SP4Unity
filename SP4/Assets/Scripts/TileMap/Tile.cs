@@ -8,6 +8,8 @@ public class Tile : MonoBehaviour
 		TILE_EMPTY = 0, // Empty tile
 		TILE_FLOOR,     // Floor tile
 		TILE_LAYER,     // Layer tile test
+
+        // Entities
         TILE_ENEMY,     // Tile that spawns an enemy
         TILE_WAYPOINT,  // Enemy's waypoint
         TILE_FIRST_PLAYER, // First player
