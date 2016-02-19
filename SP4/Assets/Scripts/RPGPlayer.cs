@@ -447,16 +447,16 @@ public class RPGPlayer : MonoBehaviour
             }
         }
 
-        if (other.gameObject.GetComponent<ObjectiveStart>() != null && ObjectiveStarted == false)
-        {
-            Debug.Log("Objective Start");
-            ObjectiveStarted = true;
-        }
+        //if (other.gameObject.GetComponent<ObjectiveStart>() != null && ObjectiveStarted == false)
+        //{
+        //    Debug.Log("Objective Start");
+        //    ObjectiveStarted = true;
+        //}
 
-        else if (other.gameObject.GetComponent<ObjectiveEnd>() != null && ObjectiveStarted == true)
-        {
-            Debug.Log("Objective End");
-            ObjectiveStarted = false;
-        }
+        //else if (other.gameObject.GetComponent<ObjectiveEnd>() != null && ObjectiveStarted == true)
+        //{
+        //    Debug.Log("Objective End");
+        //    ObjectiveStarted = false;
+        //}
     }
 }
