@@ -14,18 +14,30 @@ Example: Tile A is supposed to be rendered above Tile B, writing format is "A|B"
 public class MultiLayerTile
 {
 	public List<GameObject> multiLayerTile = new List<GameObject>();
+    private bool walkable = true;
 
 	public bool IsWalkable()
 	{
-		foreach (GameObject tile in multiLayerTile)
-		{
-			if (!tile.GetComponent<Tile>().IsWalkable())
-			{
-				return false;
-			}
-		}
-		return true;
+        return walkable;
 	}
+
+    public void AddTile(GameObject tile)
+    {
+        multiLayerTile.Add(tile);
+        walkable = calculateWalkable();
+    }
+
+    private bool calculateWalkable()
+    {
+        foreach (GameObject tile in multiLayerTile)
+        {
+            if (!tile.GetComponent<Tile>().IsWalkable())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 public class Row
@@ -90,7 +102,7 @@ public class TileMap : MonoBehaviour
 
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
 	{
 		if (Name != "")
 		{
@@ -98,6 +110,12 @@ public class TileMap : MonoBehaviour
         }
         WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
         refWaypointManager.SyncWaypoints();
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+
     }
 	
 	// Update is called once per frame
@@ -350,7 +368,7 @@ public class TileMap : MonoBehaviour
                         if (tile)
                         {
                             // Add to multi-layer
-                            multiLayerTile.multiLayerTile.Add(tile);
+                            multiLayerTile.AddTile(tile);
 
                             // Add to tile list
                             tiles.Add(tile.GetComponent<Tile>());
@@ -368,7 +386,7 @@ public class TileMap : MonoBehaviour
                     if (tile)
                     {
                         // Add to multi-layer
-                        multiLayerTile.multiLayerTile.Add(tile);
+                        multiLayerTile.AddTile(tile);
 
                         // Add to tile list
                         tiles.Add(tile.GetComponent<Tile>());
@@ -519,7 +537,7 @@ public class TileMap : MonoBehaviour
                     GameObject enemy = Instantiate(TileBlueprints[(int)type]);
                     // Set enemy data
                     Vector3 enemyPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
-                    enemyPos.z = 0.0f;
+                    enemyPos.z = 1.0f;
                     Vector3 enemySize = size * 2.0f;
                     enemy.SetActive(true);
                     enemy.GetComponent<Enemy.Enemy>().Init(enemyPos);// = pos + new Vector3(size.x, -size.y);
@@ -543,11 +561,33 @@ public class TileMap : MonoBehaviour
                         // Create waypoint
                         GameObject waypoint = Instantiate(TileBlueprints[(int)type]);
                         Vector3 waypointPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
+                        waypointPos.z = 1.5f;
                         Vector3 waypointSize = size * 2.0f;
                         waypoint.transform.position = waypointPos;
                         waypoint.transform.localScale = waypointSize;
                         refWaypointManager.Add(waypoint.GetComponent<Waypoint>());
                     }
+
+                    // Create floor tile
+                    tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR]);
+                    // Set data for each tile
+                    tile.SetActive(false);
+                    tile.transform.position = pos;
+                    tile.transform.localScale = size;
+                    tile.transform.parent = this.transform;
+                }
+                break;
+            case Tile.TILE_TYPE.TILE_FIRST_PLAYER:
+            case Tile.TILE_TYPE.TILE_SECOND_PLAYER:
+                {
+                    // Create player
+                    GameObject player = Instantiate(TileBlueprints[(int)type]);
+                    Vector3 playerPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
+                    Vector3 playerSize = size * 2.0f;
+                    playerPos.z = 0.0f;
+                    player.transform.position = playerPos;
+                    player.transform.localScale = playerSize;
+                    Camera.main.gameObject.GetComponent<MultiPlayerCamera>().PlayerList.Add(player);
 
                     // Create floor tile
                     tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR]);
