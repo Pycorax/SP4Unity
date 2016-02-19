@@ -37,13 +37,50 @@ public class WaypointManager : MonoBehaviour
             foreach (Waypoint w in waypointList)
             {
                 // Recalculate all connections
-                w.SetUpConnections(waypointList, WaypointRayTraceRadius);
+                //w.SetUpConnections(waypointList, WaypointRayTraceRadius);
 
                 // Draw the connections
                 foreach (Waypoint neighbour in w.Neighbours)
                 {
                     Debug.DrawLine(w.transform.position, neighbour.transform.position, Color.yellow, 0.0f, false);
                 }
+            }
+        }
+    }
+    /// <summary>
+    /// Function to draw the paths of the waypoints on the screen. However, it does not work as the Collider 
+    /// doesn't seem to be enabled in the UnityEditor. Unity bug maybe.
+    /// </summary>
+    void OnDrawGizmos()
+    {
+        // Get a list of all waypoints
+        List<Waypoint> listOfWaypoints = new List<Waypoint>();
+        foreach (Transform t in transform)
+        {
+            Waypoint w = t.GetComponent<Waypoint>();
+
+            if (w != null)
+            {
+                listOfWaypoints.Add(w);
+            }
+        }
+
+        // Loop through each
+        foreach (Waypoint w in listOfWaypoints)
+        {
+            // Recalculate all connections
+            w.SetUpConnections(listOfWaypoints, WaypointRayTraceRadius);
+        }
+
+        foreach (Waypoint w in listOfWaypoints)
+        {
+            // Draw the connections
+            foreach (Waypoint neighbour in w.Neighbours)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawLine(w.transform.position, neighbour.transform.position);
+                //Gizmos.color = Color.red;
+                //Gizmos.DrawSphere(neighbour.transform.localPosition, 20.0f);
             }
         }
     }
@@ -83,7 +120,7 @@ public class WaypointManager : MonoBehaviour
             }
         }
 
-        // Initialize all the waypoints
+        // Initialize all the waypoints with that list
         foreach (Waypoint w in waypointList)
         {
             w.SetUpConnections(waypointList, WaypointRayTraceRadius);
