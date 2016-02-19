@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Pathfinding
 {
@@ -51,8 +51,6 @@ public class Pathfinding
 
             // We are analyzing it, so remove from the list we are analyzing
             unanalyzedWaypoints.Remove(waypointToAnalyze);
-
-            Debug.Log(waypointToAnalyze);
 
             // If we reached the target, we are done
             if (waypointToAnalyze == target)

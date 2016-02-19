@@ -79,8 +79,6 @@ public class WaypointManager : MonoBehaviour
             {
                 Gizmos.color = Color.yellow;
                 Gizmos.DrawLine(w.transform.position, neighbour.transform.position);
-                //Gizmos.color = Color.red;
-                //Gizmos.DrawSphere(neighbour.transform.localPosition, 20.0f);
             }
         }
     }
@@ -163,6 +161,15 @@ public class WaypointManager : MonoBehaviour
     public Waypoint GetNearestWaypointToGoTo(Waypoint currentPos, Waypoint targetPos)
     {
         // Calculate and return the next point to go to
-        return Pathfinding.Dijkstra(waypointList, currentPos, targetPos).Peek();
+        Stack<Waypoint> path = Pathfinding.Dijkstra(waypointList, currentPos, targetPos);
+
+        // A path was found...
+        if (path.Count > 0)
+        {
+            return path.Peek();
+        }
+
+        // There is no more places to go
+        return null;
     }
 }
