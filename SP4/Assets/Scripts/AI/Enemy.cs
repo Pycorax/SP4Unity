@@ -31,11 +31,11 @@ namespace Enemy
         // Use this for initialization
         void Start()
         {
+            // Init the health
             health = MaxHealth;
 
-            // Get the nearest waypoint and head to it
+            // Set the Waypoint that we are nearest to right now
             currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);
-            currentTargetWaypoint = WaypointMap.GetNearestWaypointToGoTo(currentWaypoint, FinalTargetWaypoint);
         }
 
         // Update is called once per frame
