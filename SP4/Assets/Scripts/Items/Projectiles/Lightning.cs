@@ -4,14 +4,14 @@ using System.Collections;
 public class Lightning : Projectile {
 
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
         pName = "Lightning Bolt";
         pDamage = 3;
         //Load Animation
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 	
 	}
 

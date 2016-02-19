@@ -9,7 +9,7 @@ public class Crossbow : Weapon {
     public EmpoweredArrow empoweredArrow;
 
 	// Use this for initialization
-	void Start () {
+    protected override void Start () {
         Name = "Crossbow";
         
         Width = 1;
@@ -19,7 +19,7 @@ public class Crossbow : Weapon {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 	
 	}
 

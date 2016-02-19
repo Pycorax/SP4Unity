@@ -6,7 +6,7 @@ public class Sword : Weapon {
     public Sprite SwordSprite;
 
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
 
         Name = "Sword";
         Damage = 10;
@@ -21,7 +21,7 @@ public class Sword : Weapon {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 	
 	}
 

@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Projectile : Weapon  {
 
-    public string name;
     public int damage;
-    public Animation animation;
     public float speed;
 
     public string pName { get { return name; } set { name = value; } }
@@ -13,12 +12,13 @@ public class Projectile : Weapon  {
     public float pSpeed { get { return speed; } set { speed = value; } }
 
     // Use this for initialization
-	void Start () {
-
+    protected override void Start()
+    {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+    protected override void Update()
+    {
 	}
 
     public override void Use(Vector2 direction)
