@@ -5,22 +5,29 @@ public class ObjectiveManager : MonoBehaviour
 {
 
     public Objectives[] objectives;
+    public GameManager manager;
 
     void Start()
     {
-        objectives = GetComponents<Objectives>();
+        objectives = GetComponentsInChildren<Objectives>();
+        //if(objectives != null)
+        //{
+        //    Debug.Log("OBJECTIVE GIVEN");
+        //}
     }
 
     void Update()
     {
         foreach (var objective in objectives)
         {
-            if (objective.IsAchieved())
+            if (manager.LevelEnded == true)
             {
-                objective.Complete();
-                Destroy(objective);
+                if (objective.IsAchieved())
+                {
+                    objective.Complete();
+                    Destroy(objective);
+                }
             }
         }
     }
-
 }

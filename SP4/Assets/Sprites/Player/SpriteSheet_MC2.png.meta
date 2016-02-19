@@ -1,29 +1,21 @@
 fileFormatVersion: 2
-guid: b1db049cd02306d4ab11f78512575644
-timeCreated: 1455789116
+guid: 3b9410796dd7fed48b6ae47b2fb49361
+timeCreated: 1455874075
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: SpriteSheet_MC_0
-    21300002: SpriteSheet_MC_1
-    21300004: SpriteSheet_MC_2
-    21300006: SpriteSheet_MC_3
-    21300008: SpriteSheet_MC_4
-    21300010: SpriteSheet_MC_5
-    21300012: SpriteSheet_MC_6
-    21300014: SpriteSheet_MC_7
-    21300016: SpriteSheet_MC_8
-    21300018: SpriteSheet_MC_9
-    21300020: SpriteSheet_MC_10
-    21300022: SpriteSheet_MC_11
-    21300024: SpriteSheet_MC_12
-    21300026: SpriteSheet_MC_13
-    21300028: SpriteSheet_MC_14
-    21300030: SpriteSheet_MC_15
+    21300000: SpriteSheet_MC2_0
+    21300002: SpriteSheet_MC2_1
+    21300004: SpriteSheet_MC2_2
+    21300006: SpriteSheet_MC2_3
+    21300008: SpriteSheet_MC2_4
+    21300010: SpriteSheet_MC2_5
+    21300012: SpriteSheet_MC2_6
+    21300014: SpriteSheet_MC2_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -66,87 +58,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: SpriteSheet_MC_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 448
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 448
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 384
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_3
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 384
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 320
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_5
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 320
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_6
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 256
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_7
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 256
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_8
+    - name: SpriteSheet_MC2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -156,7 +68,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_9
+    - name: SpriteSheet_MC2_1
       rect:
         serializedVersion: 2
         x: 64
@@ -166,7 +78,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_10
+    - name: SpriteSheet_MC2_2
       rect:
         serializedVersion: 2
         x: 0
@@ -176,7 +88,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_11
+    - name: SpriteSheet_MC2_3
       rect:
         serializedVersion: 2
         x: 64
@@ -186,7 +98,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_12
+    - name: SpriteSheet_MC2_4
       rect:
         serializedVersion: 2
         x: 0
@@ -196,7 +108,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_13
+    - name: SpriteSheet_MC2_5
       rect:
         serializedVersion: 2
         x: 64
@@ -206,7 +118,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_14
+    - name: SpriteSheet_MC2_6
       rect:
         serializedVersion: 2
         x: 0
@@ -216,7 +128,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: SpriteSheet_MC_15
+    - name: SpriteSheet_MC2_7
       rect:
         serializedVersion: 2
         x: 64

@@ -6,20 +6,24 @@ namespace Enemy
     public class Enemy : MonoBehaviour
     {
         [Tooltip("Parent GameObject that holds children GameObjects that act as waypoints on the level.")]
-        public GameObject WaypointContainer;
+        public WaypointManager WaypointMap;
         [Tooltip("A list of references to the players in the game.")]
         public List<GameObject> PlayerList;
+        [Tooltip("The target waypoint that the enemy will go towards.")]
+        public Waypoint FinalTargetWaypoint;
 
         // Health
         public int MaxHealth = 100;
-        private int health;
+        internal int health;
 
         // Movement
         public float Speed = 200.0f;
 
         // AI
-        FSMState currentState;                      // Stores the current game state
-        Waypoint currentTargetWaypoint;             // Stores a reference to the current target waypoint
+        private FSMState currentState;                                      // Stores the current game state
+        private Waypoint currentWaypoint;
+        private Waypoint currentTargetWaypoint;                             // Stores a reference to the current target waypoint
+        private const float DISTANCE_CHECK_ACCURARCY = 10.0f;               // Used to do "reached position" checking
 
         // Getters
         public int Health { get { return health; } }
@@ -27,15 +31,58 @@ namespace Enemy
         // Use this for initialization
         void Start()
         {
+            // Init the health
             health = MaxHealth;
+
+            // Set the Waypoint that we are nearest to right now
+            currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);
         }
 
         // Update is called once per frame
         void Update()
         {
+            // Update the FSM
             if (currentState != null)
             {
                 currentState.AIUpdate();
+            }
+            
+            // Update Waypoint movement if a target is specified
+            waypointUpdate();
+        }
+
+        /// <summary>
+        /// Function to update the waypoint movement based on Dijkstra's Algorithm
+        /// </summary>
+        internal void waypointUpdate()
+        {
+            // If we still have some place to go...
+            if (FinalTargetWaypoint != null)
+            {
+                // Update the next waypoint to go to
+                currentTargetWaypoint = WaypointMap.GetNearestWaypointToGoTo(currentWaypoint, FinalTargetWaypoint);
+
+                // Check if we have reached the Waypoint
+                if (reachedWaypoint(currentTargetWaypoint))
+                {
+                    // Get direction to the target
+                    Vector2 dir = currentTargetWaypoint.transform.position - transform.position;
+                    dir.Normalize();
+
+                    // Head to the target
+                    transform.position += (Vector3)dir * 500.0f * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+                }
+                else
+                {
+                    // Update the current Waypoint
+                    currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);
+
+                    // If there is no more path, we stop deciding to go there
+                    if (currentTargetWaypoint == null)
+                    {
+                        FinalTargetWaypoint = null;
+                    }
+                }
             }
         }
 
@@ -52,7 +99,10 @@ namespace Enemy
             // changeCurrentState(new IdleState());
         }
 
-        // Function to change the state of this Enemy
+        /// <summary>
+        /// Function to change the state of this Enemy
+        /// </summary>
+        /// <param name="state"></param>
         internal void changeCurrentState(FSMState state)
         {
             currentState.AIExit();
@@ -60,7 +110,11 @@ namespace Enemy
             currentState.AIInit(this);
         }
 
-        // Function to move to a location. Takes delta time and speed into consideration.
+
+        /// <summary>
+        /// Function to move to a location. Takes delta time and speed into consideration. 
+        /// </summary>
+        /// <param name="pos">The location to move to.</param>
         internal void moveTo(Vector2 pos)
         {
             // Calculate the direction to this position
@@ -78,6 +132,20 @@ namespace Enemy
                 // Move there
                 transform.Translate(movement);
             }
+        }
+
+        /// <summary>
+        /// Function to check if the Enemy has reached a particular Waypoint
+        /// </summary>
+        /// <param name="w">The Waypoint to check with.</param>
+        /// <returns>If Enemy has reached Waypoint w</returns>
+        internal bool reachedWaypoint(Waypoint w)
+        {
+            // Determine the distance
+            float distToTargetSquared = (transform.position - w.transform.position).sqrMagnitude;
+
+            // Check if we have reached the Waypoint
+            return distToTargetSquared > DISTANCE_CHECK_ACCURARCY * DISTANCE_CHECK_ACCURARCY;
         }
     }
 }

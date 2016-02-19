@@ -2,12 +2,14 @@
 
 public class RPGPlayer : MonoBehaviour
 {
-    Inventory inventory = new Inventory();
+    Inventory inventory;
     public float Acceleration = 3500.0f;
     public float Deceleration = 3000.0f;
     public float MaxSpeed = 500.0f;
     [Tooltip("The maximum health of the character.")]
     public int MaxHealth = 100;
+    [Tooltip("The rotation offset from the original sprite direction to get the sprite to face right. This is used for calculating the correct direction of the player sprite.")]
+    public float RotationSpriteOffset = -90.0f;
 
     // Player Attributes
     private int health;
@@ -38,9 +40,6 @@ public class RPGPlayer : MonoBehaviour
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
 
-    // Boolean to control objective
-    private bool ObjectiveStarted = false;
-
     // Getters
     public int Health { get { return health; } }
     public Weapon CurrentWeapon { get { return currentWeapon; } }
@@ -55,6 +54,7 @@ public class RPGPlayer : MonoBehaviour
         
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        inventory = GetComponent<Inventory>();
     }
 
     // Update is called once per frame
@@ -66,9 +66,12 @@ public class RPGPlayer : MonoBehaviour
         // Update the direction of the player
         if (rigidBody.velocity != Vector2.zero)
         {
+            // Get the directional unit vector
             previousDir = rigidBody.velocity.normalized;
-            transform.localEulerAngles = new Vector3(0.0f, 0.0f, Vector2.Angle(Vector2.up, previousDir));
-            //Debug.Log(previousDir);
+            // Calculate the angle using Atan2 and add RotationSpriteOffset due to realign with original sprite direction
+            float angle = Mathf.Atan2(previousDir.y, previousDir.x) * Mathf.Rad2Deg + RotationSpriteOffset;
+            // Set the rotation according to a calculation based on the angle
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
 

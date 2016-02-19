@@ -30,7 +30,7 @@ public class Waypoint : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         // Hide the sprite rendering if we are going to play
-#if !WAYPOINT_DEBUG
+#if  !WAYPOINT_DEBUG
         spriteRenderer.enabled = false;
 #endif
     }
@@ -74,6 +74,11 @@ public class Waypoint : MonoBehaviour
         neighbours = list.ToList();
     }
 
+    /// <summary>
+    /// Get the neighbours within the range of NEIGHBOURING_DIST in a list of allWaypoints
+    /// </summary>
+    /// <param name="allWaypoints">List of all the waypoints in the scene.</param>
+    /// <returns>List of all waypoints withint he range of NEIGHBOURING_DIST</returns>
     public List<Waypoint> GetDistanceNeighbours(List<Waypoint> allWaypoints)
     {
         // Look for distance-neighbours
@@ -91,6 +96,46 @@ public class Waypoint : MonoBehaviour
         {
             return null;
         }
+    }
+
+    /// <summary>
+    /// Function to go through all neighbour waypoints and return a reference to the nearest waypoint
+    /// </summary>
+    /// <param name="exceptions">The list of Waypoints you wish to exclude from checking.</param>
+    /// <returns>The waypoint that is the nearest to this waypoint.</returns>
+    public Waypoint GetNearestNeighbour(List<Waypoint> exceptions = null)
+    {
+        Waypoint nearestWaypoint = null;
+        float nearestDist = float.MaxValue;
+
+        foreach (Waypoint w in neighbours)
+        {
+            // Check for exceptions if exceptions are provided
+            if (exceptions != null)
+            {
+                // Check if this waypoint is supposed to be exempted
+                foreach (Waypoint exception in exceptions)
+                {
+                    // If this is an exception, skip to the next one
+                    if (w == exception)
+                    {
+                        continue;
+                    }
+                }
+            }
+
+            // Calculate the distance to the waypoint
+            float dist = (w.transform.position - transform.position).sqrMagnitude;
+
+            // Check if this is lower than the previous nearest
+            if (nearestWaypoint == null || dist < nearestDist)
+            {
+                nearestWaypoint = w;
+                nearestDist = (w.transform.position - transform.position).sqrMagnitude;
+            }
+        }
+
+        return nearestWaypoint;
     }
 
     /// <summary>
@@ -134,25 +179,35 @@ public class Waypoint : MonoBehaviour
     /// </summary>
     public static bool HaveLineOfSight(Waypoint w1, Waypoint w2, float lineOfSightWidth)
     {
-        // Store the enabled status of the collider
-        bool colliderEnabled = false;
-
-        // Disable the origin object's collider so that the raycast dosesn't hit the origin object
-        if (w1.collider)
+        // Do not check against self
+        if (w1 == w2)
         {
-            // Save the collider state for restoration later
-            colliderEnabled = w1.collider.enabled;
-            // Disable the collider for ray casting
-            w1.collider.enabled = false;
+            return false;
         }
 
+        // Store the enabled status of the collider
+        bool colliderEnabled = false;
+        Collider2D w1Collider = w1.GetComponent<Collider2D>();
+
+        // Disable the origin object's collider so that the raycast dosesn't hit the origin object
+        if (w1Collider != null)
+        {
+            // Save the collider state for restoration later
+            colliderEnabled = w1Collider.enabled;
+            // Disable the collider for ray casting
+            w1Collider.enabled = false;
+        }
+
+        // Define the LayerMask for Circle Cast checking to only check Waypoint and Environment masks
+        int layerMask = (1 << LayerMask.NameToLayer("Waypoint")) | (1 << LayerMask.NameToLayer("Environment"));
+
         // Circle Cast check for Line of Sight
-        RaycastHit2D castInfo = Physics2D.CircleCast(w1.transform.position, lineOfSightWidth, GetDirection(w1, w2), NEIGHBOURING_DIST);
+        RaycastHit2D castInfo = Physics2D.CircleCast(w1.transform.position, lineOfSightWidth, GetDirection(w1, w2), NEIGHBOURING_DIST, layerMask);
 
         // Reset the origin object's collider back to original
-        if (w1.collider)
+        if (w1Collider)
         {
-            w1.collider.enabled = colliderEnabled;
+            w1Collider.enabled = colliderEnabled;
         }
 
 #if RAYCAST_DEBUG

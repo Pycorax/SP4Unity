@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Collections;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using UnityEngine;
 
 /**********
 Multi-layer tile system
@@ -542,6 +542,9 @@ public class TileMap : MonoBehaviour
                     enemy.SetActive(true);
                     enemy.GetComponent<Enemy.Enemy>().Init(enemyPos);// = pos + new Vector3(size.x, -size.y);
                     enemy.transform.localScale = enemySize;
+                    // Assign waypoint map to enemy
+                    WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
+                    enemy.GetComponent<Enemy.Enemy>().WaypointMap = refWaypointManager;
                     enemyList.Add(enemy);
 
                     // Create floor tile
