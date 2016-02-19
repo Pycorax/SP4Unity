@@ -10,6 +10,8 @@ public class Tile : MonoBehaviour
 		TILE_LAYER,     // Layer tile test
         TILE_ENEMY,     // Tile that spawns an enemy
         TILE_WAYPOINT,  // Enemy's waypoint
+        TILE_FIRST_PLAYER, // First player
+        TILE_SECOND_PLAYER, // Second player
 
 		NUM_TILE,       // Total number of tiles
 	};
