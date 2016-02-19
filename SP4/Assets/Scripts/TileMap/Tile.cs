@@ -9,7 +9,7 @@ public class Tile : MonoBehaviour
 		TILE_FLOOR,     // Floor tile
 		TILE_LAYER,     // Layer tile test
 
-        // Entities
+        // Entities (Tiles not on tile sheet)
         TILE_ENEMY,     // Tile that spawns an enemy
         TILE_WAYPOINT,  // Enemy's waypoint
         TILE_FIRST_PLAYER, // First player
@@ -18,7 +18,10 @@ public class Tile : MonoBehaviour
 		NUM_TILE,       // Total number of tiles
 	};
 
-	public TILE_TYPE Type = TILE_TYPE.TILE_EMPTY;
+    [Tooltip("Type of tile.")]
+    public TILE_TYPE Type = TILE_TYPE.TILE_EMPTY;
+    [Tooltip("Scale ratio according to tile size from Tile Map.")]
+    public float ScaleRatio = 1.0f;
 
 	// Use this for initialization
 	void Start () {
