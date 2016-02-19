@@ -5,6 +5,7 @@ public class ObjectiveManager : MonoBehaviour
 {
 
     public Objectives[] objectives;
+    public GameManager manager;
 
     void Start()
     {
@@ -15,12 +16,14 @@ public class ObjectiveManager : MonoBehaviour
     {
         foreach (var objective in objectives)
         {
-            if (objective.IsAchieved())
+            if (manager.LevelEnded == true)
             {
-                objective.Complete();
-                Destroy(objective);
+                if (objective.IsAchieved())
+                {
+                    objective.Complete();
+                    Destroy(objective);
+                }
             }
         }
     }
-
 }

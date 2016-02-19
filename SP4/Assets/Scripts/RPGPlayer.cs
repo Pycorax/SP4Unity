@@ -2,7 +2,7 @@
 
 public class RPGPlayer : MonoBehaviour
 {
-    Inventory inventory = new Inventory();
+    Inventory inventory;
     public float Acceleration = 3500.0f;
     public float Deceleration = 3000.0f;
     public float MaxSpeed = 500.0f;
@@ -38,9 +38,6 @@ public class RPGPlayer : MonoBehaviour
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
 
-    // Boolean to control objective
-    private bool ObjectiveStarted = false;
-
     // Getters
     public int Health { get { return health; } }
     public Weapon CurrentWeapon { get { return currentWeapon; } }
@@ -50,6 +47,7 @@ public class RPGPlayer : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        inventory = GetComponent<Inventory>();
     }
 
     // Update is called once per frame
