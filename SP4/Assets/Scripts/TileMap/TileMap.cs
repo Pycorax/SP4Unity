@@ -527,7 +527,13 @@ public class TileMap : MonoBehaviour
 
 	private GameObject createTile(Tile.TILE_TYPE type, Vector3 pos, Vector3 size)
 	{
+        if (!TileBlueprints[(int)type])
+        {
+            return null;
+        }
+
         GameObject tile = null;
+
 		switch (type)
 		{
             // TODO: Add special case for tile creation like enemy
