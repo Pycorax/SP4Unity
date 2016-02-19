@@ -179,16 +179,23 @@ public class Waypoint : MonoBehaviour
     /// </summary>
     public static bool HaveLineOfSight(Waypoint w1, Waypoint w2, float lineOfSightWidth)
     {
+        // Do not check against self
+        if (w1 == w2)
+        {
+            return false;
+        }
+
         // Store the enabled status of the collider
         bool colliderEnabled = false;
+        Collider2D w1Collider = w1.GetComponent<Collider2D>();
 
         // Disable the origin object's collider so that the raycast dosesn't hit the origin object
-        if (w1.collider)
+        if (w1Collider != null)
         {
             // Save the collider state for restoration later
-            colliderEnabled = w1.collider.enabled;
+            colliderEnabled = w1Collider.enabled;
             // Disable the collider for ray casting
-            w1.collider.enabled = false;
+            w1Collider.enabled = false;
         }
 
         // Define the LayerMask for Circle Cast checking to only check Waypoint and Environment masks
@@ -198,9 +205,9 @@ public class Waypoint : MonoBehaviour
         RaycastHit2D castInfo = Physics2D.CircleCast(w1.transform.position, lineOfSightWidth, GetDirection(w1, w2), NEIGHBOURING_DIST, layerMask);
 
         // Reset the origin object's collider back to original
-        if (w1.collider)
+        if (w1Collider)
         {
-            w1.collider.enabled = colliderEnabled;
+            w1Collider.enabled = colliderEnabled;
         }
 
 #if RAYCAST_DEBUG
