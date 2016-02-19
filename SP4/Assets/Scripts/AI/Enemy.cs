@@ -6,9 +6,11 @@ namespace Enemy
     public class Enemy : MonoBehaviour
     {
         [Tooltip("Parent GameObject that holds children GameObjects that act as waypoints on the level.")]
-        public GameObject WaypointContainer;
+        public WaypointManager WaypointMap;
         [Tooltip("A list of references to the players in the game.")]
         public List<GameObject> PlayerList;
+        
+        public Waypoint FinalTargetWaypoint;
 
         // Health
         public int MaxHealth = 100;
@@ -18,8 +20,10 @@ namespace Enemy
         public float Speed = 200.0f;
 
         // AI
-        FSMState currentState;                      // Stores the current game state
-        Waypoint currentTargetWaypoint;             // Stores a reference to the current target waypoint
+        FSMState currentState;                                      // Stores the current game state
+        Waypoint currentWaypoint;
+        Waypoint currentTargetWaypoint;                             // Stores a reference to the current target waypoint
+        private const float DISTANCE_CHECK_ACCURARCY = 10.0f;       // Used to do "reached position" checking
 
         // Getters
         public int Health { get { return health; } }
@@ -28,14 +32,46 @@ namespace Enemy
         void Start()
         {
             health = MaxHealth;
+
+            // Get the nearest waypoint and head to it
+            currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);
+            currentTargetWaypoint = WaypointMap.GetNearestWaypointToGoTo(currentWaypoint, FinalTargetWaypoint);
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (currentState != null)
+            // If we have not reached the next Waypoint...
+            if (FinalTargetWaypoint != null)
             {
-                currentState.AIUpdate();
+                // Update the next waypoint to go to, TODO: Optimize
+                currentTargetWaypoint = WaypointMap.GetNearestWaypointToGoTo(currentWaypoint, FinalTargetWaypoint);
+                // Determine the distance
+                float distToTargetSquared = (transform.position - currentTargetWaypoint.transform.position).sqrMagnitude;
+
+                // Check if we have reached the Waypoint
+                if (distToTargetSquared > DISTANCE_CHECK_ACCURARCY * DISTANCE_CHECK_ACCURARCY)
+                {
+                    // Get direction to the target
+                    Vector2 dir = currentTargetWaypoint.transform.position - transform.position;
+                    dir.Normalize();
+
+                    // Head to the target
+                    transform.position += (Vector3)dir * 500.0f * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+                }
+                else
+                {
+                    // Update the current Waypoint
+                    currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);
+                    // If we reached, decide the next point
+                    currentTargetWaypoint = WaypointMap.GetNearestWaypointToGoTo(currentWaypoint, FinalTargetWaypoint);
+
+                    // If there is no more path, we stop deciding to go there
+                    if (currentTargetWaypoint == null)
+                    {
+                        FinalTargetWaypoint = null;
+                    }
+                }
             }
         }
 
