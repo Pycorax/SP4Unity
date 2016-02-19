@@ -27,6 +27,7 @@ namespace Enemy
 
         // Getters
         public int Health { get { return health; } }
+        internal Waypoint CurrentWaypoint { get { return currentWaypoint; } }
 
         // Use this for initialization
         void Start()
@@ -36,6 +37,9 @@ namespace Enemy
 
             // Set the Waypoint that we are nearest to right now
             currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);
+
+            // Set the default state
+            changeCurrentState(new ChaseState());
         }
 
         // Update is called once per frame
@@ -44,7 +48,7 @@ namespace Enemy
             // Update the FSM
             if (currentState != null)
             {
-                currentState.AIUpdate();
+                currentState.Update();
             }
             
             // Update Waypoint movement if a target is specified
@@ -105,9 +109,14 @@ namespace Enemy
         /// <param name="state"></param>
         internal void changeCurrentState(FSMState state)
         {
-            currentState.AIExit();
+            // If there was a previous state, clear it
+            if (currentState != null)
+            {
+                currentState.Exit();
+            }
+
             currentState = state;
-            currentState.AIInit(this);
+            currentState.Init(this);
         }
 
 

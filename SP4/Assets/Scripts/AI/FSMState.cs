@@ -1,35 +1,22 @@
-﻿using UnityEngine;
-
-namespace Enemy
+﻿namespace Enemy
 {
-    public abstract class FSMState : MonoBehaviour
+    public abstract class FSMState
     {
         // Reference to the enemy that this state controls
         protected Enemy parent;
-        
-        // Use this for initialization
-        protected virtual void Start()
-        {
 
-        }
-
-        // Update is called once per frame
-        protected virtual void Update()
-        {
-        }
-
-        public void AIInit(Enemy _parent)
+        public void Init(Enemy _parent)
         {
             parent = _parent;
             init();
         }
 
-        public void AIUpdate()
+        public void Update()
         {
             update();
         }
 
-        public void AIExit()
+        public void Exit()
         {
             exit();
         }

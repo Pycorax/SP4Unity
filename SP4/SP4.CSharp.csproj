@@ -90,8 +90,10 @@
     <Compile Include="Assets\Scripts\Items\Weapons\Wand.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\Weapon.cs" />
     <Compile Include="Assets\Scripts\MultiPlayerCamera.cs" />
+    <Compile Include="Assets\Scripts\Objective\No_Dmg_Taken.cs" />
     <Compile Include="Assets\Scripts\Objective\ObjectiveManager.cs" />
     <Compile Include="Assets\Scripts\Objective\Objectives.cs" />
+    <Compile Include="Assets\Scripts\ProjectileManager.cs" />
     <Compile Include="Assets\Scripts\RPGPlayer.cs" />
     <Compile Include="Assets\Scripts\SceneManager.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
