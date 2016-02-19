@@ -7,9 +7,6 @@ public class Tile : MonoBehaviour
     {
         TILE_EMPTY = 0, // Empty tile
 
-        // Temp
-        TILE_FLOOR,
-
         // Chair 1
         TILE_CHAIR_1_RIGHT,
         TILE_CHAIR_1_UP,
