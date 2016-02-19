@@ -162,7 +162,7 @@ public class MultiPlayerCamera : MonoBehaviour
         pos = Bounds[(int)BOUNDS_TYPE.BOUNDS_LEFT].transform.position;
         scale = Bounds[(int)BOUNDS_TYPE.BOUNDS_LEFT].transform.localScale;
         pos.x = LeftBound;
-        scale.y = ScreenData.GetScreenSize().y * 0.5f;
+        scale.y = ScreenData.GetScreenSize().y;
         Bounds[(int)BOUNDS_TYPE.BOUNDS_LEFT].transform.position = pos;
         Bounds[(int)BOUNDS_TYPE.BOUNDS_LEFT].transform.localScale = scale;
 
@@ -170,7 +170,7 @@ public class MultiPlayerCamera : MonoBehaviour
         pos = Bounds[(int)BOUNDS_TYPE.BOUNDS_RIGHT].transform.position;
         scale = Bounds[(int)BOUNDS_TYPE.BOUNDS_RIGHT].transform.localScale;
         pos.x = RightBound;
-        scale.y = ScreenData.GetScreenSize().y * 0.5f;
+        scale.y = ScreenData.GetScreenSize().y;
         Bounds[(int)BOUNDS_TYPE.BOUNDS_RIGHT].transform.position = pos;
         Bounds[(int)BOUNDS_TYPE.BOUNDS_RIGHT].transform.localScale = scale;
     }

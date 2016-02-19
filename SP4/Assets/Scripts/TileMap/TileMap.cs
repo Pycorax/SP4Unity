@@ -527,7 +527,13 @@ public class TileMap : MonoBehaviour
 
 	private GameObject createTile(Tile.TILE_TYPE type, Vector3 pos, Vector3 size)
 	{
+        if (!TileBlueprints[(int)type])
+        {
+            return null;
+        }
+
         GameObject tile = null;
+
 		switch (type)
 		{
             // TODO: Add special case for tile creation like enemy
@@ -548,7 +554,7 @@ public class TileMap : MonoBehaviour
                     enemyList.Add(enemy);
 
                     // Create floor tile
-                    tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR]);
+                    tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);
                     // Set data for each tile
                     tile.SetActive(false);
                     tile.transform.position = pos;
@@ -572,7 +578,7 @@ public class TileMap : MonoBehaviour
                     }
 
                     // Create floor tile
-                    tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR]);
+                    tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);
                     // Set data for each tile
                     tile.SetActive(false);
                     tile.transform.position = pos;
@@ -593,7 +599,7 @@ public class TileMap : MonoBehaviour
                     Camera.main.gameObject.GetComponent<MultiPlayerCamera>().PlayerList.Add(player);
 
                     // Create floor tile
-                    tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR]);
+                    tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);
                     // Set data for each tile
                     tile.SetActive(false);
                     tile.transform.position = pos;

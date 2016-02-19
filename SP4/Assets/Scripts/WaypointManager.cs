@@ -6,7 +6,7 @@ using UnityEngine;
 public class WaypointManager : MonoBehaviour
 {
     [Tooltip("The radius that the ray trace will be using. Specify the enemy size as this will be used for enemy path finding.")]
-    public float WaypointRayTraceRadius = 50.0f;
+    public float WaypointRadius = 50.0f;
     [Tooltip("Set to true if you want to initialize immediately on start up. If not, you will need to call SyncWaypoints() manually.")]
     public bool SyncOnStartUp = true;
     [Tooltip("Design and debugging tool. When enabled, waypoint neighbours will be recalculated every frame and the connections will be rendered.")]
@@ -37,7 +37,7 @@ public class WaypointManager : MonoBehaviour
             foreach (Waypoint w in waypointList)
             {
                 // Recalculate all connections
-                //w.SetUpConnections(waypointList, WaypointRayTraceRadius);
+                w.SetUpConnections(waypointList, WaypointRadius);
 
                 // Draw the connections
                 foreach (Waypoint neighbour in w.Neighbours)
@@ -69,7 +69,23 @@ public class WaypointManager : MonoBehaviour
         foreach (Waypoint w in listOfWaypoints)
         {
             // Recalculate all connections
-            w.SetUpConnections(listOfWaypoints, WaypointRayTraceRadius);
+            w.SetUpConnections(listOfWaypoints, WaypointRadius);
+
+            // Set the size of each Waypoint to the WaypointRayTraceRadius
+            w.transform.localScale = new Vector3(WaypointRadius * 2.0f, WaypointRadius * 2.0f, WaypointRadius * 2.0f);
+
+            // Set colour according to number of associations
+            if (w.Neighbours.Count > 0)
+            {
+                Gizmos.color = Color.yellow;
+            }
+            else
+            {
+                Gizmos.color = Color.red;
+            }
+
+            // Draw a sphere to show the waypoint position
+            Gizmos.DrawWireSphere(w.transform.position, WaypointRadius);
         }
 
         foreach (Waypoint w in listOfWaypoints)
@@ -77,8 +93,18 @@ public class WaypointManager : MonoBehaviour
             // Draw the connections
             foreach (Waypoint neighbour in w.Neighbours)
             {
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawLine(w.transform.position, neighbour.transform.position);
+                // Calculate the direction perpendicular to the direction of the neighbour
+                Vector2 dir = w.transform.position - neighbour.transform.position;
+                if (dir != Vector2.zero)
+                {
+                    dir.Normalize();
+                }
+                Vector2 right = new Vector2(dir.y, dir.x);
+
+                // Draw the radius lines
+                Gizmos.color = Color.white;
+                Gizmos.DrawLine(w.transform.position + (Vector3)right * WaypointRadius, neighbour.transform.position + (Vector3)right * WaypointRadius);
+                Gizmos.DrawLine(w.transform.position - (Vector3)right * WaypointRadius, neighbour.transform.position - (Vector3)right * WaypointRadius);
             }
         }
     }
@@ -121,7 +147,7 @@ public class WaypointManager : MonoBehaviour
         // Initialize all the waypoints with that list
         foreach (Waypoint w in waypointList)
         {
-            w.SetUpConnections(waypointList, WaypointRayTraceRadius);
+            w.SetUpConnections(waypointList, WaypointRadius);
         }
     }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Enemy
 {
@@ -7,12 +6,12 @@ namespace Enemy
     {
         protected override void exit()
         {
-            throw new NotImplementedException();
+            
         }
 
         protected override void init()
         {
-            throw new NotImplementedException();
+            
         }
 
         protected override void update()
@@ -34,7 +33,19 @@ namespace Enemy
             // Have we found one nearby?
             if (playerToChase != null)
             {
-                parent.moveTo(playerToChase.transform.position);
+                // Determine which waypoint the player is at
+                Waypoint playerWaypoint = parent.WaypointMap.FindNearestWaypoint(playerToChase.transform.position);
+                // If we are near the same waypoint
+                if (playerWaypoint == parent.CurrentWaypoint)
+                {
+                    // Just go after him
+                    parent.moveTo(playerToChase.transform.position);
+                } 
+                else
+                {
+                    // Go towards the player
+                    parent.FinalTargetWaypoint = parent.WaypointMap.GetNearestWaypointToGoTo(parent.CurrentWaypoint, playerWaypoint);
+                }
             }
         }
     }
