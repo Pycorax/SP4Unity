@@ -7,13 +7,13 @@ public class EmpoweredArrow : Projectile {
     public int explodeRadius = 2;
 
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
         pName = "Explosive Arcane Arrow";
         pDamage = 8;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 	
 	}
 

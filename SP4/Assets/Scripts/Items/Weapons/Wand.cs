@@ -7,7 +7,7 @@ public class Wand : Weapon {
 
     public Lightning lightning;
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
         Name = "Wand";
         Damage = 3;
 
@@ -20,7 +20,7 @@ public class Wand : Weapon {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 	
 	}
 

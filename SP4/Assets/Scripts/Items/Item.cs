@@ -7,7 +7,7 @@ public abstract class Item : MonoBehaviour {
 
     public string Name { get { return ItemName; } set { ItemName = value; } }
 
-    public Animation animation;
+    public Animation anim;
     public Rigidbody2D rigidBody;
     public Collision2D collision2D;
     //public Collider2D collider2D;

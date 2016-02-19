@@ -2,9 +2,10 @@
 using System.Collections;
 
 public class Arrow : Projectile {
-    
+
+
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
         pName = "Arrow";
         pDamage = 5;
         //Tiles/sec?
@@ -13,7 +14,7 @@ public class Arrow : Projectile {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 	
 	}
 

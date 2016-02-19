@@ -3,9 +3,7 @@ using System.Collections;
 
 public class No_Dmg_Taken : Objectives
 {
-
     RPGPlayer player;
-    private int health;
 
     public override bool IsAchieved()
     {
@@ -14,6 +12,6 @@ public class No_Dmg_Taken : Objectives
 
     public override void Complete()
     {
-        
+
     }
 }

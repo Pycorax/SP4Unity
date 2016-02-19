@@ -4,14 +4,14 @@ using System.Collections;
 public class FlyingSword : Projectile {
 
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
         pName = "Flying Sword";
         pDamage = 10;
         //Load Animation
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 	
 	}
 
