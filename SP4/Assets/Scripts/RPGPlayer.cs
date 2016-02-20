@@ -13,6 +13,7 @@ public class RPGPlayer : MonoBehaviour
 
     // Player Attributes
     private int health;
+    private int enemyKilled;
 
     // Weapons
     public Weapon LeftWeapon;
@@ -43,6 +44,7 @@ public class RPGPlayer : MonoBehaviour
     // Getters
     public int Health { get { return health; } }
     public Weapon CurrentWeapon { get { return currentWeapon; } }
+    public int EnemyKilled { get { return enemyKilled; } }
 
 
     //Projectile Controller
