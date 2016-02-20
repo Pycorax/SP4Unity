@@ -16,9 +16,19 @@ namespace HighScoreServer.Controllers
             return View();
         }
 
+        public IActionResult Error()
+        {
+            return View();
+        }
+
         public int Echo(int id)
         {
             return id;
+        }
+
+        public void ForceError()
+        {
+            throw new Exception("Error!");
         }
     }
 }

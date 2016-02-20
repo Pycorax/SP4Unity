@@ -6,6 +6,8 @@ using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace HighScoreServer
 {
@@ -22,6 +24,17 @@ namespace HighScoreServer
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
+#if DEBUG
+            // Register the Microsoft default Error Handler
+            app.UseDeveloperExceptionPage();
+
+            // Register the ASP.NET Runtime Info Page
+            app.UseRuntimeInfoPage();
+#else
+            // Use a custom user-friendly error page if not
+            app.UseExceptionHandler("/Home/Error");
+#endif
+
             // Register MVC Middleware AND specify the routing format
             app.UseMvc(routes => routes.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}"));
 
