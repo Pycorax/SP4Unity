@@ -1,0 +1,27 @@
+﻿@model HighScoreServer.Models.ScoreEntry
+@{ 
+    Layout = "_Layout";
+}
+
+<h2>Post Score</h2>
+Fill in the form below to submit your score to the score board.
+<br/><br/>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary()
+
+    <!--Name-->
+    @Html.LabelFor(x => x.Name)
+    @Html.EditorFor(x => x.Name)
+    @Html.ValidationMessageFor(x => x.Name)
+    <br/>
+    <!--Score-->
+    @Html.LabelFor(x => x.Score)
+    @Html.EditorFor(x => x.Score)
+    @Html.ValidationMessageFor(x => x.Score)
+    <br/><br/>
+
+    <!--Submit Button-->
+    <button type="submit">Submit Score</button>
+}
