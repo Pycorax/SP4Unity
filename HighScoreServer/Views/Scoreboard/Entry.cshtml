@@ -1,0 +1,15 @@
+﻿@model HighScoreServer.Models.ScoreEntry
+@{ 
+    Layout = "_Layout";
+}
+
+<h2>Score</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Score</th>
+    </tr>
+    @Html.Partial("_Entry")
+</table>
