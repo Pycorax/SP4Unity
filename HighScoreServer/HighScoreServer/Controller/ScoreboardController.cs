@@ -11,6 +11,14 @@ namespace HighScoreServer.Controllers
 {
     public class ScoreboardController : Controller
     {
+        private readonly ScoreDataContext database;
+
+        public ScoreboardController(ScoreDataContext context)
+        {
+            // Save reference to the database
+            database = context;
+        }
+
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -33,9 +41,8 @@ namespace HighScoreServer.Controllers
             }
 
             // Save the entry asynchronously
-            var db = new ScoreDataContext();
-            db.Add(entry);
-            await db.SaveChangesAsync();
+            database.Add(entry);
+            await database.SaveChangesAsync();
 
             // Redirect to the Entry Action with an Anonymous Parameter that Entry() needs
             return RedirectToAction("Entry", new { id = entry.Id });
@@ -43,11 +50,8 @@ namespace HighScoreServer.Controllers
 
         public IActionResult Entry(int id)
         {
-            // Look in the Database
-            var db = new ScoreDataContext();
-
             // Retrieve the score entry using the ID (via LINQ lambda syntax)
-            ScoreEntry score = db.Entries.SingleOrDefault(x => id == x.Id);
+            ScoreEntry score = database.Entries.SingleOrDefault(x => id == x.Id);
 
             return View(score);
         }
