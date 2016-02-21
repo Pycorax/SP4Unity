@@ -52,9 +52,6 @@ namespace HighScoreServer
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
-            // Obtain User Secret
-            // var password = config.Get<string>("password");
-
             // Use different settings depending on debug or production builds
             if (config.Get<bool>("debug"))
             {
@@ -75,11 +72,6 @@ namespace HighScoreServer
 
             // Register the File Server Middleware
             app.UseFileServer();
-
-            //app.Run(async (context) =>
-            //{
-            //    await context.Response.WriteAsync("Hello World!");
-            //});
         }
 
         // Entry point for the application.

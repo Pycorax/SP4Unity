@@ -13,7 +13,7 @@ namespace HighScoreServer.Controllers
     {
         private readonly ScoreDataContext database;
 
-        public AdminController(HighScoreServer.Models.ScoreDataContext context)
+        public AdminController(ScoreDataContext context)
         {
             database = context;
         }
@@ -21,7 +21,10 @@ namespace HighScoreServer.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View();
+            ScoreConfig c = new ScoreConfig();
+            c.MaxScores = database.MaxHighScores;
+
+            return View("Index", c);
         }
 
         [HttpPost]
@@ -29,7 +32,7 @@ namespace HighScoreServer.Controllers
         {
             database.SetMaxScores(config.MaxScores);
 
-            return View();
+            return RedirectToRoute(new { controller = "Home", action = "Index" });
         }
     }
 }

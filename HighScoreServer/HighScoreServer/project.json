@@ -31,9 +31,14 @@
     "wwwroot",
     "node_modules"
   ],
+
   "publishExclude": [
+    "node_modules",
+    "**.xproj",
     "**.user",
-    "**.vspscc"
+    "**.vspscc",
+    "**.dev.**"
   ],
+
   "userSecretsId": "aspnet5-HighScoreServer-20160221125144"
 }

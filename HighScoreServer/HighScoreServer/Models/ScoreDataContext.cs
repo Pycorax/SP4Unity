@@ -9,7 +9,7 @@ namespace HighScoreServer.Models
     public class ScoreDataContext : DbContext
     {
         // Controls the amount of high scores the server can store
-        private int maxHighScores = 10;
+        private static int maxHighScores = 10;
         
         public DbSet<ScoreEntry> Entries { get; set; }
         private List<ScoreEntry> orderedEntries;
@@ -26,6 +26,7 @@ namespace HighScoreServer.Models
                 return orderedEntries;
             }
         }
+        public int MaxHighScores { get { return maxHighScores; } }
 
         public ScoreDataContext()
         {
