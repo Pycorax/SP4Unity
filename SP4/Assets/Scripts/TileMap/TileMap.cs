@@ -66,6 +66,15 @@ public class TileMap : MonoBehaviour
 		TILE_BOTTOM_LEFT,  
 	};
 
+    [Tooltip("Tile Set.")]
+    public GameObject TileSet;
+
+    [Tooltip("Player 1 reference.")]
+    public GameObject RefPlayer1;
+
+    [Tooltip("Player 2 reference.")]
+    public GameObject RefPlayer2;
+
     [Tooltip("Tiles blueprint for instantiating.")]
 	public GameObject[] TileBlueprints = new GameObject[(int)Tile.TILE_TYPE.NUM_TILE];
 	[Tooltip("Default tile if no tile is specified.")]
@@ -104,6 +113,13 @@ public class TileMap : MonoBehaviour
 	// Use this for initialization
 	void Awake ()
 	{
+        // Assign tiles blueprint from tile set
+        Tile[] blueprints = TileSet.GetComponentsInChildren<Tile>(true);
+        for (int index = 0; index < blueprints.Count(); ++index)
+        {
+            TileBlueprints[index] = blueprints[index].gameObject;
+        }
+
 		if (Name != "")
 		{
 			loadFile();
@@ -527,7 +543,7 @@ public class TileMap : MonoBehaviour
 
 	private GameObject createTile(Tile.TILE_TYPE type, Vector3 pos, Vector3 size)
 	{
-        if (!TileBlueprints[(int)type])
+        if (!TileBlueprints[(int)type] && type != Tile.TILE_TYPE.TILE_FIRST_PLAYER && type !=  Tile.TILE_TYPE.TILE_SECOND_PLAYER)
         {
             return null;
         }
@@ -587,16 +603,29 @@ public class TileMap : MonoBehaviour
                 }
                 break;
             case Tile.TILE_TYPE.TILE_FIRST_PLAYER:
-            case Tile.TILE_TYPE.TILE_SECOND_PLAYER:
                 {
-                    // Create player
-                    GameObject player = Instantiate(TileBlueprints[(int)type]);
                     Vector3 playerPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
                     Vector3 playerSize = size * 2.0f;
                     playerPos.z = 0.0f;
-                    player.transform.position = playerPos;
-                    player.transform.localScale = playerSize;
-                    Camera.main.gameObject.GetComponent<MultiPlayerCamera>().PlayerList.Add(player);
+                    RefPlayer1.transform.position = playerPos;
+                    RefPlayer1.transform.localScale = playerSize;
+
+                    // Create floor tile
+                    tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);
+                    // Set data for each tile
+                    tile.SetActive(false);
+                    tile.transform.position = pos;
+                    tile.transform.localScale = size;
+                    tile.transform.parent = this.transform;
+                }
+                break;
+            case Tile.TILE_TYPE.TILE_SECOND_PLAYER:
+                {
+                    Vector3 playerPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
+                    Vector3 playerSize = size * 2.0f;
+                    playerPos.z = 0.0f;
+                    RefPlayer2.transform.position = playerPos;
+                    RefPlayer2.transform.localScale = playerSize;
 
                     // Create floor tile
                     tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);

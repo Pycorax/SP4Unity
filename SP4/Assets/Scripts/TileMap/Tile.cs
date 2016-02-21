@@ -221,6 +221,8 @@ public class Tile : MonoBehaviour
         // Entities (Tiles not on tile sheet)
         TILE_ENEMY,     // Tile that spawns an enemy
         TILE_WAYPOINT,  // Enemy's waypoint
+
+        // Not in tile set (Always put at the back)
         TILE_FIRST_PLAYER, // First player
         TILE_SECOND_PLAYER, // Second player
 
