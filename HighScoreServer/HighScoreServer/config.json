@@ -1,8 +1,7 @@
 ﻿{
-  "Data": 
-  {
-    "HighScore": { "ConnectionString": "Server=(LocalDb)\\MSSQLLocalDb;Database=AspNetBlog_Identity" }
-  },
   "debug": false,
-  "RecreateDatabase": false
+  "InMemoryDB": true,
+  "Data": {
+    "HighScore": { "ConnectionString": "Server=(LocalDb)\\MSSQLLocalDb;Database=HighScoreDB" }
+  }
 }

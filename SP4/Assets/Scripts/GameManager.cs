@@ -10,8 +10,9 @@ public class GameManager : MonoBehaviour
     private bool objectiveStarted = false;
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start ()
+    {
+        HighScoreSystem.Instance.DownloadScores();
 	}
 	
 	// Update is called once per frame

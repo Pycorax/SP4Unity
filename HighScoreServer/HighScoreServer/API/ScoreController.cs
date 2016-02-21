@@ -21,9 +21,17 @@ namespace HighScoreServer.API
 
         // GET: api/values
         [HttpGet]
-        public IEnumerable<ScoreEntry> Get()
+        public string Get()
         {
-            return database.OrderedEntries.AsEnumerable();
+            string easyResult = "";
+
+            // Loop through each entry and produce an easy to process string
+            foreach (var e in database.OrderedEntries)
+            {
+                easyResult += e.Name + "-" + e.Score + ",";
+            }
+
+            return easyResult;
         }
 
         // GET api/values/5

@@ -1,8 +1,6 @@
 ﻿{
-  "Data": 
-  {
-    "HighScore": { "ConnectionString": "Server=(LocalDb)\\MSSQLLocalDb;Database=HighScoreDB" }
-  },
   "debug": true,
-  "RecreateDatabase": true
+  "Data": {
+    "HighScore":  { "ConnectionString": "Server=(LocalDb)\\MSSQLLocalDb;Database=HighScoreDB"}
+  }
 }
