@@ -395,10 +395,14 @@ public class RPGPlayer : MonoBehaviour
         {
             if (LeftWeapon != null)
             {
-                
-                currentWeapon = LeftWeapon;
+                if (LeftWeapon.FireRate == 0)
+                {
+                    Debug.Log("using Left Weapon");
+                    currentWeapon = LeftWeapon;
+                    //LeftWeapon.Use(previousDir);
+                }
             }
-            LeftWeapon.Use(previousDir);
+           
         }
 
         if (Input.GetKeyDown(RightAttackKey))
@@ -406,9 +410,13 @@ public class RPGPlayer : MonoBehaviour
             if (RightWeapon != null)
             {
                 // TODO: Right Attack
-                currentWeapon = RightWeapon;
+                if (RightWeapon.FireRate == 0)
+                {
+                    Debug.Log("using Right Weapon");
+                    currentWeapon = RightWeapon;
+                    //RightWeapon.Use(previousDir);
+                }
             }
-            RightWeapon.Use(previousDir);
         }
         else
         {

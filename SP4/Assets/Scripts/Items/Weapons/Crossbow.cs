@@ -5,8 +5,10 @@ using System.Collections;
 public class Crossbow : Weapon {
 
     public Sprite CrossbowSprite;
-    public Arrow arrow;
-    public EmpoweredArrow empoweredArrow;
+    public ProjectileManager PManager;
+    public GameObject projectile;
+
+    private float projectileSpeed;
 
 
     public LayerMask notToHit;
@@ -14,6 +16,11 @@ public class Crossbow : Weapon {
     float timeToFire = 0;
 
     Transform firePoint;
+
+    public float ProjectileSpeed { get { return projectileSpeed; } set { projectileSpeed = value; } }
+
+    public float projectileMaxSpeed = 5;
+
 	// Use this for initialization
     protected override void Start () {
         Name = "Crossbow";
@@ -24,6 +31,8 @@ public class Crossbow : Weapon {
 
         //1 per second
         FireRate = 0;
+
+        
 
         firePoint = transform.FindChild("FirePoint");
 
@@ -36,19 +45,32 @@ public class Crossbow : Weapon {
 	// Update is called once per frame
 	protected override void Update () {
         //Testing Shooting
-        if(FireRate == 0)
-        {
-            if(Input.GetKeyDown(KeyCode.Q))
-            {
-
-            }
-        }
+       
 	}
 
     public override void Use(Vector2 direction)
     {
         //Fire Projectile from projectile class
         //Play Firing Animation
-        arrow.MoveTowards(direction);
+        //arrow.MoveTowards(direction);
+        projectile = PManager.FetchArrow();
+
+        
+        
+    }
+
+    public void Shoot(Vector2 direction)
+    {
+        Debug.Log("Shooting");
+        // Ensure that the direction passed in is a direction
+        direction.Normalize();
+
+        // Calculate the new velocity
+        Vector2 newVelocity = direction * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+
+        // Clamp the velocity
+        newVelocity.x = Mathf.Clamp(newVelocity.x, 0, projectileMaxSpeed);
+
+        rigidBody.velocity = newVelocity;
     }
 }
