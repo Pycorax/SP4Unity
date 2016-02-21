@@ -72,5 +72,11 @@ public class Crossbow : Weapon {
         newVelocity.x = Mathf.Clamp(newVelocity.x, 0, projectileMaxSpeed);
 
         rigidBody.velocity = newVelocity;
+
+        Vector2 firePointPos = new Vector2(firePoint.position.x, firePoint.position.y);
+
+        RaycastHit2D hit = Physics2D.Raycast(firePointPos, direction, 100, notToHit);
+
+        Debug.DrawLine(firePointPos, direction * 100);
     }
 }
