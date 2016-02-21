@@ -99,7 +99,8 @@
     <Compile Include="Assets\Scripts\ProjectileManager.cs" />
     <Compile Include="Assets\Scripts\RPGPlayer.cs" />
     <Compile Include="Assets\Scripts\SceneManager.cs" />
-    <Compile Include="Assets\Scripts\Score\TestScoreWebAPI.cs" />
+    <Compile Include="Assets\Scripts\Score\HighScoreSystem.cs" />
+    <Compile Include="Assets\Scripts\Score\ScoreEntry.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\ScreenData.cs" />
     <Compile Include="Assets\Scripts\SoundManager.cs" />
