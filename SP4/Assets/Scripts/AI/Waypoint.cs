@@ -13,7 +13,6 @@ public class Waypoint : MonoBehaviour
 
     // Component
     private new Collider2D collider;
-    private SpriteRenderer spriteRenderer;
 
     // Getters
     public List<Waypoint> Neighbours { get { return neighbours; } }
@@ -27,12 +26,6 @@ public class Waypoint : MonoBehaviour
     void Start ()
     {
         collider = GetComponent<Collider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
-        // Hide the sprite rendering if we are going to play
-#if  !WAYPOINT_DEBUG
-        spriteRenderer.enabled = false;
-#endif
     }
 	
 	// Update is called once per frame

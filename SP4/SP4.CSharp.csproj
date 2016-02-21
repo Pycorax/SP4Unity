@@ -18,6 +18,7 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.2.0f3</UnityVersion>
     <RootNamespace></RootNamespace>
+    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -90,12 +91,15 @@
     <Compile Include="Assets\Scripts\Items\Weapons\Wand.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\Weapon.cs" />
     <Compile Include="Assets\Scripts\MultiPlayerCamera.cs" />
+    <Compile Include="Assets\Scripts\Objective\Collect_Coins.cs" />
+    <Compile Include="Assets\Scripts\Objective\Kill_Enemy.cs" />
     <Compile Include="Assets\Scripts\Objective\No_Dmg_Taken.cs" />
     <Compile Include="Assets\Scripts\Objective\ObjectiveManager.cs" />
     <Compile Include="Assets\Scripts\Objective\Objectives.cs" />
     <Compile Include="Assets\Scripts\ProjectileManager.cs" />
     <Compile Include="Assets\Scripts\RPGPlayer.cs" />
     <Compile Include="Assets\Scripts\SceneManager.cs" />
+    <Compile Include="Assets\Scripts\Score\TestScoreWebAPI.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\ScreenData.cs" />
     <Compile Include="Assets\Scripts\SoundManager.cs" />
