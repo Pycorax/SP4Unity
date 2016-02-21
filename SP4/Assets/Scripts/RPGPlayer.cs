@@ -398,6 +398,7 @@ public class RPGPlayer : MonoBehaviour
                 
                 currentWeapon = LeftWeapon;
             }
+            LeftWeapon.Use(previousDir);
         }
 
         if (Input.GetKeyDown(RightAttackKey))
@@ -407,6 +408,7 @@ public class RPGPlayer : MonoBehaviour
                 // TODO: Right Attack
                 currentWeapon = RightWeapon;
             }
+            RightWeapon.Use(previousDir);
         }
         else
         {
