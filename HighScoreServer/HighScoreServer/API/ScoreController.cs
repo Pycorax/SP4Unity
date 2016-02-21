@@ -23,7 +23,7 @@ namespace HighScoreServer.API
         [HttpGet]
         public IEnumerable<ScoreEntry> Get()
         {
-            return database.Entries.AsEnumerable();
+            return database.OrderedEntries.AsEnumerable();
         }
 
         // GET api/values/5
@@ -39,7 +39,7 @@ namespace HighScoreServer.API
         {
             if (value != null)
             {
-                database.Entries.Add(value);
+                database.Add(value);
                 await database.SaveChangesAsync();
 
                 return "Success";

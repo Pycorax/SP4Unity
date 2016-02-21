@@ -22,7 +22,7 @@ namespace HighScoreServer.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View(database.Entries.ToArray());
+            return View(database.OrderedEntries.ToArray());
         }
 
         [HttpGet]
@@ -54,11 +54,6 @@ namespace HighScoreServer.Controllers
             ScoreEntry score = database.Entries.SingleOrDefault(x => id == x.Id);
 
             return View(score);
-        }
-
-        public IActionResult Entry(ScoreEntry entry)
-        {
-            return View(entry);
         }
     }
 }
