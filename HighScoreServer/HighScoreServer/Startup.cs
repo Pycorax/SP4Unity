@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
+﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Data.Entity;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace HighScoreServer
 {
@@ -39,11 +34,19 @@ namespace HighScoreServer
             services.AddSingleton<HighScoreServer.Models.ScoreDataContext>();
 
             // Initialize Entity Framework
-            string scoreDBConnectionStr = config["Data:HighScore:ConnectionString"];
-            services.AddEntityFramework()
-                .AddSqlServer()
-                .AddDbContext<Models.ScoreDataContext>(dbConfig =>
-                    dbConfig.UseSqlServer(scoreDBConnectionStr));
+            if (config.Get<bool>("InMemoryDB"))
+            {
+                services.AddEntityFramework()
+                .AddInMemoryDatabase()
+                .AddDbContext<Models.ScoreDataContext>(dbConfig => dbConfig.UseInMemoryDatabase());
+            }
+            else
+            {
+                string scoreDBConnectionStr = config["Data:HighScore:ConnectionString"];
+                services.AddEntityFramework()
+                    .AddSqlServer()
+                    .AddDbContext<Models.ScoreDataContext>(dbConfig => dbConfig.UseSqlServer(scoreDBConnectionStr));
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
