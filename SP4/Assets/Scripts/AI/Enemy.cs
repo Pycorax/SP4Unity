@@ -66,26 +66,29 @@ namespace Enemy
                 // Update the next waypoint to go to
                 currentTargetWaypoint = WaypointMap.GetNearestWaypointToGoTo(currentWaypoint, FinalTargetWaypoint);
 
-                // Check if we have reached the Waypoint
-                if (reachedWaypoint(currentTargetWaypoint))
+                // Check if there is a path/Waypoint to go on
+                if (currentTargetWaypoint != null)
                 {
-                    // Get direction to the target
-                    Vector2 dir = currentTargetWaypoint.transform.position - transform.position;
-                    dir.Normalize();
+                    // Check if we have reached the Waypoint
+                    if (reachedWaypoint(currentTargetWaypoint))
+                    {
+                        // Get direction to the target
+                        Vector2 dir = currentTargetWaypoint.transform.position - transform.position;
+                        dir.Normalize();
 
-                    // Head to the target
-                    transform.position += (Vector3)dir * 500.0f * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+                        // Head to the target
+                        transform.position += (Vector3)dir * 500.0f * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+                    }
+                    else
+                    {
+                        // Update the current Waypoint
+                        currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);                        
+                    }
                 }
                 else
                 {
-                    // Update the current Waypoint
-                    currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);
-
                     // If there is no more path, we stop deciding to go there
-                    if (currentTargetWaypoint == null)
-                    {
-                        FinalTargetWaypoint = null;
-                    }
+                    FinalTargetWaypoint = null;
                 }
             }
         }
