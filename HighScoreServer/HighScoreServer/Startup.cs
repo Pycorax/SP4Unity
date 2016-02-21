@@ -75,11 +75,6 @@ namespace HighScoreServer
 
             // Register the File Server Middleware
             app.UseFileServer();
-
-            //app.Run(async (context) =>
-            //{
-            //    await context.Response.WriteAsync("Hello World!");
-            //});
         }
 
         // Entry point for the application.
