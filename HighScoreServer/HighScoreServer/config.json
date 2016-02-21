@@ -1,4 +1,8 @@
 ﻿{
+  "Data": 
+  {
+    "HighScore": { "ConnectionString": "Server=(LocalDb)\\MSSQLLocalDb;Database=AspNetBlog_Identity" }
+  },
   "debug": false,
   "RecreateDatabase": false
 }

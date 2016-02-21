@@ -64,7 +64,7 @@ namespace HighScoreServer.Models
             base.OnModelCreating(modelBuilder);
 
             // Force the server to update the ID
-            modelBuilder.UseSqlServerIdentityColumns();
+            modelBuilder.ForSqlServerUseIdentityColumns();
         }
     }
 }
