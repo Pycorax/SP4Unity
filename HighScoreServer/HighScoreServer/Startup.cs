@@ -50,8 +50,18 @@ namespace HighScoreServer
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            if (!env.IsDevelopment())
+            {
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+                        .CreateScope())
+                {
+                    serviceScope.ServiceProvider.GetService<HighScoreServer.Models.ScoreDataContext>()
+                                      .Database.Migrate();
+                }
+            }
+
             // Use different settings depending on debug or production builds
             if (config.Get<bool>("debug"))
             {
