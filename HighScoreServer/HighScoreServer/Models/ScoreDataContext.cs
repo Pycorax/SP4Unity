@@ -38,6 +38,12 @@ namespace HighScoreServer.Models
             updateOrderedList();
         }
 
+        public void SetMaxScores(int score)
+        {
+            maxHighScores = score;
+            updateOrderedList();
+        }
+
         private void updateOrderedList()
         {
             // Update the sorted list

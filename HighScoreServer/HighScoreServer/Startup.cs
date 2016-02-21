@@ -35,7 +35,7 @@ namespace HighScoreServer
             services.AddMvc();
 
             // Initialize ScoreDataContext for use with the Controllers via Dependency Injection
-            services.AddScoped<HighScoreServer.Models.ScoreDataContext>();
+            services.AddSingleton<HighScoreServer.Models.ScoreDataContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

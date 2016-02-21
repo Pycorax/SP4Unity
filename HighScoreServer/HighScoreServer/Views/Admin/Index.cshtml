@@ -1,0 +1,16 @@
+﻿@model HighScoreServer.Models.ScoreConfig
+<h2>Admin Panel</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary()
+
+    <!--Name-->
+    @Html.LabelFor(x => x.MaxScores)
+    @Html.EditorFor(x => x.MaxScores)
+    @Html.ValidationMessageFor(x => x.MaxScores)
+    <br /><br />
+
+    <!--Submit Button-->
+    <button type="submit">Submit Score</button>
+}
