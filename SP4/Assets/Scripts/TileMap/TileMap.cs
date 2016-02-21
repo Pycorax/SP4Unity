@@ -543,6 +543,10 @@ public class TileMap : MonoBehaviour
 
 	private GameObject createTile(Tile.TILE_TYPE type, Vector3 pos, Vector3 size)
 	{
+        if (type == Tile.TILE_TYPE.TILE_EMPTY)
+        {
+            return null;
+        }
         if (!TileBlueprints[(int)type] && type != Tile.TILE_TYPE.TILE_FIRST_PLAYER && type !=  Tile.TILE_TYPE.TILE_SECOND_PLAYER)
         {
             return null;
