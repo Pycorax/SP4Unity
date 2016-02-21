@@ -42,7 +42,7 @@ namespace HighScoreServer
         public void Configure(IApplicationBuilder app)
         {
             // Obtain User Secret
-            var password = config.Get<string>("password");
+            // var password = config.Get<string>("password");
 
             // Use different settings depending on debug or production builds
             if (config.Get<bool>("debug"))

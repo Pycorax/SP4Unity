@@ -1,1 +1,9 @@
-﻿<h2>List of Scores</h2>
+﻿@model HighScoreServer.Models.ScoreEntry[]
+<h2>List of Scores</h2>
+
+<table>
+    @foreach (var entry in Model)
+    {
+        @Html.Partial("_Entry", entry)
+    }
+</table>
