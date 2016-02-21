@@ -45,7 +45,7 @@ namespace HighScoreServer.Controllers
             await database.SaveChangesAsync();
 
             // Redirect to the Entry Action with an Anonymous Parameter that Entry() needs
-            return RedirectToAction("Entry", new { id = entry.Id });
+            return RedirectToAction("Index");
         }
 
         public IActionResult Entry(int id)

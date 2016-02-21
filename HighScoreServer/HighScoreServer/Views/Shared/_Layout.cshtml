@@ -2,10 +2,17 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>CatBang Highscore Server</title>
 </head>
 <body>
     <h1>CatBang Highscore Server</h1>
+    <hr/>
+    <header>
+        <nav>
+            @Html.ActionLink("Home", "Index", "Home", null)
+            @Html.ActionLink("Scoreboard", "Index", "Scoreboard", null)
+        </nav>
+    </header>
     <hr/>
     <div>
         @RenderBody()
