@@ -52,9 +52,6 @@ namespace HighScoreServer
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
-            // Obtain User Secret
-            // var password = config.Get<string>("password");
-
             // Use different settings depending on debug or production builds
             if (config.Get<bool>("debug"))
             {
