@@ -11,6 +11,10 @@ public class WaypointManager : MonoBehaviour
     public bool SyncOnStartUp = true;
     [Tooltip("Design and debugging tool. When enabled, waypoint neighbours will be recalculated every frame and the connections will be rendered.")]
     public bool DrawConnections = false;
+    [Tooltip("If true, the radius of the raytrace between Waypoints will be drawn.")]
+    public bool GizmoWaypointRadiusDraw = true;
+    [Tooltip("If true, the raytrace between Waypoints will be drawn.")]
+    public bool GizmoWaypointRayDraw = true;
 
     // Holds a list of waypoints that we set up in Start() to return later
     private List<Waypoint> waypointList;
@@ -93,18 +97,28 @@ public class WaypointManager : MonoBehaviour
             // Draw the connections
             foreach (Waypoint neighbour in w.Neighbours)
             {
-                // Calculate the direction perpendicular to the direction of the neighbour
-                Vector2 dir = w.transform.position - neighbour.transform.position;
-                if (dir != Vector2.zero)
-                {
-                    dir.Normalize();
-                }
-                Vector2 right = new Vector2(dir.y, dir.x);
-
                 // Draw the radius lines
-                Gizmos.color = Color.white;
-                Gizmos.DrawLine(w.transform.position + (Vector3)right * WaypointRadius, neighbour.transform.position + (Vector3)right * WaypointRadius);
-                Gizmos.DrawLine(w.transform.position - (Vector3)right * WaypointRadius, neighbour.transform.position - (Vector3)right * WaypointRadius);
+                if (GizmoWaypointRadiusDraw)
+                {
+                    // Calculate the direction perpendicular to the direction of the neighbour
+                    Vector2 dir = w.transform.position - neighbour.transform.position;
+                    if (dir != Vector2.zero)
+                    {
+                        dir.Normalize();
+                    }
+                    Vector2 right = new Vector2(dir.y, dir.x);
+
+                    Gizmos.color = Color.white;
+                    Gizmos.DrawLine(w.transform.position + (Vector3)right * WaypointRadius, neighbour.transform.position + (Vector3)right * WaypointRadius);
+                    Gizmos.DrawLine(w.transform.position - (Vector3)right * WaypointRadius, neighbour.transform.position - (Vector3)right * WaypointRadius);
+                }
+
+                // Draw the ray lines
+                if (GizmoWaypointRayDraw)
+                {
+                    Gizmos.color = Color.yellow;
+                    Gizmos.DrawLine(w.transform.position, neighbour.transform.position);
+                }
             }
         }
     }
