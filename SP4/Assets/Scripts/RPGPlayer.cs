@@ -19,8 +19,8 @@ public class RPGPlayer : MonoBehaviour
     private int coin;
 
     // Weapons
-    private Weapon LeftWeapon;
-    private Weapon RightWeapon;
+    public Weapon LeftWeapon;
+    public Weapon RightWeapon;
 
     // Controls
     public bool UseMouseControl = false;
@@ -63,9 +63,18 @@ public class RPGPlayer : MonoBehaviour
         animator = GetComponent<Animator>();
         inventory = GetComponent<Inventory>();
 
-        // Align the weapons properly
-        alignWeapon(ref LeftWeapon, true);
-        alignWeapon(ref RightWeapon, false);
+        // Align the weapons properly if they exist
+        if (LeftWeapon != null)
+        {
+            alignWeapon(ref LeftWeapon, true);
+        }
+        if (RightWeapon != null)
+        {
+            alignWeapon(ref RightWeapon, false);
+        }
+
+        // Initialize the health
+        health = MaxHealth;
     }
 
     // Update is called once per frame
@@ -497,7 +506,7 @@ public class RPGPlayer : MonoBehaviour
         health -= damage;
 
         // Clamp the health so we don't go crazy with the health accidentally
-        Mathf.Clamp(health, 0, MaxHealth);
+        health = Mathf.Clamp(health, 0, MaxHealth);
     }
 
     void Heal(int healing)
@@ -511,7 +520,7 @@ public class RPGPlayer : MonoBehaviour
         health += healing;
 
         // Clamp the health so we don't go crazy with the health accidentally
-        Mathf.Clamp(health, 0, MaxHealth);
+        health = Mathf.Clamp(health, 0, MaxHealth);
     }
 
     #endregion
