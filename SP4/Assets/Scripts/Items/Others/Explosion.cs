@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class Explosion : MonoBehaviour, IResourceManagable
+public class Explosion : MonoBehaviour
 {
     [Tooltip("The starting size of the explosion.")]
     public Vector2 StartSize;
@@ -48,19 +48,4 @@ public class Explosion : MonoBehaviour, IResourceManagable
             transform.gameObject.SetActive(false);
         }
 	}
-
-    void IResourceManagable.PrepareForResourcePool()
-    {
-        
-    }
-
-    bool IResourceManagable.IsUsed()
-    {
-        return gameObject.activeSelf;
-    }
-
-    void IResourceManagable.SetUsed(bool beingUsed)
-    {
-        gameObject.SetActive(false);
-    }
 }

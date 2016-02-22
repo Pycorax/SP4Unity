@@ -587,8 +587,7 @@ public class RPGPlayer : Character
         }
         else if (proj != null)
         {
-            // TODO: Pass in weapon
-            currentWeapon.CombinedUse(null, proj);
+            currentWeapon.CombinedUse(proj.Owner, proj);
         }
     }
 
