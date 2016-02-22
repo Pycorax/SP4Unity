@@ -2,9 +2,7 @@
 
 public class Shield : Weapon
 {
-    public Sprite shieldSprite;
-
-	// Use this for initialization
+    // Use this for initialization
 	protected override void Start ()
     {
         Name = "Shield";

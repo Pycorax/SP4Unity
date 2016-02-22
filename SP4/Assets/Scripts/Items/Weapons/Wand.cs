@@ -2,8 +2,6 @@
 
 public class Wand : Weapon
 {
-    public Sprite wandSprite;
-
     public Lightning lightning;
 	// Use this for initialization
 	protected override void Start () {

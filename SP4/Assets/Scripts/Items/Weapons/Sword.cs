@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
-public class Sword : Weapon {
-
-    public Sprite SwordSprite;
-
+public class Sword : Weapon
+{
+    
 	// Use this for initialization
 	protected override void Start () {
 
