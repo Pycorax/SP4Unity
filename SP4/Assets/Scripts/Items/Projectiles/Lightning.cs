@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Lightning : Projectile {
+public class Lightning : Projectile
+{
 
 	// Use this for initialization
-	protected override void Start () {
-        pName = "Lightning Bolt";
-        pDamage = 3;
+	protected override void Start ()
+    {
+        //pName = "Lightning Bolt";
+        Damage = 3;
         //Load Animation
 	}
 	
 	// Update is called once per frame
-	protected override void Update () {
-	
+	protected override void Update ()
+    {
+        base.Update();
 	}
 
-    public override void Use(Vector2 direction)
+    public override void Activate(Vector2 direction)
     {
     }
     

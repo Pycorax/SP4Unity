@@ -2,31 +2,52 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Projectile : Weapon  {
+public class Projectile : MonoBehaviour
+{
 
-    public int damage;
-    public float speed;
+    public int Damage;
+    public float Speed;
 
-    public string pName { get { return name; } set { name = value; } }
-    public int pDamage { get { return damage; } set { damage = value; } }
-    public float pSpeed { get { return speed; } set { speed = value; } }
+    // Owner
+    private RPGPlayer owner = null;
+    public RPGPlayer Owner { get { return owner; } set { owner = value; } }
+
+    // Bounds
+    public float LeftBound { get { return transform.position.x - transform.localScale.x * 0.5f; } }
+    public float RightBound { get { return transform.position.x + transform.localScale.x * 0.5f; } }
+    public float TopBound { get { return transform.position.y + transform.localScale.y * 0.5f; } }
+    public float BottomBound { get { return transform.position.y - transform.localScale.y * 0.5f; } }
 
     // Use this for initialization
-    protected override void Start()
+    protected virtual void Start()
     {
+        Damage = 0;
+        Speed = 0.0f;
+        gameObject.SetActive(false);
 	}
 	
 	// Update is called once per frame
-    protected override void Update()
+    protected virtual void Update()
     {
+        // Disable itself if out of camera
+        MultiPlayerCamera cam = Camera.main.GetComponent<MultiPlayerCamera>();
+        Vector3 camMaxBound = new Vector3(cam.RightBound, cam.TopBound);
+        Vector3 camMinBound = new Vector3(cam.LeftBound, cam.BottomBound);
+        Vector3 pMaxBound = new Vector3(RightBound, TopBound);
+        Vector3 pMinBound = new Vector3(LeftBound, BottomBound);
+        if (pMinBound.x > camMaxBound.x || pMaxBound.x < camMinBound.x || pMinBound.y > camMaxBound.y || pMaxBound.y < camMinBound.y)
+        {
+            Disable();
+        }
 	}
 
-    public override void Use(Vector2 direction)
+    public virtual void Activate(Vector2 direction)
     {
+        gameObject.SetActive(true);
         MoveTowards(direction);
     }
 
-    public virtual void MoveTowards(Vector2 direction)
+    public void MoveTowards(Vector2 direction)
     {
         // Ensure that the direction passed in is a direction
         direction.Normalize();
@@ -35,9 +56,9 @@ public class Projectile : Weapon  {
         Vector2 newVelocity = direction * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
 
         // Clamp the velocity
-        newVelocity.x = Mathf.Clamp(newVelocity.x, 0, pSpeed);
+        newVelocity.x = Mathf.Clamp(newVelocity.x, 0, Speed);
 
-        rigidBody.velocity = newVelocity;
+        GetComponent<Rigidbody2D>().velocity = newVelocity;
     }
 
 
@@ -53,32 +74,24 @@ public class Projectile : Weapon  {
         {
             //If Collided with Enemy Unit
             //Reduce Enemy HP (currently no function for that)
+            Enemy.Enemy enemy = collision.gameObject.GetComponent<Enemy.Enemy>();
         }
         else if(collision.gameObject.GetComponent<RPGPlayer>() != null)
         {
             //If Collided with other player
             //Combine Weapon Powerzz
-            CombineUse(this, collision.gameObject.GetComponent<RPGPlayer>().getCurrentActiveWeapon());
+            RPGPlayer player = collision.gameObject.GetComponent<RPGPlayer>();
+            player.getCurrentActiveWeapon().CombineUse(this, collision.gameObject.GetComponent<RPGPlayer>().getCurrentActiveWeapon());
         }
-        /*
-         * Colliding with TILE_WALL
-         * else if(collision.gameObject.GetComponent<TILE.TILE_TYPE.TILE_WALL>())
-         * {
-         *     //Destroy Projectile
-         *     Destroy(this);
-         * }
-         */
         else
         {
-            OnBecameInvisible();
+            Disable();
         }
     }
-
-    //Destroy upon leaving camera screen space
-    //Monobehaviour.OnBecameInvisible
-    void OnBecameInvisible()
+    
+    public void Disable()
     {
-        Destroy(this);
+        gameObject.SetActive(false);
     }
 
 }

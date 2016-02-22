@@ -1,24 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Arrow : Projectile {
+public class Arrow : Projectile
+{
 
 
 	// Use this for initialization
-	protected override void Start () {
-        pName = "Arrow";
-        pDamage = 5;
-        //Tiles/sec?
-        pSpeed = 2;
+	protected override void Start ()
+    {
+        //pName = "Arrow";
+        Damage = 5;
+        Speed = 2;
         //Load Animation
 	}
 	
 	// Update is called once per frame
-	protected override void Update () {
-	
+	protected override void Update ()
+    {
+        base.Update();
 	}
 
-    public override void Use(Vector2 direction)
+    public override void Activate(Vector2 direction)
     {
+        base.Activate(direction);
     }
 }

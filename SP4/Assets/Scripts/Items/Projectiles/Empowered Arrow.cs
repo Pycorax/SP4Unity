@@ -1,23 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EmpoweredArrow : Projectile {
+public class EmpoweredArrow : Projectile
+{
 
     //2 Tiles 
     public int explodeRadius = 2;
 
 	// Use this for initialization
-	protected override void Start () {
-        pName = "Explosive Arcane Arrow";
-        pDamage = 8;
+	protected override void Start ()
+    {
+        //pName = "Explosive Arcane Arrow";
+        Damage = 8;
+        Speed = 5;
 	}
 	
 	// Update is called once per frame
-	protected override void Update () {
-	
-	}
+	protected override void Update ()
+    {
+        base.Update();
+    }
 
-    public override void Use(Vector2 direction)
+    public override void Activate(Vector2 direction)
     {
 
     }

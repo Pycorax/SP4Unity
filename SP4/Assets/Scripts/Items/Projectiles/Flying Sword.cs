@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FlyingSword : Projectile {
+public class FlyingSword : Projectile
+{
 
 	// Use this for initialization
-	protected override void Start () {
-        pName = "Flying Sword";
-        pDamage = 10;
+	protected override void Start ()
+    {
+        //pName = "Flying Sword";
+        Damage = 10;
         //Load Animation
 	}
 	
 	// Update is called once per frame
-	protected override void Update () {
-	
-	}
+	protected override void Update ()
+    {
+        base.Update();
+    }
 
-    public override void Use(Vector2 direction)
+    public override void Activate(Vector2 direction)
     {
     }
 }
