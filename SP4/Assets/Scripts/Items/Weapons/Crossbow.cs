@@ -59,7 +59,7 @@ public class Crossbow : Weapon
             GameObject p = RefProjectileManager.FetchArrow();
             if (p)
             {
-                p.GetComponent<Arrow>().Activate(firePoint.position, firePoint.rotation, direction, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
+                p.GetComponent<Arrow>().Activate(firePoint, this, direction, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
                 return true;
             }
         }

@@ -52,7 +52,7 @@ public class ProjectileManager : MonoBehaviour
         for (int i = 0; i < size; i++)
         {
             GameObject arrow = Instantiate(ArrowBlueprint);
-            setCommonData(arrow);
+            setCommonData(ref arrow);
             ArrowPool.Add(arrow);
         }
     }
@@ -62,7 +62,7 @@ public class ProjectileManager : MonoBehaviour
         for (int i = 0; i < size; i++)
         {
             GameObject ea = Instantiate(EmpoweredArrowBlueprint);
-            setCommonData(ea);
+            setCommonData(ref ea);
             EmpoweredArrowPool.Add(ea);
         }
     }
@@ -72,7 +72,7 @@ public class ProjectileManager : MonoBehaviour
         for (int i = 0; i < size; i++)
         {
             GameObject fs = Instantiate(FlyingSwordBlueprint);
-            setCommonData(fs);
+            setCommonData(ref fs);
             FlyingSwordPool.Add(fs);
         }
     }
@@ -82,7 +82,7 @@ public class ProjectileManager : MonoBehaviour
         for (int i = 0; i < size; i++)
         {
             GameObject lightning = Instantiate(LightningBlueprint);
-            setCommonData(lightning);
+            setCommonData(ref lightning);
             LightningPool.Add(lightning);
         }
     }
@@ -156,11 +156,12 @@ public class ProjectileManager : MonoBehaviour
         }
     }
 
-    private void setCommonData(GameObject go)
+    private void setCommonData(ref GameObject go)
     {
         go.SetActive(false);
         float size = GetComponent<TileMap>().TileSize * 2.0f;
-        go.transform.localScale.Set(size, size, 1);
+        Vector3 scale = new Vector3(size, size);
+        go.transform.localScale = scale;
         go.transform.parent = transform;
     }
 }
