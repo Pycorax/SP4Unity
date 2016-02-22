@@ -24,8 +24,8 @@ public class RPGPlayer : MonoBehaviour
     public int coinAdd = 1;
 
     // Weapons
-    private Weapon LeftWeapon;
-    private Weapon RightWeapon;
+    public Weapon LeftWeapon;
+    public Weapon RightWeapon;
 
     // Controls
     public bool UseMouseControl = false;
@@ -69,9 +69,15 @@ public class RPGPlayer : MonoBehaviour
         animator = GetComponent<Animator>();
         inventory = GetComponent<Inventory>();
 
-        // Align the weapons properly
-        alignWeapon(ref LeftWeapon, true);
-        alignWeapon(ref RightWeapon, false);
+        // Align the weapons properly if they exist
+        if (LeftWeapon != null)
+        {
+            alignWeapon(ref LeftWeapon, true);
+        }
+        if (RightWeapon != null)
+        {
+            alignWeapon(ref RightWeapon, false);
+        }
     }
 
     // Update is called once per frame
