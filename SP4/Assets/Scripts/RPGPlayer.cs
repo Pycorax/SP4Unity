@@ -561,7 +561,7 @@ public class RPGPlayer : MonoBehaviour
             }
             else if (other.gameObject.GetComponent<SpikeTrap>() != null)
             {
-                health -= other.GetComponent<SpikeTrap>().dmg;
+                Injure(other.GetComponent<SpikeTrap>().dmg);
                 Debug.Log(health);
             }
             else if (other.gameObject.GetComponent<Coin>() != null)
@@ -580,7 +580,7 @@ public class RPGPlayer : MonoBehaviour
             }
             else if (other.gameObject.GetComponent<Heart>() != null)
             {
-                health += other.GetComponent<Heart>().Healing;
+                Heal(other.GetComponent<Heart>().Healing);
                 other.gameObject.SetActive(false);
                 Debug.Log(health);
             }
