@@ -54,12 +54,12 @@ namespace HighScoreServer
         {
             if (!env.IsDevelopment())
             {
-                //using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
-                //        .CreateScope())
-                //{
-                //    serviceScope.ServiceProvider.GetService<HighScoreServer.Models.ScoreDataContext>()
-                //                      .Database.Migrate();
-                //}
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+                        .CreateScope())
+                {
+                    serviceScope.ServiceProvider.GetService<HighScoreServer.Models.ScoreDataContext>()
+                                      .Database.Migrate();
+                }
             }
 
             // Use different settings depending on debug or production builds
