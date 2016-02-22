@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Coin : Destroyables
 {
+    public int CoinAmount = 2;
 
     // Use this for initialization
     void Start()
