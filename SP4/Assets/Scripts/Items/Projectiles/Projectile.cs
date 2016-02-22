@@ -80,7 +80,7 @@ public class Projectile : MonoBehaviour
         {
             //If Collided with other player
             //Combine Weapon Powerzz
-            RPGPlayer player = collision.gameObject.GetComponent<RPGPlayer>();
+            //RPGPlayer player = collision.gameObject.GetComponent<RPGPlayer>();
             //player.getCurrentActiveWeapon().CombineUse(this, collision.gameObject.GetComponent<RPGPlayer>().getCurrentActiveWeapon());
         }
         else
