@@ -6,10 +6,13 @@ public abstract class Character : MonoBehaviour
     public int MaxHealth = 100;
 
     // Health
-    protected int health;
+    public int health;
 
     // Getters
     public int Health { get { return health; } }
+
+    public GameObject healthBar;
+
 
     // Use this for initialization
     protected virtual void Start ()
@@ -51,6 +54,13 @@ public abstract class Character : MonoBehaviour
 
         // Clamp the health so we don't go crazy with the health accidentally
         health = Mathf.Clamp(health, 0, MaxHealth);
+    }
+
+    public void HealthBarUpdate(int health)
+    {
+        int currentHP = health / MaxHealth;
+        Mathf.Clamp(currentHP, 0, MaxHealth);
+        healthBar.transform.localScale = new Vector3(currentHP, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
     }
 
     #endregion
