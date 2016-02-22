@@ -1,4 +1,4 @@
 ﻿{
   "debug": false,
-  "InMemoryDB": false
+  "InMemoryDB": true
 }
