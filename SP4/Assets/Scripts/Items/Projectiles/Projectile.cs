@@ -39,11 +39,11 @@ public class Projectile : MonoBehaviour
         }
 	}
 
-    public virtual void Activate(Vector3 position, Vector3 rotation, Vector2 direction)
+    public virtual void Activate(Vector3 position, Quaternion rotation, Vector2 direction)
     {
         gameObject.SetActive(true);
         transform.position = position;
-        transform.rotation.SetLookRotation(rotation);
+        transform.rotation = rotation;
         MoveTowards(direction);
     }
 

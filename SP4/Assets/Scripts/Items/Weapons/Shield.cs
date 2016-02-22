@@ -27,11 +27,11 @@ public class Shield : Weapon
         // Use the base class Use() to do fire rate control
         bool usable = base.Use(direction);
 
-        // If we are able to use it this round...
+        /*// If we are able to use it this round...
         if (usable)
         {
             // ...do what we have to do
-        }
+        }*/
 
         // Return the value back
         return usable;

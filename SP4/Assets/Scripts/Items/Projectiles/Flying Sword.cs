@@ -18,7 +18,7 @@ public class FlyingSword : Projectile
         base.Update();
     }
 
-    public override void Activate(Vector3 position, Vector3 rotation, Vector2 direction)
+    public override void Activate(Vector3 position, Quaternion rotation, Vector2 direction)
     {
         base.Activate(position, rotation, direction);
     }

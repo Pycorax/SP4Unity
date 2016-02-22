@@ -9,6 +9,8 @@ public abstract class Weapon : Item {
     [Tooltip("The fire rate of the weapon in hits/minute.")]
     public float FireRate;
 
+    public ProjectileManager RefProjectileManager;
+
     /// <summary>
     /// The time between shots in milliseconds
     /// </summary>

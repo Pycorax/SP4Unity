@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 
 
-public class Crossbow : Weapon {
-
-    public Sprite CrossbowSprite;
-    public ProjectileManager PManager;
-    public GameObject projectile;
+public class Crossbow : Weapon
+{
+    //public GameObject projectile;
 
     private float projectileSpeed;
 
@@ -44,9 +42,9 @@ public class Crossbow : Weapon {
 	}
 	
 	// Update is called once per frame
-	protected override void Update () {
+	protected override void Update ()
+    {
         //Testing Shooting
-       
 	}
 
     public override bool Use(Vector2 direction)
@@ -55,13 +53,13 @@ public class Crossbow : Weapon {
         bool usable = base.Use(direction);
 
         // If we are able to use it this round...
-        if (usable)
+        //if (usable)
         {
             // ...do what we have to do
             //Fire Projectile from projectile class
             //Play Firing Animation
             //arrow.MoveTowards(direction);
-            projectile = PManager.FetchArrow();
+            //projectile = PManager.FetchArrow();
         }
 
         // Return the value back
@@ -70,23 +68,33 @@ public class Crossbow : Weapon {
 
     public void Shoot(Vector2 direction)
     {
-        Debug.Log("Shooting");
-        // Ensure that the direction passed in is a direction
-        direction.Normalize();
+        if (Use(direction))
+        {
+            // Shooting cancer
+            /*Debug.Log("Shooting");
+            // Ensure that the direction passed in is a direction
+            direction.Normalize();
 
-        // Calculate the new velocity
-        Vector2 newVelocity = direction * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+            // Calculate the new velocity
+            Vector2 newVelocity = direction * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
 
-        // Clamp the velocity
-        newVelocity.x = Mathf.Clamp(newVelocity.x, 0, projectileMaxSpeed);
+            // Clamp the velocity
+            newVelocity.x = Mathf.Clamp(newVelocity.x, 0, projectileMaxSpeed);
 
-        rigidBody.velocity = newVelocity;
+            rigidBody.velocity = newVelocity;
 
-        Vector2 firePointPos = new Vector2(firePoint.position.x, firePoint.position.y);
+            Vector2 firePointPos = new Vector2(firePoint.position.x, firePoint.position.y);
 
-        RaycastHit2D hit = Physics2D.Raycast(firePointPos, direction, 100, notToHit);
+            RaycastHit2D hit = Physics2D.Raycast(firePointPos, direction, 100, notToHit);
 
-        Debug.DrawLine(firePointPos, direction * 100);
+            Debug.DrawLine(firePointPos, direction * 100);*/
+
+            GameObject p = RefProjectileManager.FetchArrow();
+            if (p)
+            {
+                p.GetComponent<Arrow>().Activate(firePoint.position, firePoint.rotation, direction);
+            }
+        }
     }
 
     protected override void combinedUse(Weapon other, params object[] details)

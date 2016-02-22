@@ -63,6 +63,9 @@ public class RPGPlayer : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         inventory = GetComponent<Inventory>();
+        if (LeftWeapon)
+        {
+        }
     }
 
     // Update is called once per frame
