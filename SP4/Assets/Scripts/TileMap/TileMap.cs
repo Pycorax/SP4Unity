@@ -615,12 +615,12 @@ public class TileMap : MonoBehaviour
                     RefPlayer1.transform.localScale = playerSize;
 
                     // Create floor tile
-                    tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);
+                    /*tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);
                     // Set data for each tile
                     tile.SetActive(false);
                     tile.transform.position = pos;
                     tile.transform.localScale = size;
-                    tile.transform.parent = this.transform;
+                    tile.transform.parent = this.transform;*/
                 }
                 break;
             case Tile.TILE_TYPE.TILE_SECOND_PLAYER:
@@ -632,12 +632,12 @@ public class TileMap : MonoBehaviour
                     RefPlayer2.transform.localScale = playerSize;
 
                     // Create floor tile
-                    tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);
+                    /*tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);
                     // Set data for each tile
                     tile.SetActive(false);
                     tile.transform.position = pos;
                     tile.transform.localScale = size;
-                    tile.transform.parent = this.transform;
+                    tile.transform.parent = this.transform;*/
                 }
                 break;
             default:
