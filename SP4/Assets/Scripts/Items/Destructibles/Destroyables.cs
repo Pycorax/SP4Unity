@@ -16,4 +16,9 @@
 	{
         return true;
 	}
+
+    public void Deactivate()
+    {
+        transform.gameObject.SetActive(false);
+    }
 }
