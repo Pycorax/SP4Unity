@@ -521,40 +521,40 @@ public class RPGPlayer : Character
 
             if (other.gameObject.GetComponent<Exit>() != null)
             {
-
+                Debug.Log("Exit");
             }
             else if (other.gameObject.GetComponent<Pot>() != null)
             {
-
+                Debug.Log("Pot");
             }
             else if (other.gameObject.GetComponent<Table>() != null)
             {
-
+                Debug.Log("Table");
             }
             else if (other.gameObject.GetComponent<SpikeTrap>() != null)
             {
                 Injure(other.GetComponent<SpikeTrap>().dmg);
-                Debug.Log(health);
+                Debug.Log("Health: " + health);
             }
             else if (other.gameObject.GetComponent<Coin>() != null)
             {
                 coin += other.GetComponent<Coin>().CoinAmount;
                 other.gameObject.SetActive(false);
-                Debug.Log(coin);
+                Debug.Log("Coin: " + coin);
             }
             else if (other.gameObject.GetComponent<Cannon>() != null)
             {
-
+                Debug.Log("Cannon");
             }
             else if (other.gameObject.GetComponent<Box>() != null)
             {
-
+                Debug.Log("Box");
             }
             else if (other.gameObject.GetComponent<Heart>() != null)
             {
                 Heal(other.GetComponent<Heart>().Healing);
                 other.gameObject.SetActive(false);
-                Debug.Log(health);
+                Debug.Log("Health: " + health);
             }
 
         }
