@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class Projectile : MonoBehaviour
 {
@@ -83,7 +81,7 @@ public class Projectile : MonoBehaviour
             //If Collided with other player
             //Combine Weapon Powerzz
             RPGPlayer player = collision.gameObject.GetComponent<RPGPlayer>();
-            player.getCurrentActiveWeapon().CombineUse(this, collision.gameObject.GetComponent<RPGPlayer>().getCurrentActiveWeapon());
+            //player.getCurrentActiveWeapon().CombineUse(this, collision.gameObject.GetComponent<RPGPlayer>().getCurrentActiveWeapon());
         }
         else
         {
