@@ -9,8 +9,8 @@ public class Projectile : MonoBehaviour
     public float Speed;
 
     // Owner
-    private RPGPlayer owner = null;
-    public RPGPlayer Owner { get { return owner; } set { owner = value; } }
+    private Weapon owner = null;
+    public Weapon Owner { get { return owner; } set { owner = value; } }
 
     // Bounds
     public float LeftBound { get { return transform.position.x - transform.localScale.x * 0.5f; } }
@@ -41,9 +41,11 @@ public class Projectile : MonoBehaviour
         }
 	}
 
-    public virtual void Activate(Vector2 direction)
+    public virtual void Activate(Vector3 position, Vector3 rotation, Vector2 direction)
     {
         gameObject.SetActive(true);
+        transform.position = position;
+        transform.rotation.SetLookRotation(rotation);
         MoveTowards(direction);
     }
 
@@ -53,7 +55,7 @@ public class Projectile : MonoBehaviour
         direction.Normalize();
 
         // Calculate the new velocity
-        Vector2 newVelocity = direction * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game) * Speed;
+        Vector2 newVelocity = direction * /*(float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game) **/ Speed;
 
         // Clamp the velocity
         //newVelocity.x = Mathf.Clamp(newVelocity.x, 0, Speed);
