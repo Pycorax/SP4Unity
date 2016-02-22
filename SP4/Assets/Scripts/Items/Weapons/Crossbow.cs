@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 
 public class Crossbow : Weapon {
@@ -21,11 +20,13 @@ public class Crossbow : Weapon {
 
     public float projectileMaxSpeed = 5;
 
+    ////////////////////////////////////////////
+    
+
 	// Use this for initialization
-    protected override void Start () {
+    protected override void Start ()
+    {
         Name = "Crossbow";
-        
-        Width = 1;
 
         Damage = 5;
 
@@ -48,15 +49,23 @@ public class Crossbow : Weapon {
        
 	}
 
-    public override void Use(Vector2 direction)
+    public override bool Use(Vector2 direction)
     {
-        //Fire Projectile from projectile class
-        //Play Firing Animation
-        //arrow.MoveTowards(direction);
-        projectile = PManager.FetchArrow();
+        // Use the base class Use() to do fire rate control
+        bool usable = base.Use(direction);
 
-        
-        
+        // If we are able to use it this round...
+        if (usable)
+        {
+            // ...do what we have to do
+            //Fire Projectile from projectile class
+            //Play Firing Animation
+            //arrow.MoveTowards(direction);
+            projectile = PManager.FetchArrow();
+        }
+
+        // Return the value back
+        return usable;
     }
 
     public void Shoot(Vector2 direction)
@@ -78,5 +87,32 @@ public class Crossbow : Weapon {
         RaycastHit2D hit = Physics2D.Raycast(firePointPos, direction, 100, notToHit);
 
         Debug.DrawLine(firePointPos, direction * 100);
+    }
+
+    protected override void combinedUse(Weapon other, params object[] details)
+    {
+        // Explosive Arcane Shot
+        if (other is Wand)
+        {
+            Projectile arrow = null;
+
+            // Find the projectile
+            foreach (var o in details)
+            {
+                // We found it
+                if (o is Projectile)
+                {
+                    // Store it
+                    arrow = o as Projectile;
+                    break;
+                }
+            }
+
+            // Check if we found it
+            if (arrow != null)
+            {
+                // TODO: Change the projectile
+            }
+        }
     }
 }

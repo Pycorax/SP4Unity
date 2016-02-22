@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class Destroyables : Item {
+﻿public abstract class Destroyables : Item {
 
 	// Use this for initialization
     protected override void Start()
@@ -15,13 +12,8 @@ public class Destroyables : Item {
 	
 	}
 
-	public override void Use(Vector2 direction)
+	public override bool Use()
 	{
-
+        return true;
 	}
-
-    public override void CombineUse(Projectile projectile, Weapon weapon)
-    {
-        throw new System.NotImplementedException();
-    }
 }
