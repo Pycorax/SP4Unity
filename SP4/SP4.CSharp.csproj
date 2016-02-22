@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\AI\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\AI\Waypoint.cs" />
     <Compile Include="Assets\Scripts\BackgroundScroller.cs" />
+    <Compile Include="Assets\Scripts\Characters\Character.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\Items\Destructibles\Box.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Assets\Scripts\Items\Destructibles\SpikeTrap.cs" />
     <Compile Include="Assets\Scripts\Items\Destructibles\Table.cs" />
     <Compile Include="Assets\Scripts\Items\Item.cs" />
+    <Compile Include="Assets\Scripts\Items\Others\Explosion.cs" />
     <Compile Include="Assets\Scripts\Items\Projectiles\Arrow.cs" />
     <Compile Include="Assets\Scripts\Items\Projectiles\Empowered Arrow.cs" />
     <Compile Include="Assets\Scripts\Items\Projectiles\Flying Sword.cs" />

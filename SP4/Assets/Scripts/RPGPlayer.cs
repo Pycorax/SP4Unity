@@ -1,20 +1,18 @@
 ﻿using UnityEngine;
 
-public class RPGPlayer : MonoBehaviour
+public class RPGPlayer : Character
 {
     Inventory inventory;
     public float Acceleration = 3500.0f;
     public float Deceleration = 3000.0f;
     public float MaxSpeed = 500.0f;
-    [Tooltip("The maximum health of the character.")]
-    public int MaxHealth = 100;
+    
     [Tooltip("The rotation offset from the original sprite direction to get the sprite to face right. This is used for calculating the correct direction of the player sprite.")]
     public float RotationSpriteOffset = -90.0f;
     [Tooltip("The delay time before currentWeapon will be reset.")]
     public float CurrentWeaponTimeDelay = 2.0f;
 
     // Player Attributes
-    private int health;
     private int enemyKilled;
     private int coin;
 
@@ -47,7 +45,6 @@ public class RPGPlayer : MonoBehaviour
     private Animator animator;
 
     // Getters
-    public int Health { get { return health; } }
     public Weapon CurrentWeapon { get { return currentWeapon; } }
     public int EnemyKilled { get { return enemyKilled; } }
 
@@ -56,8 +53,12 @@ public class RPGPlayer : MonoBehaviour
     public ProjectileManager ProjectileManager;
 
     // Use this for initialization
-    void Start()
+    protected override void Start()
     {
+        // Base Start
+        base.Start();
+
+        // Initialize the Components
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -72,14 +73,15 @@ public class RPGPlayer : MonoBehaviour
         {
             alignWeapon(ref RightWeapon, false);
         }
-
-        // Initialize the health
-        health = MaxHealth;
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        // Base Update
+        base.Update();
+
+        // Updates
         movementUpdate();
         attackUpdate();
 
@@ -492,39 +494,7 @@ public class RPGPlayer : MonoBehaviour
     }
 
     #endregion
-
-    #region Health
-
-    void Injure(int damage)
-    {
-        // Error checks
-        if (damage < 0)
-        {
-            throw new UnityException("Please don't use Injure() to heal!");
-        }
-
-        health -= damage;
-
-        // Clamp the health so we don't go crazy with the health accidentally
-        health = Mathf.Clamp(health, 0, MaxHealth);
-    }
-
-    void Heal(int healing)
-    {
-        // Error checks
-        if (healing < 0)
-        {
-            throw new UnityException("Please don't use Heal() to injure!");
-        }
-
-        health += healing;
-
-        // Clamp the health so we don't go crazy with the health accidentally
-        health = Mathf.Clamp(health, 0, MaxHealth);
-    }
-
-    #endregion
-
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         string name = other.gameObject.name;
