@@ -92,11 +92,12 @@ public class RPGPlayer : Character
         {
             // Get the directional unit vector
             previousDir = rigidBody.velocity.normalized;
-            // Calculate the angle using Atan2 and add RotationSpriteOffset due to realign with original sprite direction
-            float angle = Mathf.Atan2(previousDir.y, previousDir.x) * Mathf.Rad2Deg + RotationSpriteOffset;
-            // Set the rotation according to a calculation based on the angle
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
+
+        // Calculate the angle using Atan2 and add RotationSpriteOffset due to realign with original sprite direction
+        float angle = Mathf.Atan2(previousDir.y, previousDir.x) * Mathf.Rad2Deg + RotationSpriteOffset;
+        // Set the rotation according to a calculation based on the angle
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     /// <summary>
