@@ -15,31 +15,32 @@ public class SceneManager : MonoBehaviour {
 
     public void LoadMainMenu()
     {
-        Application.LoadLevel("MainMenu");
+        Application.LoadLevel("MainMenuScene");
     }
 
+    //Load Up GameScene
     public void LoadGame()
     {
-        Application.LoadLevel("Game");
+        Application.LoadLevel("GameScene");
     }
 
     public void LoadOptions()
     {
-        Application.LoadLevel("Options");
+        Application.LoadLevel("OptionScene");
     }
 
     public void LoadCredits()
     {
-        Application.LoadLevel("Credits");
+        Application.LoadLevel("CreditScene");
     }
 
     public void LoadShops()
     {
-        Application.LoadLevel("Shops");
+        Application.LoadLevel("ShopScene");
     }
 
     public void LoadScores()
     {
-        Application.LoadLevel("Scores");
+        Application.LoadLevel("ScoreScenes");
     }
 }
