@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// A class that manages a list of resources in a form of a Resource Pool.
@@ -8,17 +9,32 @@ public class ResourceManager<T>
     where T : IResourceManagable, new()
 {
     // List Descriptors
-    private uint resourceCap;           // The max number of items in the resource manager
-    private bool expandable = true;            
-    private uint expandSize = 10;            
+    protected uint resourceCap;           // The max number of items in the resource manager
+    protected bool expandable = true;
+    protected uint expandSize = 10;
 
     // List of Resources
-    private List<T> resourceList = new List<T>();
+    protected List<T> resourceList = new List<T>();
 
     // Properties
     public uint ResourceCap { get { return resourceCap; } }             
     public bool Expandable { get; set; }                                // Dictates if the list can expand
     public uint ExpandSize { get; set; }                                // Dictates the amount we expand each time we need to
+    public List<T> ResourceList { get { return resourceList; } }
+    public List<T> UsedResourcesList
+    {
+        get
+        {
+            return (from item in resourceList where item.IsUsed() select item).ToList();
+        }
+    }
+    public List<T> UnusedResourcesList
+    {
+        get
+        {
+            return (from item in resourceList where !item.IsUsed() select item).ToList();
+        }
+    }
 
     /// <summary>
     /// Default Constructor

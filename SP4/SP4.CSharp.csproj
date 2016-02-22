@@ -80,7 +80,9 @@
     <Compile Include="Assets\Scripts\AI\Waypoint.cs" />
     <Compile Include="Assets\Scripts\BackgroundScroller.cs" />
     <Compile Include="Assets\Scripts\Characters\Character.cs" />
+    <Compile Include="Assets\Scripts\Framework\IPausable.cs" />
     <Compile Include="Assets\Scripts\Framework\IResourceManagable.cs" />
+    <Compile Include="Assets\Scripts\Framework\PausableResourceManager.cs" />
     <Compile Include="Assets\Scripts\Framework\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
