@@ -14,6 +14,12 @@ public class RPGPlayer : MonoBehaviour
     // Player Attributes
     private int health;
     private int enemyKilled;
+    private int coin;
+
+    //Destructable Object
+    public int spikeDamage = 20;
+    public int healthHeal = 30;
+    public int coinAdd = 1;
 
     // Weapons
     public Weapon LeftWeapon;
@@ -45,6 +51,7 @@ public class RPGPlayer : MonoBehaviour
     public int Health { get { return health; } }
     public Weapon CurrentWeapon { get { return currentWeapon; } }
     public int EnemyKilled { get { return enemyKilled; } }
+    public int Coin { get { return coin; } }
 
 
     //Projectile Controller
@@ -491,14 +498,22 @@ public class RPGPlayer : MonoBehaviour
                 case "Table":
                     break;
                 case "SpikeTrap":
+                    health -= spikeDamage;
+                    Debug.Log(health);
                     break;
                 case "Coin":
+                    coin += coinAdd;
+                    other.gameObject.SetActive(false);
+                    Debug.Log(coin);
                     break;
                 case "Cannon":
                     break;
                 case "Box":
                     break;
                 case "Heart":
+                    health += healthHeal;
+                    other.gameObject.SetActive(false);
+                    Debug.Log(health);
                     break;
             }
 
