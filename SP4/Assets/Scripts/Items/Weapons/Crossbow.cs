@@ -30,7 +30,7 @@ public class Crossbow : Weapon
 	// Update is called once per frame
 	protected override void Update ()
     {
-        //Testing Shooting
+        base.Update();
 	}
 
     public override bool Use(Vector2 direction)
@@ -59,7 +59,7 @@ public class Crossbow : Weapon
             GameObject p = RefProjectileManager.FetchArrow();
             if (p)
             {
-                p.GetComponent<Arrow>().Activate(firePoint.position, firePoint.rotation, direction);
+                p.GetComponent<Arrow>().Activate(firePoint, this, direction, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
                 return true;
             }
         }

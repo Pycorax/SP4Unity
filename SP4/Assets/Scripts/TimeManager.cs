@@ -6,10 +6,11 @@
         public enum TimeType
         {
             Normal,
-            Game
+            Game,
+            SceneOrganization
         }
 
-        private static double[] timeScale = { 1.0, 1.0 };
+        private static double[] timeScale = { 1.0, 1.0, 1.0f };
 
         public static double GetTimeScale(TimeType type)
         {

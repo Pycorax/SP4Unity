@@ -18,7 +18,7 @@ public class Wand : Weapon
 	// Update is called once per frame
 	protected override void Update ()
     {
-
+        base.Update();
     }
 
     public override bool Use(Vector2 direction)

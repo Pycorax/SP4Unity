@@ -4,7 +4,7 @@ public abstract class Weapon : Item {
 
     [Tooltip("The damage the weapon does.")]
     public int Damage;
-    [Tooltip("The range of the weapon in Unity units.")]
+    [Tooltip("The range of the weapon in tile map units.")]
     public float Range;
     [Tooltip("The fire rate of the weapon in hits/minute.")]
     public float FireRate = 0.0f;

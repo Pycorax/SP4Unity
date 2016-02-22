@@ -18,7 +18,6 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.2.0f3</UnityVersion>
     <RootNamespace></RootNamespace>
-    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -80,9 +79,6 @@
     <Compile Include="Assets\Scripts\AI\Waypoint.cs" />
     <Compile Include="Assets\Scripts\BackgroundScroller.cs" />
     <Compile Include="Assets\Scripts\Characters\Character.cs" />
-    <Compile Include="Assets\Scripts\Framework\IPausable.cs" />
-    <Compile Include="Assets\Scripts\Framework\IResourceManagable.cs" />
-    <Compile Include="Assets\Scripts\Framework\PausableResourceManager.cs" />
     <Compile Include="Assets\Scripts\Framework\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
@@ -98,8 +94,8 @@
     <Compile Include="Assets\Scripts\Items\Item.cs" />
     <Compile Include="Assets\Scripts\Items\Others\Explosion.cs" />
     <Compile Include="Assets\Scripts\Items\Projectiles\Arrow.cs" />
-    <Compile Include="Assets\Scripts\Items\Projectiles\Empowered Arrow.cs" />
-    <Compile Include="Assets\Scripts\Items\Projectiles\Flying Sword.cs" />
+    <Compile Include="Assets\Scripts\Items\Projectiles\EmpoweredArrow.cs" />
+    <Compile Include="Assets\Scripts\Items\Projectiles\FlyingSword.cs" />
     <Compile Include="Assets\Scripts\Items\Projectiles\Lightning.cs" />
     <Compile Include="Assets\Scripts\Items\Projectiles\Projectile.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\Crossbow.cs" />

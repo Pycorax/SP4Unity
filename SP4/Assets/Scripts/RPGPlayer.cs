@@ -47,7 +47,7 @@ public class RPGPlayer : Character
     // Getters
     public Weapon CurrentWeapon { get { return currentWeapon; } }
     public int EnemyKilled { get { return enemyKilled; } }
-
+    public Vector2 CurrentDirection { get { return previousDir; } }
 
     //Projectile Controller
     public ProjectileManager ProjectileManager;
@@ -63,6 +63,7 @@ public class RPGPlayer : Character
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         inventory = GetComponent<Inventory>();
+        //healthBar = GetComponentInChildren<GameObject>();
 
         // Align the weapons properly if they exist
         if (LeftWeapon != null)
@@ -92,12 +93,14 @@ public class RPGPlayer : Character
         {
             // Get the directional unit vector
             previousDir = rigidBody.velocity.normalized;
+            // Calculate the angle using Atan2 and add RotationSpriteOffset due to realign with original sprite direction
+            float angle = Mathf.Atan2(previousDir.y, previousDir.x) * Mathf.Rad2Deg + RotationSpriteOffset;
+            // Set the rotation according to a calculation based on the angle
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
-        // Calculate the angle using Atan2 and add RotationSpriteOffset due to realign with original sprite direction
-        float angle = Mathf.Atan2(previousDir.y, previousDir.x) * Mathf.Rad2Deg + RotationSpriteOffset;
-        // Set the rotation according to a calculation based on the angle
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        //HealthBar Testing
+        HealthBarUpdate(Health);
     }
 
     /// <summary>
@@ -452,11 +455,6 @@ public class RPGPlayer : Character
         }
     }
 
-    public Weapon getCurrentActiveWeapon()
-    {
-        return currentWeapon;
-    }
-
     /// <summary>
     /// Sets the alignment of the sprite on the left or right hand.
     /// </summary>
@@ -584,8 +582,8 @@ public class RPGPlayer : Character
         }
         else if (proj != null)
         {
-            // TODO: Pass in weapon
-            currentWeapon.CombinedUse(null, proj);
+            currentWeapon.CombinedUse(proj.Owner, proj);
         }
     }
+
 }

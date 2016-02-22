@@ -2,9 +2,9 @@
 
 public class Projectile : MonoBehaviour
 {
-
-    public int Damage;
-    public float Speed;
+    public int Damage = 0;
+    public float Speed = 0.0f;
+    private float DistTillDespawn;
 
     // Owner
     private Weapon owner = null;
@@ -19,16 +19,21 @@ public class Projectile : MonoBehaviour
     // Use this for initialization
     protected virtual void Start()
     {
-        Damage = 0;
-        Speed = 0.0f;
         gameObject.SetActive(false);
 	}
 	
 	// Update is called once per frame
     protected virtual void Update()
     {
+        // Deduct distance
+        DistTillDespawn -= GetComponent<Rigidbody2D>().velocity.magnitude * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+        if (DistTillDespawn <= 0.0f)
+        {
+            Disable();
+        }
+
         // Disable itself if out of camera
-        MultiPlayerCamera cam = Camera.main.GetComponent<MultiPlayerCamera>();
+        /*MultiPlayerCamera cam = Camera.main.GetComponent<MultiPlayerCamera>();
         Vector3 camMaxBound = new Vector3(cam.RightBound, cam.TopBound);
         Vector3 camMinBound = new Vector3(cam.LeftBound, cam.BottomBound);
         Vector3 pMaxBound = new Vector3(RightBound, TopBound);
@@ -36,14 +41,16 @@ public class Projectile : MonoBehaviour
         if (pMinBound.x > camMaxBound.x || pMaxBound.x < camMinBound.x || pMinBound.y > camMaxBound.y || pMaxBound.y < camMinBound.y)
         {
             Disable();
-        }
+        }*/
 	}
 
-    public virtual void Activate(Vector3 position, Quaternion rotation, Vector2 direction)
+    public virtual void Activate(Transform data, Weapon shooter, Vector2 direction, float distTillDespawn)
     {
         gameObject.SetActive(true);
-        transform.position = position;
-        transform.rotation = rotation;
+        transform.position = data.position;
+        transform.rotation = data.rotation;
+        DistTillDespawn = distTillDespawn;
+        Owner = shooter;
         MoveTowards(direction);
     }
 
@@ -75,6 +82,7 @@ public class Projectile : MonoBehaviour
             //If Collided with Enemy Unit
             //Reduce Enemy HP (currently no function for that)
             Enemy.Enemy enemy = collision.gameObject.GetComponent<Enemy.Enemy>();
+            Disable();
         }
         else if(collision.gameObject.GetComponent<RPGPlayer>() != null)
         {
