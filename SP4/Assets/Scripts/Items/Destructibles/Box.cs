@@ -11,11 +11,17 @@ public class Box : Destroyables
     {
         anim = GetComponent<Animator>();
         anim.speed = AnimSpeed;
+        anim.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    public void Onhit(GameObject Gameobject)
+    {
+        anim.enabled = true;
     }
 }
