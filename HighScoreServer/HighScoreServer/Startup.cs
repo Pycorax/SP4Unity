@@ -12,13 +12,15 @@ namespace HighScoreServer
         private IConfiguration config;
 
         // This function sets up the configuration environment
-        public Startup(IApplicationEnvironment env)
+        public Startup(IApplicationEnvironment env, IHostingEnvironment hEnv)
         {
             config = new ConfigurationBuilder()
                 .SetBasePath(env.ApplicationBasePath)
                 .AddEnvironmentVariables()
                 .AddJsonFile("config.json")
                 .AddJsonFile("config.dev.json", true)
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{hEnv.EnvironmentName}.json", optional: true)
                 .AddUserSecrets()
                 .Build();
         }

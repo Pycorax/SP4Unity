@@ -1,7 +1,4 @@
 ﻿{
   "debug": false,
-  "InMemoryDB": false,
-  "Data": {
-    "HighScore": { "ConnectionString": "Server=(LocalDb)\\MSSQLLocalDb;Database=HighScoreDB" }
-  }
+  "InMemoryDB": false
 }
