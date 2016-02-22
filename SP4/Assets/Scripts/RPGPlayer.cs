@@ -47,7 +47,7 @@ public class RPGPlayer : Character
     // Getters
     public Weapon CurrentWeapon { get { return currentWeapon; } }
     public int EnemyKilled { get { return enemyKilled; } }
-
+    public Vector2 CurrentDirection { get { return previousDir; } }
 
     //Projectile Controller
     public ProjectileManager ProjectileManager;
@@ -453,11 +453,6 @@ public class RPGPlayer : Character
                 useTimeDelta = 0.0f;
             }
         }
-    }
-
-    public Weapon getCurrentActiveWeapon()
-    {
-        return currentWeapon;
     }
 
     /// <summary>
