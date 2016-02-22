@@ -53,6 +53,7 @@ public class ProjectileManager : MonoBehaviour
         {
             GameObject arrow = Instantiate(ArrowBlueprint);
             arrow.SetActive(false);
+            arrow.transform.parent = transform;
             ArrowPool.Add(arrow);
         }
     }
@@ -63,6 +64,7 @@ public class ProjectileManager : MonoBehaviour
         {
             GameObject ea = Instantiate(EmpoweredArrowBlueprint);
             ea.SetActive(false);
+            ea.transform.parent = transform;
             EmpoweredArrowPool.Add(ea);
         }
     }
@@ -73,6 +75,7 @@ public class ProjectileManager : MonoBehaviour
         {
             GameObject fs = Instantiate(FlyingSwordBlueprint);
             fs.SetActive(false);
+            fs.transform.parent = transform;
             FlyingSwordPool.Add(fs);
         }
     }
@@ -83,6 +86,7 @@ public class ProjectileManager : MonoBehaviour
         {
             GameObject lightning = Instantiate(LightningBlueprint);
             lightning.SetActive(false);
+            lightning.transform.parent = transform;
             LightningPool.Add(lightning);
         }
     }

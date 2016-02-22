@@ -67,10 +67,12 @@ public class RPGPlayer : MonoBehaviour
         if (LeftWeapon != null)
         {
             alignWeapon(ref LeftWeapon, true);
+            LeftWeapon.RefProjectileManager = ProjectileManager;
         }
         if (RightWeapon != null)
         {
             alignWeapon(ref RightWeapon, false);
+            RightWeapon.RefProjectileManager = ProjectileManager;
         }
     }
 

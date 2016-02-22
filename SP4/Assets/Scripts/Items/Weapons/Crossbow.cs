@@ -49,26 +49,7 @@ public class Crossbow : Weapon
 
     public override bool Use(Vector2 direction)
     {
-        // Use the base class Use() to do fire rate control
-        bool usable = base.Use(direction);
-
-        // If we are able to use it this round...
-        //if (usable)
-        {
-            // ...do what we have to do
-            //Fire Projectile from projectile class
-            //Play Firing Animation
-            //arrow.MoveTowards(direction);
-            //projectile = PManager.FetchArrow();
-        }
-
-        // Return the value back
-        return usable;
-    }
-
-    public void Shoot(Vector2 direction)
-    {
-        if (Use(direction))
+        if (base.Use(direction))
         {
             // Shooting cancer
             /*Debug.Log("Shooting");
@@ -93,8 +74,10 @@ public class Crossbow : Weapon
             if (p)
             {
                 p.GetComponent<Arrow>().Activate(firePoint.position, firePoint.rotation, direction);
+                return true;
             }
         }
+        return false;
     }
 
     protected override void combinedUse(Weapon other, params object[] details)
