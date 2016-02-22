@@ -52,8 +52,7 @@ public class ProjectileManager : MonoBehaviour
         for (int i = 0; i < size; i++)
         {
             GameObject arrow = Instantiate(ArrowBlueprint);
-            arrow.SetActive(false);
-            arrow.transform.parent = transform;
+            setCommonData(arrow);
             ArrowPool.Add(arrow);
         }
     }
@@ -63,8 +62,7 @@ public class ProjectileManager : MonoBehaviour
         for (int i = 0; i < size; i++)
         {
             GameObject ea = Instantiate(EmpoweredArrowBlueprint);
-            ea.SetActive(false);
-            ea.transform.parent = transform;
+            setCommonData(ea);
             EmpoweredArrowPool.Add(ea);
         }
     }
@@ -74,8 +72,7 @@ public class ProjectileManager : MonoBehaviour
         for (int i = 0; i < size; i++)
         {
             GameObject fs = Instantiate(FlyingSwordBlueprint);
-            fs.SetActive(false);
-            fs.transform.parent = transform;
+            setCommonData(fs);
             FlyingSwordPool.Add(fs);
         }
     }
@@ -85,8 +82,7 @@ public class ProjectileManager : MonoBehaviour
         for (int i = 0; i < size; i++)
         {
             GameObject lightning = Instantiate(LightningBlueprint);
-            lightning.SetActive(false);
-            lightning.transform.parent = transform;
+            setCommonData(lightning);
             LightningPool.Add(lightning);
         }
     }
@@ -158,5 +154,13 @@ public class ProjectileManager : MonoBehaviour
         {
             l.GetComponent<Rigidbody2D>().isKinematic = movement;
         }
+    }
+
+    private void setCommonData(GameObject go)
+    {
+        go.SetActive(false);
+        float size = GetComponent<TileMap>().TileSize * 2.0f;
+        go.transform.localScale.Set(size, size, 1);
+        go.transform.parent = transform;
     }
 }

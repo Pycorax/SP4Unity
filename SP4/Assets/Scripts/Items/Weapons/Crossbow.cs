@@ -5,18 +5,13 @@ public class Crossbow : Weapon
 {
     //public GameObject projectile;
 
-    private float projectileSpeed;
-
-
-    public LayerMask notToHit;
-
-    float timeToFire = 0;
+    //private float projectileSpeed;
 
     Transform firePoint;
 
-    public float ProjectileSpeed { get { return projectileSpeed; } set { projectileSpeed = value; } }
+    //public float ProjectileSpeed { get { return projectileSpeed; } set { projectileSpeed = value; } }
 
-    public float projectileMaxSpeed = 5;
+    //public float projectileMaxSpeed = 5;
 
     ////////////////////////////////////////////
     
@@ -24,15 +19,6 @@ public class Crossbow : Weapon
 	// Use this for initialization
     protected override void Start ()
     {
-        Name = "Crossbow";
-
-        Damage = 5;
-
-        //1 per second
-        FireRate = 0;
-
-        
-
         firePoint = transform.FindChild("FirePoint");
 
         if(!firePoint)

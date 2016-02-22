@@ -7,27 +7,23 @@ public abstract class Weapon : Item {
     [Tooltip("The range of the weapon in Unity units.")]
     public float Range;
     [Tooltip("The fire rate of the weapon in hits/minute.")]
-    public float FireRate;
+    public float FireRate = 0.0f;
 
-    public ProjectileManager RefProjectileManager;
+    public ProjectileManager RefProjectileManager { get { return refProjectileManager; } set { refProjectileManager = value; } }
+    private ProjectileManager refProjectileManager;
 
-    /// <summary>
-    /// The time between shots in milliseconds
-    /// </summary>
-    private float fireRate;
     /// <summary>
     /// The actual recorded time between shots in milliseconds
     /// </summary>
     private float useTimeDelta = 0.0f;
 
     // Getters
-    public bool CanUse { get { return useTimeDelta >= fireRate; } }
+    public bool CanUse { get { return useTimeDelta >= FireRate; } }
 
 	// Use this for initialization
 	protected override void Start ()
     {
         // Initialize the fire rate based on the values provided
-        fireRate = 1000 / (FireRate / 60);
     }
 	
 	// Update is called once per frame

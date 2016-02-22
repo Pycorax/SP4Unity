@@ -67,12 +67,12 @@ public class RPGPlayer : Character
         // Align the weapons properly if they exist
         if (LeftWeapon != null)
         {
-            alignWeapon(ref LeftWeapon, true);
+            //alignWeapon(ref LeftWeapon, true);
             LeftWeapon.RefProjectileManager = ProjectileManager;
         }
         if (RightWeapon != null)
         {
-            alignWeapon(ref RightWeapon, false);
+            //alignWeapon(ref RightWeapon, false);
             RightWeapon.RefProjectileManager = ProjectileManager;
         }
     }
