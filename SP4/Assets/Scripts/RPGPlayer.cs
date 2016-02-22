@@ -72,6 +72,9 @@ public class RPGPlayer : MonoBehaviour
         {
             alignWeapon(ref RightWeapon, false);
         }
+
+        // Initialize the health
+        health = MaxHealth;
     }
 
     // Update is called once per frame
@@ -503,7 +506,7 @@ public class RPGPlayer : MonoBehaviour
         health -= damage;
 
         // Clamp the health so we don't go crazy with the health accidentally
-        Mathf.Clamp(health, 0, MaxHealth);
+        health = Mathf.Clamp(health, 0, MaxHealth);
     }
 
     void Heal(int healing)
@@ -517,7 +520,7 @@ public class RPGPlayer : MonoBehaviour
         health += healing;
 
         // Clamp the health so we don't go crazy with the health accidentally
-        Mathf.Clamp(health, 0, MaxHealth);
+        health = Mathf.Clamp(health, 0, MaxHealth);
     }
 
     #endregion
