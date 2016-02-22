@@ -16,6 +16,8 @@ public class ProjectileManager : MonoBehaviour
     public GameObject EmpoweredArrowBlueprint;
     [Tooltip("Empowered Arrow default pool size")]
     public int EmpoweredArrowPoolSize = 2;
+    [Tooltip("Reference to the ExplosionManager for getting Explosion objects")]
+    public ResourceManager ExplosionManager;
     private List<GameObject> EmpoweredArrowPool = new List<GameObject>();
 
     // Flying Sword
@@ -63,6 +65,7 @@ public class ProjectileManager : MonoBehaviour
         {
             GameObject ea = Instantiate(EmpoweredArrowBlueprint);
             setCommonData(ref ea);
+            ea.GetComponent<EmpoweredArrow>().ExplosionManager = ExplosionManager;
             EmpoweredArrowPool.Add(ea);
         }
     }

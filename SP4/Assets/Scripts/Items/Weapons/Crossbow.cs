@@ -3,18 +3,7 @@
 
 public class Crossbow : Weapon
 {
-    //public GameObject projectile;
-
-    //private float projectileSpeed;
-
     Transform firePoint;
-
-    //public float ProjectileSpeed { get { return projectileSpeed; } set { projectileSpeed = value; } }
-
-    //public float projectileMaxSpeed = 5;
-
-    ////////////////////////////////////////////
-    
 
 	// Use this for initialization
     protected override void Start ()
@@ -38,7 +27,8 @@ public class Crossbow : Weapon
         if (base.Use(direction))
         {
             // Shooting cancer
-            /*Debug.Log("Shooting");
+            /*
+            Debug.Log("Shooting");
             // Ensure that the direction passed in is a direction
             direction.Normalize();
 
@@ -54,7 +44,8 @@ public class Crossbow : Weapon
 
             RaycastHit2D hit = Physics2D.Raycast(firePointPos, direction, 100, notToHit);
 
-            Debug.DrawLine(firePointPos, direction * 100);*/
+            Debug.DrawLine(firePointPos, direction * 100);
+            */
 
             GameObject p = RefProjectileManager.FetchArrow();
             if (p)
@@ -68,7 +59,7 @@ public class Crossbow : Weapon
 
     protected override void combinedUse(Weapon other, params object[] details)
     {
-        // Explosive Arcane Shot
+        #region Explosive Arcane Shot (Wand => Crossbow)
         if (other is Wand)
         {
             Projectile arrow = null;
@@ -88,8 +79,22 @@ public class Crossbow : Weapon
             // Check if we found it
             if (arrow != null)
             {
-                // TODO: Change the projectile
+                // Create the Empowered Arrow
+                var empoweredArrow = RefProjectileManager.FetchEmpoweredArrow().GetComponent<EmpoweredArrow>();
+
+                // Get a handle to the owner of this weapon to get shoot direction
+                var parent = GetComponentInParent<RPGPlayer>();
+
+                // Initialize and fire the Empowered Arrow
+                if (empoweredArrow && parent)
+                {
+                    empoweredArrow.Activate(firePoint, this, parent.CurrentDirection, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
+                }
+
+                // Destroy the existing Arrow
+                arrow.transform.gameObject.SetActive(false);
             }
         }
+        #endregion
     }
 }

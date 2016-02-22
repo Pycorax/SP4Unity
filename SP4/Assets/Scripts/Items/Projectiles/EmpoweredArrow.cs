@@ -4,8 +4,8 @@
 
 public class EmpoweredArrow : Projectile
 {
-    //2 Tiles 
-    public int explodeRadius = 2;
+    [Tooltip("Reference to the ExplosionManager for getting Explosion objects")]
+    public ResourceManager ExplosionManager;
 
 	// Use this for initialization
 	protected override void Start ()
@@ -26,9 +26,13 @@ public class EmpoweredArrow : Projectile
         base.Activate(data, shooter, direction, distTillDespawn);
     }
 
-    private void OnCollisionEnter2D(Collider2D other)
+    public override void OnCollisionEnter2D(Collision2D other)
     {
-        // On collision, start explosion
+        base.OnCollisionEnter2D(other);
 
+        // On collision, start explosion
+        var explosion = ExplosionManager.Fetch();
+        explosion.SetActive(true);
+        explosion.transform.position = other.transform.position;
     }
 }

@@ -2,27 +2,36 @@
 
 public class Wand : Weapon
 {
-    public Lightning lightning;
-	// Use this for initialization
-	protected override void Start () {
-        Name = "Wand";
-        Damage = 3;
+    Transform firePoint;
 
-        //1 Tile
-        Range = 5;
+    // Use this for initialization
+    protected override void Start()
+    {
+        firePoint = transform.FindChild("FirePoint");
 
-        //1 per second
-        FireRate = 1;
-	}
-	
-	// Update is called once per frame
-	protected override void Update ()
+        if (!firePoint)
+        {
+            Debug.LogError("No FirePoint");
+        }
+    }
+
+    // Update is called once per frame
+    protected override void Update ()
     {
         base.Update();
     }
 
     public override bool Use(Vector2 direction)
     {
+        if (base.Use(direction))
+        {
+            GameObject p = RefProjectileManager.FetchLightning();
+            if (p)
+            {
+                p.GetComponent<Lightning>().Activate(firePoint, this, direction, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
+                return true;
+            }
+        }
         return false;
     }
 

@@ -7,7 +7,7 @@ public class Table : Destroyables
     public Animator anim;
 
     // Use this for initialization
-    void Start()
+    protected override void Start()
     {
         anim = GetComponent<Animator>();
         anim.speed = AnimSpeed;
@@ -15,13 +15,10 @@ public class Table : Destroyables
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        
+        base.Update();
     }
 
-    public void Onhit(GameObject Gameobject)
-    {
 
-    }
 }
