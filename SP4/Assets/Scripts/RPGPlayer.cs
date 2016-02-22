@@ -10,6 +10,8 @@ public class RPGPlayer : MonoBehaviour
     public int MaxHealth = 100;
     [Tooltip("The rotation offset from the original sprite direction to get the sprite to face right. This is used for calculating the correct direction of the player sprite.")]
     public float RotationSpriteOffset = -90.0f;
+    [Tooltip("The delay time before currentWeapon will be reset.")]
+    public float CurrentWeaponTimeDelay = 2.0f;
 
     // Player Attributes
     private int health;
@@ -17,8 +19,8 @@ public class RPGPlayer : MonoBehaviour
     private int coin;
 
     // Weapons
-    public Weapon LeftWeapon;
-    public Weapon RightWeapon;
+    private Weapon LeftWeapon;
+    private Weapon RightWeapon;
 
     // Controls
     public bool UseMouseControl = false;
@@ -37,10 +39,12 @@ public class RPGPlayer : MonoBehaviour
 
     // Weapons
     private Weapon currentWeapon;                       // Stores a reference to the last weapon used by the player. For use with combo attacks.
+    private float useTimeDelta;                         // The time since the last weapon attack
 
     // Components
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
 
     // Getters
     public int Health { get { return health; } }
@@ -56,7 +60,12 @@ public class RPGPlayer : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         inventory = GetComponent<Inventory>();
+
+        // Align the weapons properly
+        alignWeapon(ref LeftWeapon, true);
+        alignWeapon(ref RightWeapon, false);
     }
 
     // Update is called once per frame
@@ -288,10 +297,7 @@ public class RPGPlayer : MonoBehaviour
         if (LeftWeapon == null)
         {
             LeftWeapon = weap;
-            LeftWeapon.transform.rotation = transform.rotation;
-            LeftWeapon.transform.position = transform.position;
-            LeftWeapon.transform.localScale = transform.localScale;
-            LeftWeapon.transform.parent = transform;
+            alignWeapon(ref LeftWeapon, true);
 
             return true;
         }
@@ -313,10 +319,8 @@ public class RPGPlayer : MonoBehaviour
         if (RightWeapon == null)
         {
             RightWeapon = weap;
-            RightWeapon.transform.rotation = transform.rotation;
-            RightWeapon.transform.position = transform.position;
-            //LeftWeapon.transform.localScale = transform.localScale;
-            RightWeapon.transform.parent = transform;
+            alignWeapon(ref RightWeapon, false);
+
             return true;
         }
 
@@ -330,7 +334,6 @@ public class RPGPlayer : MonoBehaviour
     /// <returns>Whether the equip process was successful</returns>
     public bool EquipHand(Weapon weap)
     {
-
         // Try to equip right
         if (RightWeapon == null)
         {
@@ -391,36 +394,47 @@ public class RPGPlayer : MonoBehaviour
 
     private void attackUpdate()
     {
+        bool shot = false;
+
+        // Shoot Left
         if (Input.GetKeyDown(LeftAttackKey))
         {
             if (LeftWeapon != null)
             {
-                if (LeftWeapon.FireRate == 0)
+                if(attack(LeftWeapon))
                 {
-                    Debug.Log("using Left Weapon");
-                    currentWeapon = LeftWeapon;
-                    //LeftWeapon.Use(previousDir);
+                    shot = true;
                 }
             }
 
         }
 
+        // Shoot Right
         if (Input.GetKeyDown(RightAttackKey))
         {
             if (RightWeapon != null)
             {
-                // TODO: Right Attack
-                if (RightWeapon.FireRate == 0)
+                if(attack(RightWeapon))
                 {
-                    Debug.Log("using Right Weapon");
-                    currentWeapon = RightWeapon;
-                    //RightWeapon.Use(previousDir);
+                    shot = true;
                 }
             }
         }
-        else
+
+        // If no shots were made, update the last shot timer
+        if (!shot && currentWeapon != null)
         {
-            currentWeapon = null;
+            // Update the timer
+            useTimeDelta += (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+
+            // If it's been too long,
+            if (useTimeDelta > CurrentWeaponTimeDelay)
+            {
+                // Current weapon is not so current anymore so we remove it
+                currentWeapon = null;
+                // Reset the timer for the next instance
+                useTimeDelta = 0.0f;
+            }
         }
     }
 
@@ -428,6 +442,46 @@ public class RPGPlayer : MonoBehaviour
     {
         return currentWeapon;
     }
+
+    /// <summary>
+    /// Sets the alignment of the sprite on the left or right hand.
+    /// </summary>
+    /// <param name="w">The weapon to align.</param>
+    /// <param name="left">To align left or right.</param>
+    private void alignWeapon(ref Weapon w, bool left)
+    {
+        // Get the scale and Abs(x) to ensure we are working with consistent data
+        Vector3 newScale = w.transform.localScale;
+        newScale.x = Mathf.Abs(newScale.x);
+
+        // If right, then we flip the image
+        if (!left)
+        {
+            newScale.x = -newScale.x;
+        }
+
+        // Set the new Scale
+        w.transform.localScale = newScale;
+    }
+
+    /// <summary>
+    /// Uses the weapon selected to attack.
+    /// </summary>
+    /// <param name="w">The weapon to use to attack.</param>
+    /// <returns>Whether the attack was succssful.</returns>
+    private bool attack(Weapon w)
+    {
+        if (w.Use(previousDir))
+        {
+            // Update the current weapon
+            currentWeapon = w;
+
+            return true;
+        }
+
+        return false;
+    }
+
     #endregion
 
     #region Health
@@ -535,5 +589,21 @@ public class RPGPlayer : MonoBehaviour
         //    Debug.Log("Objective End");
         //    ObjectiveStarted = false;
         //}
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        Weapon weapon = other.gameObject.GetComponent<Weapon>();
+        Projectile proj = other.gameObject.GetComponent<Projectile>();
+
+        if (weapon != null)
+        {
+            currentWeapon.CombinedUse(weapon);
+        }
+        else if (proj != null)
+        {
+            // TODO: Pass in weapon
+            currentWeapon.CombinedUse(null, proj);
+        }
     }
 }
