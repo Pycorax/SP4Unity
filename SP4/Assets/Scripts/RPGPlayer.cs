@@ -18,11 +18,6 @@ public class RPGPlayer : MonoBehaviour
     private int enemyKilled;
     private int coin;
 
-    //Destructable Object
-    public int spikeDamage = 20;
-    public int healthHeal = 30;
-    public int coinAdd = 1;
-
     // Weapons
     public Weapon LeftWeapon;
     public Weapon RightWeapon;
@@ -55,7 +50,6 @@ public class RPGPlayer : MonoBehaviour
     public int Health { get { return health; } }
     public Weapon CurrentWeapon { get { return currentWeapon; } }
     public int EnemyKilled { get { return enemyKilled; } }
-    public int Coin { get { return coin; } }
 
 
     //Projectile Controller
@@ -532,6 +526,7 @@ public class RPGPlayer : MonoBehaviour
     {
         string name = other.gameObject.name;
 
+        //Check wether the object is a weapon
         if (other.gameObject.GetComponent<Weapon>() != null)
         {
             Weapon w = other.gameObject.GetComponent<Weapon>();
@@ -545,36 +540,46 @@ public class RPGPlayer : MonoBehaviour
             }
         }
 
+        //Check if the items are destroyables
         if (other.gameObject.GetComponent<Destroyables>() != null)
         {
-            string d = other.gameObject.name;
 
-            switch (d)
+            if (other.gameObject.GetComponent<Exit>() != null)
             {
-                case "Exit":
-                    break;
-                case "Pot":
-                    break;
-                case "Table":
-                    break;
-                case "SpikeTrap":
-                    health -= spikeDamage;
-                    Debug.Log(health);
-                    break;
-                case "Coin":
-                    coin += coinAdd;
-                    other.gameObject.SetActive(false);
-                    Debug.Log(coin);
-                    break;
-                case "Cannon":
-                    break;
-                case "Box":
-                    break;
-                case "Heart":
-                    health += healthHeal;
-                    other.gameObject.SetActive(false);
-                    Debug.Log(health);
-                    break;
+
+            }
+            else if (other.gameObject.GetComponent<Pot>() != null)
+            {
+
+            }
+            else if (other.gameObject.GetComponent<Table>() != null)
+            {
+
+            }
+            else if (other.gameObject.GetComponent<SpikeTrap>() != null)
+            {
+                health -= other.GetComponent<SpikeTrap>().dmg;
+                Debug.Log(health);
+            }
+            else if (other.gameObject.GetComponent<Coin>() != null)
+            {
+                coin += other.GetComponent<Coin>().CoinAmount;
+                other.gameObject.SetActive(false);
+                Debug.Log(coin);
+            }
+            else if (other.gameObject.GetComponent<Cannon>() != null)
+            {
+
+            }
+            else if (other.gameObject.GetComponent<Box>() != null)
+            {
+
+            }
+            else if (other.gameObject.GetComponent<Heart>() != null)
+            {
+                health += other.GetComponent<Heart>().Healing;
+                other.gameObject.SetActive(false);
+                Debug.Log(health);
             }
 
         }

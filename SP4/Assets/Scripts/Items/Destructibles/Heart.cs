@@ -1,19 +1,19 @@
-﻿public class Heart : Destroyables
+﻿using UnityEngine;
+using System.Collections;
+
+public class Heart : Destroyables
 {
-    public override bool Use()
-    {
-        return true;
-    }
+    public int Healing = 30;
 
     // Use this for initialization
-    protected override void Start ()
+    void Start()
     {
-	
-	}
-	
-	// Update is called once per frame
-    protected override void Update()
+
+    }
+
+    // Update is called once per frame
+    void Update()
     {
-	
-	}
+
+    }
 }
