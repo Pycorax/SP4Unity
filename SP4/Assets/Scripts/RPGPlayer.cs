@@ -519,6 +519,17 @@ public class RPGPlayer : MonoBehaviour
 
     private void OnCollisionEnter2D(Collider2D other)
     {
+        Weapon weapon = other.GetComponent<Weapon>();
+        Projectile proj = other.GetComponent<Projectile>();
 
+        if (weapon != null)
+        {
+            currentWeapon.CombinedUse(weapon);
+        }
+        else if (proj != null)
+        {
+            // TODO: Pass in weapon
+            currentWeapon.CombinedUse(null, proj);
+        }
     }
 }
