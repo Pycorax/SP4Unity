@@ -22,8 +22,8 @@ public class RPGPlayer : MonoBehaviour
     public int coinAdd = 1;
 
     // Weapons
-    public Weapon LeftWeapon;
-    public Weapon RightWeapon;
+    private Weapon LeftWeapon;
+    private Weapon RightWeapon;
 
     // Controls
     public bool UseMouseControl = false;
@@ -63,6 +63,10 @@ public class RPGPlayer : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         inventory = GetComponent<Inventory>();
+
+        // Align the weapons properly
+        alignWeapon(ref LeftWeapon, true);
+        alignWeapon(ref RightWeapon, false);
     }
 
     // Update is called once per frame
@@ -294,10 +298,7 @@ public class RPGPlayer : MonoBehaviour
         if (LeftWeapon == null)
         {
             LeftWeapon = weap;
-            LeftWeapon.transform.rotation = transform.rotation;
-            LeftWeapon.transform.position = transform.position;
-            LeftWeapon.transform.localScale = transform.localScale;
-            LeftWeapon.transform.parent = transform;
+            alignWeapon(ref LeftWeapon, true);
 
             return true;
         }
@@ -319,10 +320,8 @@ public class RPGPlayer : MonoBehaviour
         if (RightWeapon == null)
         {
             RightWeapon = weap;
-            RightWeapon.transform.rotation = transform.rotation;
-            RightWeapon.transform.position = transform.position;
-            //LeftWeapon.transform.localScale = transform.localScale;
-            RightWeapon.transform.parent = transform;
+            alignWeapon(ref RightWeapon, false);
+
             return true;
         }
 
@@ -434,6 +433,23 @@ public class RPGPlayer : MonoBehaviour
     {
         return currentWeapon;
     }
+
+    private void alignWeapon(ref Weapon w, bool left)
+    {
+        // Get the scale and Abs(x) to ensure we are working with consistent data
+        Vector3 newScale = w.transform.localScale;
+        newScale.x = Mathf.Abs(newScale.x);
+
+        // If right, then we flip the image
+        if (!left)
+        {
+            newScale.x = -newScale.x;
+        }
+
+        // Set the new Scale
+        w.transform.localScale = newScale;
+    }
+
     #endregion
 
     #region Health
@@ -534,8 +550,8 @@ public class RPGPlayer : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Weapon weapon = other.GetComponent<Weapon>();
-        Projectile proj = other.GetComponent<Projectile>();
+        Weapon weapon = other.gameObject.GetComponent<Weapon>();
+        Projectile proj = other.gameObject.GetComponent<Projectile>();
 
         if (weapon != null)
         {
