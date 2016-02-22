@@ -53,10 +53,10 @@ public class Projectile : MonoBehaviour
         direction.Normalize();
 
         // Calculate the new velocity
-        Vector2 newVelocity = direction * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+        Vector2 newVelocity = direction * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game) * Speed;
 
         // Clamp the velocity
-        newVelocity.x = Mathf.Clamp(newVelocity.x, 0, Speed);
+        //newVelocity.x = Mathf.Clamp(newVelocity.x, 0, Speed);
 
         GetComponent<Rigidbody2D>().velocity = newVelocity;
     }

@@ -134,4 +134,25 @@ public class ProjectileManager : MonoBehaviour
         }
         return null;
     }
+
+    public void SetState(bool movement)
+    {
+        // Set movement state for all projectiles
+        foreach (GameObject a in ArrowPool)
+        {
+            a.GetComponent<Rigidbody2D>().isKinematic = movement;
+        }
+        foreach (GameObject ea in EmpoweredArrowPool)
+        {
+            ea.GetComponent<Rigidbody2D>().isKinematic = movement;
+        }
+        foreach (GameObject fs in FlyingSwordPool)
+        {
+            fs.GetComponent<Rigidbody2D>().isKinematic = movement;
+        }
+        foreach (GameObject l in LightningPool)
+        {
+            l.GetComponent<Rigidbody2D>().isKinematic = movement;
+        }
+    }
 }
