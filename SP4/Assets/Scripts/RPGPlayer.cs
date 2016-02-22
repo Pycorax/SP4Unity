@@ -520,55 +520,46 @@ public class RPGPlayer : Character
 
             if (other.gameObject.GetComponent<Exit>() != null)
             {
-                Debug.Log("Exit");
+                //Debug.Log("Exit");
             }
             else if (other.gameObject.GetComponent<Pot>() != null)
             {
-                Debug.Log("Pot");
+                other.gameObject.GetComponent<Pot>().Onhit(other.gameObject);
+                //Debug.Log("Pot");
             }
             else if (other.gameObject.GetComponent<Table>() != null)
             {
-                Debug.Log("Table");
+                other.gameObject.GetComponent<Table>().Onhit(other.gameObject);
+                //Debug.Log("Table");
             }
             else if (other.gameObject.GetComponent<SpikeTrap>() != null)
             {
                 Injure(other.GetComponent<SpikeTrap>().dmg);
-                Debug.Log("Health: " + health);
+                //Debug.Log("Health: " + health);
             }
             else if (other.gameObject.GetComponent<Coin>() != null)
             {
                 coin += other.GetComponent<Coin>().CoinAmount;
                 other.gameObject.SetActive(false);
-                Debug.Log("Coin: " + coin);
+                //Debug.Log("Coin: " + coin);
             }
-            else if (other.gameObject.GetComponent<Cannon>() != null)
-            {
-                Debug.Log("Cannon");
-            }
+            //else if (other.gameObject.GetComponent<Cannon>() != null)
+            //{
+            //    Debug.Log("Cannon");
+            //}
             else if (other.gameObject.GetComponent<Box>() != null)
             {
-                Debug.Log("Box");
+                other.gameObject.GetComponent<Box>().Onhit(other.gameObject);
+                //Debug.Log("Box");
             }
             else if (other.gameObject.GetComponent<Heart>() != null)
             {
                 Heal(other.GetComponent<Heart>().Healing);
                 other.gameObject.SetActive(false);
-                Debug.Log("Health: " + health);
+                //Debug.Log("Health: " + health);
             }
 
         }
-
-        //if (other.gameObject.GetComponent<ObjectiveStart>() != null && ObjectiveStarted == false)
-        //{
-        //    Debug.Log("Objective Start");
-        //    ObjectiveStarted = true;
-        //}
-
-        //else if (other.gameObject.GetComponent<ObjectiveEnd>() != null && ObjectiveStarted == true)
-        //{
-        //    Debug.Log("Objective End");
-        //    ObjectiveStarted = false;
-        //}
     }
 
     private void OnCollisionEnter2D(Collision2D other)

@@ -15,12 +15,12 @@ public class Box : Destroyables
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-
+        base.Update();
     }
 
-    public void Onhit(GameObject Gameobject)
+    public void Onhit(GameObject gameobject)
     {
         anim.enabled = true;
     }
