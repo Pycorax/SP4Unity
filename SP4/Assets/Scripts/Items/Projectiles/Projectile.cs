@@ -28,7 +28,7 @@ public class Projectile : MonoBehaviour
     protected virtual void Update()
     {
         // Disable itself if out of camera
-        /*MultiPlayerCamera cam = Camera.main.GetComponent<MultiPlayerCamera>();
+        MultiPlayerCamera cam = Camera.main.GetComponent<MultiPlayerCamera>();
         Vector3 camMaxBound = new Vector3(cam.RightBound, cam.TopBound);
         Vector3 camMinBound = new Vector3(cam.LeftBound, cam.BottomBound);
         Vector3 pMaxBound = new Vector3(RightBound, TopBound);
@@ -36,7 +36,7 @@ public class Projectile : MonoBehaviour
         if (pMinBound.x > camMaxBound.x || pMaxBound.x < camMinBound.x || pMinBound.y > camMaxBound.y || pMaxBound.y < camMinBound.y)
         {
             Disable();
-        }*/
+        }
 	}
 
     public virtual void Activate(Vector3 position, Quaternion rotation, Vector2 direction)
