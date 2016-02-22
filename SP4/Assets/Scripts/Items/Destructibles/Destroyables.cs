@@ -24,16 +24,4 @@ public class Destroyables : Item {
     {
         throw new System.NotImplementedException();
     }
-
-	//Animation
-	public virtual void DestroyItem()
-	{
-		if(this is Heart)
-		{
-			//play animation HERE
-
-		   //fucking kah wei doesnt have a player health
-		   //3.8 gpa bois
-		}
-	}
 }

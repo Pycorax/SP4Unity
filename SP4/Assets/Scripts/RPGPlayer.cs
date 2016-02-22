@@ -53,7 +53,6 @@ public class RPGPlayer : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         inventory = GetComponent<Inventory>();
@@ -212,7 +211,7 @@ public class RPGPlayer : MonoBehaviour
             {
                 vertMoved = true;
             }
-        }        
+        }
     }
 
     private void moveTowards(Vector2 direction)
@@ -330,7 +329,7 @@ public class RPGPlayer : MonoBehaviour
     /// <returns>Whether the equip process was successful</returns>
     public bool EquipHand(Weapon weap)
     {
-       
+
         // Try to equip right
         if (RightWeapon == null)
         {
@@ -402,7 +401,7 @@ public class RPGPlayer : MonoBehaviour
                     //LeftWeapon.Use(previousDir);
                 }
             }
-           
+
         }
 
         if (Input.GetKeyDown(RightAttackKey))
@@ -469,7 +468,7 @@ public class RPGPlayer : MonoBehaviour
         if (other.gameObject.GetComponent<Weapon>() != null)
         {
             Weapon w = other.gameObject.GetComponent<Weapon>();
-            if(w != null)
+            if (w != null)
             {
                 EquipHand(w);
             }
@@ -477,6 +476,32 @@ public class RPGPlayer : MonoBehaviour
             {
                 inventory.AddItem(w);
             }
+        }
+
+        if (other.gameObject.GetComponent<Destroyables>() != null)
+        {
+            string d = other.gameObject.name;
+
+            switch (d)
+            {
+                case "Exit":
+                    break;
+                case "Pot":
+                    break;
+                case "Table":
+                    break;
+                case "SpikeTrap":
+                    break;
+                case "Coin":
+                    break;
+                case "Cannon":
+                    break;
+                case "Box":
+                    break;
+                case "Heart":
+                    break;
+            }
+
         }
 
         //if (other.gameObject.GetComponent<ObjectiveStart>() != null && ObjectiveStarted == false)
