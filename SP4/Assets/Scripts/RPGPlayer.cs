@@ -532,7 +532,7 @@ public class RPGPlayer : MonoBehaviour
         //}
     }
 
-    private void OnCollisionEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
 
     }
