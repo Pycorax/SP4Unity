@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : Character
     {
         [Tooltip("Parent GameObject that holds children GameObjects that act as waypoints on the level.")]
         public WaypointManager WaypointMap;
@@ -11,10 +11,6 @@ namespace Enemy
         public List<GameObject> PlayerList;
         [Tooltip("The target waypoint that the enemy will go towards.")]
         public Waypoint FinalTargetWaypoint;
-
-        // Health
-        public int MaxHealth = 100;
-        internal int health;
 
         // Movement
         public float Speed = 200.0f;
@@ -26,14 +22,13 @@ namespace Enemy
         private const float DISTANCE_CHECK_ACCURARCY = 10.0f;               // Used to do "reached position" checking
 
         // Getters
-        public int Health { get { return health; } }
         internal Waypoint CurrentWaypoint { get { return currentWaypoint; } }
 
         // Use this for initialization
-        void Start()
+        protected override void Start()
         {
-            // Init the health
-            health = MaxHealth;
+            // Base Start
+            base.Start();
 
             // Set the Waypoint that we are nearest to right now
             currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);
@@ -43,8 +38,11 @@ namespace Enemy
         }
 
         // Update is called once per frame
-        void Update()
+        protected override void Update()
         {
+            // Base Update
+            base.Update();
+
             // Update the FSM
             if (currentState != null)
             {
@@ -55,6 +53,11 @@ namespace Enemy
             waypointUpdate();
         }
 
+        #region Health
+
+        #endregion
+
+        #region Waypoint
         /// <summary>
         /// Function to update the waypoint movement based on Dijkstra's Algorithm
         /// </summary>
@@ -159,5 +162,6 @@ namespace Enemy
             // Check if we have reached the Waypoint
             return distToTargetSquared > DISTANCE_CHECK_ACCURARCY * DISTANCE_CHECK_ACCURARCY;
         }
+        #endregion
     }
 }

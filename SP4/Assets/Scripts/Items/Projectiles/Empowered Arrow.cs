@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
+
+[RequireComponent(typeof(Collider2D))]
 
 public class EmpoweredArrow : Projectile
 {
-
     //2 Tiles 
     public int explodeRadius = 2;
 
@@ -24,5 +24,11 @@ public class EmpoweredArrow : Projectile
     public override void Activate(Vector3 position, Quaternion rotation, Vector2 direction)
     {
         base.Activate(position, rotation, direction);
+    }
+
+    private void OnCollisionEnter2D(Collider2D other)
+    {
+        // On collision, start explosion
+
     }
 }
