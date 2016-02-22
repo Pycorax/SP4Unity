@@ -18,9 +18,9 @@ public class Lightning : Projectile
         base.Update();
 	}
 
-    public override void Activate(Vector3 position, Quaternion rotation, Vector2 direction)
+    public override void Activate(Vector3 position, Quaternion rotation, Vector2 direction, float distTillDespawn)
     {
-        base.Activate(position, rotation, direction);
+        base.Activate(position, rotation, direction, distTillDespawn);
     }
     
 }
