@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class Wand : Weapon {
- 
+public class Wand : Weapon
+{
     public Sprite wandSprite;
 
     public Lightning lightning;
@@ -13,7 +12,6 @@ public class Wand : Weapon {
 
         //1 Tile
         Range = 5;
-        Width = 1;
 
         //1 per second
         FireRate = 1;
@@ -24,10 +22,26 @@ public class Wand : Weapon {
 	
 	}
 
-    public override void Use(Vector2 direction)
+    public override bool Use(Vector2 direction)
     {
-        //Fire a Lightning Bolt Projectile
-        //Check for Collision with any other weapons
-        lightning.MoveTowards(direction);
+        // Use the base class Use() to do fire rate control
+        bool usable = base.Use(direction);
+
+        // If we are able to use it this round...
+        if (usable)
+        {
+            // ...do what we have to do
+            //Fire a Lightning Bolt Projectile
+            //Check for Collision with any other weapons
+            lightning.MoveTowards(direction);
+        }
+
+        // Return the value back
+        return usable;
+    }
+
+    protected override void combinedUse(Weapon other, params object[] details)
+    {
+        
     }
 }

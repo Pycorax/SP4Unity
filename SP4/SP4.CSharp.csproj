@@ -52,11 +52,17 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
@@ -77,8 +83,15 @@
     <Compile Include="Assets\Scripts\BackgroundScroller.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Items\Destructibles\Box.cs" />
+    <Compile Include="Assets\Scripts\Items\Destructibles\Cannon.cs" />
+    <Compile Include="Assets\Scripts\Items\Destructibles\Coin.cs" />
     <Compile Include="Assets\Scripts\Items\Destructibles\Destroyables.cs" />
+    <Compile Include="Assets\Scripts\Items\Destructibles\Exit.cs" />
     <Compile Include="Assets\Scripts\Items\Destructibles\Heart.cs" />
+    <Compile Include="Assets\Scripts\Items\Destructibles\Pot.cs" />
+    <Compile Include="Assets\Scripts\Items\Destructibles\SpikeTrap.cs" />
+    <Compile Include="Assets\Scripts\Items\Destructibles\Table.cs" />
     <Compile Include="Assets\Scripts\Items\Item.cs" />
     <Compile Include="Assets\Scripts\Items\Projectiles\Arrow.cs" />
     <Compile Include="Assets\Scripts\Items\Projectiles\Empowered Arrow.cs" />
