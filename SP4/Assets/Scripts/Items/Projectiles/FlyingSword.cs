@@ -18,9 +18,9 @@ public class FlyingSword : Projectile
         base.Update();
     }
 
-    public override void Activate(Vector3 position, Quaternion rotation, Vector2 direction, float distTillDespawn)
+    public override void Activate(Transform data, Weapon shooter, Vector2 direction, float distTillDespawn)
     {
-        base.Activate(position, rotation, direction, distTillDespawn);
+        base.Activate(data, shooter, direction, distTillDespawn);
     }
 
     public override void OnCollisionEnter2D(Collision2D collision)
@@ -30,6 +30,10 @@ public class FlyingSword : Projectile
             //If Collided with Enemy Unit
             //Reduce Enemy HP (currently no function for that)
             Enemy.Enemy enemy = collision.gameObject.GetComponent<Enemy.Enemy>();
+        }
+        else if (collision.gameObject.GetComponent<RPGPlayer>() != null)
+        {
+
         }
         else
         {

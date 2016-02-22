@@ -4,7 +4,7 @@ public class Projectile : MonoBehaviour
 {
     public int Damage = 0;
     public float Speed = 0.0f;
-    public float DistTillDespawn = 0.0f;
+    private float DistTillDespawn;
 
     // Owner
     private Weapon owner = null;
@@ -44,12 +44,13 @@ public class Projectile : MonoBehaviour
         }*/
 	}
 
-    public virtual void Activate(Vector3 position, Quaternion rotation, Vector2 direction, float distTillDespawn)
+    public virtual void Activate(Transform data, Weapon shooter, Vector2 direction, float distTillDespawn)
     {
         gameObject.SetActive(true);
-        transform.position = position;
-        transform.rotation = rotation;
+        transform.position = data.position;
+        transform.rotation = data.rotation;
         DistTillDespawn = distTillDespawn;
+        Owner = shooter;
         MoveTowards(direction);
     }
 
