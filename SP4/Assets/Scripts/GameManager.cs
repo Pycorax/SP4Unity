@@ -7,18 +7,21 @@ public class GameManager : MonoBehaviour
     private bool levelended = false;
 
     // Objective
-    private bool objectiveStarted = false;
+    private bool objectivestarted = false;
 
-    public bool LevelEnded { get { return levelended;} set { levelended = value;} }
+    //Getter and setter
+    public bool LevelEnded { get { return levelended; } set { levelended = value; } }
+    public bool ObjeciveStarted { get { return objectivestarted; } set { objectivestarted = value; } }
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         HighScoreSystem.Instance.DownloadScores();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

@@ -520,7 +520,7 @@ public class RPGPlayer : Character
 
             if (other.gameObject.GetComponent<Exit>() != null)
             {
-                //other.gameObject.GetComponent<Exit>().Onhit(other.gameObject);
+                other.gameObject.GetComponent<Exit>().Onhit();
             }
             else if (other.gameObject.GetComponent<Pot>() != null)
             {
