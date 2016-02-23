@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class RPGPlayer : Character
 {
     Inventory inventory;
@@ -596,10 +598,9 @@ public class RPGPlayer : Character
             }
 
         }
-    }
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
+        #region Handle Weapon Combine Use Conditions
+
         Weapon weapon = other.gameObject.GetComponent<Weapon>();
         Projectile proj = other.gameObject.GetComponent<Projectile>();
         RPGPlayer player = other.gameObject.GetComponent<RPGPlayer>();
@@ -617,13 +618,14 @@ public class RPGPlayer : Character
             else
             {
                 // If not doing a CombinedUse(), handle the arrow
-                proj.gameObject.SetActive(false);
+                proj.Disable();
             }
         }
-        else if(player != null)
+        else if (player != null)
         {
             //do nothing yet
         }
-    }
 
+        #endregion
+    }
 }

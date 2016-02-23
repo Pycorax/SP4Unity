@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
-
 public class EmpoweredArrow : Projectile
 {
     [Tooltip("Reference to the ExplosionManager for getting Explosion objects")]
@@ -28,11 +26,14 @@ public class EmpoweredArrow : Projectile
 
     public override void OnTriggerEnter2D(Collider2D other)
     {
-        // On collision, start explosion
+        base.OnTriggerEnter2D(other);
+
+        // Start explosion
         var explosion = ExplosionManager.Fetch();
         explosion.SetActive(true);
-        explosion.transform.position = other.transform.position;
 
-        base.OnTriggerEnter2D(other);
+        // -- Set Explosion Position
+        Vector2 newPos = other.transform.position;
+        explosion.transform.position = newPos;
     }
 }

@@ -123,6 +123,7 @@
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\ScreenData.cs" />
     <Compile Include="Assets\Scripts\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\SplashScreen.cs" />
     <Compile Include="Assets\Scripts\SpriteData.cs" />
     <Compile Include="Assets\Scripts\TileMap\Tile.cs" />
     <Compile Include="Assets\Scripts\TileMap\TileMap.cs" />
