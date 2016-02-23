@@ -51,7 +51,7 @@ public class RPGPlayer : Character
     public Weapon CurrentWeapon { get { return currentWeapon; } }
     public int EnemyKilled { get { return enemyKilled; } }
     public Vector2 CurrentDirection { get { return currentDir; } }
-    public int Coins { get { return coin; }}
+    public int Coins { get { return coin; } set { coin = value; } }
 
     //Projectile Controller
     public ProjectileManager ProjectileManager;
@@ -537,9 +537,7 @@ public class RPGPlayer : Character
     }
 
     #endregion
-
-    #region Collisions and Triggers
-
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         string name = other.gameObject.name;
@@ -627,7 +625,5 @@ public class RPGPlayer : Character
             //do nothing yet
         }
     }
-
-    #endregion
 
 }
