@@ -30,7 +30,10 @@ public abstract class Weapon : Item {
 	protected override void Update ()
     {
         // Update the time between hits
-        useTimeDelta += (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+        if (useTimeDelta < FireRate)
+        {
+            useTimeDelta += (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+        }
 	}
 
     public override bool Use()

@@ -5,7 +5,8 @@ public class Exit : Destroyables
 {
     public float AnimSpeed = 0.5f;
     public Animator anim;
-    
+    public GameManager gamemanager;
+
     // Use this for initialization
     void Start()
     {
@@ -15,13 +16,19 @@ public class Exit : Destroyables
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-
+        base.Update();
     }
 
-    public void Onhit(GameObject Gameobject)
+    public void Onhit()
     {
+        anim.enabled = true;
+    }
 
+    private void LevelEnded()
+    {
+        Debug.Log("LevelEnded");
+        gamemanager.LevelEnded = true;
     }
 }
