@@ -45,7 +45,7 @@ public class Row
 	public List<MultiLayerTile> column = new List<MultiLayerTile>();
 }
 
-public abstract class TileMap : MonoBehaviour
+public class TileMap : MonoBehaviour
 {
 	public static char TILE_SPLIT = ',';
 	public static char TILE_MULTIPLE_LAYER_SPLIT = '|';
@@ -103,6 +103,17 @@ public abstract class TileMap : MonoBehaviour
 	// Use this for initialization
 	void Awake ()
 	{
+        
+    }
+
+    // Use this for initialization
+    protected virtual void Start()
+    {
+        if (!TileSet)
+        {
+            throw new UnityException("No tile set given");
+        }
+
         // Assign tiles blueprint from tile set
         Tile[] blueprints = TileSet.GetComponentsInChildren<Tile>(true);
         for (int index = 0; index < blueprints.Count(); ++index)
@@ -110,18 +121,10 @@ public abstract class TileMap : MonoBehaviour
             tileBlueprints[index] = blueprints[index].gameObject;
         }
 
-		if (Name != "")
-		{
-			loadFile();
+        if (Name != "")
+        {
+            loadFile();
         }
-        WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
-        refWaypointManager.SyncWaypoints();
-    }
-
-    // Use this for initialization
-    void Start()
-    {
-
     }
 	
 	// Update is called once per frame
@@ -129,6 +132,13 @@ public abstract class TileMap : MonoBehaviour
 	{
 	
 	}
+
+    public void Load(string name, int numOfTiles = 18)
+    {
+        Name = name;
+        NumOfTiles = numOfTiles;
+        loadFile();
+    }
 
 	public MultiLayerTile FetchTile(Vector3 position)
 	{
@@ -163,6 +173,11 @@ public abstract class TileMap : MonoBehaviour
 		return new Vector2(rowIndex, colIndex);
 	}
 
+    public void ActivateAllTiles(bool mode)
+    {
+        ActivateTiles(0, rowCount - 1, 0, colCount - 1, mode);
+    }
+
 	public void ActivateTiles(Vector3 topLeftPos, Vector3 bottomRightPos)
 	{
 		Vector2 topLeftIndex = FetchTileIndex(topLeftPos);
@@ -170,7 +185,7 @@ public abstract class TileMap : MonoBehaviour
 		ActivateTiles((int)topLeftIndex.x, (int)bottomRightIndex.x, (int)topLeftIndex.y, (int)bottomRightIndex.y);
     }
 
-    private void ActivateTiles(int rowIndexMin, int rowIndexMax, int colIndexMin, int colIndexMax)
+    private void ActivateTiles(int rowIndexMin, int rowIndexMax, int colIndexMin, int colIndexMax, bool mode = true)
     {
         //if (!isActivated()) // Check if first update is required
         {
@@ -191,7 +206,7 @@ public abstract class TileMap : MonoBehaviour
                         for (int multiIndex = 0; multiIndex < multiTiles.multiLayerTile.Count; ++multiIndex)
                         {
                             GameObject goTile = multiTiles.multiLayerTile[multiIndex];
-                            goTile.SetActive(true);
+                            goTile.SetActive(mode);
                         }
                     }
                 }
@@ -309,7 +324,11 @@ public abstract class TileMap : MonoBehaviour
 	{
 		int numRow = 0, numCol= 0;
 		ArrayList sMap = new ArrayList(); // Write data into
-		StreamReader file = new StreamReader(File.OpenRead(MAP_DIRECTORY + Name + MAP_EXTENSION)); // Open file
+        if (!File.Exists(MAP_DIRECTORY + Name + MAP_EXTENSION))
+        {
+            return false;
+        }
+        StreamReader file = new StreamReader(File.OpenRead(MAP_DIRECTORY + Name + MAP_EXTENSION)); // Open file
 		while (!file.EndOfStream)
 		{
 			string line = file.ReadLine();
@@ -326,6 +345,7 @@ public abstract class TileMap : MonoBehaviour
 			sMap.Add(line);
 		}
 		numRow = sMap.Count;
+        file.Close();
 		if (generateMap(sMap, numRow, numCol))
 		{
 			return true;
