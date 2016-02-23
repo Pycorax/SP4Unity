@@ -45,7 +45,7 @@ public class Row
 	public List<MultiLayerTile> column = new List<MultiLayerTile>();
 }
 
-public class TileMap : MonoBehaviour
+public abstract class TileMap : MonoBehaviour
 {
 	public static char TILE_SPLIT = ',';
 	public static char TILE_MULTIPLE_LAYER_SPLIT = '|';
@@ -69,25 +69,16 @@ public class TileMap : MonoBehaviour
     [Tooltip("Tile Set.")]
     public GameObject TileSet;
 
-    [Tooltip("Player 1 reference.")]
-    public GameObject RefPlayer1;
-
-    [Tooltip("Player 2 reference.")]
-    public GameObject RefPlayer2;
-
-    [Tooltip("Enemy Manager reference.")]
-    public ResourceManager RefEnemyManager;
-
     //[Tooltip("Tiles blueprint for instantiating.")]
-	private GameObject[] tileBlueprints = new GameObject[(int)Tile.TILE_TYPE.NUM_TILE];
+    protected GameObject[] tileBlueprints = new GameObject[(int)Tile.TILE_TYPE.NUM_TILE];
 	[Tooltip("Default tile if no tile is specified.")]
 	public Tile.TILE_TYPE DefaultTile = Tile.TILE_TYPE.TILE_EMPTY;
 
 	// Tile map data
 	[Tooltip("Origin point of Tile Map.")]
-	private TILEMAP_ORIGIN TileMapOrigin = TILEMAP_ORIGIN.TILEMAP_CENTER;
+    protected TILEMAP_ORIGIN TileMapOrigin = TILEMAP_ORIGIN.TILEMAP_CENTER;
 	[Tooltip("Origin point of Tile.")]
-	private TILE_ORIGIN TileOrigin = TILE_ORIGIN.TILE_CENTER;
+	protected TILE_ORIGIN TileOrigin = TILE_ORIGIN.TILE_CENTER;
 	[Tooltip("Name of map file.")]
 	public string Name = "";
 	[Tooltip("Number of tile(s) vertically.")]
@@ -95,23 +86,19 @@ public class TileMap : MonoBehaviour
 
     public int TileSize { get { return tileSize; } }
 
-    private Vector2 NumOfScreenTiles = new Vector2();
-	private int tileSize = 32;
-	private Vector3 tileMapDistToTopLeft = new Vector3();
-	private int rowCount, colCount;
+    protected Vector2 NumOfScreenTiles = new Vector2();
+    protected int tileSize = 32;
+    protected Vector3 tileMapDistToTopLeft = new Vector3();
+    protected int rowCount, colCount;
 
     // For tile map activation optimisation
-    private int minRowIndex = -1, maxRowIndex = -1, minColIndex = -1, maxColIndex = -1;
+    protected int minRowIndex = -1, maxRowIndex = -1, minColIndex = -1, maxColIndex = -1;
 
 
-	private List<Tile> tiles = new List<Tile>();
+    protected List<Tile> tiles = new List<Tile>();
 
-	// Map
-	private List<Row> map = new List<Row>();
-
-    // TODO: Delete this when enemy pool is available
-    private List<GameObject> enemyList = new List<GameObject>();
-
+    // Map
+    protected List<Row> map = new List<Row>();
 
 	// Use this for initialization
 	void Awake ()
@@ -348,7 +335,7 @@ public class TileMap : MonoBehaviour
 
 	private bool generateMap(ArrayList sMap, int numRow, int numCol)
 	{
-		tileSize = calculateTileSize();
+		tileSize = calculateTileSize(ScreenData.GetScreenSize());
 		tileMapDistToTopLeft = generateDistToTopLeft(numRow, numCol);
 		rowCount = numRow;
 		colCount = numCol;
@@ -533,9 +520,8 @@ public class TileMap : MonoBehaviour
 		return topLeft;
 	}
 
-	private int calculateTileSize()
+	private int calculateTileSize(Vector2 screenSize)
 	{
-		Vector2 screenSize = ScreenData.GetScreenSize();
 		NumOfScreenTiles.y = NumOfTiles;
 
 		tileSize = (int)Math.Ceiling(screenSize.y / NumOfScreenTiles.y);
@@ -544,7 +530,7 @@ public class TileMap : MonoBehaviour
 		return tileSize;
 	}
 
-	private GameObject createTile(Tile.TILE_TYPE type, Vector3 pos, Vector3 size)
+	protected virtual GameObject createTile(Tile.TILE_TYPE type, Vector3 pos, Vector3 size)
 	{
         if (type == Tile.TILE_TYPE.TILE_EMPTY)
         {
@@ -559,102 +545,6 @@ public class TileMap : MonoBehaviour
 
 		switch (type)
 		{
-            // TODO: Add special case for tile creation like enemy
-            case Tile.TILE_TYPE.TILE_ENEMY:
-                {
-                    // Create enemy
-                    GameObject enemy = RefEnemyManager.Fetch();
-                    if (enemy)
-                    {
-                        // Set enemy data
-                        Vector3 enemyPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
-                        enemyPos.z = 1.0f;
-                        Vector3 enemySize = size * 2.0f;
-                        enemy.SetActive(true);
-                        enemy.GetComponent<Enemy.Enemy>().Init(enemyPos);
-                        enemy.transform.localScale = enemySize;
-                    }
-
-                    /*GameObject enemy = Instantiate(TileBlueprints[(int)type]);
-                    // Set enemy data
-                    Vector3 enemyPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
-                    enemyPos.z = 1.0f;
-                    Vector3 enemySize = size * 2.0f;
-                    enemy.SetActive(true);
-                    enemy.GetComponent<Enemy.Enemy>().Init(enemyPos);// = pos + new Vector3(size.x, -size.y);
-                    enemy.transform.localScale = enemySize;
-                    // Assign waypoint map to enemy
-                    WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
-                    enemy.GetComponent<Enemy.Enemy>().WaypointMap = refWaypointManager;
-                    enemyList.Add(enemy);*/
-
-                    /*// Create floor tile
-                    tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);
-                    // Set data for each tile
-                    tile.SetActive(false);
-                    tile.transform.position = pos;
-                    tile.transform.localScale = size;
-                    tile.transform.parent = this.transform;*/
-                }
-                break;
-            case Tile.TILE_TYPE.TILE_WAYPOINT:
-                {
-                    WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
-                    if (refWaypointManager)
-                    {
-                        // Create waypoint
-                        GameObject waypoint = Instantiate(tileBlueprints[(int)type]);
-                        Vector3 waypointPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
-                        waypointPos.z = 1.5f;
-                        Vector3 waypointSize = size * 2.0f;
-                        waypoint.transform.position = waypointPos;
-                        waypoint.transform.localScale = waypointSize;
-                        refWaypointManager.Add(waypoint.GetComponent<Waypoint>());
-                    }
-
-                    /*// Create floor tile
-                    tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);
-                    // Set data for each tile
-                    tile.SetActive(false);
-                    tile.transform.position = pos;
-                    tile.transform.localScale = size;
-                    tile.transform.parent = this.transform;*/
-                }
-                break;
-            case Tile.TILE_TYPE.TILE_FIRST_PLAYER:
-                {
-                    Vector3 playerPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
-                    Vector3 playerSize = size * 2.0f;
-                    playerPos.z = 0.0f;
-                    RefPlayer1.transform.position = playerPos;
-                    RefPlayer1.transform.localScale = playerSize;
-
-                    // Create floor tile
-                    /*tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);
-                    // Set data for each tile
-                    tile.SetActive(false);
-                    tile.transform.position = pos;
-                    tile.transform.localScale = size;
-                    tile.transform.parent = this.transform;*/
-                }
-                break;
-            case Tile.TILE_TYPE.TILE_SECOND_PLAYER:
-                {
-                    Vector3 playerPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
-                    Vector3 playerSize = size * 2.0f;
-                    playerPos.z = 0.0f;
-                    RefPlayer2.transform.position = playerPos;
-                    RefPlayer2.transform.localScale = playerSize;
-
-                    // Create floor tile
-                    /*tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);
-                    // Set data for each tile
-                    tile.SetActive(false);
-                    tile.transform.position = pos;
-                    tile.transform.localScale = size;
-                    tile.transform.parent = this.transform;*/
-                }
-                break;
             default:
                 {
                     tile = Instantiate(tileBlueprints[(int)type]);

@@ -18,7 +18,6 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.2.0f3</UnityVersion>
     <RootNamespace></RootNamespace>
-    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -108,6 +107,7 @@
     <Compile Include="Assets\Scripts\Items\Weapons\Sword.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\Wand.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\Weapon.cs" />
+    <Compile Include="Assets\Scripts\LevelEditor.cs" />
     <Compile Include="Assets\Scripts\MultiPlayerCamera.cs" />
     <Compile Include="Assets\Scripts\Objective\Collect_Coins.cs" />
     <Compile Include="Assets\Scripts\Objective\Kill_Enemy.cs" />
@@ -125,6 +125,7 @@
     <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\SplashScreen.cs" />
     <Compile Include="Assets\Scripts\SpriteData.cs" />
+    <Compile Include="Assets\Scripts\TileMap\GameTileMap.cs" />
     <Compile Include="Assets\Scripts\TileMap\Tile.cs" />
     <Compile Include="Assets\Scripts\TileMap\TileMap.cs" />
     <Compile Include="Assets\Scripts\TimeManager.cs" />
