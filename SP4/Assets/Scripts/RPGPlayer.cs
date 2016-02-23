@@ -32,7 +32,7 @@ public class RPGPlayer : Character
     // Movement
     private Vector2 prevHoriDir = Vector2.zero;         // Determines the direction that was last pressed in the horizontal
     private Vector2 prevVertDir = Vector2.zero;         // Determines the direction that was last pressed in the vertical         
-    private Vector2 previousDir = Vector2.up;           // Stores the current direction of the player
+    private Vector2 currentDir = Vector2.up;           // Stores the current direction of the player
     private const float MOUSE_CONTROL_DEADZONE = 5.0f;
 
     // Weapons
@@ -47,7 +47,7 @@ public class RPGPlayer : Character
     // Getters
     public Weapon CurrentWeapon { get { return currentWeapon; } }
     public int EnemyKilled { get { return enemyKilled; } }
-    public Vector2 CurrentDirection { get { return previousDir; } }
+    public Vector2 CurrentDirection { get { return currentDir; } }
 
     //Projectile Controller
     public ProjectileManager ProjectileManager;
@@ -91,10 +91,12 @@ public class RPGPlayer : Character
         // Update the direction of the player
         if (rigidBody.velocity != Vector2.zero)
         {
-            // Get the directional unit vector
-            previousDir = rigidBody.velocity.normalized;
+            // Update the directional unit vector
+            currentDir = rigidBody.velocity.normalized;
+
             // Calculate the angle using Atan2 and add RotationSpriteOffset due to realign with original sprite direction
-            float angle = Mathf.Atan2(previousDir.y, previousDir.x) * Mathf.Rad2Deg + RotationSpriteOffset;
+            float angle = Mathf.Atan2(currentDir.y, currentDir.x) * Mathf.Rad2Deg + RotationSpriteOffset;
+
             // Set the rotation according to a calculation based on the angle
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
@@ -257,6 +259,13 @@ public class RPGPlayer : Character
 
     private void deceleration(bool movedHori, bool moveVert)
     {
+        // Do not decelerate if we aren't moving
+        if (rigidBody.velocity.sqrMagnitude < 10)
+        {
+            rigidBody.velocity = Vector2.zero;
+            return;
+        }
+
         // Calculate the deceleration direction
         Vector2 decelerationDir = -rigidBody.velocity;
         if (decelerationDir == Vector2.zero)
@@ -267,17 +276,19 @@ public class RPGPlayer : Character
 
         // Calculate the deceleration this frame
         Vector2 currDecel = (decelerationDir * Deceleration * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game));
-        if (currDecel.x > Mathf.Abs(rigidBody.velocity.x))
+
+        if (Mathf.Abs(currDecel.x) > Mathf.Abs(rigidBody.velocity.x))
         {
             currDecel.x = -rigidBody.velocity.x;
         }
-        if (currDecel.y > Mathf.Abs(rigidBody.velocity.y))
+        if (Mathf.Abs(currDecel.y) > Mathf.Abs(rigidBody.velocity.y))
         {
             currDecel.y = -rigidBody.velocity.y;
         }
 
         // Calculate the new velocity
         Vector2 newVelocity = rigidBody.velocity + currDecel;
+        // Set the new velocty        
         rigidBody.velocity = newVelocity;
     }
 
@@ -483,7 +494,7 @@ public class RPGPlayer : Character
     /// <returns>Whether the attack was succssful.</returns>
     private bool attack(Weapon w)
     {
-        if (w.Use(previousDir))
+        if (w.Use(currentDir))
         {
             // Update the current weapon
             currentWeapon = w;
