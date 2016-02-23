@@ -568,7 +568,15 @@ public class RPGPlayer : Character
         }
         else if (proj != null)
         {
-            currentWeapon.CombinedUse(proj.Owner, proj);
+            if (currentWeapon != null)
+            {
+                currentWeapon.CombinedUse(proj.Owner, proj);
+            }
+            else
+            {
+                // If not doing a CombinedUse(), handle the arrow
+                proj.gameObject.SetActive(false);
+            }
         }
         else if(player != null)
         {
