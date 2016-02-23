@@ -53,10 +53,6 @@ namespace Enemy
             waypointUpdate();
         }
 
-        #region Health
-
-        #endregion
-
         #region Waypoint
         /// <summary>
         /// Function to update the waypoint movement based on Dijkstra's Algorithm
