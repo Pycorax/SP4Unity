@@ -32,6 +32,9 @@ public class ProjectileManager : MonoBehaviour
     public GameObject LightningBlueprint;
     [Tooltip("Lightning default pool size")]
     public int LightningPoolSize = 20;
+    [Tooltip("Reference to Enemy Manager")]
+    public ResourceManager RefEnemyManager;
+    public TileMap RefTileMap;
     private List<GameObject> LightningPool = new List<GameObject>();
 
     // Use this for initialization
@@ -86,6 +89,8 @@ public class ProjectileManager : MonoBehaviour
         {
             GameObject lightning = Instantiate(LightningBlueprint);
             setCommonData(ref lightning);
+            lightning.GetComponent<Lightning>().RefEnemyManager = RefEnemyManager;
+            lightning.GetComponent<Lightning>().RefTileMap = RefTileMap;
             LightningPool.Add(lightning);
         }
     }

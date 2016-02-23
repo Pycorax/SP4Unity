@@ -75,21 +75,19 @@ public class Projectile : MonoBehaviour
      * 
      * brief: Perform Collision functions
      */
-    public virtual void OnCollisionEnter2D (Collision2D collision)
+    public virtual void OnTriggerEnter2D (Collider2D collision)
     {
         if(collision.gameObject.GetComponent<Enemy.Enemy>() != null)
         {
             //If Collided with Enemy Unit
             //Reduce Enemy HP (currently no function for that)
             Enemy.Enemy enemy = collision.gameObject.GetComponent<Enemy.Enemy>();
+            enemy.Injure(Damage);
             Disable();
         }
         else if(collision.gameObject.GetComponent<RPGPlayer>() != null)
         {
-            //If Collided with other player
-            //Combine Weapon Powerzz
-            //RPGPlayer player = collision.gameObject.GetComponent<RPGPlayer>();
-            //player.getCurrentActiveWeapon().CombineUse(this, collision.gameObject.GetComponent<RPGPlayer>().getCurrentActiveWeapon());
+            // Collision handled by player
         }
         else
         {
@@ -97,9 +95,10 @@ public class Projectile : MonoBehaviour
         }
     }
     
-    public void Disable()
+    public virtual void Disable()
     {
         gameObject.SetActive(false);
+        Owner = null;
     }
 
 }

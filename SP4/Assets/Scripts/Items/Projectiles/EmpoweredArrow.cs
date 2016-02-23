@@ -26,13 +26,13 @@ public class EmpoweredArrow : Projectile
         base.Activate(data, shooter, direction, distTillDespawn);
     }
 
-    public override void OnCollisionEnter2D(Collision2D other)
+    public override void OnTriggerEnter2D(Collider2D other)
     {
-        base.OnCollisionEnter2D(other);
-
         // On collision, start explosion
         var explosion = ExplosionManager.Fetch();
         explosion.SetActive(true);
         explosion.transform.position = other.transform.position;
+
+        base.OnTriggerEnter2D(other);
     }
 }

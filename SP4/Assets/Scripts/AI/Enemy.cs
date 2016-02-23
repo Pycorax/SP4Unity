@@ -46,11 +46,27 @@ namespace Enemy
             // Update the FSM
             if (currentState != null)
             {
-                currentState.Update();
+                //currentState.Update();
             }
             
             // Update Waypoint movement if a target is specified
             waypointUpdate();
+        }
+
+        public void OnCollisionEnter2D(Collision2D other)
+        {
+            if (other.gameObject.GetComponent<Projectile>() != null)
+            {
+                // Collision handled by projectile
+            }
+        }
+
+        public void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.gameObject.GetComponent<Projectile>() != null)
+            {
+                // Collision handled by projectile
+            }
         }
 
         #region Waypoint
