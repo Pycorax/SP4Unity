@@ -520,28 +520,24 @@ public class RPGPlayer : Character
 
             if (other.gameObject.GetComponent<Exit>() != null)
             {
-                //Debug.Log("Exit");
+                other.gameObject.GetComponent<Exit>().Onhit(other.gameObject);
             }
             else if (other.gameObject.GetComponent<Pot>() != null)
             {
                 other.gameObject.GetComponent<Pot>().Onhit(other.gameObject);
-                //Debug.Log("Pot");
             }
             else if (other.gameObject.GetComponent<Table>() != null)
             {
                 other.gameObject.GetComponent<Table>().Onhit(other.gameObject);
-                //Debug.Log("Table");
             }
             else if (other.gameObject.GetComponent<SpikeTrap>() != null)
             {
-                Injure(other.GetComponent<SpikeTrap>().dmg);
-                //Debug.Log("Health: " + health);
+                // Spike trap implementation is in the class itself
             }
             else if (other.gameObject.GetComponent<Coin>() != null)
             {
                 coin += other.GetComponent<Coin>().CoinAmount;
                 other.gameObject.SetActive(false);
-                //Debug.Log("Coin: " + coin);
             }
             //else if (other.gameObject.GetComponent<Cannon>() != null)
             //{
@@ -550,13 +546,11 @@ public class RPGPlayer : Character
             else if (other.gameObject.GetComponent<Box>() != null)
             {
                 other.gameObject.GetComponent<Box>().Onhit(other.gameObject);
-                //Debug.Log("Box");
             }
             else if (other.gameObject.GetComponent<Heart>() != null)
             {
                 Heal(other.GetComponent<Heart>().Healing);
                 other.gameObject.SetActive(false);
-                //Debug.Log("Health: " + health);
             }
 
         }
