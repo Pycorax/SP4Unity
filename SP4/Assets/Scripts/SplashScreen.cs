@@ -7,26 +7,42 @@ public class SplashScreen : MonoBehaviour {
     public Image Splash;
     public float Alpha;
 
+    bool FadedIn = false;
+    bool FadedOut = false;
+
 	// Use this for initialization
-	void Awake () {
+	void Start () {
         //Set Alpha to zero for fade in
         Splash.canvasRenderer.SetAlpha(0f);
-        Alpha = Splash.canvasRenderer.GetAlpha();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-        if(Alpha < 1f)
+        Debug.Log(Splash.canvasRenderer.GetAlpha());
+        if (Splash.canvasRenderer.GetAlpha() < 0.95f && FadedIn == false)
         {
+            Debug.Log("FadeIn");
             FadeIn();
+            if(Splash.canvasRenderer.GetAlpha() >= 0.95f)
+            {
+                FadedIn = true;
+            }
         }
-        else if(Alpha >= 1f)
+        if (FadedIn == true && FadedOut == false)
         {
+            Debug.Log("FadeOut");
             FadeOut();
+            if (Splash.canvasRenderer.GetAlpha() <= 0.05f)
+            {
+                FadedOut = true;
+            }
         }
-
-
+        
+        if(FadedIn == true && FadedOut == true)
+        {
+            Debug.Log("ayylmao");
+            Application.LoadLevel("GameScene");
+        }
 	}
     
     //Delay for 2 Seconds
