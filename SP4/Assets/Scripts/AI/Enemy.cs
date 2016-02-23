@@ -59,6 +59,7 @@ namespace Enemy
         }
 
         #region Waypoint
+
         /// <summary>
         /// Function to update the waypoint movement based on Dijkstra's Algorithm
         /// </summary>
@@ -164,5 +165,21 @@ namespace Enemy
             return distToTargetSquared > DISTANCE_CHECK_ACCURARCY * DISTANCE_CHECK_ACCURARCY;
         }
         #endregion
+
+        #region Collision
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            RPGPlayer player = other.gameObject.GetComponent<RPGPlayer>();
+
+            if(player)
+            {
+                player.Injure(5);
+            }
+        }
+
+        #endregion
+
     }
 }
+
