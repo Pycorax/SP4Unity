@@ -3,24 +3,29 @@ using System.Collections;
 
 public class Collect_Coins : Objectives
 {
-    private int coins = 0;
+    private int coins;
     public int requiredCoins = 50;
+
+    public override void Start()
+    {
+        coins = player.Coins + requiredCoins;
+    }
 
     public override bool IsAchieved() 
     {
-        return (coins >= requiredCoins);
+        if(coins >= requiredCoins)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
  
     public override void Complete() 
     {
+        Debug.Log("Collect_Coins Complete()");
+    }
 
-    }
- 
-    public void OnTriggerEnter2D(Collider2D other) 
-    {
-        if (string.Equals(other.tag, "Coin")) {
-            coins++;
-            Destroy(other.gameObject);
-        }
-    }
 }
