@@ -20,6 +20,7 @@ public class HighScoreSystem
     public List<ScoreEntry> Scores { get { return scores; } }
 
     private static HighScoreSystem instance;
+
     public static HighScoreSystem Instance
     {
         get

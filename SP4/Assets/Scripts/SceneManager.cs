@@ -19,9 +19,24 @@ public class SceneManager : MonoBehaviour {
     }
 
     //Load Up GameScene
-    public void LoadGame()
+    public void LoadGame1()
     {
         Application.LoadLevel("GameScene");
+    }
+
+    public void LoadGame2()
+    {
+        Application.LoadLevel("Level2Scene");
+    }
+
+    public void LoadGame3()
+    {
+        Application.LoadLevel("Level3Scene");
+    }
+
+    public void LoadGame4()
+    {
+        Application.LoadLevel("Level4Scene");
     }
 
     public void LoadOptions()
@@ -42,5 +57,15 @@ public class SceneManager : MonoBehaviour {
     public void LoadScores()
     {
         Application.LoadLevel("ScoreScenes");
+    }
+
+    public void LoadLevelSelectScene()
+    {
+        Application.LoadLevel("LevelSelectScene");
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

@@ -43,7 +43,7 @@ public class SplashScreen : MonoBehaviour {
         //Load Next Scene when done
         if(FadedIn == true && FadedOut == true)
         {
-            Application.LoadLevel("GameScene");
+            Application.LoadLevel("MainMenuScene");
         }
 	}
     
