@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class FlyingSword : Projectile
 {
@@ -12,31 +11,19 @@ public class FlyingSword : Projectile
         //Load Animation
     }
 
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-
-        if (!gameObject.activeSelf)
-        {
-            // Disabled
-            Owner.gameObject.SetActive(true);
-        }
-    }
-
     public override void Activate(Transform data, Weapon shooter, Vector2 direction, float distTillDespawn)
     {
         base.Activate(data, shooter, direction, distTillDespawn);
         shooter.gameObject.SetActive(false);
     }
 
-    public override void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.GetComponent<Enemy.Enemy>() != null)
+        if (other.gameObject.GetComponent<Enemy.Enemy>() != null)
         {
             //If Collided with Enemy Unit
             //Reduce Enemy HP (currently no function for that)
-            Enemy.Enemy enemy = collision.gameObject.GetComponent<Enemy.Enemy>();
+            Enemy.Enemy enemy = other.gameObject.GetComponent<Enemy.Enemy>();
 
             if (prevTarget && enemy != prevTarget)
             {
@@ -48,9 +35,14 @@ public class FlyingSword : Projectile
                 prevTarget = enemy;
             }
         }
-        else if (collision.gameObject.GetComponent<RPGPlayer>() != null)
+        else if (other.gameObject.GetComponent<RPGPlayer>() != null)
         {
             // Collision handled by player
+        }
+        else if (other.gameObject.GetComponent<Projectile>() != null)
+        {
+            // Do not allow collisions with self
+            return;
         }
         else
         {
