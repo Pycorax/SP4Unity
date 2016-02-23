@@ -5,7 +5,7 @@ public class Collect_Coins : Objectives
 {
     private int coins = 0;
     public int requiredCoins = 50;
-    private int coinsNeeded;
+    private int coinsNeeded = 0;
 
     public override void Start()
     {
