@@ -75,8 +75,11 @@ public class TileMap : MonoBehaviour
     [Tooltip("Player 2 reference.")]
     public GameObject RefPlayer2;
 
-    [Tooltip("Tiles blueprint for instantiating.")]
-	public GameObject[] TileBlueprints = new GameObject[(int)Tile.TILE_TYPE.NUM_TILE];
+    [Tooltip("Enemy Manager reference.")]
+    public ResourceManager RefEnemyManager;
+
+    //[Tooltip("Tiles blueprint for instantiating.")]
+	private GameObject[] tileBlueprints = new GameObject[(int)Tile.TILE_TYPE.NUM_TILE];
 	[Tooltip("Default tile if no tile is specified.")]
 	public Tile.TILE_TYPE DefaultTile = Tile.TILE_TYPE.TILE_EMPTY;
 
@@ -117,7 +120,7 @@ public class TileMap : MonoBehaviour
         Tile[] blueprints = TileSet.GetComponentsInChildren<Tile>(true);
         for (int index = 0; index < blueprints.Count(); ++index)
         {
-            TileBlueprints[index] = blueprints[index].gameObject;
+            tileBlueprints[index] = blueprints[index].gameObject;
         }
 
 		if (Name != "")
@@ -547,7 +550,7 @@ public class TileMap : MonoBehaviour
         {
             return null;
         }
-        if (!TileBlueprints[(int)type] && type != Tile.TILE_TYPE.TILE_FIRST_PLAYER && type !=  Tile.TILE_TYPE.TILE_SECOND_PLAYER)
+        if (!tileBlueprints[(int)type] && type != Tile.TILE_TYPE.TILE_FIRST_PLAYER && type !=  Tile.TILE_TYPE.TILE_SECOND_PLAYER && type != Tile.TILE_TYPE.TILE_ENEMY && type != Tile.TILE_TYPE.TILE_WAYPOINT)
         {
             return null;
         }
@@ -560,7 +563,19 @@ public class TileMap : MonoBehaviour
             case Tile.TILE_TYPE.TILE_ENEMY:
                 {
                     // Create enemy
-                    GameObject enemy = Instantiate(TileBlueprints[(int)type]);
+                    GameObject enemy = RefEnemyManager.Fetch();
+                    if (enemy)
+                    {
+                        // Set enemy data
+                        Vector3 enemyPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
+                        enemyPos.z = 1.0f;
+                        Vector3 enemySize = size * 2.0f;
+                        enemy.SetActive(true);
+                        enemy.GetComponent<Enemy.Enemy>().Init(enemyPos);
+                        enemy.transform.localScale = enemySize;
+                    }
+
+                    /*GameObject enemy = Instantiate(TileBlueprints[(int)type]);
                     // Set enemy data
                     Vector3 enemyPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
                     enemyPos.z = 1.0f;
@@ -571,15 +586,15 @@ public class TileMap : MonoBehaviour
                     // Assign waypoint map to enemy
                     WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
                     enemy.GetComponent<Enemy.Enemy>().WaypointMap = refWaypointManager;
-                    enemyList.Add(enemy);
+                    enemyList.Add(enemy);*/
 
-                    // Create floor tile
+                    /*// Create floor tile
                     tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);
                     // Set data for each tile
                     tile.SetActive(false);
                     tile.transform.position = pos;
                     tile.transform.localScale = size;
-                    tile.transform.parent = this.transform;
+                    tile.transform.parent = this.transform;*/
                 }
                 break;
             case Tile.TILE_TYPE.TILE_WAYPOINT:
@@ -588,7 +603,7 @@ public class TileMap : MonoBehaviour
                     if (refWaypointManager)
                     {
                         // Create waypoint
-                        GameObject waypoint = Instantiate(TileBlueprints[(int)type]);
+                        GameObject waypoint = Instantiate(tileBlueprints[(int)type]);
                         Vector3 waypointPos = pos + (new Vector3(size.x, -size.y) * 0.5f);
                         waypointPos.z = 1.5f;
                         Vector3 waypointSize = size * 2.0f;
@@ -597,13 +612,13 @@ public class TileMap : MonoBehaviour
                         refWaypointManager.Add(waypoint.GetComponent<Waypoint>());
                     }
 
-                    // Create floor tile
+                    /*// Create floor tile
                     tile = Instantiate(TileBlueprints[(int)Tile.TILE_TYPE.TILE_FLOOR_1]);
                     // Set data for each tile
                     tile.SetActive(false);
                     tile.transform.position = pos;
                     tile.transform.localScale = size;
-                    tile.transform.parent = this.transform;
+                    tile.transform.parent = this.transform;*/
                 }
                 break;
             case Tile.TILE_TYPE.TILE_FIRST_PLAYER:
@@ -642,7 +657,7 @@ public class TileMap : MonoBehaviour
                 break;
             default:
                 {
-                    tile = Instantiate(TileBlueprints[(int)type]);
+                    tile = Instantiate(tileBlueprints[(int)type]);
 
                     // Set data for each tile
                     tile.SetActive(false);
