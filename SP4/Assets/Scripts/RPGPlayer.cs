@@ -50,8 +50,8 @@ public class RPGPlayer : Character
     // Getters
     public Weapon CurrentWeapon { get { return currentWeapon; } }
     public int EnemyKilled { get { return enemyKilled; } }
-    public Vector2 CurrentDirection { get { return previousDir; } }
-    public int Coins { get { return coin; }}
+    public Vector2 CurrentDirection { get { return currentDir; } }
+    public int Coins { get { return coin; } set { coin = value; } }
 
     //Projectile Controller
     public ProjectileManager ProjectileManager;
