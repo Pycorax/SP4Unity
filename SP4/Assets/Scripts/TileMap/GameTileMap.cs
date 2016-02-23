@@ -13,10 +13,13 @@ public class GameTileMap : TileMap
     public ResourceManager RefEnemyManager;
 
     // Use this for initialization
-    void Start ()
+    protected override void Start ()
     {
-	
-	}
+        base.Start();
+        // Sync waypoints
+        WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
+        refWaypointManager.SyncWaypoints();
+    }
 	
 	// Update is called once per frame
 	void Update ()
