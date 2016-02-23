@@ -4,23 +4,28 @@ using UnityEngine.UI;
 
 public class SplashScreen : MonoBehaviour {
 
-    public Image splash;
+    public Image Splash;
+    public float Alpha;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         //Set Alpha to zero for fade in
-        splash.canvasRenderer.SetAlpha(0);
+        Splash.canvasRenderer.SetAlpha(0f);
+        Alpha = Splash.canvasRenderer.GetAlpha();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        //Fade In
-        splash.CrossFadeAlpha(255, 2, false);
+        if(Alpha < 1f)
+        {
+            FadeIn();
+        }
+        else if(Alpha >= 1f)
+        {
+            FadeOut();
+        }
 
-        StartCoroutine(delay(2));
-
-        splash.CrossFadeAlpha(0, 2, false);
 
 	}
     
@@ -28,5 +33,18 @@ public class SplashScreen : MonoBehaviour {
     IEnumerator delay(int seconds)
     {
         yield return new WaitForSeconds(seconds);
+    }
+
+    
+    //Fade In
+    private void FadeIn()
+    {    
+        Splash.CrossFadeAlpha(1f, 2, false);
+    }
+
+    //Fade Out
+    private void FadeOut()
+    {
+        Splash.CrossFadeAlpha(0f, 2, false);
     }
 }
