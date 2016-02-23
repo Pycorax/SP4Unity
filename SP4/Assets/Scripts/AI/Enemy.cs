@@ -24,6 +24,9 @@ namespace Enemy
         // Getters
         internal Waypoint CurrentWaypoint { get { return currentWaypoint; } }
 
+        //Components
+        public Animator animator;
+
         // Use this for initialization
         protected override void Start()
         {
@@ -35,6 +38,8 @@ namespace Enemy
 
             // Set the default state
             changeCurrentState(new ChaseState());
+
+            animator = GetComponent<Animator>();
         }
 
         // Update is called once per frame

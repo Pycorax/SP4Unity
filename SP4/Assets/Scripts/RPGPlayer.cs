@@ -495,7 +495,9 @@ public class RPGPlayer : Character
     }
 
     #endregion
-    
+
+    #region Collisions and Triggers
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         string name = other.gameObject.name;
@@ -581,5 +583,7 @@ public class RPGPlayer : Character
             //do nothing yet
         }
     }
+
+    #endregion
 
 }
