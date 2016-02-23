@@ -7,10 +7,8 @@
         Damage = 10;
 
         //1 Tile
-        Range = 1;
 
         //1 per second
-        FireRate = 1;
 
 	}
 	

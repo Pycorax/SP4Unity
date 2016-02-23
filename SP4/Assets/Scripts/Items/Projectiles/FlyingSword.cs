@@ -11,6 +11,11 @@ public class FlyingSword : Projectile
         //Load Animation
     }
 
+    protected override void Update()
+    {
+        base.Update();
+    }
+
     public override void Activate(Transform data, Weapon shooter, Vector2 direction, float distTillDespawn)
     {
         base.Activate(data, shooter, direction, distTillDespawn);
@@ -46,14 +51,14 @@ public class FlyingSword : Projectile
         }
         else
         {
-            Owner.gameObject.SetActive(true);
             Disable();
         }
     }
 
     public override void Disable()
     {
-        base.Disable();
         prevTarget = null;
+        Owner.gameObject.SetActive(true);
+        base.Disable();
     }
 }
