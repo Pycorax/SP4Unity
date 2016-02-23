@@ -9,6 +9,8 @@ public class Explosion : MonoBehaviour
     public Vector2 MaxSize;
     [Tooltip("The speed of the explosion.")]
     public float BoomSpeed;
+    [Tooltip("The damage inflicted on the player.")]
+    public int Damage;
 
     // Expansion
     private Vector2 expandDelta;        // The explosion "direction"
@@ -46,6 +48,20 @@ public class Explosion : MonoBehaviour
         {
             // Once we become large enough, it's time to kill ourself
             transform.gameObject.SetActive(false);
+
+            // Reset variables
+            transform.localScale = StartSize;
         }
 	}
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        var enemy = other.gameObject.GetComponent<Enemy.Enemy>();
+
+        // Damage
+        if (enemy)
+        {
+            enemy.Injure(Damage);
+        }
+    }
 }

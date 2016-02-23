@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour
 {
     public int Damage = 0;
     public float Speed = 0.0f;
+    [Tooltip("Use this to adjust the range of a specific projectile.")]
+    public float RangeMultiplier = 1.0f;
     private float DistTillDespawn;
 
     // Owner
@@ -35,11 +39,18 @@ public class Projectile : MonoBehaviour
 
     public virtual void Activate(Transform data, Weapon shooter, Vector2 direction, float distTillDespawn)
     {
+        // Activate this Projectile
         gameObject.SetActive(true);
+        // Initialize Transforms
         transform.position = data.position;
         transform.rotation = data.rotation;
-        DistTillDespawn = distTillDespawn;
+        // Set the range
+        DistTillDespawn = distTillDespawn * RangeMultiplier;
+        // Store a reference to the owner
         Owner = shooter;
+        // Add Collision Exceptions
+        SetCollisionWithOwners(false);
+        // Start moving the Projectile
         MoveTowards(direction);
     }
 
@@ -87,7 +98,30 @@ public class Projectile : MonoBehaviour
     public virtual void Disable()
     {
         gameObject.SetActive(false);
+        // Strip Collison Exceptions
+        SetCollisionWithOwners(true);
+        // Disown the Owner
         Owner = null;
+    }
+
+    /// <summary>
+    /// Use this function to set if this projectile should collide with it's owners
+    /// </summary>
+    /// <param name="collision">If true, collision with owners are enabled.</param>
+    public void SetCollisionWithOwners(bool collision)
+    {
+        // Remove Collision Exceptions
+        var thisCollider = GetComponent<Collider2D>();
+
+        // -- Ensure that the weapon won't crash with the projectile
+        Physics2D.IgnoreCollision(thisCollider, Owner.GetComponent<Collider2D>(), !collision);
+
+        // -- Ensure that the weapon's owner won't crash with the projectile
+        var weapOwner = Owner.transform.GetComponentInParent<RPGPlayer>();
+        if (weapOwner != null)
+        {
+            Physics2D.IgnoreCollision(thisCollider, weapOwner.GetComponent<Collider2D>(), !collision);
+        }
     }
 
 }
