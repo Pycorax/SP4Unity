@@ -28,12 +28,15 @@ public class RPGPlayer : Character
     public KeyCode MoveDownKey = KeyCode.S;
     public KeyCode LeftAttackKey = KeyCode.Q;
     public KeyCode RightAttackKey = KeyCode.E;
+    [Tooltip("The distance from the cursor to the character to start moving.")]
+    public float MinCursorDistance = 100.0f;
+    [Tooltip("The distance from the cursor to the character to reach max speed.")]
+    public float MaxCursorDistance = 400.0f;
 
     // Movement
     private Vector2 prevHoriDir = Vector2.zero;         // Determines the direction that was last pressed in the horizontal
     private Vector2 prevVertDir = Vector2.zero;         // Determines the direction that was last pressed in the vertical         
     private Vector2 currentDir = Vector2.up;           // Stores the current direction of the player
-    private const float MOUSE_CONTROL_DEADZONE = 5.0f;
 
     // Weapons
     private Weapon currentWeapon;                       // Stores a reference to the last weapon used by the player. For use with combo attacks.
@@ -47,7 +50,8 @@ public class RPGPlayer : Character
     // Getters
     public Weapon CurrentWeapon { get { return currentWeapon; } }
     public int EnemyKilled { get { return enemyKilled; } }
-    public Vector2 CurrentDirection { get { return currentDir; } }
+    public Vector2 CurrentDirection { get { return previousDir; } }
+    public int Coins { get { return coin; }}
 
     //Projectile Controller
     public ProjectileManager ProjectileManager;
@@ -92,13 +96,7 @@ public class RPGPlayer : Character
         if (rigidBody.velocity != Vector2.zero)
         {
             // Update the directional unit vector
-            currentDir = rigidBody.velocity.normalized;
-
-            // Calculate the angle using Atan2 and add RotationSpriteOffset due to realign with original sprite direction
-            float angle = Mathf.Atan2(currentDir.y, currentDir.x) * Mathf.Rad2Deg + RotationSpriteOffset;
-
-            // Set the rotation according to a calculation based on the angle
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            directionUpdate(rigidBody.velocity);
         }
 
         //HealthBar Testing
@@ -153,6 +151,24 @@ public class RPGPlayer : Character
                 prevVertDir = Vector2.zero;
             }
         }
+    }
+
+    private void directionUpdate(Vector2 dir)
+    {
+        // Ensure an actual direction is provided
+        if (dir == Vector2.zero)
+        {
+            return;
+        }
+
+        // Update the directional unit vector
+        currentDir = dir.normalized;
+
+        // Calculate the angle using Atan2 and add RotationSpriteOffset due to realign with original sprite direction
+        float angle = Mathf.Atan2(currentDir.y, currentDir.x) * Mathf.Rad2Deg + RotationSpriteOffset;
+
+        // Set the rotation according to a calculation based on the angle
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     private void keyboardMovementInput(out bool horiMoved, out bool vertMoved)
@@ -224,10 +240,14 @@ public class RPGPlayer : Character
 
         // Get the direction to move in
         Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        float distSqr = dir.sqrMagnitude;
 
         // Only move if we are outside the dead zone
-        if (dir.sqrMagnitude > MOUSE_CONTROL_DEADZONE * MOUSE_CONTROL_DEADZONE)
+        if (distSqr > MinCursorDistance * MinCursorDistance)
         {
+            // Determine the speed modifier to apply
+            float speedMod = distSqr / (MaxCursorDistance * MaxCursorDistance);
+
             moveTowards(dir);
 
             // Check for horizontal movement
@@ -240,6 +260,11 @@ public class RPGPlayer : Character
             {
                 vertMoved = true;
             }
+        }
+        else
+        {
+            // Update the direction
+            directionUpdate(dir);
         }
     }
 
