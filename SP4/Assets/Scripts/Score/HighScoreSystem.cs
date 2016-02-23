@@ -1,10 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.IO;
+using System.Net;
 using System.Text;
-using System;
+using UnityEngine;
 
 /// <summary>
 /// A Singleton HighScoreSystem class that works with initializing and loading the HighScore.
