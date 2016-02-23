@@ -245,15 +245,21 @@ public class RPGPlayer : Character
 
     private void moveTowards(Vector2 direction)
     {
+        moveTowards(direction, 1.0f);
+    }
+
+    private void moveTowards(Vector2 direction, float speedModifier)
+    {
         // Ensure that the direction passed in is a direction
         direction.Normalize();
 
         // Calculate the new velocity
-        Vector2 newVelocity = rigidBody.velocity + direction * Acceleration * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+        Vector2 newVelocity = rigidBody.velocity + direction * speedModifier * Acceleration * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
 
         // Clamp the velocity
-        newVelocity.x = Mathf.Clamp(newVelocity.x, -MaxSpeed, MaxSpeed);
+        newVelocity = Vector2.ClampMagnitude(newVelocity, MaxSpeed);
 
+        // Set the velocity
         rigidBody.velocity = newVelocity;
     }
 
