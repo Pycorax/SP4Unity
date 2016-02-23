@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Lightning : Projectile
 {
-
 	// Use this for initialization
 	protected override void Start ()
     {
