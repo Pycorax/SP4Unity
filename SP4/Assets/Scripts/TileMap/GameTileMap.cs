@@ -15,7 +15,9 @@ public class GameTileMap : TileMap
     // Use this for initialization
     protected override void Start ()
     {
+        TotalSize = ScreenData.GetScreenSize();
         base.Start();
+        Load(Name, NumOfTiles);
         // Sync waypoints
         WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
         refWaypointManager.SyncWaypoints();

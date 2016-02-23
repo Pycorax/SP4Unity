@@ -45,7 +45,7 @@ public class Row
 	public List<MultiLayerTile> column = new List<MultiLayerTile>();
 }
 
-public class TileMap : MonoBehaviour
+public abstract class TileMap : MonoBehaviour
 {
 	public static char TILE_SPLIT = ',';
 	public static char TILE_MULTIPLE_LAYER_SPLIT = '|';
@@ -83,6 +83,10 @@ public class TileMap : MonoBehaviour
 	public string Name = "";
 	[Tooltip("Number of tile(s) vertically.")]
 	public int NumOfTiles = 9;
+    [Tooltip("The center point of the tile map.")]
+    public Vector2 CenterPoint = new Vector2(0, 0);
+    [Tooltip("The total size of the tile map.")]
+    public Vector2 TotalSize = new Vector2(1, 1);
 
     public int TileSize { get { return tileSize; } }
 
@@ -121,10 +125,10 @@ public class TileMap : MonoBehaviour
             tileBlueprints[index] = blueprints[index].gameObject;
         }
 
-        if (Name != "")
+        /*if (Name != "")
         {
             loadFile();
-        }
+        }*/
     }
 	
 	// Update is called once per frame
@@ -355,7 +359,7 @@ public class TileMap : MonoBehaviour
 
 	private bool generateMap(ArrayList sMap, int numRow, int numCol)
 	{
-		tileSize = calculateTileSize(ScreenData.GetScreenSize());
+		tileSize = calculateTileSize(TotalSize);
 		tileMapDistToTopLeft = generateDistToTopLeft(numRow, numCol);
 		rowCount = numRow;
 		colCount = numCol;
@@ -518,7 +522,7 @@ public class TileMap : MonoBehaviour
 
 	private Vector3 generateDistToTopLeft(int numRow, int numCol)
 	{
-		Vector3 topLeft = Vector3.zero;
+		Vector3 topLeft = CenterPoint;
 		switch (TileMapOrigin)
 		{
 			case TILEMAP_ORIGIN.TILEMAP_TOP_LEFT:
@@ -528,12 +532,12 @@ public class TileMap : MonoBehaviour
 				break;
 			case TILEMAP_ORIGIN.TILEMAP_CENTER:
 				{
-					topLeft.Set(numCol * tileSize * 0.5f, -(numRow * tileSize * 0.5f), 0.0f);
+					topLeft += new Vector3(numCol * tileSize * 0.5f, -(numRow * tileSize * 0.5f), 0.0f);
 				}
 				break;
 			case TILEMAP_ORIGIN.TILEMAP_BOTTOM_LEFT:
 				{
-					topLeft.Set(0.0f, -(numRow * tileSize), 0.0f);
+					topLeft += new Vector3(0.0f, -(numRow * tileSize), 0.0f);
 				}
 				break;
 		}
