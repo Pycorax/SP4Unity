@@ -26,11 +26,7 @@ public class EmpoweredArrow : Projectile
 
     public override void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if collided with another Projectile
-        if (other.GetComponent<Projectile>() != null)
-        {
-            return;
-        }
+        base.OnTriggerEnter2D(other);
 
         // Start explosion
         var explosion = ExplosionManager.Fetch();
@@ -39,7 +35,5 @@ public class EmpoweredArrow : Projectile
         // -- Set Explosion Position
         Vector2 newPos = other.transform.position;
         explosion.transform.position = newPos;
-
-        base.OnTriggerEnter2D(other);
     }
 }

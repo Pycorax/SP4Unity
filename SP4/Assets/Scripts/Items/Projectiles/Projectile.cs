@@ -89,6 +89,11 @@ public class Projectile : MonoBehaviour
         {
             // Collision handled by player
         }
+        else if (collision.gameObject.GetComponent<Projectile>() != null)
+        {
+            // Do not allow collisions with self
+            return;
+        }
         else
         {
             Disable();
@@ -113,14 +118,18 @@ public class Projectile : MonoBehaviour
         // Remove Collision Exceptions
         var thisCollider = GetComponent<Collider2D>();
 
-        // -- Ensure that the weapon won't crash with the projectile
-        Physics2D.IgnoreCollision(thisCollider, Owner.GetComponent<Collider2D>(), !collision);
-
-        // -- Ensure that the weapon's owner won't crash with the projectile
-        var weapOwner = Owner.transform.GetComponentInParent<RPGPlayer>();
-        if (weapOwner != null)
+        
+        if (Owner != null)
         {
-            Physics2D.IgnoreCollision(thisCollider, weapOwner.GetComponent<Collider2D>(), !collision);
+            // -- Ensure that the weapon won't crash with the projectile
+            Physics2D.IgnoreCollision(thisCollider, Owner.GetComponent<Collider2D>(), !collision);
+
+            // -- Ensure that the weapon's owner won't crash with the projectile
+            var weapOwner = Owner.transform.GetComponentInParent<RPGPlayer>();
+            if (weapOwner != null)
+            {
+                Physics2D.IgnoreCollision(thisCollider, weapOwner.GetComponent<Collider2D>(), !collision);
+            }
         }
     }
 

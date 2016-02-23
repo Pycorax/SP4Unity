@@ -1,10 +1,5 @@
-﻿using UnityEngine;
-
-public class Sword : Weapon
+﻿public class Sword : Weapon
 {
-
-    Transform firePoint;
-    
 	// Use this for initialization
 	protected override void Start () {
 
@@ -25,11 +20,6 @@ public class Sword : Weapon
         base.Update();
     }
 
-    public override bool Use(Vector2 direction)
-    {
-        return false;
-    }
-
     protected override void combinedUse(Weapon other, params object[] details)
     {
         // Destroy the projectile
@@ -47,6 +37,7 @@ public class Sword : Weapon
         }
 
         #region Flying Sword
+
         if (other is Crossbow)
         {
             // -- Check if we found a projectile
@@ -55,17 +46,21 @@ public class Sword : Weapon
                 // Destroy it
                 projectile.Disable();
             }
-            // Launch a Flying Sword
 
-            var flyingsword = RefProjectileManager.FetchFlyingSword().GetComponent<FlyingSword>();
-
-            var parent = GetComponentInParent<RPGPlayer>();
-
-            if(flyingsword && parent)
+            // Check if we can launch a flying sword
+            if (gameObject.activeSelf)
             {
-                flyingsword.Activate(firePoint, this, parent.CurrentDirection, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
+                // Launch a Flying Sword
+                var flyingsword = RefProjectileManager.FetchFlyingSword().GetComponent<FlyingSword>();
+                var parent = GetComponentInParent<RPGPlayer>();
+
+                if (flyingsword && parent)
+                {
+                    flyingsword.Activate(transform, this, parent.CurrentDirection, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
+                }
             }
         }
+
         #endregion
 
         #region Big Sword
