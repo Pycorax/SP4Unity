@@ -46,6 +46,9 @@ public class Explosion : MonoBehaviour
         {
             // Once we become large enough, it's time to kill ourself
             transform.gameObject.SetActive(false);
+
+            // Reset variables
+            transform.localScale = StartSize;
         }
 	}
 }

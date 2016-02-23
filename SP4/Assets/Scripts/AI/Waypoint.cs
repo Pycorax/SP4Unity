@@ -17,11 +17,6 @@ public class Waypoint : MonoBehaviour
     // Getters
     public List<Waypoint> Neighbours { get { return neighbours; } }
 
-#if RAYCAST_DEBUG
-    // Debugging
-    public Waypoint waypoint;
-#endif
-
     // Use this for initialization
     void Start ()
     {
@@ -31,19 +26,6 @@ public class Waypoint : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-#if RAYCAST_DEBUG
-        if (waypoint)
-        {
-            if(HaveLineOfSight(this, waypoint, transform.localScale.x))
-            {
-                GetComponent<SpriteRenderer>().color = new Color(0.0f, 1.0f, 0.0f);
-            }
-            else
-            {
-                GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f);
-            }
-        }
-#endif
     }
 
     /// <summary>
@@ -202,10 +184,6 @@ public class Waypoint : MonoBehaviour
         {
             w1Collider.enabled = colliderEnabled;
         }
-
-#if RAYCAST_DEBUG
-        Debug.DrawLine(w1.transform.position, castInfo.collider.transform.position, Color.yellow, 5.0f, false);
-#endif
 
         // If we are able to collide with w2, means we have a straight line towards it
         return castInfo.collider == w2.GetComponent<Collider2D>();

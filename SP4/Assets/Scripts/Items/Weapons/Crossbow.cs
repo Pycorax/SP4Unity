@@ -59,6 +59,9 @@ public class Crossbow : Weapon
             // Check if we found it
             if (arrow != null)
             {
+                // Destroy the existing Arrow
+                arrow.Disable();
+
                 // Create the Empowered Arrow
                 var empoweredArrow = RefProjectileManager.FetchEmpoweredArrow().GetComponent<EmpoweredArrow>();
 
@@ -68,13 +71,12 @@ public class Crossbow : Weapon
                 // Initialize and fire the Empowered Arrow
                 if (empoweredArrow && parent)
                 {
+                    // Fire the Empowered Arrow
                     empoweredArrow.Activate(firePoint, this, parent.CurrentDirection, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
                 }
-
-                // Destroy the existing Arrow
-                arrow.transform.gameObject.SetActive(false);
             }
         }
+
         #endregion
     }
 }
