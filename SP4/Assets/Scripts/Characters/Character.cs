@@ -58,7 +58,7 @@ public abstract class Character : MonoBehaviour
 
     public void HealthBarUpdate(int health)
     {
-        int currentHP = health / MaxHealth;
+        float currentHP = (float)health / (float)MaxHealth;
         Mathf.Clamp(currentHP, 0, MaxHealth);
         healthBar.transform.localScale = new Vector3(currentHP, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
     }
