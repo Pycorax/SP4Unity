@@ -19,8 +19,6 @@ namespace HighScoreServer
                 .AddEnvironmentVariables()
                 .AddJsonFile("config.json")
                 .AddJsonFile("config.dev.json", true)
-                .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.{hEnv.EnvironmentName}.json", optional: true)
                 .AddUserSecrets()
                 .Build();
         }
@@ -44,7 +42,7 @@ namespace HighScoreServer
             }
             else
             {
-                string scoreDBConnectionStr = config["Data:HighScore:ConnectionString"];
+                string scoreDBConnectionStr = config["Data:DefaultDatabase:ConnectionString"];
                 services.AddEntityFramework()
                     .AddSqlServer()
                     .AddDbContext<Models.ScoreDataContext>(dbConfig => dbConfig.UseSqlServer(scoreDBConnectionStr));
@@ -65,13 +63,6 @@ namespace HighScoreServer
             }
             else
             {
-                //using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
-                //        .CreateScope())
-                //{
-                //    serviceScope.ServiceProvider.GetService<HighScoreServer.Models.ScoreDataContext>()
-                //                      .Database.Migrate();
-                //}
-                // Use a custom user-friendly error page if not
                 app.UseExceptionHandler("/Home/Error");
             }
 
