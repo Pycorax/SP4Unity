@@ -4,11 +4,17 @@ using System.Collections;
 public class Kill_Enemy : Objectives
 {
     private int enemies = 0;
-    public int EnemiesToKill = 10;
+    private int Enemiesneeded = 0;
+    public int requiredEnemies = 10;
+
+    public override void Start()
+    {
+        Enemiesneeded = player.EnemyKilled + requiredEnemies;
+    }
 
     public override bool IsAchieved()
     {
-        if(EnemiesToKill >= enemies)
+        if(enemies >= Enemiesneeded)
         {
             return true;
         }
@@ -23,12 +29,8 @@ public class Kill_Enemy : Objectives
         Debug.Log("Kill_Enemy Complete()");
     }
 
-    public void OnTriggerEnter2D(Collider2D other)
+    public override void Update()
     {
-        if (string.Equals(other.tag, "Enemy"))
-        {
-            enemies++;
-            Destroy(other.gameObject);
-        }
+        enemies = player.EnemyKilled;
     }
 }
