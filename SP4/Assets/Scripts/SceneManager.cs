@@ -26,7 +26,7 @@ public class SceneManager : MonoBehaviour {
 
     public void LoadGame2()
     {
-        Application.LoadLevel("Level2Scene");
+        Application.LoadLevel("WhateverKeithWants");
     }
 
     public void LoadGame3()
