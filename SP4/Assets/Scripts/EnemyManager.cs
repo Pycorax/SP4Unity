@@ -4,6 +4,8 @@ using System.Collections;
 public class EnemyManager : MonoBehaviour
 {
     public WaypointManager WaypointMap;
+    public RPGPlayer RefPlayer1;
+    public RPGPlayer RefPlayer2;
     private ResourceManager list;
 
 	// Use this for initialization
@@ -31,6 +33,8 @@ public class EnemyManager : MonoBehaviour
         if (e)
         {
             e.WaypointMap = WaypointMap;
+            e.PlayerList.Add(RefPlayer1.gameObject);
+            e.PlayerList.Add(RefPlayer2.gameObject);
         }
     }
 }
