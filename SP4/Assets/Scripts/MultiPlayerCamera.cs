@@ -44,9 +44,6 @@ public class MultiPlayerCamera : MonoBehaviour
     // Components
     private new Camera camera;
 
-    // Debug
-    public GameObject TestObject;
-
     // Getters
 
     public float TopBound { get { return transform.position.y + ScreenData.GetScreenSize().y * 0.5f; } }
@@ -61,8 +58,20 @@ public class MultiPlayerCamera : MonoBehaviour
         updateBounds();
     }
 	
-	// Update is called once per frame
-	void Update ()
+    void OnDrawGizmos()
+    {
+        Vector2 topLeftBound = new Vector2(LeftBound + LeftDeadZonePadding, TopBound - TopDeadZonePadding);
+        Vector2 botRightBound = new Vector2(RightBound - RightDeadZonePadding, BottomBound + BottomDeadZonePadding);
+
+        Vector3 testObjPos = new Vector3(topLeftBound.x + (botRightBound.x - topLeftBound.x) * 0.5f, botRightBound.y + (topLeftBound.y - botRightBound.y) * 0.5f, 1.0f);
+
+        // Draw the wire cube to represent the dead zone
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(testObjPos, new Vector3(botRightBound.x - topLeftBound.x, botRightBound.y - topLeftBound.y, 1));
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         // Error checking. This script only works on 2 players.
         if (PlayerList.Count != PLAYER_COUNT)
@@ -82,15 +91,6 @@ public class MultiPlayerCamera : MonoBehaviour
             // Check if this point is outside the deadzone, if so, then we move
             Vector2 topLeftBound = new Vector2(LeftBound + LeftDeadZonePadding, TopBound - TopDeadZonePadding);
             Vector2 botRightBound = new Vector2(RightBound - RightDeadZonePadding, BottomBound + BottomDeadZonePadding);
-
-            #region Debugging Code: Displays Deadzone on Scene
-
-            TestObject.transform.localScale = new Vector3(botRightBound.x - topLeftBound.x, botRightBound.y - topLeftBound.y, 1);
-            Vector3 testObjPos = new Vector3(topLeftBound.x + (botRightBound.x - topLeftBound.x) * 0.5f, botRightBound.y + (topLeftBound.y - botRightBound.y) * 0.5f, 1.0f);
-            testObjPos.z = 1;
-            TestObject.transform.position = testObjPos;
-
-            #endregion
 
             // Only move if we are out of the bounds
             if (!

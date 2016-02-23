@@ -4,19 +4,24 @@ using System.Collections;
 public class GameManager : MonoBehaviour
 {
     // Check if level has ended
-    public bool LevelEnded = false;
+    private bool levelended = false;
 
     // Objective
-    private bool objectiveStarted = false;
+    private bool objectivestarted = false;
 
-	// Use this for initialization
-	void Start ()
+    //Getter and setter
+    public bool LevelEnded { get { return levelended; } set { levelended = value; } }
+    public bool ObjeciveStarted { get { return objectivestarted; } set { objectivestarted = value; } }
+
+    // Use this for initialization
+    void Start()
     {
         HighScoreSystem.Instance.DownloadScores();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

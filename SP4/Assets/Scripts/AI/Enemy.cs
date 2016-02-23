@@ -24,6 +24,9 @@ namespace Enemy
         // Getters
         internal Waypoint CurrentWaypoint { get { return currentWaypoint; } }
 
+        //Components
+        public Animator animator;
+
         // Use this for initialization
         protected override void Start()
         {
@@ -35,6 +38,8 @@ namespace Enemy
 
             // Set the default state
             changeCurrentState(new ChaseState());
+
+            animator = GetComponent<Animator>();
         }
 
         // Update is called once per frame
@@ -46,30 +51,15 @@ namespace Enemy
             // Update the FSM
             if (currentState != null)
             {
-                //currentState.Update();
+                currentState.Update();
             }
             
             // Update Waypoint movement if a target is specified
             waypointUpdate();
         }
 
-        public void OnCollisionEnter2D(Collision2D other)
-        {
-            if (other.gameObject.GetComponent<Projectile>() != null)
-            {
-                // Collision handled by projectile
-            }
-        }
-
-        public void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.gameObject.GetComponent<Projectile>() != null)
-            {
-                // Collision handled by projectile
-            }
-        }
-
         #region Waypoint
+
         /// <summary>
         /// Function to update the waypoint movement based on Dijkstra's Algorithm
         /// </summary>
@@ -175,5 +165,25 @@ namespace Enemy
             return distToTargetSquared > DISTANCE_CHECK_ACCURARCY * DISTANCE_CHECK_ACCURARCY;
         }
         #endregion
+
+        #region Collision
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            RPGPlayer player = other.gameObject.GetComponent<RPGPlayer>();
+
+            if(player)
+            {
+                player.Injure(5);
+            }
+            else if (other.gameObject.GetComponent<Projectile>() != null)
+            {
+                // Collision handled by projectile
+            }
+        }
+
+        #endregion
+
     }
 }
+

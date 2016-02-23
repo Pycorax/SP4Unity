@@ -26,27 +26,6 @@ public class Crossbow : Weapon
     {
         if (base.Use(direction))
         {
-            // Shooting cancer
-            /*
-            Debug.Log("Shooting");
-            // Ensure that the direction passed in is a direction
-            direction.Normalize();
-
-            // Calculate the new velocity
-            Vector2 newVelocity = direction * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
-
-            // Clamp the velocity
-            newVelocity.x = Mathf.Clamp(newVelocity.x, 0, projectileMaxSpeed);
-
-            rigidBody.velocity = newVelocity;
-
-            Vector2 firePointPos = new Vector2(firePoint.position.x, firePoint.position.y);
-
-            RaycastHit2D hit = Physics2D.Raycast(firePointPos, direction, 100, notToHit);
-
-            Debug.DrawLine(firePointPos, direction * 100);
-            */
-
             GameObject p = RefProjectileManager.FetchArrow();
             if (p)
             {
@@ -60,6 +39,7 @@ public class Crossbow : Weapon
     protected override void combinedUse(Weapon other, params object[] details)
     {
         #region Explosive Arcane Shot (Wand => Crossbow)
+
         if (other is Wand)
         {
             Projectile arrow = null;

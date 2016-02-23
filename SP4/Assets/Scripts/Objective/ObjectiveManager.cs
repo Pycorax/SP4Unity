@@ -6,6 +6,7 @@ public class ObjectiveManager : MonoBehaviour
 
     public Objectives[] objectives;
     public GameManager manager;
+    private bool objectivecompletedbefore;
 
     void Start()
     {
@@ -22,10 +23,11 @@ public class ObjectiveManager : MonoBehaviour
         {
             if (manager.LevelEnded == true)
             {
-                if (objective.IsAchieved())
+                if (objective.IsAchieved() == true && objectivecompletedbefore == false)
                 {
                     objective.Complete();
-                    Destroy(objective);
+                    objectivecompletedbefore = true;
+                    //Destroy(objective);
                 }
             }
         }

@@ -3,15 +3,21 @@ using System.Collections;
 
 public class No_Dmg_Taken : Objectives
 {
-    RPGPlayer player;
 
     public override bool IsAchieved()
     {
-        return (player.Health == player.MaxHealth);
+        if(player.Health == player.MaxHealth)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public override void Complete()
     {
-
+        Debug.Log("No_Dmg_Taken Complete()");
     }
 }

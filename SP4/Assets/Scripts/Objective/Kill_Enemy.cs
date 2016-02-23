@@ -8,12 +8,19 @@ public class Kill_Enemy : Objectives
 
     public override bool IsAchieved()
     {
-        return (EnemiesToKill >= enemies);
+        if(EnemiesToKill >= enemies)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public override void Complete()
     {
-
+        Debug.Log("Kill_Enemy Complete()");
     }
 
     public void OnTriggerEnter2D(Collider2D other)

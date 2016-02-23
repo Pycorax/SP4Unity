@@ -60,7 +60,10 @@ public abstract class Character : MonoBehaviour
     {
         float currentHP = (float)health / (float)MaxHealth;
         currentHP = Mathf.Clamp(currentHP, 0, MaxHealth);
-        healthBar.transform.localScale = new Vector3(currentHP, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
+        if(health != null)
+        {
+            healthBar.transform.localScale = new Vector3(currentHP, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
+        }   
     }
 
     #endregion

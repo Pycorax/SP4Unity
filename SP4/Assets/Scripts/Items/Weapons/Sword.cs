@@ -2,6 +2,8 @@
 
 public class Sword : Weapon
 {
+
+    Transform firePoint;
     
 	// Use this for initialization
 	protected override void Start () {
@@ -44,25 +46,41 @@ public class Sword : Weapon
             }
         }
 
+        #region Flying Sword
         if (other is Crossbow)
         {
             // -- Check if we found a projectile
             if (projectile != null)
             {
                 // Destroy it
+                projectile.Disable();
             }
-
             // Launch a Flying Sword
+
+            var flyingsword = RefProjectileManager.FetchFlyingSword().GetComponent<FlyingSword>();
+
+            var parent = GetComponentInParent<RPGPlayer>();
+
+            if(flyingsword && parent)
+            {
+                flyingsword.Activate(firePoint, this, parent.CurrentDirection, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
+            }
         }
+        #endregion
+
+        #region Big Sword
         else if (other is Wand)
         {
             // -- Check if we found a projectile
             if (projectile != null)
             {
                 // Destroy it
+                projectile.Disable();
             }
 
             // Set the sword to be larger
+
         }
+        #endregion
     }
 }

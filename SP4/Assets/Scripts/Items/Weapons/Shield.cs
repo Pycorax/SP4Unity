@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Shield : Weapon
 {
+    Transform firePoint;
+
     // Use this for initialization
 	protected override void Start ()
     {
@@ -43,17 +45,32 @@ public class Shield : Weapon
                 break;
             }
         }
-
+        #region Arrow Barrage
         if (other is Crossbow)
         {
             // -- Check if we found a projectile
             if (projectile != null)
             {
                 // Destroy it
+                projectile.Disable();
             }
-
             // Barrage of Arrows
+            for(int i = 0; i < 5; i++)
+            {
+                var arrow = RefProjectileManager.FetchArrow().GetComponent<Arrow>();
+
+                var parent = GetComponentInParent<RPGPlayer>();
+
+                if(arrow && parent)
+                {
+                    arrow.Activate(firePoint, this, parent.CurrentDirection, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
+                }
+            }
+            
         }
+        #endregion  
+
+        #region Big Shield
         else if (other is Wand)
         {
             // -- Check if we found a projectile
@@ -64,5 +81,6 @@ public class Shield : Weapon
 
             // Set the shield to be larger
         }
+        #endregion
     }
 }

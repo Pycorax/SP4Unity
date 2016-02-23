@@ -18,13 +18,11 @@ public class Lightning : Projectile
         Damage = 3;
         //Load Animation
 	}
-	
-	// Update is called once per frame
-	protected override void Update ()
-    {
-        base.Update();
 
-        if (gameObject.activeSelf && target)
+    // Update is called once per frame
+    protected override void Update()
+    {
+        if (target)
         {
             // Move towards target
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Speed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game));
@@ -59,6 +57,10 @@ public class Lightning : Projectile
                     }
                 }
             }
+        }
+        else
+        {
+            base.Update();
         }
     }
 

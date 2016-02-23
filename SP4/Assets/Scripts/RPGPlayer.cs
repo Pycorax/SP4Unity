@@ -28,12 +28,15 @@ public class RPGPlayer : Character
     public KeyCode MoveDownKey = KeyCode.S;
     public KeyCode LeftAttackKey = KeyCode.Q;
     public KeyCode RightAttackKey = KeyCode.E;
+    [Tooltip("The distance from the cursor to the character to start moving.")]
+    public float MinCursorDistance = 100.0f;
+    [Tooltip("The distance from the cursor to the character to reach max speed.")]
+    public float MaxCursorDistance = 400.0f;
 
     // Movement
     private Vector2 prevHoriDir = Vector2.zero;         // Determines the direction that was last pressed in the horizontal
     private Vector2 prevVertDir = Vector2.zero;         // Determines the direction that was last pressed in the vertical         
-    private Vector2 previousDir = Vector2.up;           // Stores the current direction of the player
-    private const float MOUSE_CONTROL_DEADZONE = 5.0f;
+    private Vector2 currentDir = Vector2.up;           // Stores the current direction of the player
 
     // Weapons
     private Weapon currentWeapon;                       // Stores a reference to the last weapon used by the player. For use with combo attacks.
@@ -47,7 +50,8 @@ public class RPGPlayer : Character
     // Getters
     public Weapon CurrentWeapon { get { return currentWeapon; } }
     public int EnemyKilled { get { return enemyKilled; } }
-    public Vector2 CurrentDirection { get { return previousDir; } }
+    public Vector2 CurrentDirection { get { return currentDir; } }
+    public int Coins { get { return coin; } set { coin = value; } }
 
     //Projectile Controller
     public ProjectileManager ProjectileManager;
@@ -91,12 +95,8 @@ public class RPGPlayer : Character
         // Update the direction of the player
         if (rigidBody.velocity != Vector2.zero)
         {
-            // Get the directional unit vector
-            previousDir = rigidBody.velocity.normalized;
-            // Calculate the angle using Atan2 and add RotationSpriteOffset due to realign with original sprite direction
-            float angle = Mathf.Atan2(previousDir.y, previousDir.x) * Mathf.Rad2Deg + RotationSpriteOffset;
-            // Set the rotation according to a calculation based on the angle
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            // Update the directional unit vector
+            directionUpdate(rigidBody.velocity);
         }
 
         //HealthBar Testing
@@ -151,6 +151,24 @@ public class RPGPlayer : Character
                 prevVertDir = Vector2.zero;
             }
         }
+    }
+
+    private void directionUpdate(Vector2 dir)
+    {
+        // Ensure an actual direction is provided
+        if (dir == Vector2.zero)
+        {
+            return;
+        }
+
+        // Update the directional unit vector
+        currentDir = dir.normalized;
+
+        // Calculate the angle using Atan2 and add RotationSpriteOffset due to realign with original sprite direction
+        float angle = Mathf.Atan2(currentDir.y, currentDir.x) * Mathf.Rad2Deg + RotationSpriteOffset;
+
+        // Set the rotation according to a calculation based on the angle
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     private void keyboardMovementInput(out bool horiMoved, out bool vertMoved)
@@ -222,10 +240,14 @@ public class RPGPlayer : Character
 
         // Get the direction to move in
         Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        float distSqr = dir.sqrMagnitude;
 
         // Only move if we are outside the dead zone
-        if (dir.sqrMagnitude > MOUSE_CONTROL_DEADZONE * MOUSE_CONTROL_DEADZONE)
+        if (distSqr > MinCursorDistance * MinCursorDistance)
         {
+            // Determine the speed modifier to apply
+            float speedMod = distSqr / (MaxCursorDistance * MaxCursorDistance);
+
             moveTowards(dir);
 
             // Check for horizontal movement
@@ -239,24 +261,42 @@ public class RPGPlayer : Character
                 vertMoved = true;
             }
         }
+        else
+        {
+            // Update the direction
+            directionUpdate(dir);
+        }
     }
 
     private void moveTowards(Vector2 direction)
+    {
+        moveTowards(direction, 1.0f);
+    }
+
+    private void moveTowards(Vector2 direction, float speedModifier)
     {
         // Ensure that the direction passed in is a direction
         direction.Normalize();
 
         // Calculate the new velocity
-        Vector2 newVelocity = rigidBody.velocity + direction * Acceleration * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+        Vector2 newVelocity = rigidBody.velocity + direction * speedModifier * Acceleration * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
 
         // Clamp the velocity
-        newVelocity.x = Mathf.Clamp(newVelocity.x, -MaxSpeed, MaxSpeed);
+        newVelocity = Vector2.ClampMagnitude(newVelocity, MaxSpeed);
 
+        // Set the velocity
         rigidBody.velocity = newVelocity;
     }
 
     private void deceleration(bool movedHori, bool moveVert)
     {
+        // Do not decelerate if we aren't moving
+        if (rigidBody.velocity.sqrMagnitude < 10)
+        {
+            rigidBody.velocity = Vector2.zero;
+            return;
+        }
+
         // Calculate the deceleration direction
         Vector2 decelerationDir = -rigidBody.velocity;
         if (decelerationDir == Vector2.zero)
@@ -267,17 +307,19 @@ public class RPGPlayer : Character
 
         // Calculate the deceleration this frame
         Vector2 currDecel = (decelerationDir * Deceleration * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game));
-        if (currDecel.x > Mathf.Abs(rigidBody.velocity.x))
+
+        if (Mathf.Abs(currDecel.x) > Mathf.Abs(rigidBody.velocity.x))
         {
             currDecel.x = -rigidBody.velocity.x;
         }
-        if (currDecel.y > Mathf.Abs(rigidBody.velocity.y))
+        if (Mathf.Abs(currDecel.y) > Mathf.Abs(rigidBody.velocity.y))
         {
             currDecel.y = -rigidBody.velocity.y;
         }
 
         // Calculate the new velocity
         Vector2 newVelocity = rigidBody.velocity + currDecel;
+        // Set the new velocty        
         rigidBody.velocity = newVelocity;
     }
 
@@ -483,7 +525,7 @@ public class RPGPlayer : Character
     /// <returns>Whether the attack was succssful.</returns>
     private bool attack(Weapon w)
     {
-        if (w.Use(previousDir))
+        if (w.Use(currentDir))
         {
             // Update the current weapon
             currentWeapon = w;
@@ -520,15 +562,15 @@ public class RPGPlayer : Character
 
             if (other.gameObject.GetComponent<Exit>() != null)
             {
-                other.gameObject.GetComponent<Exit>().Onhit(other.gameObject);
+                other.gameObject.GetComponent<Exit>().Onhit();
             }
             else if (other.gameObject.GetComponent<Pot>() != null)
             {
-                other.gameObject.GetComponent<Pot>().Onhit(other.gameObject);
+                other.gameObject.GetComponent<Pot>().Onhit();
             }
             else if (other.gameObject.GetComponent<Table>() != null)
             {
-                other.gameObject.GetComponent<Table>().Onhit(other.gameObject);
+                other.gameObject.GetComponent<Table>().Onhit();
             }
             else if (other.gameObject.GetComponent<SpikeTrap>() != null)
             {
@@ -545,7 +587,7 @@ public class RPGPlayer : Character
             //}
             else if (other.gameObject.GetComponent<Box>() != null)
             {
-                other.gameObject.GetComponent<Box>().Onhit(other.gameObject);
+                other.gameObject.GetComponent<Box>().Onhit();
             }
             else if (other.gameObject.GetComponent<Heart>() != null)
             {
@@ -568,7 +610,15 @@ public class RPGPlayer : Character
         }
         else if (proj != null)
         {
-            currentWeapon.CombinedUse(proj.Owner, proj);
+            if (currentWeapon != null)
+            {
+                currentWeapon.CombinedUse(proj.Owner, proj);
+            }
+            else
+            {
+                // If not doing a CombinedUse(), handle the arrow
+                proj.gameObject.SetActive(false);
+            }
         }
         else if(player != null)
         {
