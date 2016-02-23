@@ -19,9 +19,4 @@ public class Exit : Destroyables
     {
 
     }
-
-    public void Onhit(GameObject Gameobject)
-    {
-
-    }
 }

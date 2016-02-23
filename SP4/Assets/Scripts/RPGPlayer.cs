@@ -520,15 +520,15 @@ public class RPGPlayer : Character
 
             if (other.gameObject.GetComponent<Exit>() != null)
             {
-                other.gameObject.GetComponent<Exit>().Onhit(other.gameObject);
+                //other.gameObject.GetComponent<Exit>().Onhit(other.gameObject);
             }
             else if (other.gameObject.GetComponent<Pot>() != null)
             {
-                other.gameObject.GetComponent<Pot>().Onhit(other.gameObject);
+                other.gameObject.GetComponent<Pot>().Onhit();
             }
             else if (other.gameObject.GetComponent<Table>() != null)
             {
-                other.gameObject.GetComponent<Table>().Onhit(other.gameObject);
+                other.gameObject.GetComponent<Table>().Onhit();
             }
             else if (other.gameObject.GetComponent<SpikeTrap>() != null)
             {
@@ -545,7 +545,7 @@ public class RPGPlayer : Character
             //}
             else if (other.gameObject.GetComponent<Box>() != null)
             {
-                other.gameObject.GetComponent<Box>().Onhit(other.gameObject);
+                other.gameObject.GetComponent<Box>().Onhit();
             }
             else if (other.gameObject.GetComponent<Heart>() != null)
             {

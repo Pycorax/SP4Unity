@@ -20,7 +20,7 @@ public class Table : Destroyables
         base.Update();
     }
 
-    public void Onhit(GameObject gameobject)
+    public void Onhit()
     {
         anim.enabled = true;
     }
