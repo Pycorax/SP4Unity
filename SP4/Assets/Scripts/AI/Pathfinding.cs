@@ -12,6 +12,12 @@ public class Pathfinding
     /// <returns>A stack that contains the path. If no path is possible, null is returned instead.</returns>
     public static Stack<Waypoint> Dijkstra(List<Waypoint> waypointList, Waypoint current, Waypoint target)
     {
+        // Don't need to calculate, you're already here
+        if (current == target)
+        {
+            return null;
+        }
+
         // Dictionary to store the distance to each Waypoint associated to the Waypoint
         Dictionary<Waypoint, float> distToWaypoint = new Dictionary<Waypoint, float>();
         // Dictionary to store the previous Waypoint accessed to access the key Waypoint

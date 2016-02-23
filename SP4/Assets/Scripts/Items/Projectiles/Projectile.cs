@@ -31,17 +31,6 @@ public class Projectile : MonoBehaviour
         {
             Disable();
         }
-
-        // Disable itself if out of camera
-        /*MultiPlayerCamera cam = Camera.main.GetComponent<MultiPlayerCamera>();
-        Vector3 camMaxBound = new Vector3(cam.RightBound, cam.TopBound);
-        Vector3 camMinBound = new Vector3(cam.LeftBound, cam.BottomBound);
-        Vector3 pMaxBound = new Vector3(RightBound, TopBound);
-        Vector3 pMinBound = new Vector3(LeftBound, BottomBound);
-        if (pMinBound.x > camMaxBound.x || pMaxBound.x < camMinBound.x || pMinBound.y > camMaxBound.y || pMaxBound.y < camMinBound.y)
-        {
-            Disable();
-        }*/
 	}
 
     public virtual void Activate(Transform data, Weapon shooter, Vector2 direction, float distTillDespawn)
@@ -75,21 +64,19 @@ public class Projectile : MonoBehaviour
      * 
      * brief: Perform Collision functions
      */
-    public virtual void OnCollisionEnter2D (Collision2D collision)
+    public virtual void OnTriggerEnter2D (Collider2D collision)
     {
         if(collision.gameObject.GetComponent<Enemy.Enemy>() != null)
         {
             //If Collided with Enemy Unit
             //Reduce Enemy HP (currently no function for that)
             Enemy.Enemy enemy = collision.gameObject.GetComponent<Enemy.Enemy>();
+            enemy.Injure(Damage);
             Disable();
         }
         else if(collision.gameObject.GetComponent<RPGPlayer>() != null)
         {
-            //If Collided with other player
-            //Combine Weapon Powerzz
-            //RPGPlayer player = collision.gameObject.GetComponent<RPGPlayer>();
-            //player.getCurrentActiveWeapon().CombineUse(this, collision.gameObject.GetComponent<RPGPlayer>().getCurrentActiveWeapon());
+            // Collision handled by player
         }
         else
         {
@@ -97,9 +84,10 @@ public class Projectile : MonoBehaviour
         }
     }
     
-    public void Disable()
+    public virtual void Disable()
     {
         gameObject.SetActive(false);
+        Owner = null;
     }
 
 }

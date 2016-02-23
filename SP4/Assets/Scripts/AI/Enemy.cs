@@ -176,6 +176,10 @@ namespace Enemy
             {
                 player.Injure(5);
             }
+            else if (other.gameObject.GetComponent<Projectile>() != null)
+            {
+                // Collision handled by projectile
+            }
         }
 
         #endregion

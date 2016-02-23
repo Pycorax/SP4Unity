@@ -200,6 +200,12 @@ public class WaypointManager : MonoBehaviour
 
     public Waypoint GetNearestWaypointToGoTo(Waypoint currentPos, Waypoint targetPos)
     {
+        // We can't go to ourselves
+        if (currentPos == targetPos)
+        {
+            return null;
+        }
+
         // Calculate and return the next point to go to
         Stack<Waypoint> path = Pathfinding.Dijkstra(waypointList, currentPos, targetPos);
 
