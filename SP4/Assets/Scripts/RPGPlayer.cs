@@ -566,6 +566,7 @@ public class RPGPlayer : Character
     {
         Weapon weapon = other.gameObject.GetComponent<Weapon>();
         Projectile proj = other.gameObject.GetComponent<Projectile>();
+        RPGPlayer player = other.gameObject.GetComponent<RPGPlayer>();
 
         if (weapon != null)
         {
@@ -574,6 +575,10 @@ public class RPGPlayer : Character
         else if (proj != null)
         {
             currentWeapon.CombinedUse(proj.Owner, proj);
+        }
+        else if(player != null)
+        {
+            //do nothing yet
         }
     }
 
