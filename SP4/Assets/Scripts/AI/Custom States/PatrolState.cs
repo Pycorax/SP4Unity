@@ -17,7 +17,7 @@ namespace Enemy
         protected override void init()
         {
             Neighbourcount = parent.CurrentWaypoint.Neighbours.Count;
-            randomnum = Random.Range(0, Neighbourcount);
+            randomnum = Random.Range(0, Neighbourcount - 1);
         }
 
         protected override void update()
