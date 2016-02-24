@@ -544,7 +544,7 @@ public abstract class TileMap : MonoBehaviour
 		return topLeft;
 	}
 
-	private int calculateTileSize(Vector2 screenSize)
+	protected int calculateTileSize(Vector2 screenSize)
 	{
 		NumOfScreenTiles.y = NumOfTiles;
 

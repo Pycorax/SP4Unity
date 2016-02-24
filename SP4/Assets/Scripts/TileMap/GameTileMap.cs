@@ -16,6 +16,7 @@ public class GameTileMap : TileMap
     protected override void Start ()
     {
         TotalSize = ScreenData.GetScreenSize();
+        tileSize = calculateTileSize(TotalSize);
         base.Start();
         Load(Name, NumOfTiles);
         // Sync waypoints
