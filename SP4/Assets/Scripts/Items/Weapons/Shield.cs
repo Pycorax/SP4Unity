@@ -79,9 +79,11 @@ public class Shield : Weapon
             if (projectile != null)
             {
                 // Destroy it
+                projectile.Disable();
             }
 
             // Set the shield to be larger
+            
         }
         #endregion
     }

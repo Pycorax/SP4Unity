@@ -91,8 +91,11 @@ public class RPGPlayer : Character
         base.Update();
 
         // Updates
-        movementUpdate();
-        attackUpdate();
+        if (Health > 0)
+        {
+            movementUpdate();
+            attackUpdate();
+        }
 
         // Update the direction of the player
         if (rigidBody.velocity != Vector2.zero)

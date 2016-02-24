@@ -8,6 +8,7 @@ public class ScoreDisplay : MonoBehaviour {
 
     private List<ScoreEntry> scoreList;
 
+
 	// Use this for initialization
 	void Start () {
 
@@ -24,10 +25,17 @@ public class ScoreDisplay : MonoBehaviour {
         //    scoreList.Add(i);
         //}
 
-        //Sort the Scores
-        //Uses default comparer, which is found in ScoreEntry Class
-        //IT SHOULD, NOTE SHOULD, sort by Score
+        /*                 [[UNTESTED]]
+        *Sort the Scores
+        *Uses default comparer, which is found in ScoreEntry Class
+        *IT SHOULD, NOTE SHOULD, sort by Score
+        */
         scoreList.Sort();
+
+        foreach (var i in scoreList)
+        {
+            Debug.Log(i.Name + ", " + i.Score);
+        }
 	}
 	
 	// Update is called once per frame
