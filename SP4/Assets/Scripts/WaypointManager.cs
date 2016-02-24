@@ -210,7 +210,7 @@ public class WaypointManager : MonoBehaviour
         Stack<Waypoint> path = Pathfinding.Dijkstra(waypointList, currentPos, targetPos);
 
         // A path was found...
-        if (path.Count > 0)
+        if (path != null || path.Count > 0)
         {
             return path.Peek();
         }
