@@ -39,11 +39,16 @@ public class Projectile : MonoBehaviour
 
     public virtual void Activate(Transform data, Weapon shooter, Vector2 direction, float distTillDespawn)
     {
+        Activate(data, shooter, direction, data.rotation, distTillDespawn);
+    }
+
+    public virtual void Activate(Transform data, Weapon shooter, Vector2 direction, Quaternion rotation, float distTillDespawn)
+    {
         // Activate this Projectile
         gameObject.SetActive(true);
         // Initialize Transforms
         transform.position = data.position;
-        transform.rotation = data.rotation;
+        transform.rotation = rotation;
         // Set the range
         DistTillDespawn = distTillDespawn * RangeMultiplier;
         // Store a reference to the owner
