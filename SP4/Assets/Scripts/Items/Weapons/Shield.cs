@@ -8,13 +8,19 @@ public class Shield : Weapon
     public float BarrageRange = 10.0f;
     [Tooltip("The field of view angle where arrows would be fired from for an Arrow Barrage.")]
     public float BarrageFOV = 130.0f;
+    [Tooltip("How long the big shield lasts.")]
+    public float BigShieldDuration = 5.0f;
 
     public Sprite BigShield;
     private SpriteRenderer spriteRenderer;
 
     Transform firePoint;
 
+    // Big Shield
+    private float bigShieldTimer = 0.0f;
+
     // Animation
+    private readonly int animBigShield = Animator.StringToHash("Big Shield");
     private bool shieldOut = false;
 
     // Use this for initialization
@@ -25,6 +31,25 @@ public class Shield : Weapon
         firePoint = transform.FindChild("FirePoint");
         spriteRenderer = (SpriteRenderer)GetComponent<Renderer>();
 	}
+
+    protected override void Update()
+    {
+        base.Update();
+
+        // Big Shield: we are using timer to do condition checking
+        if (bigShieldTimer > 0.0f)
+        {
+            // Update the timer
+            bigShieldTimer += (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+
+            // If time's up, turn it off
+            if (bigShieldTimer >= BigShieldDuration)
+            {
+                bigShieldTimer = 0.0f;
+                anim.SetBool(animBigShield, false);
+            }
+        }
+    }
 
     public override bool Use(Vector2 direction)
     {
@@ -122,8 +147,16 @@ public class Shield : Weapon
                 projectile.Disable();
             }
 
-            // Set the shield to be larger
-            spriteRenderer.sprite = BigShield;
+            // Activate the large shield
+            if (bigShieldTimer <= 0.0f)
+            {
+                // Start the timer
+                bigShieldTimer = (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+
+                // Trigger the Shield
+                anim.SetBool(animBigShield, true);
+            }
+            
         }
         #endregion
     }
