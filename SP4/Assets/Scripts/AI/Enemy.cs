@@ -168,7 +168,7 @@ namespace Enemy
 
         #region Collision
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             RPGPlayer player = other.gameObject.GetComponent<RPGPlayer>();
 
