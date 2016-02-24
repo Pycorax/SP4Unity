@@ -18,6 +18,7 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.2.0f3</UnityVersion>
     <RootNamespace></RootNamespace>
+    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -82,6 +83,8 @@
     <Compile Include="Assets\Scripts\Framework\ResourceController.cs" />
     <Compile Include="Assets\Scripts\Framework\ResourceControllerEditor.cs" />
     <Compile Include="Assets\Scripts\Framework\ResourceManager.cs" />
+    <Compile Include="Assets\Scripts\Framework\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\Framework\SoundManagerEditor.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
@@ -118,11 +121,11 @@
     <Compile Include="Assets\Scripts\RPGPlayer.cs" />
     <Compile Include="Assets\Scripts\SceneManager.cs" />
     <Compile Include="Assets\Scripts\Score\HighScoreSystem.cs" />
+    <Compile Include="Assets\Scripts\Score\ScoreDisplay.cs" />
     <Compile Include="Assets\Scripts\Score\ScoreEntry.cs" />
     <Compile Include="Assets\Scripts\Score\ScoreTest.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\ScreenData.cs" />
-    <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\SplashScreen.cs" />
     <Compile Include="Assets\Scripts\SpriteData.cs" />
     <Compile Include="Assets\Scripts\TileMap\EditorTileMap.cs" />

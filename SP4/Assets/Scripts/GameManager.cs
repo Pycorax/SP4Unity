@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,7 +15,8 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        HighScoreSystem.Instance.DownloadScores();
+        //HighScoreSystem.Instance.DownloadScores();
+        SoundManager.PlayBackgroundMusic(SoundManager.BackgroundMusic.Beep_Beepe);
     }
 
     // Update is called once per frame
