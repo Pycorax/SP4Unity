@@ -55,7 +55,7 @@ public class LevelEditorCamera : MonoBehaviour
         {
             float x = Mathf.Clamp(transform.position.x, RefTileMap.LeftBound, RefTileMap.RightBound);
             float y = Mathf.Clamp(transform.position.y, RefTileMap.BottomBound, RefTileMap.TopBound);
-            transform.position = new Vector3(x, y);
+            transform.position = new Vector3(x, y, -10);
             RefTileMap.ActivateTiles(new Vector3(LeftBound, TopBound), new Vector3(RightBound, BottomBound));
         }
 	}
