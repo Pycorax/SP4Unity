@@ -5,16 +5,38 @@ public class SoundManager : MonoBehaviour
 {
 	public enum BackgroundMusic
 	{
-		Default
+		Beep_Beepe,
+        RPG_Battle,
+        RPGM_Battle,
 	}
 
 	public enum SoundEffect
 	{
-		BulletShoot
-	}
+        // Weapons
+        Weapon_Attack_1,
+        Weapon_Attack_2,
+        Weapon_Attack_3,
+        Weapon_Attack_4,
+        Weapon_Attack_5,
+        Shield_Kick,
+        // Combos
+        Combo_ArcaneShot,
+        Combo_ArrowBarrage,
+        Combo_Enchant,
+        Combo_Impale,
+        Combo_PiercingSword,
+        // Explosion
+        Explosion,
+        Explosion_2,
+        // Hit
+        Hit_1,
+        Hit_2,
+        Hit_3,
+        Hit_4,
+    }
 
-	// For initializing sounds
-	public AudioClip[] BackgroundMusicToLoad = new AudioClip[Enum.GetNames(typeof(BackgroundMusic)).Length];
+    // For initializing sounds
+    public AudioClip[] BackgroundMusicToLoad = new AudioClip[Enum.GetNames(typeof(BackgroundMusic)).Length];
 	public AudioClip[] SoundEffectsToLoad = new AudioClip[Enum.GetNames(typeof(SoundEffect)).Length];
 
 	// For Controlling Volume
