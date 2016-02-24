@@ -51,7 +51,7 @@ public class LevelEditorCamera : MonoBehaviour
             transform.position += Vector3.down * Speed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
         }
 
-        if (RefTileMap)
+        if (RefTileMap && RefTileMap.Active)
         {
             float x = Mathf.Clamp(transform.position.x, RefTileMap.LeftBound, RefTileMap.RightBound);
             float y = Mathf.Clamp(transform.position.y, RefTileMap.BottomBound, RefTileMap.TopBound);
