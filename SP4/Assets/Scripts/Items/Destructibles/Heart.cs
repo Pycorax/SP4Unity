@@ -5,12 +5,12 @@ public class Heart : Destroyables
 {
     public int Healing = 30;
     public float AnimSpeed = 0.5f;
-    public Animator anim;
 
     // Use this for initialization
-    void Start()
+    protected override void  Start()
     {
-        anim = GetComponent<Animator>();
+        base.Start();
+
         anim.speed = AnimSpeed;
     }
 

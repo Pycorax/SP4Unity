@@ -126,6 +126,8 @@
     <Compile Include="Assets\Scripts\Score\ScoreTest.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\ScreenData.cs" />
+    <Compile Include="Assets\Scripts\Sound\BGMScript.cs" />
+    <Compile Include="Assets\Scripts\Sound\SFXScript.cs" />
     <Compile Include="Assets\Scripts\SplashScreen.cs" />
     <Compile Include="Assets\Scripts\SpriteData.cs" />
     <Compile Include="Assets\Scripts\TileMap\EditorTileMap.cs" />

@@ -14,17 +14,37 @@ public class Shield : Weapon
 
     Transform firePoint;
 
+    // Animation
+    private bool shieldOut = false;
+
     // Use this for initialization
     protected override void Start()
     {
+        base.Start();
+
         firePoint = transform.FindChild("FirePoint");
         spriteRenderer = (SpriteRenderer)GetComponent<Renderer>();
 	}
-	
-	// Update is called once per frame
-	protected override void Update ()
+
+    public override bool Use(Vector2 direction)
     {
-        base.Update();
+        // Set the animation
+        if (!shieldOut)
+        {
+            shieldOut = true;
+            anim.SetBool(animAttack, true);
+        }
+
+        return true;
+    }
+
+    public override void Unuse()
+    {
+        if (shieldOut)
+        {
+            shieldOut = false;
+            anim.SetBool(animAttack, false);
+        }
     }
 
     protected override void combinedUse(Weapon other, params object[] details)

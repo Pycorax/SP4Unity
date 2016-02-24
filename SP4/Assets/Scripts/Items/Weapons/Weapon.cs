@@ -14,6 +14,10 @@ public abstract class Weapon : Item {
     public ProjectileManager RefProjectileManager { get { return refProjectileManager; } set { refProjectileManager = value; } }
     private ProjectileManager refProjectileManager;
 
+    // Animation
+    static protected int animAttack = Animator.StringToHash("Attack");
+    static protected int animWithdraw = Animator.StringToHash("Withdraw");
+
     /// <summary>
     /// The actual recorded time between shots in milliseconds
     /// </summary>
@@ -25,6 +29,8 @@ public abstract class Weapon : Item {
 	// Use this for initialization
 	protected override void Start ()
     {
+        base.Start();
+
         // Initialize the fire rate based on the values provided
     }
 	
@@ -40,8 +46,24 @@ public abstract class Weapon : Item {
 
     public override bool Use()
     {
-        // Use on self?
         return Use(Vector2.zero);
+    }
+
+    /// <summary>
+    /// Use this function to stop usage on  weapons that are held down
+    /// </summary>
+    public virtual void Unuse() { }
+
+    /// <summary>
+    /// Use this function to hold back the weapon when another weapon is being used
+    /// </summary>
+    public void Withdraw()
+    {
+        // Update weapon animation
+        if (anim != null)
+        {
+            anim.SetTrigger(animWithdraw);
+        }
     }
 
     public virtual bool Use(Vector2 direction)
@@ -51,6 +73,13 @@ public abstract class Weapon : Item {
         {
             // Reset the timer
             useTimeDelta = 0.0f;
+
+            // Update weapon animation
+            if (anim != null)
+            {
+                anim.SetTrigger(animAttack);
+            }
+
             return true;
         }
 

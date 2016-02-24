@@ -50,8 +50,6 @@ public class RPGPlayer : Character
     private int animMoving = Animator.StringToHash("Moving");
     private int animShootLeft = Animator.StringToHash("ShootLeft");
     private int animShootRight = Animator.StringToHash("ShootRight");
-    private int animAttack = Animator.StringToHash("Attack");
-    private int animWithdraw = Animator.StringToHash("Withdraw");
 
     // Components
     private Rigidbody2D rigidBody;
@@ -510,7 +508,14 @@ public class RPGPlayer : Character
 
                     // Start animation
                     animator.SetTrigger(animShootLeft);
+
+                    // Withdraw other weapon
+                    RightWeapon.Withdraw();
                 }
+            }
+            else
+            {
+                LeftWeapon.Unuse();
             }
 
         }
@@ -518,7 +523,7 @@ public class RPGPlayer : Character
         // Shoot Right
         if (RightWeapon != null)
         {
-            if ((LeftWeapon.HeldDownUsable && Input.GetKey(RightAttackKey)) || Input.GetKeyDown(RightAttackKey))
+            if ((RightWeapon.HeldDownUsable && Input.GetKey(RightAttackKey)) || Input.GetKeyDown(RightAttackKey))
             {
                 if(attack(RightWeapon))
                 {
@@ -526,7 +531,14 @@ public class RPGPlayer : Character
 
                     // Start animation
                     animator.SetTrigger(animShootRight);
+
+                    // Withdraw other weapon
+                    LeftWeapon.Withdraw();
                 }
+            }
+            else
+            {
+                RightWeapon.Unuse();
             }
         }
 
@@ -579,13 +591,6 @@ public class RPGPlayer : Character
         {
             // Update the current weapon
             currentWeapon = w;
-
-            // Update weapon animation
-            Animator weapAnimator = w.GetComponent<Animator>();
-            if (weapAnimator != null)
-            {
-                weapAnimator.SetTrigger(animAttack);
-            }
 
             return true;
         }
