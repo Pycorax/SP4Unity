@@ -234,8 +234,13 @@ public class Tile : MonoBehaviour
     [Tooltip("Scale ratio according to tile size from Tile Map.")]
     public float ScaleRatio = 1.0f;
 
-	// Use this for initialization
-	void Start () {
+    public float TopBound { get { return transform.position.y + transform.localScale.y * 0.5f; } }
+    public float BottomBound { get { return transform.position.y - transform.localScale.y * 0.5f; } }
+    public float LeftBound { get { return transform.position.x - transform.localScale.x * 0.5f; } }
+    public float RightBound { get { return transform.position.x + transform.localScale.x * 0.5f; } }
+
+    // Use this for initialization
+    void Start () {
 	
 	}
 	
