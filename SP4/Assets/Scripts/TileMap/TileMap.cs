@@ -439,7 +439,7 @@ public abstract class TileMap : MonoBehaviour
 		return true;
 	}
 
-	private Vector3 generateStartPos(int numRow, int numCol, int rowIndex = 0, int colIndex = 0)
+	protected Vector3 generateStartPos(int numRow, int numCol, int rowIndex = 0, int colIndex = 0)
 	{
 		Vector3 startPos = CenterPoint;
 		startPos += new Vector3(tileSize * colIndex, -tileSize * rowIndex, 2.0f);
@@ -520,7 +520,7 @@ public abstract class TileMap : MonoBehaviour
 		return startPos;
 	}
 
-	private Vector3 generateDistToTopLeft(int numRow, int numCol)
+	protected Vector3 generateDistToTopLeft(int numRow, int numCol)
 	{
         Vector3 topLeft = Vector3.zero;//CenterPoint;
 		switch (TileMapOrigin)
