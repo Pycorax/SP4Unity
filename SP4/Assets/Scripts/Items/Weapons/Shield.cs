@@ -4,18 +4,21 @@ public class Shield : Weapon
 {
     [Tooltip("The number of arrrows to reflect on an Arrow Barrage.")]
     public int BarrageArrows = 5;
+    [Tooltip("The range of the arrows to reflect on an Arrow Barrage.")]
+    public float BarrageRange = 10.0f;
+    [Tooltip("The field of view angle where arrows would be fired from for an Arrow Barrage.")]
+    public float BarrageFOV = 130.0f;
+
+    public Sprite BigShield;
+    private SpriteRenderer spriteRenderer;
+
+    Transform firePoint;
 
     // Use this for initialization
-	protected override void Start ()
+    protected override void Start()
     {
-        Name = "Shield";
-        Damage = 1;
-
-        //1 Tile
-        Range = 1;
-
-        //1 per second
-        FireRate = 2;
+        firePoint = transform.FindChild("FirePoint");
+        spriteRenderer = (SpriteRenderer)GetComponent<Renderer>();
 	}
 	
 	// Update is called once per frame
@@ -23,12 +26,6 @@ public class Shield : Weapon
     {
         base.Update();
     }
-
-    public override bool Use(Vector2 direction)
-    {
-        return false;
-    }
-
 
     protected override void combinedUse(Weapon other, params object[] details)
     {
@@ -56,16 +53,39 @@ public class Shield : Weapon
                 projectile.Disable();
             }
 
-            // Barrage of Arrows
-            for(int i = 0; i < BarrageArrows; i++)
+            // Spawn Barrage of Arrows
+            float barrageLeftAngle = (180 - BarrageFOV) * 0.5f;     // Dictates where we should start shooting from
+            float degreeOfDifference = BarrageFOV / BarrageArrows;      // Get the angle in degrees between each arrow's direction
+            var parent = GetComponentInParent<RPGPlayer>();         // Handle to thhe weapon's parent to get user direction
+
+            // We got a handle to the parent?
+            if (parent != null)
             {
-                var arrow = RefProjectileManager.FetchArrow().GetComponent<Arrow>();
+                // Determine the Right Vector where we start shooting from
+                Vector2 right = new Vector2(parent.CurrentDirection.y, -parent.CurrentDirection.x);
 
-                var parent = GetComponentInParent<RPGPlayer>();
-
-                if(arrow && parent)
+                // Shoot every arrow we need to shoot
+                for (int i = 0; i < BarrageArrows; i++)
                 {
-                    arrow.Activate(transform, this, parent.CurrentDirection, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
+                    // Fetch an arrow
+                    var arrow = RefProjectileManager.FetchArrow().GetComponent<Arrow>();
+
+                    // If we are able to get an arrow
+                    if (arrow)
+                    {
+
+                        // Determine the angle of this shot
+                        float arrowAngle = barrageLeftAngle + (degreeOfDifference * i);
+                        // Get a rotation to calculate the direction vector
+                        Quaternion rot = Quaternion.AngleAxis(arrowAngle, new Vector3(0.0f, 0.0f, 1.0f));
+                        
+                        // Calculate the direction vector
+                        Vector2 dir = (rot * right).normalized;
+                        //Debug.DrawLine(firePoint.position, firePoint.position + (Vector3)(dir * BarrageRange), Color.red, 5.0f);
+
+                        // Shoot the arrow
+                        arrow.Activate(firePoint, this, dir, Quaternion.FromToRotation(Vector2.up, dir), BarrageRange * RefProjectileManager.GetComponent<TileMap>().TileSize);
+                    }
                 }
             }
             
@@ -79,9 +99,11 @@ public class Shield : Weapon
             if (projectile != null)
             {
                 // Destroy it
+                projectile.Disable();
             }
 
             // Set the shield to be larger
+            spriteRenderer.sprite = BigShield;
         }
         #endregion
     }

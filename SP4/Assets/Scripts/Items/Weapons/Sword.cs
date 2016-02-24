@@ -1,10 +1,17 @@
-﻿public class Sword : Weapon
+﻿using UnityEngine;
+
+public class Sword : Weapon
 {
+
+    private SpriteRenderer spriteRenderer;
+    public Sprite BigSword;
 	// Use this for initialization
 	protected override void Start () {
 
         Name = "Sword";
         Damage = 10;
+
+        spriteRenderer = (SpriteRenderer)GetComponent<Renderer>();
 
         //1 Tile
 
@@ -72,6 +79,7 @@
             }
 
             // Set the sword to be larger
+            spriteRenderer.sprite = BigSword;
 
         }
         #endregion
