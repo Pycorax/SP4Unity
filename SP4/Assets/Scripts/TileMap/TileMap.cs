@@ -90,6 +90,11 @@ public abstract class TileMap : MonoBehaviour
 
     public int TileSize { get { return tileSize; } }
 
+    public float TopBound { get { return CenterPoint.y + rowCount * tileSize * 0.5f; } }
+    public float BottomBound { get { return CenterPoint.y - rowCount * tileSize * 0.5f; } }
+    public float LeftBound { get { return CenterPoint.x - colCount * tileSize * 0.5f; } }
+    public float RightBound { get { return CenterPoint.x + colCount * tileSize * 0.5f; } }
+
     protected Vector2 NumOfScreenTiles = new Vector2();
     protected int tileSize = 32;
     protected Vector3 tileMapDistToTopLeft = new Vector3();
@@ -189,7 +194,7 @@ public abstract class TileMap : MonoBehaviour
 		ActivateTiles((int)topLeftIndex.x, (int)bottomRightIndex.x, (int)topLeftIndex.y, (int)bottomRightIndex.y);
     }
 
-    private void ActivateTiles(int rowIndexMin, int rowIndexMax, int colIndexMin, int colIndexMax, bool mode = true)
+    protected virtual void ActivateTiles(int rowIndexMin, int rowIndexMax, int colIndexMin, int colIndexMax, bool mode = true)
     {
         //if (!isActivated()) // Check if first update is required
         {
@@ -439,7 +444,7 @@ public abstract class TileMap : MonoBehaviour
 		return true;
 	}
 
-	private Vector3 generateStartPos(int numRow, int numCol, int rowIndex = 0, int colIndex = 0)
+	protected Vector3 generateStartPos(int numRow, int numCol, int rowIndex = 0, int colIndex = 0)
 	{
 		Vector3 startPos = CenterPoint;
 		startPos += new Vector3(tileSize * colIndex, -tileSize * rowIndex, 2.0f);
@@ -520,7 +525,7 @@ public abstract class TileMap : MonoBehaviour
 		return startPos;
 	}
 
-	private Vector3 generateDistToTopLeft(int numRow, int numCol)
+	protected Vector3 generateDistToTopLeft(int numRow, int numCol)
 	{
         Vector3 topLeft = Vector3.zero;//CenterPoint;
 		switch (TileMapOrigin)
