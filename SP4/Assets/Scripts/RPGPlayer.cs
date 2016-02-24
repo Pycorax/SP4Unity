@@ -50,6 +50,8 @@ public class RPGPlayer : Character
     private int animMoving = Animator.StringToHash("Moving");
     private int animShootLeft = Animator.StringToHash("ShootLeft");
     private int animShootRight = Animator.StringToHash("ShootRight");
+    private int animAttack = Animator.StringToHash("Attack");
+    private int animWithdraw = Animator.StringToHash("Withdraw");
 
     // Components
     private Rigidbody2D rigidBody;
@@ -127,12 +129,32 @@ public class RPGPlayer : Character
 
     private void animationUpdate()
     {
-        // Update Movement
-        animator.SetBool(animMoving, rigidBody.velocity.sqrMagnitude > 0.0f);
+        // Update 
+        bool moving = rigidBody.velocity.sqrMagnitude > 0.0f;
+        // -- This Character
+        animator.SetBool(animMoving, moving);
+        // -- Weapons
+        updateWeaponAnimation(LeftWeapon, moving);
+        updateWeaponAnimation(RightWeapon, moving);
         // Update Living-ness
         animator.SetBool(animAlive, IsAlive);
     }
 
+
+    private void updateWeaponAnimation(Weapon w, bool moving)
+    {
+        // Ensure that a weapon exists for us to update
+        if (w == null)
+        {
+            return;
+        }
+
+        Animator weapAnimator = w.GetComponent<Animator>();
+        if (weapAnimator != null)
+        {
+            weapAnimator.SetBool(animMoving, moving);
+        }
+    }
     #region Movement
 
     private void movementUpdate()
@@ -557,6 +579,13 @@ public class RPGPlayer : Character
         {
             // Update the current weapon
             currentWeapon = w;
+
+            // Update weapon animation
+            Animator weapAnimator = w.GetComponent<Animator>();
+            if (weapAnimator != null)
+            {
+                weapAnimator.SetTrigger(animAttack);
+            }
 
             return true;
         }
