@@ -52,6 +52,7 @@ public class EditorTileMap : TileMap
             // Add row into map (Map is a list of rows)
             map.Add(rowOfData);
         }
+        active = true;
 
         drawGridLines();
     }
