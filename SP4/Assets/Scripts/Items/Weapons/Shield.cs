@@ -9,12 +9,16 @@ public class Shield : Weapon
     [Tooltip("The field of view angle where arrows would be fired from for an Arrow Barrage.")]
     public float BarrageFOV = 130.0f;
 
+    public Sprite BigShield;
+    private SpriteRenderer spriteRenderer;
+
     Transform firePoint;
 
     // Use this for initialization
     protected override void Start()
     {
         firePoint = transform.FindChild("FirePoint");
+        spriteRenderer = (SpriteRenderer)GetComponent<Renderer>();
 	}
 	
 	// Update is called once per frame
@@ -99,7 +103,7 @@ public class Shield : Weapon
             }
 
             // Set the shield to be larger
-            
+            spriteRenderer.sprite = BigShield;
         }
         #endregion
     }
