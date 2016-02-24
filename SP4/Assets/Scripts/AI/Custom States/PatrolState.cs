@@ -5,8 +5,9 @@ namespace Enemy
 {
     public class PatrolState : FSMState
     {
-        public Waypoint Initwaypoint;
-        public Waypoint Finalwaypoint;
+        private int Neighbourcount;
+        private int randomnum;
+        private Waypoint previousWaypoint;
 
         protected override void exit()
         {
@@ -15,18 +16,22 @@ namespace Enemy
 
         protected override void init()
         {
-
+            Neighbourcount = parent.CurrentWaypoint.Neighbours.Count;
+            randomnum = Random.Range(0, Neighbourcount);
         }
 
         protected override void update()
         {
-            if (parent.CurrentWaypoint == Initwaypoint)
+            previousWaypoint = parent.CurrentWaypoint;
+            parent.FinalTargetWaypoint = parent.CurrentWaypoint.Neighbours[randomnum];
+            if (parent.CurrentWaypoint == parent.FinalTargetWaypoint && parent.FinalTargetWaypoint != previousWaypoint)
             {
-                parent.FinalTargetWaypoint = Finalwaypoint;
-            }
-            else if (parent.CurrentWaypoint == Finalwaypoint)
-            {
-                parent.FinalTargetWaypoint = Initwaypoint;
+                //Generate another random number to go to
+                Neighbourcount = parent.CurrentWaypoint.Neighbours.Count;
+                randomnum = Random.Range(0, Neighbourcount);
+
+                previousWaypoint = parent.CurrentWaypoint;
+                parent.FinalTargetWaypoint = parent.CurrentWaypoint.Neighbours[randomnum];
             }
         }
     }
