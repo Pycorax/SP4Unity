@@ -2,6 +2,7 @@
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class RPGPlayer : Character
 {
     Inventory inventory;
@@ -44,6 +45,12 @@ public class RPGPlayer : Character
     private Weapon currentWeapon;                       // Stores a reference to the last weapon used by the player. For use with combo attacks.
     private float useTimeDelta;                         // The time since the last weapon attack
 
+    // Animation
+    private int animAlive = Animator.StringToHash("Alive");
+    private int animMoving = Animator.StringToHash("Moving");
+    private int animShootLeft = Animator.StringToHash("ShootLeft");
+    private int animShootRight = Animator.StringToHash("ShootRight");
+
     // Components
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
@@ -69,7 +76,6 @@ public class RPGPlayer : Character
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         inventory = GetComponent<Inventory>();
-        //healthBar = GetComponentInChildren<GameObject>();
 
         // Align the weapons properly if they exist
         if (LeftWeapon != null)
@@ -97,6 +103,8 @@ public class RPGPlayer : Character
             attackUpdate();
         }
 
+        animationUpdate();
+
         // Update the direction of the player
         if (rigidBody.velocity != Vector2.zero)
         {
@@ -115,6 +123,14 @@ public class RPGPlayer : Character
     public void Init(Vector3 startPosition)
     {
         transform.position = startPosition;
+    }
+
+    private void animationUpdate()
+    {
+        // Update Movement
+        animator.SetBool(animMoving, rigidBody.velocity.sqrMagnitude > 0.0f);
+        // Update Living-ness
+        animator.SetBool(animAlive, IsAlive);
     }
 
     #region Movement
@@ -468,6 +484,9 @@ public class RPGPlayer : Character
                 if(attack(LeftWeapon))
                 {
                     shot = true;
+
+                    // Start animation
+                    animator.SetTrigger(animShootLeft);
                 }
             }
 
@@ -481,6 +500,9 @@ public class RPGPlayer : Character
                 if(attack(RightWeapon))
                 {
                     shot = true;
+
+                    // Start animation
+                    animator.SetTrigger(animShootRight);
                 }
             }
         }

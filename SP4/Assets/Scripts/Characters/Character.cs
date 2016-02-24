@@ -10,6 +10,7 @@ public abstract class Character : MonoBehaviour
 
     // Getters
     public int Health { get { return health; } }
+    public bool IsAlive { get { return health > 0; } }
 
     public GameObject healthBar;
 

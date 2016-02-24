@@ -23,12 +23,6 @@ public class GameTileMap : TileMap
         WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
         refWaypointManager.SyncWaypoints();
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-	
-	}
 
     protected override GameObject createTile(Tile.TILE_TYPE type, Vector3 pos, Vector3 size)
     {

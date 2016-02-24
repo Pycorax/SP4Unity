@@ -37,7 +37,7 @@ namespace Enemy
             currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);
 
             // Set the default state
-            changeCurrentState(new IdleState());
+            changeCurrentState(new PatrolState());
 
             animator = GetComponent<Animator>();
         }
