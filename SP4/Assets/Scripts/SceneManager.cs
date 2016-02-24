@@ -56,7 +56,7 @@ public class SceneManager : MonoBehaviour {
 
     public void LoadScores()
     {
-        Application.LoadLevel("ScoreScenes");
+        Application.LoadLevel("HighScoreScene");
     }
 
     public void LoadLevelSelectScene()
