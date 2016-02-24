@@ -89,12 +89,14 @@ public abstract class TileMap : MonoBehaviour
     public Vector2 TotalSize = new Vector2(1, 1);
 
     public int TileSize { get { return tileSize; } }
+    public bool Active { get { return active; } }
 
     public float TopBound { get { return CenterPoint.y + rowCount * tileSize * 0.5f; } }
     public float BottomBound { get { return CenterPoint.y - rowCount * tileSize * 0.5f; } }
     public float LeftBound { get { return CenterPoint.x - colCount * tileSize * 0.5f; } }
     public float RightBound { get { return CenterPoint.x + colCount * tileSize * 0.5f; } }
 
+    protected bool active = false;
     protected Vector2 NumOfScreenTiles = new Vector2();
     protected int tileSize = 32;
     protected Vector3 tileMapDistToTopLeft = new Vector3();
@@ -357,6 +359,7 @@ public abstract class TileMap : MonoBehaviour
         file.Close();
 		if (generateMap(sMap, numRow, numCol))
 		{
+            active = true;
 			return true;
 		}
 		return false;
