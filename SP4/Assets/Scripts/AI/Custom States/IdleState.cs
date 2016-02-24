@@ -5,6 +5,7 @@ namespace Enemy
 {
     public class IdleState : FSMState
     {
+        private double timer;
 
         protected override void exit()
         {
@@ -18,15 +19,18 @@ namespace Enemy
 
         protected override void update()
         {
-            //Heal Enemy While Idle
-            //When Enemy is in IdleState for more than 2 seconds
-            //Heal for 2hp per second.
-            parent.InvokeRepeating("healenemy", 2, 1);
+            timer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+            if(timer >= 5)
+            {
+                healenemy();
+                timer = 0;
+            }
         }
 
-        protected void healenemy()
+        private void healenemy()
         {
             parent.Heal(2);
+            Debug.Log(parent.Health);
         }
     }
 }
