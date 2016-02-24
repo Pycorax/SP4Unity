@@ -477,10 +477,11 @@ public class RPGPlayer : Character
         bool shot = false;
 
         // Shoot Left
-        if (Input.GetKeyDown(LeftAttackKey))
+        if (LeftWeapon != null)
         {
-            if (LeftWeapon != null)
+            if ((LeftWeapon.HeldDownUsable &&  Input.GetKey(LeftAttackKey))|| Input.GetKeyDown(LeftAttackKey))
             {
+            
                 if(attack(LeftWeapon))
                 {
                     shot = true;
@@ -493,9 +494,9 @@ public class RPGPlayer : Character
         }
 
         // Shoot Right
-        if (Input.GetKeyDown(RightAttackKey))
+        if (RightWeapon != null)
         {
-            if (RightWeapon != null)
+            if ((LeftWeapon.HeldDownUsable && Input.GetKey(RightAttackKey)) || Input.GetKeyDown(RightAttackKey))
             {
                 if(attack(RightWeapon))
                 {

@@ -8,6 +8,8 @@ public abstract class Weapon : Item {
     public float Range;
     [Tooltip("The fire rate of the weapon in hits/minute.")]
     public float FireRate = 0.0f;
+    [Tooltip("If the weapon is fired by holding down.")]
+    public bool HeldDownUsable = false;
 
     public ProjectileManager RefProjectileManager { get { return refProjectileManager; } set { refProjectileManager = value; } }
     private ProjectileManager refProjectileManager;
