@@ -1,9 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Shield : Weapon
 {
-    Transform firePoint;
+    [Tooltip("The number of arrrows to reflect on an Arrow Barrage.")]
+    public int BarrageArrows = 5;
 
     // Use this for initialization
 	protected override void Start ()
@@ -46,6 +46,7 @@ public class Shield : Weapon
             }
         }
         #region Arrow Barrage
+
         if (other is Crossbow)
         {
             // -- Check if we found a projectile
@@ -54,8 +55,9 @@ public class Shield : Weapon
                 // Destroy it
                 projectile.Disable();
             }
+
             // Barrage of Arrows
-            for(int i = 0; i < 5; i++)
+            for(int i = 0; i < BarrageArrows; i++)
             {
                 var arrow = RefProjectileManager.FetchArrow().GetComponent<Arrow>();
 
@@ -63,7 +65,7 @@ public class Shield : Weapon
 
                 if(arrow && parent)
                 {
-                    arrow.Activate(firePoint, this, parent.CurrentDirection, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
+                    arrow.Activate(transform, this, parent.CurrentDirection, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
                 }
             }
             
