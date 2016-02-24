@@ -25,6 +25,8 @@ namespace Enemy
                 healenemy();
                 timer = 0;
             }
+
+            parent.gameObject.transform.Rotate(0, 0, 0.3f);
         }
 
         private void healenemy()
