@@ -13,7 +13,6 @@ namespace Enemy
 
         protected override void init()
         {
-
             //Kill of enemy
             parent.gameObject.SetActive(false);
         }

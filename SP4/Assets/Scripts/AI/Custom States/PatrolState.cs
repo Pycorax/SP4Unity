@@ -5,8 +5,6 @@ namespace Enemy
 {
     public class PatrolState : FSMState
     {
-        private int Neighbourcount;
-        private int randomnum;
         private Waypoint previousWaypoint;
 
         protected override void exit()
@@ -16,22 +14,22 @@ namespace Enemy
 
         protected override void init()
         {
-            Neighbourcount = parent.CurrentWaypoint.Neighbours.Count;
-            randomnum = Random.Range(0, Neighbourcount - 1);
+            // Previous waypoit will be enemy current waypoint
+            previousWaypoint = parent.CurrentWaypoint;
+            //Enemy will now move to its next destination
+            parent.FinalTargetWaypoint = parent.CurrentWaypoint.GetRandomNeighbour();
         }
 
         protected override void update()
         {
-            previousWaypoint = parent.CurrentWaypoint;
-            parent.FinalTargetWaypoint = parent.CurrentWaypoint.Neighbours[randomnum];
-            if (parent.CurrentWaypoint == parent.FinalTargetWaypoint && parent.FinalTargetWaypoint != previousWaypoint)
+            //Make sure the parent is at the final way point
+            if (parent.FinalTargetWaypoint == null)
             {
-                //Generate another random number to go to
-                Neighbourcount = parent.CurrentWaypoint.Neighbours.Count;
-                randomnum = Random.Range(0, Neighbourcount);
+                //MOVE!
+                parent.FinalTargetWaypoint = parent.CurrentWaypoint.GetRandomNeighbour(previousWaypoint);
 
+                //set ur previous waypoint to current waypoint
                 previousWaypoint = parent.CurrentWaypoint;
-                parent.FinalTargetWaypoint = parent.CurrentWaypoint.Neighbours[randomnum];
             }
         }
     }

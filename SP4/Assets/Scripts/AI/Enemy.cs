@@ -48,14 +48,22 @@ namespace Enemy
             // Base Update
             base.Update();
 
-            // Update the FSM
-            if (currentState != null)
+            // Check for Death
+            if (IsAlive)
             {
-                currentState.Update();
+                // Update the FSM
+                if (currentState != null)
+                {
+                    currentState.Update();
+                }
+
+                // Update Waypoint movement if a target is specified
+                waypointUpdate();
             }
-            
-            // Update Waypoint movement if a target is specified
-            waypointUpdate();
+            else
+            {
+                changeCurrentState(new DeadState());
+            }
         }
 
         #region Waypoint
@@ -171,19 +179,25 @@ namespace Enemy
         private void OnTriggerEnter2D(Collider2D other)
         {
             RPGPlayer player = other.gameObject.GetComponent<RPGPlayer>();
+            Projectile proj = other.gameObject.GetComponent<Projectile>();
+            Sword sword = other.gameObject.GetComponent<Sword>();
 
-            if(player)
+            if (player != null)
             {
                 player.Injure(5);
             }
-            else if (other.gameObject.GetComponent<Projectile>() != null)
+            else if (proj != null)
             {
-                // Collision handled by projectile
+                // Injury from Projectile
+                Injure(proj.Damage);
+
+                // Remove the Projectile
+                proj.Disable();
             }
             //Collided with Sword
-            else if(other.gameObject.GetComponent<Sword>())
+            else if(sword != null)
             {
-                this.Injure(other.gameObject.GetComponent<Sword>().Damage);
+                Injure(sword.Damage);
             }
         }
 
