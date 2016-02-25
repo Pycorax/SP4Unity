@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Lightning : Projectile
 {
@@ -67,6 +66,13 @@ public class Lightning : Projectile
     public override void Activate(Transform data, Weapon shooter, Vector2 direction, float distTillDespawn)
     {
         base.Activate(data, shooter, direction, distTillDespawn);
+    }
+
+    public void Activate(Transform data, Weapon shooter, Vector2 direction, int chainTimes, float distTillDespawn)
+    {
+        base.Activate(data, shooter, direction, distTillDespawn);
+
+        MaxBounce = chainTimes;
     }
 
     public override void OnTriggerEnter2D(Collider2D collision)

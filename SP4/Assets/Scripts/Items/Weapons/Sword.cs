@@ -96,6 +96,7 @@ public class Sword : Weapon
         #endregion
 
         #region Big Sword
+
         else if (other is Wand)
         {
             // Set the sword to be larger
@@ -103,6 +104,7 @@ public class Sword : Weapon
             Damage = 20;
             isBigSword = true;
         }
+
         #endregion
     }
 }

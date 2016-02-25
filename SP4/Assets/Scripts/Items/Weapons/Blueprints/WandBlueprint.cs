@@ -1,4 +1,6 @@
-﻿public class WandBlueprint : WeaponBlueprint
+﻿using UnityEngine;
+
+public class WandBlueprint : WeaponBlueprint
 {
     public override Weapon GenerateRandom()
     {
@@ -18,6 +20,9 @@
         Weapon generatedWeapon = generatedWand;
 
         setCommonStats(ref generatedWeapon);
+
+        // Lightning
+        generatedWand.LightningChainTimes = Random.Range(worstVariant.LightningChainTimes, bestVariant.LightningChainTimes);
 
         return generatedWand;
     }

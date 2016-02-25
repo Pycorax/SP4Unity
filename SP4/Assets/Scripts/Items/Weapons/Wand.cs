@@ -2,6 +2,9 @@
 
 public class Wand : Weapon
 {
+    [Tooltip("Number of times the Wand's lightning projectile bounces between enemies.")]
+    public int LightningChainTimes = 3;
+
     Transform firePoint;
 
     // Use this for initialization
@@ -28,7 +31,7 @@ public class Wand : Weapon
             GameObject p = RefProjectileManager.FetchLightning();
             if (p)
             {
-                p.GetComponent<Lightning>().Activate(firePoint, this, direction, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
+                p.GetComponent<Lightning>().Activate(firePoint, this, direction, LightningChainTimes, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
                 return true;
             }
         }
