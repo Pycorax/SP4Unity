@@ -10,6 +10,8 @@ public abstract class Weapon : Item {
     public float FireRate = 0.0f;
     [Tooltip("If the weapon is fired by holding down.")]
     public bool HeldDownUsable = false;
+    [Tooltip("If this weapon is always ready to trigger a combo attack.")]
+    public bool AlwaysCombo = false;
 
     public ProjectileManager RefProjectileManager { get { return refProjectileManager; } set { refProjectileManager = value; } }
     private ProjectileManager refProjectileManager;
@@ -50,9 +52,16 @@ public abstract class Weapon : Item {
     }
 
     /// <summary>
-    /// Use this function to stop usage on  weapons that are held down
+    /// Use this function to stop usage on weapons that are held down
     /// </summary>
-    public virtual void Unuse() { }
+    public virtual void Unuse(Weapon other)
+    {
+        // Stop the other weapon from being withdrawn
+        if (other != null)
+        {
+            other.EndWithdraw();
+        }
+    }
 
     /// <summary>
     /// Use this function to hold back the weapon when another weapon is being used
@@ -62,7 +71,19 @@ public abstract class Weapon : Item {
         // Update weapon animation
         if (anim != null)
         {
-            anim.SetTrigger(animWithdraw);
+            anim.SetBool(animWithdraw, true);
+        }
+    }
+
+    /// <summary>
+    /// Use this function to end withdrawing
+    /// </summary>
+    public void EndWithdraw()
+    {
+        // Update weapon animation
+        if (anim != null)
+        {
+            anim.SetBool(animWithdraw, false);
         }
     }
 
