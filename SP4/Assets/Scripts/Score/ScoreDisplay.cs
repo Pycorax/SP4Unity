@@ -6,7 +6,7 @@ public class ScoreDisplay : MonoBehaviour {
 
     private SortedList sortedList;
 
-    private List<ScoreEntry> scoreList;
+    private List<ScoreEntry> scoreList = new List<ScoreEntry>();
 
 
 	// Use this for initialization
@@ -16,10 +16,16 @@ public class ScoreDisplay : MonoBehaviour {
 
         HighScoreSystem.Instance.DownloadScores();
 
-        
+        foreach (var i in HighScoreSystem.Instance.Scores)
+        {
+            Debug.Log(i.Name + ", " + i.Score);
+        }
+
         //Add Scores to ScoreList
-        scoreList.AddRange(HighScoreSystem.Instance.Scores);
-        
+        //if (HighScoreSystem.Instance.Scores != null)
+        //{
+        //    scoreList.AddRange(HighScoreSystem.Instance.Scores);
+        //}
         //foreach(var i in HighScoreSystem.Instance.Scores)
         //{
         //    scoreList.Add(i);
@@ -30,12 +36,12 @@ public class ScoreDisplay : MonoBehaviour {
         *Uses default comparer, which is found in ScoreEntry Class
         *IT SHOULD, NOTE SHOULD, sort by Score
         */
-        scoreList.Sort();
+        //scoreList.Sort();
 
-        foreach (var i in scoreList)
-        {
-            Debug.Log(i.Name + ", " + i.Score);
-        }
+        //foreach (var i in scoreList)
+        //{
+        //    Debug.Log(i.Name + ", " + i.Score);
+        //}
 	}
 	
 	// Update is called once per frame

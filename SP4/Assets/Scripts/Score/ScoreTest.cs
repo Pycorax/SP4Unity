@@ -10,9 +10,12 @@ public class ScoreTest : MonoBehaviour {
         //HighScoreSystem.Instance.SendScore(new ScoreEntry("Test", 64));
         //HighScoreSystem.Instance.SendScore(new ScoreEntry("Test", 24));
         HighScoreSystem.Instance.DownloadScores();
-        foreach (var i in HighScoreSystem.Instance.Scores)
+        if (HighScoreSystem.Instance.Scores != null)
         {
-            Debug.Log(i.Name + ": " + i.Score);
+            foreach (var i in HighScoreSystem.Instance.Scores)
+            {
+                Debug.Log(i.Name + ": " + i.Score);
+            }
         }
     }
 	
