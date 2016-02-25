@@ -16,6 +16,10 @@ public class LevelEditor : MonoBehaviour
 
     public EditorTileMap RefTileMap;
 
+    // Controls
+    public KeyCode PlaceKey = KeyCode.Mouse1;
+    public KeyCode RemoveKey = KeyCode.Mouse2;
+
     // Side Bar
     public bool ShowSideBar = false;
     public float SideBarPadding = 10.0f;
@@ -35,10 +39,38 @@ public class LevelEditor : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        //Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         //Debug.Log(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y)));
         if (selectedTile)
         {
             updateSelected(ref selectedTile);
+
+            Vector3 worldClickPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            // On place block click
+            if (Input.GetMouseButton(0))
+            {
+                if (ShowSideBar && worldClickPoint.x < Camera.main.transform.position.x)
+                {
+                    placeTile(worldClickPoint);
+                }
+                else if (!ShowSideBar)
+                {
+                    placeTile(worldClickPoint);
+                }
+            }
+
+            // On remove block click
+            if (Input.GetMouseButton(1))
+            {
+                if (ShowSideBar && worldClickPoint.x < Camera.main.transform.position.x)
+                {
+                    removeTile(worldClickPoint);
+                }
+                else if (!ShowSideBar)
+                {
+                    removeTile(worldClickPoint);
+                }
+            }
         }
 	}
 
@@ -50,6 +82,11 @@ public class LevelEditor : MonoBehaviour
 
     public void TileSelected(Tile tile)
     {
+        if (selectedTile)
+        {
+            Destroy(selectedTile);
+            selectedTile = null;
+        }
         GameObject goTile = RefTileMap.FetchBlueprint(tile.Type);
         if (goTile)
         {
@@ -83,5 +120,36 @@ public class LevelEditor : MonoBehaviour
     private RectTransform GetUI(UI_TYPE type)
     {
         return UI[(int)type];
+    }
+
+    private void placeTile(Vector3 pos)
+    {
+        MultiLayerTile multiTile = RefTileMap.FetchTile(pos);
+        if (multiTile != null && multiTile.IsWalkable())
+        {
+            GameObject newTile = Instantiate(selectedTile);
+            Vector2 tileIndex = RefTileMap.FetchTileIndex(pos);
+            newTile.gameObject.SetActive(true);
+            newTile.transform.position = RefTileMap.GenerateStartPos(RefTileMap.RowCount, RefTileMap.ColCount, (int)tileIndex.x, (int)tileIndex.y);
+            newTile.transform.localScale = new Vector3(RefTileMap.TileSize, RefTileMap.TileSize, 1.0f);
+            newTile.transform.parent = RefTileMap.transform;
+            RefTileMap.AddToTiles(newTile.GetComponent<Tile>());
+            multiTile.AddFront(newTile);
+        }
+    }
+
+    private void removeTile(Vector3 pos)
+    {
+        MultiLayerTile multiTile = RefTileMap.FetchTile(pos);
+        if (multiTile != null)
+        {
+            GameObject tileToDestroy = multiTile.RemoveTop();
+            if (tileToDestroy)
+            {
+                Tile t = tileToDestroy.GetComponent<Tile>();
+                RefTileMap.DestroyTile(ref t);
+                //Destroy(tileToDestroy);
+            }
+        }
     }
 }
