@@ -63,8 +63,10 @@ public class Shield : Weapon
         return true;
     }
 
-    public override void Unuse()
+    public override void Unuse(Weapon other)
     {
+        base.Unuse(other);
+
         if (shieldOut)
         {
             shieldOut = false;
