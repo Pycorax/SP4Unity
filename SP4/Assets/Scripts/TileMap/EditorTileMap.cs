@@ -27,7 +27,7 @@ public class EditorTileMap : TileMap
         MultiLayerTile multiLayerTile = FetchTile(0, 0);
         GameObject temp = Instantiate(tileBlueprints[(int)Tile.TILE_TYPE.TILE_BARREL]);
         temp.SetActive(false);
-        Vector3 newPos = generateStartPos(rowCount, colCount, 0, 0);
+        Vector3 newPos = GenerateStartPos(rowCount, colCount, 0, 0);
         newPos.z = 0.0f;
         temp.transform.position = newPos;
         temp.transform.localScale = new Vector3(tileSize, tileSize);
@@ -65,7 +65,7 @@ public class EditorTileMap : TileMap
         
         // Calculate data needed
         Vector3 size = new Vector3(tileSize, tileSize, 1); // Size of tile (Scale)
-        Vector3 startPos = generateStartPos(numRow, numCol); // Calculate start position
+        Vector3 startPos = GenerateStartPos(numRow, numCol); // Calculate start position
 
         for (int rowIndex = 0; rowIndex < numRow; ++rowIndex)
         {
@@ -201,7 +201,7 @@ public class EditorTileMap : TileMap
             for (int colIndex = 0; colIndex < row.column.Count; ++colIndex)
             {
                 MultiLayerTile multiTile = row.column[colIndex];
-                startPos = generateStartPos(rowCount, colCount, rowIndex, colIndex);
+                startPos = GenerateStartPos(rowCount, colCount, rowIndex, colIndex);
                 for (int tileIndex = 0; tileIndex < multiTile.multiLayerTile.Count; ++tileIndex)
                 {
                     GameObject tile = multiTile.multiLayerTile[tileIndex];

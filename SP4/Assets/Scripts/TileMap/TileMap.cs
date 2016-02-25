@@ -27,6 +27,24 @@ public class MultiLayerTile
         walkable = calculateWalkable();
     }
 
+    public void AddFront(GameObject tile)
+    {
+        multiLayerTile.Insert(0, tile);
+        walkable = calculateWalkable();
+    }
+    
+    public GameObject RemoveTop()
+    {
+        if (multiLayerTile.Count == 0)
+        {
+            return null;
+        }
+        GameObject tile = multiLayerTile[0];
+        multiLayerTile.RemoveAt(0);
+        walkable = calculateWalkable();
+        return tile;
+    }
+
     private bool calculateWalkable()
     {
         foreach (GameObject tile in multiLayerTile)
@@ -90,6 +108,8 @@ public abstract class TileMap : MonoBehaviour
 
     public int TileSize { get { return tileSize; } }
     public bool Active { get { return active; } }
+    public int RowCount { get { return rowCount; } }
+    public int ColCount { get { return colCount; } }
 
     public float TopBound { get { return CenterPoint.y + rowCount * tileSize * 0.5f; } }
     public float BottomBound { get { return CenterPoint.y - rowCount * tileSize * 0.5f; } }
@@ -149,6 +169,17 @@ public abstract class TileMap : MonoBehaviour
         Name = name;
         NumOfTiles = numOfTiles;
         loadFile();
+    }
+
+    public void AddToTiles(Tile tile)
+    {
+        tiles.Add(tile);
+    }
+
+    public void DestroyTile(ref Tile tile)
+    {
+        tiles.Remove(tile);
+        Destroy(tile.gameObject);
     }
 
     public GameObject FetchBlueprint(Tile.TILE_TYPE type)
@@ -383,7 +414,7 @@ public abstract class TileMap : MonoBehaviour
 
 		// Calculate data needed
 		Vector3 size = new Vector3(tileSize, tileSize, 1); // Size of tile (Scale)
-		Vector3 startPos = generateStartPos(numRow, numCol); // Calculate start position
+		Vector3 startPos = GenerateStartPos(numRow, numCol); // Calculate start position
 
 		// Generate map
 		for (int rowIndex = 0; rowIndex < numRow;) // Loop for rows
@@ -444,19 +475,19 @@ public abstract class TileMap : MonoBehaviour
 				}
 
 				// Next col startPos
-				startPos = generateStartPos(numRow, numCol, rowIndex, ++colIndex);
+				startPos = GenerateStartPos(numRow, numCol, rowIndex, ++colIndex);
 			}
 
 			// Add row of data into map
 			map.Add(rowOfData);
 
 			// Next row startPos
-			startPos = generateStartPos(numRow, numCol, ++rowIndex, 0);
+			startPos = GenerateStartPos(numRow, numCol, ++rowIndex, 0);
 		}
 		return true;
 	}
 
-	protected Vector3 generateStartPos(int numRow, int numCol, int rowIndex = 0, int colIndex = 0)
+	public Vector3 GenerateStartPos(int numRow, int numCol, int rowIndex = 0, int colIndex = 0)
 	{
 		Vector3 startPos = CenterPoint;
 		startPos += new Vector3(tileSize * colIndex, -tileSize * rowIndex, 2.0f);
