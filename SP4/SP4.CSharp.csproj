@@ -76,15 +76,18 @@
     <Compile Include="Assets\Scripts\AI\Enemy.cs" />
     <Compile Include="Assets\Scripts\AI\FSMState.cs" />
     <Compile Include="Assets\Scripts\AI\Pathfinding.cs" />
-    <Compile Include="Assets\Scripts\AI\Waypoint.cs" />
+    <Compile Include="Assets\Scripts\AI\Waypoints\Waypoint.cs" />
+    <Compile Include="Assets\Scripts\AI\Waypoints\WaypointManager.cs" />
     <Compile Include="Assets\Scripts\BackgroundScroller.cs" />
     <Compile Include="Assets\Scripts\Characters\Character.cs" />
     <Compile Include="Assets\Scripts\EnemyManager.cs" />
+    <Compile Include="Assets\Scripts\Framework\MultiPlayerCamera.cs" />
     <Compile Include="Assets\Scripts\Framework\ResourceController.cs" />
     <Compile Include="Assets\Scripts\Framework\ResourceControllerEditor.cs" />
     <Compile Include="Assets\Scripts\Framework\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\Framework\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Framework\SoundManagerEditor.cs" />
+    <Compile Include="Assets\Scripts\Framework\TimeManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
@@ -104,14 +107,19 @@
     <Compile Include="Assets\Scripts\Items\Projectiles\FlyingSword.cs" />
     <Compile Include="Assets\Scripts\Items\Projectiles\Lightning.cs" />
     <Compile Include="Assets\Scripts\Items\Projectiles\Projectile.cs" />
+    <Compile Include="Assets\Scripts\Items\Weapons\Blueprints\CrossbowBlueprint.cs" />
+    <Compile Include="Assets\Scripts\Items\Weapons\Blueprints\ShieldBlueprint.cs" />
+    <Compile Include="Assets\Scripts\Items\Weapons\Blueprints\SwordBlueprint.cs" />
+    <Compile Include="Assets\Scripts\Items\Weapons\Blueprints\WandBlueprint.cs" />
+    <Compile Include="Assets\Scripts\Items\Weapons\Blueprints\WeaponBlueprint.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\Crossbow.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\Shield.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\Sword.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\Wand.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\Weapon.cs" />
+    <Compile Include="Assets\Scripts\Items\Weapons\WeaponBlueprint.cs" />
     <Compile Include="Assets\Scripts\Level Editor\LevelEditor.cs" />
     <Compile Include="Assets\Scripts\Level Editor\LevelEditorCamera.cs" />
-    <Compile Include="Assets\Scripts\MultiPlayerCamera.cs" />
     <Compile Include="Assets\Scripts\Objective\Collect_Coins.cs" />
     <Compile Include="Assets\Scripts\Objective\Kill_Enemy.cs" />
     <Compile Include="Assets\Scripts\Objective\No_Dmg_Taken.cs" />
@@ -134,8 +142,6 @@
     <Compile Include="Assets\Scripts\TileMap\GameTileMap.cs" />
     <Compile Include="Assets\Scripts\TileMap\Tile.cs" />
     <Compile Include="Assets\Scripts\TileMap\TileMap.cs" />
-    <Compile Include="Assets\Scripts\TimeManager.cs" />
-    <Compile Include="Assets\Scripts\WaypointManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
