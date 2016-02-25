@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -111,6 +112,36 @@ public class Waypoint : MonoBehaviour
         }
 
         return nearestWaypoint;
+    }
+
+    public Waypoint GetRandomNeighbour(Waypoint exception = null)
+    {
+        // Don't bother when there's none to begin with
+        if (Neighbours.Count <= 0)
+        {
+            return null;
+        }
+
+        List<Waypoint> randList = Neighbours.OrderBy(x => Guid.NewGuid()).ToList();
+
+        // Find one in the list that isn't an exception
+        foreach (var w in randList)
+        {
+            // If no exception is given, we disregard it
+            if (exception == null)
+            {
+                return w;
+            }
+            // If an exception is given, we check for it
+            else if (exception != w)
+            {
+                return w;
+            }
+
+        }
+
+        // If there only the exception, oh well
+        return randList[0];
     }
 
     /// <summary>
