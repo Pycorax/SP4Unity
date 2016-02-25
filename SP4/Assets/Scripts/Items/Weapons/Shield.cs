@@ -11,9 +11,6 @@ public class Shield : Weapon
     [Tooltip("How long the big shield lasts.")]
     public float BigShieldDuration = 5.0f;
 
-    public Sprite BigShield;
-    private SpriteRenderer spriteRenderer;
-
     Transform firePoint;
 
     // Big Shield
@@ -29,7 +26,6 @@ public class Shield : Weapon
         base.Start();
 
         firePoint = transform.FindChild("FirePoint");
-        spriteRenderer = (SpriteRenderer)GetComponent<Renderer>();
 	}
 
     protected override void Update()
