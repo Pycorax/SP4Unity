@@ -144,11 +144,20 @@ public abstract class TileMap : MonoBehaviour
 	
 	}
 
-    public void Load(string name, int numOfTiles = 18)
+    public virtual void Load(string name, int numOfTiles = 18)
     {
         Name = name;
         NumOfTiles = numOfTiles;
         loadFile();
+    }
+
+    public GameObject FetchBlueprint(Tile.TILE_TYPE type)
+    {
+        if (type == Tile.TILE_TYPE.TILE_EMPTY)
+        {
+            return null;
+        }
+        return tileBlueprints[(int)type];
     }
 
 	public MultiLayerTile FetchTile(Vector3 position)

@@ -4,14 +4,15 @@ using UnityEngine.Rendering;
 
 public class EditorTileMap : TileMap
 {
-    public GameObject LineParent;
+    private GameObject lineParent;
     public GameObject LineBlueprint;
-    public float LineSize;
+    public float LineSize = 0.1f;
     public Color LineColor;
     public bool ShowLines = true;
+    private float lineSizeRatio;
 
     public float ZoomSensitivity = 1.0f;
-    public float pendingZoom = 0.0f;
+    private float pendingZoom = 0.0f;
 
     private List<LineRenderer> gridLinesRow = new List<LineRenderer>();
     private List<LineRenderer> gridLinesCol = new List<LineRenderer>();
@@ -26,7 +27,9 @@ public class EditorTileMap : TileMap
         MultiLayerTile multiLayerTile = FetchTile(0, 0);
         GameObject temp = Instantiate(tileBlueprints[(int)Tile.TILE_TYPE.TILE_BARREL]);
         temp.SetActive(false);
-        temp.transform.position = generateStartPos(rowCount, colCount, 0, 0);
+        Vector3 newPos = generateStartPos(rowCount, colCount, 0, 0);
+        newPos.z = 0.0f;
+        temp.transform.position = newPos;
         temp.transform.localScale = new Vector3(tileSize, tileSize);
         temp.transform.parent = transform;
         tiles.Add(temp.GetComponent<Tile>());
@@ -45,6 +48,12 @@ public class EditorTileMap : TileMap
             pendingZoom -= diff;
             updateMap();
         }
+    }
+
+    public override void Load(string name, int numOfTiles = 18)
+    {
+        base.Load(name, numOfTiles);
+        lineSizeRatio = calculateLineSizeRatio();
     }
 
     public void CreateNew(int numRow, int numCol)
@@ -71,6 +80,7 @@ public class EditorTileMap : TileMap
         active = true;
 
         drawGridLines();
+        lineSizeRatio = calculateLineSizeRatio();
     }
 
     public void ToggleLines()
@@ -100,9 +110,9 @@ public class EditorTileMap : TileMap
 
         const int START = 0;
         const int END = 1;
-        LineParent = new GameObject();
-        LineParent.name = "Lines";
-        LineParent.transform.parent = transform;
+        lineParent = new GameObject();
+        lineParent.name = "Lines";
+        lineParent.transform.parent = transform;
 
         // Draw lines between each row and 1 extra at the end
         for (int rowIndex = 0; rowIndex <= rowCount; ++rowIndex)
@@ -122,7 +132,7 @@ public class EditorTileMap : TileMap
             line.SetColors(LineColor, LineColor);
             line.gameObject.SetActive(ShowLines);
 
-            line.transform.parent = LineParent.transform;
+            line.transform.parent = lineParent.transform;
             gridLinesRow.Add(line);
         }
 
@@ -144,7 +154,7 @@ public class EditorTileMap : TileMap
             line.SetColors(LineColor, LineColor);
             line.gameObject.SetActive(ShowLines);
 
-            line.transform.parent = LineParent.transform;
+            line.transform.parent = lineParent.transform;
             gridLinesCol.Add(line);
         }
     }
@@ -203,5 +213,10 @@ public class EditorTileMap : TileMap
 
         // Grid lines
         updateGridLines();
+    }
+
+    private float calculateLineSizeRatio()
+    {
+        return LineSize / NumOfTiles;
     }
 }
