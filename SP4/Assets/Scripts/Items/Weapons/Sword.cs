@@ -79,13 +79,6 @@ public class Sword : Weapon
 
         if (other is Crossbow)
         {
-            // -- Check if we found a projectile
-            if (projectile != null)
-            {
-                // Destroy it
-                projectile.Disable();
-            }
-
             // Check if we can launch a flying sword
             if (gameObject.activeSelf)
             {
@@ -105,13 +98,6 @@ public class Sword : Weapon
         #region Big Sword
         else if (other is Wand)
         {
-            // -- Check if we found a projectile
-            if (projectile != null)
-            {
-                // Destroy it
-                projectile.Disable();
-            }
-
             // Set the sword to be larger
             spriteRenderer.sprite = BigSword;
             Damage = 20;

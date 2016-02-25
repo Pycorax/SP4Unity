@@ -89,13 +89,6 @@ public class Shield : Weapon
 
         if (other is Crossbow)
         {
-            // -- Check if we found a projectile
-            if (projectile != null)
-            {
-                // Destroy it
-                projectile.Disable();
-            }
-
             // Spawn Barrage of Arrows
             float barrageLeftAngle = (180 - BarrageFOV) * 0.5f;     // Dictates where we should start shooting from
             float degreeOfDifference = BarrageFOV / BarrageArrows;      // Get the angle in degrees between each arrow's direction
@@ -138,13 +131,6 @@ public class Shield : Weapon
         #region Big Shield
         else if (other is Wand)
         {
-            // -- Check if we found a projectile
-            if (projectile != null)
-            {
-                // Destroy it
-                projectile.Disable();
-            }
-
             // Activate the large shield
             if (bigShieldTimer <= 0.0f)
             {

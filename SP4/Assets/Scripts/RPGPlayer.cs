@@ -707,15 +707,21 @@ public class RPGPlayer : Character
             {
                 currentWeapon.CombinedUse(proj.Owner, proj);
             }
-            else if (LeftWeapon != null && LeftWeapon.AlwaysCombo)
-            {
-                LeftWeapon.CombinedUse(proj.Owner, proj);
-            }
-            else if (RightWeapon != null && RightWeapon.AlwaysCombo)
-            {
-                RightWeapon.CombinedUse(proj.Owner, proj);
-            }
             else
+            {
+                if (LeftWeapon != null && LeftWeapon.AlwaysCombo)
+                {
+                    LeftWeapon.CombinedUse(proj.Owner, proj);
+                }
+
+                if (RightWeapon != null && RightWeapon.AlwaysCombo)
+                {
+                    RightWeapon.CombinedUse(proj.Owner, proj);
+                }
+            }
+            
+            // If the projectile was not destroyed prior, destroy it
+            if (proj != null)
             {
                 // If not doing a CombinedUse(), handle the arrow
                 proj.Disable();
