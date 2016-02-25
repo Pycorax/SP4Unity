@@ -15,6 +15,7 @@ public class LevelEditor : MonoBehaviour
     }
 
     public EditorTileMap RefTileMap;
+    public Text MapName;
 
     // Controls
     public KeyCode PlaceKey = KeyCode.Mouse1;
@@ -74,6 +75,11 @@ public class LevelEditor : MonoBehaviour
         }
 	}
 
+    public void Save()
+    {
+        RefTileMap.Save();
+    }
+
     public void ToggleSideBar()
     {
         ShowSideBar = !ShowSideBar;
@@ -93,6 +99,11 @@ public class LevelEditor : MonoBehaviour
             selectedTile = Instantiate(goTile);
             updateSelected(ref selectedTile);
         }
+    }
+
+    public void UpdateName(Text text)
+    {
+        RefTileMap.Name = text.text;
     }
 
     private void updateSelected(ref GameObject go)

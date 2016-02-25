@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.Rendering;
+using System.IO;
 
 public class EditorTileMap : TileMap
 {
@@ -54,6 +54,43 @@ public class EditorTileMap : TileMap
     {
         base.Load(name, numOfTiles);
         lineSizeRatio = calculateLineSizeRatio();
+    }
+
+    public bool Save()
+    {
+        if (Name == "")
+        {
+            return false;
+        }
+        string path = MAP_DIRECTORY + Name + MAP_EXTENSION;
+        StreamWriter file = new StreamWriter(File.Create(path));
+
+        foreach (Row row in map)
+        {
+            string line = "";
+            foreach (MultiLayerTile multiTile in row.column)
+            {
+                if (multiTile.multiLayerTile.Count > 0)
+                {
+                    foreach (GameObject goTile in multiTile.multiLayerTile)
+                    {
+                        Tile tile = goTile.GetComponent<Tile>();
+                        line += (int)(tile.Type) + TILE_MULTIPLE_LAYER_SPLIT.ToString();
+                    }
+                    // Remove the extra multiple layer split
+                    line = line.Remove(line.Length - 1);
+                }
+                else
+                {
+                    line += (int)Tile.TILE_TYPE.TILE_EMPTY;
+                }
+                line += TILE_SPLIT.ToString();
+            }
+            line = line.Remove(line.Length - 1);
+            file.WriteLine(line);
+        }
+        file.Close();
+        return true;
     }
 
     public void CreateNew(int numRow, int numCol)
