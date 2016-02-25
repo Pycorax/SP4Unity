@@ -102,7 +102,7 @@ public class SoundManager : MonoBehaviour
         }
 
         // Initialize all the SFXs
-        for (int i = 0; i < Enum.GetNames(typeof(BackgroundMusic)).Length; ++i)
+        for (int i = 0; i < Enum.GetNames(typeof(SoundEffect)).Length; ++i)
         {
             GameObject go = new GameObject();
             go.transform.parent = transform;

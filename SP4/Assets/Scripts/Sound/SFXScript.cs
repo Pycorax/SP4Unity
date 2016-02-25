@@ -16,6 +16,7 @@ public class SFXScript : MonoBehaviour {
     public void ChangeVolume(float volume)
     {
         Mathf.Clamp(volume, 0f, 1f);
+        Debug.Log(volume);
         SoundManager.SFXVolume = volume;
     }
 }

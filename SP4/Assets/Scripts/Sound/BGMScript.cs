@@ -17,6 +17,7 @@ public class BGMScript : MonoBehaviour {
     public void ChangeVolume(float volume)
     {
         Mathf.Clamp(volume, 0f, 1f);
+        Debug.Log(volume);
         SoundManager.BGMVolume = volume;
     }
 }
