@@ -5,21 +5,24 @@ using UnityEngine;
 [CustomEditor(typeof(SoundManager))]
 public class SoundManagerEditor : Editor
 {
+    private bool showBGM = true;
+    private bool showSFX = true;
+
     public override void OnInspectorGUI()
     {
         // The ResourceController to manipulate
         SoundManager SM = (SoundManager)target;
 
-
-        EditorGUILayout.PrefixLabel("Background Music");
-
-        // Store the Enum details
-        var bgmEnumType = typeof(SoundManager.BackgroundMusic);
-        var bgmEnumNames = Enum.GetNames(bgmEnumType);
+        // Fold Out
+        showBGM = EditorGUILayout.Foldout(showBGM, "Background Music");
 
         // If Managers is available to be set (Not-Runtime)
-        if (SM.BackgroundMusicToLoad != null)
+        if (showBGM && SM.BackgroundMusicToLoad != null)
         {
+            // Store the Enum details
+            var bgmEnumType = typeof(SoundManager.BackgroundMusic);
+            var bgmEnumNames = Enum.GetNames(bgmEnumType);
+
             // Loop through all managers and show a field to allow editing
             for (int i = 0; i < Enum.GetValues(bgmEnumType).Length; i++)
             {
@@ -27,15 +30,16 @@ public class SoundManagerEditor : Editor
             }
         }
 
-        EditorGUILayout.Separator();
-        EditorGUILayout.PrefixLabel("Sound Effects");
-        // Store the Enum details
-        var sfxEnumType = typeof(SoundManager.SoundEffect);
-        var sfxEnumNames = Enum.GetNames(sfxEnumType);
+        // Fold Out
+        showSFX = EditorGUILayout.Foldout(showSFX, "Sound Effects");
 
         // If Managers is available to be set (Not-Runtime)
-        if (SM.SoundEffectsToLoad != null)
+        if (showSFX && SM.SoundEffectsToLoad != null)
         {
+            // Store the Enum details
+            var sfxEnumType = typeof(SoundManager.SoundEffect);
+            var sfxEnumNames = Enum.GetNames(sfxEnumType);
+
             // Loop through all managers and show a field to allow editing
             for (int i = 0; i < Enum.GetValues(sfxEnumType).Length; i++)
             {
