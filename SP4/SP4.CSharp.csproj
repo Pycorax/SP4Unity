@@ -88,6 +88,8 @@
     <Compile Include="Assets\Scripts\Framework\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Framework\SoundManagerEditor.cs" />
     <Compile Include="Assets\Scripts\Framework\TimeManager.cs" />
+    <Compile Include="Assets\Scripts\Gachapon.cs" />
+    <Compile Include="Assets\Scripts\Gachapon\GachaponEditor.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
@@ -120,6 +122,8 @@
     <Compile Include="Assets\Scripts\Items\Weapons\WeaponBlueprint.cs" />
     <Compile Include="Assets\Scripts\Level Editor\LevelEditor.cs" />
     <Compile Include="Assets\Scripts\Level Editor\LevelEditorCamera.cs" />
+    <Compile Include="Assets\Scripts\Menu Scripts\SceneManager.cs" />
+    <Compile Include="Assets\Scripts\Menu Scripts\SplashScreen.cs" />
     <Compile Include="Assets\Scripts\Objective\Collect_Coins.cs" />
     <Compile Include="Assets\Scripts\Objective\Kill_Enemy.cs" />
     <Compile Include="Assets\Scripts\Objective\No_Dmg_Taken.cs" />
@@ -127,7 +131,6 @@
     <Compile Include="Assets\Scripts\Objective\Objectives.cs" />
     <Compile Include="Assets\Scripts\ProjectileManager.cs" />
     <Compile Include="Assets\Scripts\RPGPlayer.cs" />
-    <Compile Include="Assets\Scripts\SceneManager.cs" />
     <Compile Include="Assets\Scripts\Score\HighScoreSystem.cs" />
     <Compile Include="Assets\Scripts\Score\ScoreDisplay.cs" />
     <Compile Include="Assets\Scripts\Score\ScoreEntry.cs" />
@@ -136,7 +139,6 @@
     <Compile Include="Assets\Scripts\ScreenData.cs" />
     <Compile Include="Assets\Scripts\Sound\BGMScript.cs" />
     <Compile Include="Assets\Scripts\Sound\SFXScript.cs" />
-    <Compile Include="Assets\Scripts\SplashScreen.cs" />
     <Compile Include="Assets\Scripts\SpriteData.cs" />
     <Compile Include="Assets\Scripts\TileMap\EditorTileMap.cs" />
     <Compile Include="Assets\Scripts\TileMap\GameTileMap.cs" />

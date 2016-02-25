@@ -30,8 +30,8 @@ public abstract class WeaponBlueprint : MonoBehaviour
     /// <param name="result">The Weapon to set the common stats for.</param>
     protected void setCommonStats(ref Weapon weap)
     {
-        weap.Range = Random.Range(WorstPossibleVariant.Range, BestPossibleVariant.Range + 1.0f);
+        weap.Range = Random.Range(WorstPossibleVariant.Range, BestPossibleVariant.Range);
         weap.Damage = Random.Range(WorstPossibleVariant.Damage, BestPossibleVariant.Damage + 1);
-        weap.FireRate = Random.Range(WorstPossibleVariant.FireRate, BestPossibleVariant.FireRate + 1.0f);
+        weap.FireRate = Random.Range(WorstPossibleVariant.FireRate, BestPossibleVariant.FireRate);
     }
 }
