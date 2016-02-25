@@ -4,36 +4,44 @@ using UnityEditor;
 [CustomEditor(typeof(Gachapon))]
 public class GachaponEditor : Editor
 {
+    private bool showWeapBlueprints = true;
+    private bool showSpawnRates = true;
+
     public override void OnInspectorGUI()
     {                                                                                        
-        // The ResourceController to manipulate
+        // The Gachapon script to manipulate
         Gachapon gacha = (Gachapon)target;
-
-        // Title
-        EditorGUILayout.PrefixLabel("Weapon Blueprints");
 
         // Store the Enum details
         var weapType = typeof(Gachapon.Spawnable);
         var weapEnumNames = Enum.GetNames(weapType);
 
-        // Loop through all Weapon Blueprints and show a field to allow editing
-        for (int i = 0; i < Enum.GetValues(weapType).Length; i++)
+        // Foldout Controllers
+        showWeapBlueprints = EditorGUILayout.Foldout(showWeapBlueprints, "Weapon Blueprints");
+        if (showWeapBlueprints)
         {
-            EditorGUILayout.PrefixLabel(weapEnumNames[i]);
-            gacha.WeaponBlueprints[i] = (WeaponBlueprint)EditorGUILayout.ObjectField(gacha.WeaponBlueprints[i], typeof(WeaponBlueprint), false);
+            // Loop through all Weapon Blueprints and show a field to allow editing
+            for (int i = 0; i < Enum.GetValues(weapType).Length; i++)
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PrefixLabel(weapEnumNames[i]);
+                gacha.WeaponBlueprints[i] = (WeaponBlueprint)EditorGUILayout.ObjectField(gacha.WeaponBlueprints[i], typeof(WeaponBlueprint), false);
+                EditorGUILayout.EndHorizontal();
+            }
         }
 
-        // Split
-        EditorGUILayout.Separator();
-
-        // Title
-        EditorGUILayout.PrefixLabel("Spawn Rates");
-        // Loop through all probabilities and show a field to allow editing
-        for (int i = 0; i < Enum.GetValues(weapType).Length; i++)
+        // Foldout
+        showSpawnRates = EditorGUILayout.Foldout(showSpawnRates, "Spawn Rates");
+        if (showSpawnRates)
         {
-            EditorGUILayout.PrefixLabel(weapEnumNames[i]);
-            gacha.WeaponSpawnRates[i] = EditorGUILayout.IntField(gacha.WeaponSpawnRates[i]);
-        }                                                                                        
-        
+            // Loop through all probabilities and show a field to allow editing
+            for (int i = 0; i < Enum.GetValues(weapType).Length; i++)
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PrefixLabel(weapEnumNames[i]);
+                gacha.WeaponSpawnRates[i] = EditorGUILayout.IntField(gacha.WeaponSpawnRates[i]);
+                EditorGUILayout.EndHorizontal();
+            }
+        }
     }
 }
