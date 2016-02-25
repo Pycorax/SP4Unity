@@ -114,6 +114,11 @@ public class Waypoint : MonoBehaviour
         return nearestWaypoint;
     }
 
+    /// <summary>
+    /// Function that provides a random neighbour from the list of Neighbours
+    /// </summary>
+    /// <param name="exception">A Waypoint that you want to exclude from the random list. However, if the exception is the only neighbour, it will return that.</param>
+    /// <returns>The random Waypoint from the list of neighbouring Waypoints.</returns>
     public Waypoint GetRandomNeighbour(Waypoint exception = null)
     {
         // Don't bother when there's none to begin with
