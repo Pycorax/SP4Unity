@@ -50,6 +50,8 @@ public class RPGPlayer : Character
     private int animMoving = Animator.StringToHash("Moving");
     private int animShootLeft = Animator.StringToHash("ShootLeft");
     private int animShootRight = Animator.StringToHash("ShootRight");
+    private int animShootingLeft = Animator.StringToHash("Attacking Left");
+    private int animShootingRight = Animator.StringToHash("Attacking Right");
 
     // Components
     private Rigidbody2D rigidBody;
@@ -507,7 +509,16 @@ public class RPGPlayer : Character
                     shot = true;
 
                     // Start animation
-                    animator.SetTrigger(animShootLeft);
+                    if (LeftWeapon.HeldDownUsable)
+                    {
+                        // Use a bool for continuous
+                        animator.SetBool(animShootingLeft, true);
+                    }
+                    else
+                    {
+                        // Use trigger for one-off things
+                        animator.SetTrigger(animShootLeft);
+                    }
 
                     // Withdraw other weapon
                     RightWeapon.Withdraw();
@@ -515,7 +526,13 @@ public class RPGPlayer : Character
             }
             else
             {
-                LeftWeapon.Unuse();
+                LeftWeapon.Unuse(RightWeapon);
+
+                // If it was held down previously, we stop holding down
+                if (LeftWeapon.HeldDownUsable)
+                {
+                    animator.SetBool(animShootingLeft, false);
+                }
             }
 
         }
@@ -530,7 +547,16 @@ public class RPGPlayer : Character
                     shot = true;
 
                     // Start animation
-                    animator.SetTrigger(animShootRight);
+                    if (RightWeapon.HeldDownUsable)
+                    {
+                        // Use a bool for continuous
+                        animator.SetBool(animShootingRight, true);
+                    }
+                    else
+                    {
+                        // Use trigger for one-off things
+                        animator.SetTrigger(animShootRight);
+                    }
 
                     // Withdraw other weapon
                     LeftWeapon.Withdraw();
@@ -538,7 +564,13 @@ public class RPGPlayer : Character
             }
             else
             {
-                RightWeapon.Unuse();
+                RightWeapon.Unuse(LeftWeapon);
+
+                // If it was held down previously, we stop holding down
+                if (RightWeapon.HeldDownUsable)
+                {
+                    animator.SetBool(animShootingRight, false);
+                }
             }
         }
 
@@ -674,6 +706,14 @@ public class RPGPlayer : Character
             if (currentWeapon != null)
             {
                 currentWeapon.CombinedUse(proj.Owner, proj);
+            }
+            else if (LeftWeapon != null && LeftWeapon.AlwaysCombo)
+            {
+                LeftWeapon.CombinedUse(proj.Owner, proj);
+            }
+            else if (RightWeapon != null && RightWeapon.AlwaysCombo)
+            {
+                RightWeapon.CombinedUse(proj.Owner, proj);
             }
             else
             {

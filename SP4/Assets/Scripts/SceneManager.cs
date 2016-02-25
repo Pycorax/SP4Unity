@@ -51,7 +51,7 @@ public class SceneManager : MonoBehaviour {
 
     public void LoadShops()
     {
-        Application.LoadLevel("ShopScene");
+        Application.LoadLevel("StoreScene");
     }
 
     public void LoadScores()

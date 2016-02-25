@@ -180,6 +180,11 @@ namespace Enemy
             {
                 // Collision handled by projectile
             }
+            //Collided with Sword
+            else if(other.gameObject.GetComponent<Sword>())
+            {
+                this.Injure(other.gameObject.GetComponent<Sword>().Damage);
+            }
         }
 
         #endregion
