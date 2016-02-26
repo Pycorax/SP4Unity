@@ -14,6 +14,7 @@ Example: Tile A is supposed to be rendered above Tile B, writing format is "A|B"
 public class MultiLayerTile
 {
 	public List<GameObject> multiLayerTile = new List<GameObject>();
+    public bool Walkable { set { walkable = value; } }
     private bool walkable = true;
 
 	public bool IsWalkable()
@@ -24,13 +25,13 @@ public class MultiLayerTile
     public void AddTile(GameObject tile)
     {
         multiLayerTile.Add(tile);
-        walkable = calculateWalkable();
+        walkable = CalculateWalkable();
     }
 
     public void AddFront(GameObject tile)
     {
         multiLayerTile.Insert(0, tile);
-        walkable = calculateWalkable();
+        walkable = CalculateWalkable();
     }
     
     public GameObject RemoveTop()
@@ -41,11 +42,11 @@ public class MultiLayerTile
         }
         GameObject tile = multiLayerTile[0];
         multiLayerTile.RemoveAt(0);
-        walkable = calculateWalkable();
+        walkable = CalculateWalkable();
         return tile;
     }
 
-    private bool calculateWalkable()
+    public bool CalculateWalkable()
     {
         int i = 0;
         foreach (GameObject tile in multiLayerTile)
@@ -69,6 +70,7 @@ public abstract class TileMap : MonoBehaviour
 {
 	public static char TILE_SPLIT = ',';
 	public static char TILE_MULTIPLE_LAYER_SPLIT = '|';
+    public static char TILE_OBJECTILE_IDENTIFIER = '#';
     public static string MAP_DIRECTORY = "Assets\\Maps\\";
     public static string MAP_EXTENSION = ".map";
 
@@ -389,6 +391,11 @@ public abstract class TileMap : MonoBehaviour
 			{
 				continue; // Ignores commented line
 			}
+            else if (line.StartsWith(TILE_OBJECTILE_IDENTIFIER.ToString()))
+            {
+                // Objective
+
+            }
 			string[] tokens = line.Split(',');
 			int newLength = tokens.Length;
 			if (newLength > numCol)

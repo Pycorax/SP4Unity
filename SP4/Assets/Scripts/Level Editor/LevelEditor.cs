@@ -64,7 +64,7 @@ public class LevelEditor : MonoBehaviour
                 {
                     placeTile(worldClickPoint);
                 }
-                else if (!ShowSideBar)
+                else if (!ShowSideBar && Input.mousePosition.x < GetUI(UI_TYPE.UI_OPEN_SIDEBAR).position.x)
                 {
                     placeTile(worldClickPoint);
                 }
@@ -78,7 +78,7 @@ public class LevelEditor : MonoBehaviour
             {
                 removeTile(worldClickPoint);
             }
-            else if (!ShowSideBar)
+            else if (!ShowSideBar && Input.mousePosition.x < GetUI(UI_TYPE.UI_OPEN_SIDEBAR).position.x)
             {
                 removeTile(worldClickPoint);
             }

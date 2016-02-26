@@ -262,6 +262,7 @@ public class EditorTileMap : TileMap
     public bool AddTile(Vector3 pos, GameObject blueprint)
     {
         MultiLayerTile multiTile = FetchTile(pos);
+        Vector2 tileIndex = FetchTileIndex(pos);
         if (multiTile != null && multiTile.IsWalkable())
         {
             // Check if same tile exists
@@ -273,10 +274,33 @@ public class EditorTileMap : TileMap
                 }
             }
 
+            float scaleRatio = blueprint.GetComponent<Tile>().ScaleRatio;
+            List<MultiLayerTile> tempList = new List<MultiLayerTile>();
+
+            // Set other tiles walkable to false if scale ratio bigger than 0
+            for (int row = (int)tileIndex.x; row < tileIndex.x + scaleRatio; ++row)
+            {
+                for (int col = (int)tileIndex.y; col < tileIndex.y + scaleRatio; ++col)
+                {
+                    MultiLayerTile tile = FetchTile(row, col);
+                    if (tile != null)
+                    {
+                        tile.Walkable = blueprint.GetComponent<Tile>().IsWalkable();
+                        tempList.Add(tile);
+                    }
+                    else
+                    {
+                        foreach (MultiLayerTile t in tempList)
+                        {
+                            t.CalculateWalkable();
+                        }
+                        return false;
+                    }
+                }
+            }
+
             // Adding the tile
             GameObject newTile = Instantiate(blueprint);
-            float scaleRatio = newTile.GetComponent<Tile>().ScaleRatio;
-            Vector2 tileIndex = FetchTileIndex(pos);
             newTile.gameObject.SetActive(true);
             newTile.transform.position = generateStartPos(RowCount, ColCount, (int)tileIndex.x, (int)tileIndex.y) + new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
             newTile.transform.localScale = new Vector3(TileSize * scaleRatio, TileSize * scaleRatio, 1.0f);
@@ -298,6 +322,22 @@ public class EditorTileMap : TileMap
             {
                 Tile t = tileToDestroy.GetComponent<Tile>();
                 DestroyTile(ref t);
+
+                // Recalculate the walkable value for tiles occupied
+                Vector2 tileIndex = FetchTileIndex(pos);
+                float scaleRatio = t.ScaleRatio;
+                for (int row = (int)tileIndex.x; row < tileIndex.x + scaleRatio; ++row)
+                {
+                    for (int col = (int)tileIndex.y; col < tileIndex.y + scaleRatio; ++col)
+                    {
+                        MultiLayerTile tile = FetchTile(row, col);
+                        if (tile != null)
+                        {
+                            tile.CalculateWalkable();
+                        }
+                    }
+                }
+
                 return true;
             }
         }
