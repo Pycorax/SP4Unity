@@ -14,6 +14,8 @@ public class RPGPlayer : Character
     public float RotationSpriteOffset = -90.0f;
     [Tooltip("The delay time before currentWeapon will be reset.")]
     public float CurrentWeaponTimeDelay = 2.0f;
+    [Tooltip("The skin of the player.")]
+    public Skin PlayerSkin;
 
     // Player Attributes
     private int enemyKilled;
@@ -90,6 +92,12 @@ public class RPGPlayer : Character
             //alignWeapon(ref RightWeapon, false);
             RightWeapon.RefProjectileManager = ProjectileManager;
         }
+
+        // Load Skins if there is one
+        if (PlayerSkin != null)
+        {
+            PlayerSkin.Load();
+        }
     }
 
     // Update is called once per frame
@@ -116,6 +124,15 @@ public class RPGPlayer : Character
 
         //HealthBar Testing
         HealthBarUpdate(Health);
+    }
+
+    void LateUpdate()
+    {
+        // If there is a skin...
+        if (PlayerSkin != null)
+        {
+            PlayerSkin.SwapSkin(spriteRenderer);
+        }
     }
 
     /// <summary>

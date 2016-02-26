@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Enemy
 {
-    public class WaitingState : FSMState
+    public class AlertState : FSMState
     {
 
         protected override void exit()
@@ -17,11 +17,6 @@ namespace Enemy
         }
 
         protected override void update()
-        {
-            Changeofstates();
-        }
-
-        private void Changeofstates()
         {
 
         }

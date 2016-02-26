@@ -13,13 +13,13 @@ public class LevelEditor : MonoBehaviour
         UI_CLOSE_SIDEBAR,
         NUM_UI,
     }
-
+    
     public EditorTileMap RefTileMap;
     public Text MapName;
 
     // Controls
-    public KeyCode PlaceKey = KeyCode.Mouse1;
-    public KeyCode RemoveKey = KeyCode.Mouse2;
+    /*public KeyCode PlaceKey = KeyCode.Mouse0;
+    public KeyCode RemoveKey = KeyCode.Mouse1;*/
 
     // Side Bar
     public bool ShowSideBar = false;
@@ -40,40 +40,50 @@ public class LevelEditor : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        //Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        //Debug.Log(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y)));
+        /*float canvasWidth = GetComponent<RectTransform>().rect.width;
+        float panelWidth = GetUI(UI_TYPE.UI_SIDEBAR).rect.width;
+        Debug.Log(canvasWidth - panelWidth);*/
+        //Debug.Log(GetUI(UI_TYPE.UI_CLOSE_SIDEBAR).position.x);
+
+        // Update tile map scrolling
+        if (RefTileMap)
+        {
+            RefTileMap.PendingZoom += Input.GetAxis("Mouse ScrollWheel") * RefTileMap.ZoomSensitivity;
+        }
+
+        // Update selected tile and check for tile placement
+        Vector3 worldClickPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Mouse position in world space
         if (selectedTile)
         {
             updateSelected(ref selectedTile);
 
-            Vector3 worldClickPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            // On place block click
+            // On place tile click
             if (Input.GetMouseButton(0))
             {
-                if (ShowSideBar && worldClickPoint.x < Camera.main.transform.position.x)
+                if (ShowSideBar && Input.mousePosition.x < GetUI(UI_TYPE.UI_CLOSE_SIDEBAR).position.x)
                 {
                     placeTile(worldClickPoint);
                 }
-                else if (!ShowSideBar)
+                else if (!ShowSideBar && Input.mousePosition.x < GetUI(UI_TYPE.UI_OPEN_SIDEBAR).position.x)
                 {
                     placeTile(worldClickPoint);
-                }
-            }
-
-            // On remove block click
-            if (Input.GetMouseButton(1))
-            {
-                if (ShowSideBar && worldClickPoint.x < Camera.main.transform.position.x)
-                {
-                    removeTile(worldClickPoint);
-                }
-                else if (!ShowSideBar)
-                {
-                    removeTile(worldClickPoint);
                 }
             }
         }
-	}
+
+        // On remove block click
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (ShowSideBar && worldClickPoint.x < Camera.main.transform.position.x)
+            {
+                removeTile(worldClickPoint);
+            }
+            else if (!ShowSideBar && Input.mousePosition.x < GetUI(UI_TYPE.UI_OPEN_SIDEBAR).position.x)
+            {
+                removeTile(worldClickPoint);
+            }
+        }
+    }
 
     public void Save()
     {
@@ -108,11 +118,12 @@ public class LevelEditor : MonoBehaviour
 
     private void updateSelected(ref GameObject go)
     {
-        Vector2 mousePos = Input.mousePosition;
-        Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y));
+        float tileSize = RefTileMap.TileSize;
+        float scaleRatio = go.GetComponent<Tile>().ScaleRatio;
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         pos.z = 0.0f;
-        go.transform.position = pos;
-        go.transform.localScale = new Vector3(RefTileMap.TileSize, RefTileMap.TileSize, 1.0f);
+        go.transform.position = pos + new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
+        go.transform.localScale = new Vector3(tileSize * scaleRatio, tileSize * scaleRatio, 1.0f);
     }
 
     private void updateSideBar()
@@ -135,32 +146,11 @@ public class LevelEditor : MonoBehaviour
 
     private void placeTile(Vector3 pos)
     {
-        MultiLayerTile multiTile = RefTileMap.FetchTile(pos);
-        if (multiTile != null && multiTile.IsWalkable())
-        {
-            GameObject newTile = Instantiate(selectedTile);
-            Vector2 tileIndex = RefTileMap.FetchTileIndex(pos);
-            newTile.gameObject.SetActive(true);
-            newTile.transform.position = RefTileMap.GenerateStartPos(RefTileMap.RowCount, RefTileMap.ColCount, (int)tileIndex.x, (int)tileIndex.y);
-            newTile.transform.localScale = new Vector3(RefTileMap.TileSize, RefTileMap.TileSize, 1.0f);
-            newTile.transform.parent = RefTileMap.transform;
-            RefTileMap.AddToTiles(newTile.GetComponent<Tile>());
-            multiTile.AddFront(newTile);
-        }
+        RefTileMap.AddTile(pos, selectedTile);
     }
 
     private void removeTile(Vector3 pos)
     {
-        MultiLayerTile multiTile = RefTileMap.FetchTile(pos);
-        if (multiTile != null)
-        {
-            GameObject tileToDestroy = multiTile.RemoveTop();
-            if (tileToDestroy)
-            {
-                Tile t = tileToDestroy.GetComponent<Tile>();
-                RefTileMap.DestroyTile(ref t);
-                //Destroy(tileToDestroy);
-            }
-        }
+        RefTileMap.RemoveTile(pos);
     }
 }
