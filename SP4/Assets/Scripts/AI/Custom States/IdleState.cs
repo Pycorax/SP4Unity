@@ -6,6 +6,8 @@ namespace Enemy
     public class IdleState : FSMState
     {
         private double timer;
+        private double changestatetimer;
+        private int Decide;
 
         protected override void exit()
         {
@@ -19,9 +21,12 @@ namespace Enemy
 
         protected override void update()
         {
-            // If timer is more than 5 seconds, enemy will heal itself
+
+            // If timer is more than 3 seconds, enemy will heal itself
             timer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
-            if(timer >= 5)
+            changestatetimer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+
+            if (timer >= 3)
             {
                 healenemy();
                 timer = 0;
@@ -30,19 +35,31 @@ namespace Enemy
             //Enemy will rotate in idle state
             parent.gameObject.transform.Rotate(0, 0, 0.3f);
 
-            Changeofstates();
+            //Every 5 seconds, will check if the enemy want to change states
+            if(changestatetimer >= 5)
+            {
+                Changeofstates();
+                changestatetimer = 0;
+            }
         }
 
         private void healenemy()
         {
             // Will heal the enemy for a certain amount
             parent.Heal(2);
-            Debug.Log(parent.Health);
         }
 
         private void Changeofstates()
         {
-
+            Decide = Random.Range(0, 2);
+            switch (Decide)
+            {
+                case 0:
+                    break;
+                case 1:
+                    parent.changeCurrentState(new PatrolState());
+                    break;
+            }
         }
     }
 }
