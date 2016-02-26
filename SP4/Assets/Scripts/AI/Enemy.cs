@@ -66,6 +66,35 @@ namespace Enemy
             }
         }
 
+        internal RPGPlayer getNearestPlayer()
+        {
+            float dist;
+            return getNearestPlayer(out dist);
+        }
+
+        internal RPGPlayer getNearestPlayer(out float distSqrToPlayer)
+        {
+            // Determine nearest player to chase
+            float shortestDist = -1.0f;
+            GameObject nearestPlayer = null;
+            foreach (var player in PlayerList)
+            {
+                float distToPlayer = (transform.position - player.transform.position).sqrMagnitude;
+
+                if (shortestDist < 0.0f || shortestDist > distToPlayer)
+                {
+                    shortestDist = distToPlayer;
+                    nearestPlayer = player;
+                }
+            }
+
+            // Return the distance squared to the player via out
+            distSqrToPlayer = shortestDist;
+
+            // Return the reference to the nearest player
+            return nearestPlayer.GetComponent<RPGPlayer>();
+        }
+
         #region Waypoint
 
         /// <summary>
@@ -90,7 +119,7 @@ namespace Enemy
                         dir.Normalize();
 
                         // Head to the target
-                        transform.position += (Vector3)dir * 500.0f * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+                        transform.position += (Vector3)dir * Speed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
                     }
                     else
                     {

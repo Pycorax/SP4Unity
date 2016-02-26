@@ -23,6 +23,7 @@ namespace HighScoreServer.Models
                     // Build from the DB
                     updateOrderedList();
                 }
+
                 return orderedEntries;
             }
         }
@@ -42,6 +43,16 @@ namespace HighScoreServer.Models
         public void SetMaxScores(int score)
         {
             maxHighScores = score;
+            updateOrderedList();
+        }
+
+        public void Clear()
+        {
+            foreach (var s in Entries)
+            {
+                Entries.RemoveRange(Entries.ToArray());
+            }
+
             updateOrderedList();
         }
 

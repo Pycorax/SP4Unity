@@ -32,6 +32,13 @@ namespace HighScoreServer.Controllers
         {
             database.SetMaxScores(config.MaxScores);
 
+            // Clear scores?
+            if (config.ResetScores)
+            {
+                database.Clear();
+                database.SaveChangesAsync();
+            }
+
             return RedirectToRoute(new { controller = "Home", action = "Index" });
         }
     }

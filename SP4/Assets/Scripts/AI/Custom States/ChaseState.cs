@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Enemy
+﻿namespace Enemy
 {
     public class ChaseState : FSMState
     {
@@ -17,18 +15,7 @@ namespace Enemy
         protected override void update()
         {
             // Determine nearest player to chase
-            float shortestDist = -1.0f;
-            GameObject playerToChase = null;
-            foreach (var player in parent.PlayerList)
-            {
-                float distToPlayer = (parent.transform.position - player.transform.position).sqrMagnitude;
-
-                if (shortestDist < 0.0f || shortestDist > distToPlayer)
-                {
-                    shortestDist = distToPlayer;
-                    playerToChase = player;
-                }
-            }
+            var playerToChase = parent.getNearestPlayer();
 
             // Have we found one nearby?
             if (playerToChase != null)
@@ -47,6 +34,13 @@ namespace Enemy
                     parent.FinalTargetWaypoint = parent.WaypointMap.GetNearestWaypointToGoTo(parent.CurrentWaypoint, playerWaypoint);
                 }
             }
+
+            Changeofstates();
+        }
+
+        private void Changeofstates()
+        {
+
         }
     }
 }

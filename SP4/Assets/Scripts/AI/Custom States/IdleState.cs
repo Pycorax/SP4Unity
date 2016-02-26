@@ -29,6 +29,8 @@ namespace Enemy
 
             //Enemy will rotate in idle state
             parent.gameObject.transform.Rotate(0, 0, 0.3f);
+
+            Changeofstates();
         }
 
         private void healenemy()
@@ -36,6 +38,11 @@ namespace Enemy
             // Will heal the enemy for a certain amount
             parent.Heal(2);
             Debug.Log(parent.Health);
+        }
+
+        private void Changeofstates()
+        {
+
         }
     }
 }
