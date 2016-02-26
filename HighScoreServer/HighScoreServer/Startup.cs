@@ -65,6 +65,9 @@ namespace HighScoreServer
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            
+            // Shows an error page when there is a 400 - 599 error
+            app.UseStatusCodePagesWithRedirects("/Home/Error");
 
             // Register MVC Middleware AND specify the routing format
             app.UseMvc(routes => routes.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}"));

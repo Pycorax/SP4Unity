@@ -1,6 +1,13 @@
 ﻿{
   "debug": true,
   "Data": {
-    "DefaultDatabase":  { "ConnectionString": "Server=(LocalDb)\\MSSQLLocalDb;Database=HighScoreDB"}
+    "DefaultConnection": {
+       "ConnectionString": "Server=(LocalDb)\\MSSQLLocalDb;Database=HighScoreDB" }
+  },
+
+  "EntityFramework": {
+    "ApplicationDbContext": {
+      "ConnectionStringKey": "Data:DefaultConnection:ConnectionString" 
+    }
   }
 }
