@@ -30,17 +30,18 @@
                 } 
                 else
                 {
-                    // Go towards the player
-                    parent.FinalTargetWaypoint = parent.WaypointMap.GetNearestWaypointToGoTo(parent.CurrentWaypoint, playerWaypoint);
+                    if (parent.Health < 50)
+                    {
+                        parent.changeCurrentState(new FleeingState());
+                        return;
+                    }
+                    else
+                    {
+                        // Go towards the player
+                        parent.FinalTargetWaypoint = parent.WaypointMap.GetNearestWaypointToGoTo(parent.CurrentWaypoint, playerWaypoint);
+                    }    
                 }
             }
-
-            Changeofstates();
-        }
-
-        private void Changeofstates()
-        {
-
         }
     }
 }
