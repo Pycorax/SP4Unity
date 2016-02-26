@@ -1,56 +1,54 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class ScoreDisplay : MonoBehaviour {
 
-    private SortedList sortedList;
+    private ScoreEntry[] scoreArray;
+    private int scoreCount;
 
-    private List<ScoreEntry> scoreList = new List<ScoreEntry>();
-
+    public Text [] DisplayScore = new Text[5];
 
 	// Use this for initialization
 	void Start () {
 
         HighScoreSystem.Instance.ServerAPIAddress = "http://catbang.kahwei.xyz/api/Score";
 
+        //Sending Scores to check
+
+        //HighScoreSystem.Instance.SendScore(new ScoreEntry("Jesus", 4));
+        //HighScoreSystem.Instance.SendScore(new ScoreEntry("Bitch", 64));
+        //HighScoreSystem.Instance.SendScore(new ScoreEntry("Christ", 24));
+        //HighScoreSystem.Instance.SendScore(new ScoreEntry("Darth", 12));
+        //HighScoreSystem.Instance.SendScore(new ScoreEntry("Vader", 131));
+        HighScoreSystem.Instance.SendScore(new ScoreEntry("My Name is Jogan Cena.", 1369));
+        
+        //Download Scores
         HighScoreSystem.Instance.DownloadScores();
 
-        foreach (var i in HighScoreSystem.Instance.Scores)
-        {
-            Debug.Log(i.Name + ", " + i.Score);
-        }
+        scoreCount = HighScoreSystem.Instance.Scores.Count;
 
-        //Add Scores to ScoreList
-        //if (HighScoreSystem.Instance.Scores != null)
-        //{
-        //    scoreList.AddRange(HighScoreSystem.Instance.Scores);
-        //}
-        //foreach(var i in HighScoreSystem.Instance.Scores)
-        //{
-        //    scoreList.Add(i);
-        //}
+        scoreArray = new ScoreEntry[scoreCount];
+        
+        scoreCount = Mathf.Clamp(scoreCount, 0, 5);
+        //Add top 5 scores to scorelist
 
-        /*                 [[UNTESTED]]
-        *Sort the Scores
-        *Uses default comparer, which is found in ScoreEntry Class
-        *IT SHOULD, NOTE SHOULD, sort by Score
-        */
-        //scoreList.Sort();
+        HighScoreSystem.Instance.Scores.CopyTo(0, scoreArray, 0, scoreCount);
+        
 
-        //foreach (var i in scoreList)
-        //{
-        //    Debug.Log(i.Name + ", " + i.Score);
-        //}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+        displayScores();
 	}
 
     public void displayScores()
     {
-
+        for(int i = 0; i < scoreCount; i++)
+        {
+            DisplayScore[i].text = scoreArray[i].Name + "..............." + scoreArray[i].Score.ToString();
+        }
     }
 }
