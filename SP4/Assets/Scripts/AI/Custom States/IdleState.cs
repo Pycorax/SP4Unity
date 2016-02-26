@@ -51,13 +51,16 @@ namespace Enemy
 
         private void Changeofstates()
         {
-            Decide = Random.Range(0, 2);
+            Decide = Random.Range(0, 3);
             switch (Decide)
             {
                 case 0:
                     break;
                 case 1:
                     parent.changeCurrentState(new PatrolState());
+                    break;
+                case 2:
+                    parent.changeCurrentState(new AlertState());
                     break;
             }
         }
