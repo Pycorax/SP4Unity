@@ -11,6 +11,9 @@ public class Gachapon : MonoBehaviour
         Wand
     }
 
+    [Tooltip("The cost of a Gachapon capsule.")]
+    public int Cost;
+
     [Tooltip("The list of weapon blueprints for the weapon to generate.")]
     public WeaponBlueprint[] WeaponBlueprints = new WeaponBlueprint[Enum.GetNames(typeof(Spawnable)).Length];
 

@@ -16,6 +16,12 @@ public class GachaponEditor : Editor
         var weapType = typeof(Gachapon.Spawnable);
         var weapEnumNames = Enum.GetNames(weapType);
 
+        // Cost
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("Cost");
+        gacha.Cost = EditorGUILayout.IntField(gacha.Cost);
+        EditorGUILayout.EndHorizontal();
+
         // Foldout Controllers
         showWeapBlueprints = EditorGUILayout.Foldout(showWeapBlueprints, "Weapon Blueprints");
         if (showWeapBlueprints)

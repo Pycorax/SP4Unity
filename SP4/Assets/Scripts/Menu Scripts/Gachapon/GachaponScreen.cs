@@ -18,12 +18,9 @@ public class GachaponScreen : MonoBehaviour
         Vanilla,
         HideMerch,
         ShowCapsule,
-        ShowCapsuleOpen,
+        OpenCapsule,
         End
     }
-
-    // Constants
-    private const float MAX_ALPHA_VALUE = 255.0f;
 
     // Animation
     private State menuState = State.Vanilla;
@@ -34,9 +31,10 @@ public class GachaponScreen : MonoBehaviour
     private Text[] merchantChildText;
     // -- Capsule Container
     private Image capsuleImage;
+    private Animation capsuleAnimation;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
         // Get References for State.HideMerch
         merchantChildImages = MerchantContainer.GetComponentsInChildren<Image>();
@@ -44,6 +42,9 @@ public class GachaponScreen : MonoBehaviour
 
         // Get References for State.ShowCapsule
         capsuleImage = CapsuleContainer.GetComponentInChildren<Image>();
+
+        // Get References for State.OpenCapsule
+        capsuleAnimation = CapsuleContainer.GetComponentInChildren<Animation>();
 
         // Set Up the Scene
         CapsuleContainer.SetActive(false);
@@ -86,18 +87,20 @@ public class GachaponScreen : MonoBehaviour
                 break;
 
             case State.ShowCapsule:
-                if (capsuleImage.color.a < MAX_ALPHA_VALUE)
+                if (capsuleImage.color.a < 1.0f)
                 {
                     setColorAlpha(capsuleImage, capsuleImage.color.a + FadeSpeed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game));
                 }
                 else
                 {
-                    menuState = State.ShowCapsuleOpen;
+                    menuState = State.OpenCapsule;
                 }
                 break;
 
-            case State.ShowCapsuleOpen:
-
+            case State.OpenCapsule:
+                // TODO: Fix
+                //capsuleAnimation["GachaOpen"].wrapMode = WrapMode.Once;
+                //capsuleAnimation.Play("GachaOpen");
                 break;
         }
 	}
