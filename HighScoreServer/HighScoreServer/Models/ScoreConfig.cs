@@ -10,5 +10,6 @@ namespace HighScoreServer.Models
     {
         [Required]
         public int MaxScores { get; set; }
+        public bool ResetScores { get; set; }
     }
 }
