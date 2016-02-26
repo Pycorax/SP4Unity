@@ -52,11 +52,29 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
@@ -69,8 +87,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AI\Custom States\AlertState.cs" />
     <Compile Include="Assets\Scripts\AI\Custom States\ChaseState.cs" />
     <Compile Include="Assets\Scripts\AI\Custom States\DeadState.cs" />
+    <Compile Include="Assets\Scripts\AI\Custom States\FleeingState.cs" />
     <Compile Include="Assets\Scripts\AI\Custom States\IdleState.cs" />
     <Compile Include="Assets\Scripts\AI\Custom States\PatrolState.cs" />
     <Compile Include="Assets\Scripts\AI\Enemy.cs" />
@@ -88,7 +108,7 @@
     <Compile Include="Assets\Scripts\Framework\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Framework\SoundManagerEditor.cs" />
     <Compile Include="Assets\Scripts\Framework\TimeManager.cs" />
-    <Compile Include="Assets\Scripts\Gachapon.cs" />
+    <Compile Include="Assets\Scripts\Gachapon\Gachapon.cs" />
     <Compile Include="Assets\Scripts\Gachapon\GachaponEditor.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
@@ -129,6 +149,7 @@
     <Compile Include="Assets\Scripts\Objective\No_Dmg_Taken.cs" />
     <Compile Include="Assets\Scripts\Objective\ObjectiveManager.cs" />
     <Compile Include="Assets\Scripts\Objective\Objectives.cs" />
+    <Compile Include="Assets\Scripts\Players\Skin.cs" />
     <Compile Include="Assets\Scripts\ProjectileManager.cs" />
     <Compile Include="Assets\Scripts\RPGPlayer.cs" />
     <Compile Include="Assets\Scripts\Score\HighScoreSystem.cs" />
