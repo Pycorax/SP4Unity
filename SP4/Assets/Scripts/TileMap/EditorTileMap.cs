@@ -283,7 +283,7 @@ public class EditorTileMap : TileMap
                 for (int col = (int)tileIndex.y; col < tileIndex.y + scaleRatio; ++col)
                 {
                     MultiLayerTile tile = FetchTile(row, col);
-                    if (tile != null)
+                    if (tile != null && tile.IsWalkable())
                     {
                         tile.Walkable = blueprint.GetComponent<Tile>().IsWalkable();
                         tempList.Add(tile);
@@ -292,7 +292,7 @@ public class EditorTileMap : TileMap
                     {
                         foreach (MultiLayerTile t in tempList)
                         {
-                            t.CalculateWalkable();
+                            t.Walkable = t.CalculateWalkable();
                         }
                         return false;
                     }
@@ -333,7 +333,7 @@ public class EditorTileMap : TileMap
                         MultiLayerTile tile = FetchTile(row, col);
                         if (tile != null)
                         {
-                            tile.CalculateWalkable();
+                            tile.Walkable = tile.CalculateWalkable();
                         }
                     }
                 }
