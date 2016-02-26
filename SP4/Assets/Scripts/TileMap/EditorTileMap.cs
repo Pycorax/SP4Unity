@@ -13,6 +13,7 @@ public class EditorTileMap : TileMap
 
     public float ZoomSensitivity = 1.0f;
     private float pendingZoom = 0.0f;
+    public float PendingZoom { set { pendingZoom = value; } get { return pendingZoom; } }
 
     private List<LineRenderer> gridLinesRow = new List<LineRenderer>();
     private List<LineRenderer> gridLinesCol = new List<LineRenderer>();
@@ -27,7 +28,7 @@ public class EditorTileMap : TileMap
         MultiLayerTile multiLayerTile = FetchTile(0, 0);
         GameObject temp = Instantiate(tileBlueprints[(int)Tile.TILE_TYPE.TILE_BARREL]);
         temp.SetActive(false);
-        Vector3 newPos = GenerateStartPos(rowCount, colCount, 0, 0);
+        Vector3 newPos = generateStartPos(rowCount, colCount, 0, 0);
         newPos.z = 0.0f;
         temp.transform.position = newPos;
         temp.transform.localScale = new Vector3(tileSize, tileSize);
@@ -39,13 +40,13 @@ public class EditorTileMap : TileMap
 	// Update is called once per frame
 	protected override void Update ()
     {
-        pendingZoom += Input.GetAxis("Mouse ScrollWheel") * ZoomSensitivity;
         if (pendingZoom >= 1 || pendingZoom <= -1)
         {
             // Zooming
             int diff = Mathf.FloorToInt(pendingZoom);
             NumOfTiles -= diff;
             pendingZoom -= diff;
+            NumOfTiles = Mathf.Clamp(NumOfTiles, 1, 50);
             updateMap();
         }
     }
@@ -102,7 +103,7 @@ public class EditorTileMap : TileMap
         
         // Calculate data needed
         Vector3 size = new Vector3(tileSize, tileSize, 1); // Size of tile (Scale)
-        Vector3 startPos = GenerateStartPos(numRow, numCol); // Calculate start position
+        Vector3 startPos = generateStartPos(numRow, numCol); // Calculate start position
 
         for (int rowIndex = 0; rowIndex < numRow; ++rowIndex)
         {
@@ -230,7 +231,6 @@ public class EditorTileMap : TileMap
         tileSize = calculateTileSize(TotalSize);
         tileMapDistToTopLeft = generateDistToTopLeft(rowCount, colCount);
         Vector3 startPos;
-        Vector3 size = new Vector3(tileSize, tileSize);
 
         for (int rowIndex = 0; rowIndex < map.Count; ++rowIndex)
         {
@@ -238,11 +238,13 @@ public class EditorTileMap : TileMap
             for (int colIndex = 0; colIndex < row.column.Count; ++colIndex)
             {
                 MultiLayerTile multiTile = row.column[colIndex];
-                startPos = GenerateStartPos(rowCount, colCount, rowIndex, colIndex);
+                startPos = generateStartPos(rowCount, colCount, rowIndex, colIndex);
                 for (int tileIndex = 0; tileIndex < multiTile.multiLayerTile.Count; ++tileIndex)
                 {
                     GameObject tile = multiTile.multiLayerTile[tileIndex];
-                    tile.transform.position = startPos;
+                    float scaleRatio = tile.GetComponent<Tile>().ScaleRatio;
+                    Vector3 size = new Vector3(tileSize * scaleRatio, tileSize * scaleRatio);
+                    tile.transform.position = startPos + new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
                     tile.transform.localScale = size;
                 }
             }
@@ -255,5 +257,50 @@ public class EditorTileMap : TileMap
     private float calculateLineSizeRatio()
     {
         return LineSize / NumOfTiles;
+    }
+
+    public bool AddTile(Vector3 pos, GameObject blueprint)
+    {
+        MultiLayerTile multiTile = FetchTile(pos);
+        if (multiTile != null && multiTile.IsWalkable())
+        {
+            // Check if same tile exists
+            foreach (GameObject tempGO in multiTile.multiLayerTile)
+            {
+                if (tempGO.GetComponent<Tile>().Type == blueprint.GetComponent<Tile>().Type)
+                {
+                    return false;
+                }
+            }
+
+            // Adding the tile
+            GameObject newTile = Instantiate(blueprint);
+            float scaleRatio = newTile.GetComponent<Tile>().ScaleRatio;
+            Vector2 tileIndex = FetchTileIndex(pos);
+            newTile.gameObject.SetActive(true);
+            newTile.transform.position = generateStartPos(RowCount, ColCount, (int)tileIndex.x, (int)tileIndex.y) + new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
+            newTile.transform.localScale = new Vector3(TileSize * scaleRatio, TileSize * scaleRatio, 1.0f);
+            newTile.transform.parent = transform;
+            tiles.Add(newTile.GetComponent<Tile>());
+            multiTile.AddFront(newTile);
+            return true;
+        }
+        return false;
+    }
+
+    public bool RemoveTile(Vector3 pos)
+    {
+        MultiLayerTile multiTile = FetchTile(pos);
+        if (multiTile != null)
+        {
+            GameObject tileToDestroy = multiTile.RemoveTop();
+            if (tileToDestroy)
+            {
+                Tile t = tileToDestroy.GetComponent<Tile>();
+                DestroyTile(ref t);
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -47,8 +47,10 @@ public class MultiLayerTile
 
     private bool calculateWalkable()
     {
+        int i = 0;
         foreach (GameObject tile in multiLayerTile)
         {
+            tile.GetComponent<SpriteRenderer>().sortingOrder = i++;
             if (!tile.GetComponent<Tile>().IsWalkable())
             {
                 return false;
@@ -414,7 +416,7 @@ public abstract class TileMap : MonoBehaviour
 
 		// Calculate data needed
 		Vector3 size = new Vector3(tileSize, tileSize, 1); // Size of tile (Scale)
-		Vector3 startPos = GenerateStartPos(numRow, numCol); // Calculate start position
+		Vector3 startPos = generateStartPos(numRow, numCol); // Calculate start position
 
 		// Generate map
 		for (int rowIndex = 0; rowIndex < numRow;) // Loop for rows
@@ -475,19 +477,19 @@ public abstract class TileMap : MonoBehaviour
 				}
 
 				// Next col startPos
-				startPos = GenerateStartPos(numRow, numCol, rowIndex, ++colIndex);
+				startPos = generateStartPos(numRow, numCol, rowIndex, ++colIndex);
 			}
 
 			// Add row of data into map
 			map.Add(rowOfData);
 
 			// Next row startPos
-			startPos = GenerateStartPos(numRow, numCol, ++rowIndex, 0);
+			startPos = generateStartPos(numRow, numCol, ++rowIndex, 0);
 		}
 		return true;
 	}
 
-	public Vector3 GenerateStartPos(int numRow, int numCol, int rowIndex = 0, int colIndex = 0)
+	protected Vector3 generateStartPos(int numRow, int numCol, int rowIndex = 0, int colIndex = 0)
 	{
 		Vector3 startPos = CenterPoint;
 		startPos += new Vector3(tileSize * colIndex, -tileSize * rowIndex, 2.0f);
