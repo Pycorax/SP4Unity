@@ -8,6 +8,9 @@
     <!--Name-->
     @Html.LabelFor(x => x.MaxScores)
     @Html.EditorFor(x => x.MaxScores)
+    <!--Clear Scores-->
+    @Html.LabelFor(x => x.ResetScores)
+    @Html.EditorFor(x => x.ResetScores)
     @Html.ValidationMessageFor(x => x.MaxScores)
     <br /><br />
 
