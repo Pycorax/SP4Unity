@@ -31,6 +31,13 @@ namespace Enemy
                 //set ur previous waypoint to current waypoint
                 previousWaypoint = parent.CurrentWaypoint;
             }
+
+            Changeofstates();
+        }
+
+        private void Changeofstates()
+        {
+            //parent.changeCurrentState(new ChaseState());
         }
     }
 }

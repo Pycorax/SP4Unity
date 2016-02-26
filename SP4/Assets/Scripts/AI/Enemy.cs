@@ -119,7 +119,7 @@ namespace Enemy
                         dir.Normalize();
 
                         // Head to the target
-                        transform.position += (Vector3)dir * 500.0f * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+                        transform.position += (Vector3)dir * Speed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
                     }
                     else
                     {

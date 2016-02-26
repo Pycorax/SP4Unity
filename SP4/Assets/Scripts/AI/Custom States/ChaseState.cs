@@ -34,6 +34,13 @@
                     parent.FinalTargetWaypoint = parent.WaypointMap.GetNearestWaypointToGoTo(parent.CurrentWaypoint, playerWaypoint);
                 }
             }
+
+            Changeofstates();
+        }
+
+        private void Changeofstates()
+        {
+
         }
     }
 }
