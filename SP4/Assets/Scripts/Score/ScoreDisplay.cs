@@ -16,13 +16,8 @@ public class ScoreDisplay : MonoBehaviour {
         HighScoreSystem.Instance.ServerAPIAddress = "http://catbang.kahwei.xyz/api/Score";
 
         //Sending Scores to check
-
-        //HighScoreSystem.Instance.SendScore(new ScoreEntry("Jesus", 4));
-        //HighScoreSystem.Instance.SendScore(new ScoreEntry("Bitch", 64));
-        //HighScoreSystem.Instance.SendScore(new ScoreEntry("Christ", 24));
-        //HighScoreSystem.Instance.SendScore(new ScoreEntry("Darth", 12));
-        //HighScoreSystem.Instance.SendScore(new ScoreEntry("Vader", 131));
-        HighScoreSystem.Instance.SendScore(new ScoreEntry("My Name is Jogan Cena.", 1369));
+        //HighScoreSystem.Instance.SendScore(new ScoreEntry("Potato", 420));
+        //HighScoreSystem.Instance.SendScore(new ScoreEntry("M3M3L0RD", 1337));
         
         //Download Scores
         HighScoreSystem.Instance.DownloadScores();
@@ -48,7 +43,7 @@ public class ScoreDisplay : MonoBehaviour {
     {
         for(int i = 0; i < scoreCount; i++)
         {
-            DisplayScore[i].text = scoreArray[i].Name + "..............." + scoreArray[i].Score.ToString();
+            DisplayScore[i].text = scoreArray[i].Name + " - " + scoreArray[i].Score.ToString();
         }
     }
 }

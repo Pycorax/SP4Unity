@@ -19,25 +19,44 @@ public class SceneManager : MonoBehaviour {
     }
 
     //Load Up GameScene
-    public void LoadGame1()
+    //CANCER INCOMING
+    public void LoadLevel1()
     {
-        Application.LoadLevel("GameScene");
+        Application.LoadLevel("Level1-1");
+    }
+    public void LoadLevel2()
+    {
+        Application.LoadLevel("Level1-2");
+    }
+    public void LoadLevel3()
+    {
+        Application.LoadLevel("Level1-3");
+    }
+    public void LoadLevel4()
+    {
+        Application.LoadLevel("Level2-1");
+    }
+    public void LoadLevel5()
+    {
+        Application.LoadLevel("Level2-2");
+    }
+    public void LoadLevel6()
+    {
+        Application.LoadLevel("Level2-3");
+    }
+    public void LoadLevel7()
+    {
+        Application.LoadLevel("Level3-1");
+    }
+    public void LoadLevel8()
+    {
+        Application.LoadLevel("Level3-2");
+    }
+    public void LoadLevel9()
+    {
+        Application.LoadLevel("Level3-3");
     }
 
-    public void LoadGame2()
-    {
-        Application.LoadLevel("WhateverKeithWants");
-    }
-
-    public void LoadGame3()
-    {
-        Application.LoadLevel("Level3Scene");
-    }
-
-    public void LoadGame4()
-    {
-        Application.LoadLevel("Level4Scene");
-    }
 
     public void LoadOptions()
     {
@@ -62,6 +81,11 @@ public class SceneManager : MonoBehaviour {
     public void LoadLevelSelectScene()
     {
         Application.LoadLevel("LevelSelectScene");
+    }
+
+    public void LoadLevelEditor()
+    {
+        Application.LoadLevel("LevelEditor");
     }
 
     public void ExitGame()
