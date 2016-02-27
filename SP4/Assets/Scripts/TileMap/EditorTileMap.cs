@@ -18,6 +18,9 @@ public class EditorTileMap : TileMap
     private List<LineRenderer> gridLinesRow = new List<LineRenderer>();
     private List<LineRenderer> gridLinesCol = new List<LineRenderer>();
 
+    // Components
+    private WaypointManager waypointManager;
+
     // Use this for initialization
     protected override void Start ()
 	{
@@ -35,7 +38,10 @@ public class EditorTileMap : TileMap
         temp.transform.parent = transform;
         tiles.Add(temp.GetComponent<Tile>());
         multiLayerTile.AddTile(temp);
-    }
+
+        // Initialize Components
+        waypointManager = GetComponent<WaypointManager>();
+	}
 	
 	// Update is called once per frame
 	protected override void Update ()
@@ -128,6 +134,11 @@ public class EditorTileMap : TileMap
     {
         ShowLines = !ShowLines;
         ActivateLines(ShowLines);
+    }
+
+    public void ToggleWaypointLines()
+    {
+        waypointManager.DrawConnections = !waypointManager.DrawConnections;
     }
 
     public void ActivateLines(bool active)
