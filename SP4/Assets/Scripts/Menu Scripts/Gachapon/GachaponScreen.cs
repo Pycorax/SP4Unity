@@ -24,6 +24,7 @@ public class GachaponScreen : MonoBehaviour
 
     // Animation
     private State menuState = State.Vanilla;
+    private int animGachaOpen = Animator.StringToHash("OpenGacha"); // The hash for the Capsule animator's OpenGacha trigger
 
     // Components
     // -- Merchant Container
@@ -31,7 +32,7 @@ public class GachaponScreen : MonoBehaviour
     private Text[] merchantChildText;
     // -- Capsule Container
     private Image capsuleImage;
-    private Animation capsuleAnimation;
+    private Animator capsuleAnimator;
 
     // Use this for initialization
     void Start ()
@@ -44,7 +45,7 @@ public class GachaponScreen : MonoBehaviour
         capsuleImage = CapsuleContainer.GetComponentInChildren<Image>();
 
         // Get References for State.OpenCapsule
-        capsuleAnimation = CapsuleContainer.GetComponentInChildren<Animation>();
+        capsuleAnimator = CapsuleContainer.GetComponentInChildren<Animator>();
 
         // Set Up the Scene
         CapsuleContainer.SetActive(false);
@@ -93,14 +94,13 @@ public class GachaponScreen : MonoBehaviour
                 }
                 else
                 {
+                    capsuleAnimator.SetTrigger(animGachaOpen);
                     menuState = State.OpenCapsule;
                 }
                 break;
 
             case State.OpenCapsule:
-                // TODO: Fix
-                //capsuleAnimation["GachaOpen"].wrapMode = WrapMode.Once;
-                //capsuleAnimation.Play("GachaOpen");
+                
                 break;
         }
 	}
