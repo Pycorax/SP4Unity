@@ -21,50 +21,61 @@ public class LevelEditorButtonsController : MonoBehaviour
     [Tooltip("A reference to the LevelEditor you wish to work with.")]
     public LevelEditorGemini LevelEditorReference;
 
+    [Tooltip("If true, this is treated as a template and Start() will not load the buttons.")]
+    public bool IsTemplate = false;
+
     // Components
     private RectTransform templateTileButtonRTf;
 
     // Use this for initialization
     void Start ()
 	{
+        if (!IsTemplate)
+        {
+            Load(TileSet);
+        }
+	}
+
+    public void Load(GameObject tileSet)
+    {
         // Get a reference to the template tile's rect transform for positioning later on
-	    templateTileButtonRTf = TemplateTileButton.GetComponent<RectTransform>();
+        templateTileButtonRTf = TemplateTileButton.GetComponent<RectTransform>();
 
         // Save and use this to track the position to spawn a button next
         float buttonSpawnPosY = templateTileButtonRTf.rect.min.y + templateTileButtonRTf.rect.height * 0.5f;
 
         // Create a button for each tile in the TileSet
-	    foreach (var t in TileSet.GetComponentsInChildren<Tile>())
-	    {
+        foreach (var t in tileSet.GetComponentsInChildren<Tile>())
+        {
             // Create a tile button for this guy
-	        var tileButton = Instantiate(TemplateTileButton);
+            var tileButton = Instantiate(TemplateTileButton);
             // Get a reference to the button's Button
-	        var tileButtonBtn = tileButton.GetComponent<Button>();
+            var tileButtonBtn = tileButton.GetComponent<Button>();
             // Get a reference to the button's Image
-	        var tileButtonImage = tileButton.GetComponent<Image>();
+            var tileButtonImage = tileButton.GetComponent<Image>();
             // Get a reference tot he button's RectTransform
             var tileButtonRTf = tileButton.GetComponent<RectTransform>();
 
             // Register the Callback
-	        Tile thisTile = t;
+            Tile thisTile = t;
             tileButtonBtn.onClick.AddListener(delegate { LevelEditorReference.TileSelected(thisTile); });
 
             // Update the button's image
-	        tileButtonImage.sprite = t.GetComponent<SpriteRenderer>().sprite;
+            tileButtonImage.sprite = t.GetComponent<SpriteRenderer>().sprite;
 
             // Make this a child of this controller
-	        tileButton.transform.SetParent(transform);
-        
+            tileButton.transform.SetParent(transform);
+
             // Set Position, Alignment and Scaling
             tileButtonRTf.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, (tileButtonRTf.parent.GetComponent<RectTransform>().rect.width - tileButtonRTf.rect.width) * 0.5f, templateTileButtonRTf.rect.width);
             tileButtonRTf.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, buttonSpawnPosY, templateTileButtonRTf.rect.height);
-	        tileButton.transform.localScale = Vector3.one;
+            tileButton.transform.localScale = Vector3.one;
 
             // Update the next button spawn position
             buttonSpawnPosY += templateTileButtonRTf.rect.height + TileButtonYMargin;
-	    }
+        }
 
         // Deactivate the now useless TemplateTileButton
         TemplateTileButton.gameObject.SetActive(false);
-	}
+    }
 }
