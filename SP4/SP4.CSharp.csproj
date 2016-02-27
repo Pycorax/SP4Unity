@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\Framework\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Framework\SoundManagerEditor.cs" />
     <Compile Include="Assets\Scripts\Framework\TimeManager.cs" />
+    <Compile Include="Assets\Scripts\Framework\TrackerLine.cs" />
     <Compile Include="Assets\Scripts\Gachapon\Gachapon.cs" />
     <Compile Include="Assets\Scripts\Gachapon\GachaponEditor.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Assets\Scripts\Level Editor\LevelEditor.cs" />
     <Compile Include="Assets\Scripts\Level Editor\LevelEditorButtonsController.cs" />
     <Compile Include="Assets\Scripts\Level Editor\LevelEditorCamera.cs" />
+    <Compile Include="Assets\Scripts\Level Editor\LevelEditorCategoryButtonsController.cs" />
     <Compile Include="Assets\Scripts\Level Editor\LevelEditorGemini.cs" />
     <Compile Include="Assets\Scripts\Level Editor\LevelEditorObjectiveDropdown.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\Gachapon\GachaCapsuleButton.cs" />

@@ -161,6 +161,17 @@ public class ResourceManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Sets all items in this ResourceManager to be inactive
+    /// </summary>
+    public void ResetAll()
+    {
+        foreach (var v in resourceList)
+        {
+            v.SetActive(false);
+        }
+    }
+
+    /// <summary>
     /// Adds 'ExpandSize' amount of items into the list or until the list is full.
     /// </summary>
     /// <returns>Whether expansion occured.</returns>

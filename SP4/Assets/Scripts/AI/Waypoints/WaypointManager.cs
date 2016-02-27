@@ -16,6 +16,9 @@ public class WaypointManager : MonoBehaviour
     [Tooltip("If true, the raytrace between Waypoints will be drawn.")]
     public bool GizmoWaypointRayDraw = true;
 
+    [Tooltip("The ResourceManager for a LineManager")]
+    public ResourceManager LineManager;
+
     // Holds a list of waypoints that we set up in Start() to return later
     private List<Waypoint> waypointList;
 
@@ -35,25 +38,31 @@ public class WaypointManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (DrawConnections)
-        {
+        // Set up the Lines
+        
+            LineManager.ResetAll();
+
             // Loop through each
             foreach (Waypoint w in waypointList)
             {
-                // Recalculate all connections
                 w.SetUpConnections(waypointList, WaypointRadius);
 
+            if (DrawConnections)
+            {
                 // Draw the connections
                 foreach (Waypoint neighbour in w.Neighbours)
                 {
-                    Debug.DrawLine(w.transform.position, neighbour.transform.position, Color.yellow, 0.0f, false);
+                    var rsc = LineManager.Fetch();
+                    rsc.SetActive(true);
+                    var line = rsc.GetComponent<TrackerLine>();
+                    line.Init(w.gameObject, neighbour.gameObject);
                 }
             }
         }
     }
     /// <summary>
     /// Function to draw the paths of the waypoints on the screen. However, it does not work as the Collider 
-    /// doesn't seem to be enabled in the UnityEditor. Unity bug maybe.
+    /// doesn't seem to be enabled in the UnityEditor. Unity bugs maybe.
     /// </summary>
     void OnDrawGizmos()
     {
