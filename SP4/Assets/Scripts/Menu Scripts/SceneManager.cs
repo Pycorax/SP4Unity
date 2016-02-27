@@ -85,7 +85,7 @@ public class SceneManager : MonoBehaviour {
 
     public void LoadLevelEditor()
     {
-        Application.LoadLevel("LevelEditor");
+        Application.LoadLevel("NewLevelEditor");
     }
 
     public void ExitGame()
