@@ -8,6 +8,9 @@ public class LevelEditorObjectiveDropdown : MonoBehaviour
     // Component
     private Dropdown dropdown;
 
+    // Getters
+    public Objectives.Type Objective { get { return (Objectives.Type)dropdown.value; } }
+
 	// Use this for initialization
 	void Start ()
 	{

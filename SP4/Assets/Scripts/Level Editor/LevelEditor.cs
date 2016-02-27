@@ -16,6 +16,7 @@ public class LevelEditor : MonoBehaviour
     
     public EditorTileMap RefTileMap;
     public Text MapName;
+    public LevelEditorObjectiveDropdown RefObjective;
 
     // Controls
     /*public KeyCode PlaceKey = KeyCode.Mouse0;
@@ -87,7 +88,7 @@ public class LevelEditor : MonoBehaviour
 
     public void Save()
     {
-        RefTileMap.Save();
+        RefTileMap.Save(RefObjective.Objective);
     }
 
     public void ToggleSideBar()

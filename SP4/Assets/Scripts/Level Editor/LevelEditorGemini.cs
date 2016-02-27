@@ -6,27 +6,10 @@ using UnityEngine.EventSystems;
 
 public class LevelEditorGemini : MonoBehaviour
 {
-    // List of UI types that are required to resize and re-position
-    enum UI_TYPE
-    {
-        UI_SIDEBAR,
-        UI_SIDEBAR_CONTAINER,
-        UI_OPEN_SIDEBAR,
-        UI_CLOSE_SIDEBAR,
-        NUM_UI,
-    }
     
     public EditorTileMap RefTileMap;
     public Text MapName;
-
-    // Controls
-    /*public KeyCode PlaceKey = KeyCode.Mouse0;
-    public KeyCode RemoveKey = KeyCode.Mouse1;*/
-
-    // Side Bar
-    public bool ShowSideBar = false;
-    public float SideBarPadding = 10.0f;
-    public RectTransform[] UI = new RectTransform[(int)UI_TYPE.NUM_UI];
+    public LevelEditorObjectiveDropdown RefObjective;
 
     private GameObject selectedTile = null;
 
@@ -42,17 +25,13 @@ public class LevelEditorGemini : MonoBehaviour
         // Initialize Components
 	    graphicRaycaster = GetComponent<GraphicRaycaster>();
 
-	    //updateSideBar();
-	    //resizeUI();
+        // Send default name to tile map
+        RefTileMap.Name = MapName.text;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        /*float canvasWidth = GetComponent<RectTransform>().rect.width;
-        float panelWidth = GetUI(UI_TYPE.UI_SIDEBAR).rect.width;
-        Debug.Log(canvasWidth - panelWidth);*/
-        //Debug.Log(GetUI(UI_TYPE.UI_CLOSE_SIDEBAR).position.x);
 
         // Do not allow modification of the tilemap when the mouse isn't on it
 	    if (mouseIsOnUi())
@@ -81,27 +60,14 @@ public class LevelEditorGemini : MonoBehaviour
 
 	    // On remove block click
 	    if (Input.GetMouseButtonDown(1))
-	    {
-	        if (ShowSideBar && worldClickPoint.x < Camera.main.transform.position.x)
-	        {
-	            removeTile(worldClickPoint);
-	        }
-	        else if (!ShowSideBar && Input.mousePosition.x < GetUI(UI_TYPE.UI_OPEN_SIDEBAR).position.x)
-	        {
-	            removeTile(worldClickPoint);
-	        }
-	    }
+        {
+            removeTile(worldClickPoint);
+        }
     }
 
     public void Save()
     {
-        RefTileMap.Save();
-    }
-
-    public void ToggleSideBar()
-    {
-        ShowSideBar = !ShowSideBar;
-        updateSideBar();
+        RefTileMap.Save(RefObjective.Objective);
     }
 
     public void TileSelected(Tile tile)
@@ -149,24 +115,6 @@ public class LevelEditorGemini : MonoBehaviour
         pos.z = 0.0f;
         go.transform.position = pos + new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
         go.transform.localScale = new Vector3(tileSize * scaleRatio, tileSize * scaleRatio, 1.0f);
-    }
-
-    private void updateSideBar()
-    {
-        //GetUI(UI_TYPE.UI_SIDEBAR).gameObject.SetActive(ShowSideBar);
-        //GetUI(UI_TYPE.UI_CLOSE_SIDEBAR).gameObject.SetActive(ShowSideBar);
-        GetUI(UI_TYPE.UI_SIDEBAR_CONTAINER).gameObject.SetActive(ShowSideBar);
-        GetUI(UI_TYPE.UI_OPEN_SIDEBAR).gameObject.SetActive(!ShowSideBar);
-    }
-
-    private void resizeUI()
-    {
-        GetUI(UI_TYPE.UI_SIDEBAR);
-    }
-
-    private RectTransform GetUI(UI_TYPE type)
-    {
-        return UI[(int)type];
     }
 
     private void placeTile(Vector3 pos)

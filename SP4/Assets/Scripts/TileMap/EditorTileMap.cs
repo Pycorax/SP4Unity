@@ -57,7 +57,7 @@ public class EditorTileMap : TileMap
         lineSizeRatio = calculateLineSizeRatio();
     }
 
-    public bool Save()
+    public bool Save(Objectives.Type objective)
     {
         if (Name == "")
         {
@@ -65,6 +65,9 @@ public class EditorTileMap : TileMap
         }
         string path = MAP_DIRECTORY + Name + MAP_EXTENSION;
         StreamWriter file = new StreamWriter(File.Create(path));
+
+        // Save objective
+        file.WriteLine(TILE_OBJECTILE_IDENTIFIER.ToString() + ((int)objective));
 
         foreach (Row row in map)
         {
