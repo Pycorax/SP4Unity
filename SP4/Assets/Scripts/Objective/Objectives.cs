@@ -3,6 +3,13 @@ using System.Collections;
 
 public abstract class Objectives : MonoBehaviour {
 
+    public enum Type
+    {
+        KillAll,
+        CollectCoins,
+        NoDamage
+    }
+
     public RPGPlayer player;
 
     public virtual void Start()

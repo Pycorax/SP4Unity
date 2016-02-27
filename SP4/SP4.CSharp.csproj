@@ -123,7 +123,10 @@
     <Compile Include="Assets\Scripts\Items\Weapons\Weapon.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\WeaponBlueprint.cs" />
     <Compile Include="Assets\Scripts\Level Editor\LevelEditor.cs" />
+    <Compile Include="Assets\Scripts\Level Editor\LevelEditorButtonsController.cs" />
     <Compile Include="Assets\Scripts\Level Editor\LevelEditorCamera.cs" />
+    <Compile Include="Assets\Scripts\Level Editor\LevelEditorGemini.cs" />
+    <Compile Include="Assets\Scripts\Level Editor\LevelEditorObjectiveDropdown.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\Gachapon\GachaCapsuleButton.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\Gachapon\GachaponScreen.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\Level Select\SpawnButton.cs" />
