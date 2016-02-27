@@ -20,7 +20,10 @@ public class TrackerLine : MonoBehaviour
         line = GetComponent<LineRenderer>();
 
         // Set up the Renderer
-	    Init(StartObject, EndObject);
+	    if (StartObject != null && EndObject != null)
+	    {
+	        Init(StartObject, EndObject);
+	    }
     }
 
     // Update is called once per frame

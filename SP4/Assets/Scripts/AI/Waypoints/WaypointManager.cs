@@ -15,9 +15,14 @@ public class WaypointManager : MonoBehaviour
     public bool GizmoWaypointRadiusDraw = true;
     [Tooltip("If true, the raytrace between Waypoints will be drawn.")]
     public bool GizmoWaypointRayDraw = true;
-
+    [Tooltip("If true, then recheck children for Waypoints every second.")]
+    public bool MessyWaypoints = false;
     [Tooltip("The ResourceManager for a LineManager")]
     public ResourceManager LineManager;
+
+    // MessyWaypoints timer
+    private float messyWaypointsTimer = 0.0f;
+    private const float MESSY_WAYPOINTS_TIME_DELAY = 1.0f;
 
     // Holds a list of waypoints that we set up in Start() to return later
     private List<Waypoint> waypointList;
@@ -40,12 +45,12 @@ public class WaypointManager : MonoBehaviour
     {
         // Set up the Lines
         
-            LineManager.ResetAll();
+        LineManager.ResetAll();
 
-            // Loop through each
-            foreach (Waypoint w in waypointList)
-            {
-                w.SetUpConnections(waypointList, WaypointRadius);
+        // Loop through each
+        foreach (Waypoint w in waypointList)
+        {
+            w.SetUpConnections(waypointList, WaypointRadius);
 
             if (DrawConnections)
             {
@@ -59,6 +64,34 @@ public class WaypointManager : MonoBehaviour
                 }
             }
         }
+
+        if (MessyWaypoints)
+        {
+            // Update Timer
+            messyWaypointsTimer += (float)TimeManager.GetDeltaTime(TimeManager.TimeType.SceneOrganization);
+
+            // Reorganize if need be
+            if (messyWaypointsTimer > MESSY_WAYPOINTS_TIME_DELAY)
+            {
+                // Clear the List
+                waypointList.Clear();
+
+                // Rebuild the List
+                foreach (Transform t in transform)
+                {
+                    Waypoint w = t.GetComponent<Waypoint>();
+
+                    if (w != null)
+                    {
+                        waypointList.Add(w);
+                    }
+                }
+
+                // Reset the Timer
+                messyWaypointsTimer = 0.0f;
+            }
+        }
+
     }
     /// <summary>
     /// Function to draw the paths of the waypoints on the screen. However, it does not work as the Collider 
