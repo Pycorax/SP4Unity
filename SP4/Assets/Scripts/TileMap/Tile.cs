@@ -217,6 +217,17 @@ public class Tile : MonoBehaviour
         TILE_CARPET_1_7_3,
         TILE_CARPET_1_7_4,
 
+        // Interatible objects
+        TILE_TABLE,
+        TILE_BOX,
+        TILE_POT,
+        TILE_SPIKE_TRAP,
+        TILE_HEART,
+        TILE_EXIT,
+
+        TILE_CANDLE,
+        TILE_CANNON,
+        TILE_COIN,
 
         // Entities (Tiles not on tile sheet)
         TILE_ENEMY,     // Tile that spawns an enemy
