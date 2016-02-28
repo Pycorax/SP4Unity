@@ -24,9 +24,16 @@ public class SpawnButton : MonoBehaviour {
 
         foreach(var i in files)
         {
+            //Get Button Component
             button = GetComponent<Button>();
+
+            //Set Button Parent
+            button.transform.parent = transform;
+
             var text = button.GetComponentInChildren<Text>();
             text.text = i.Name;
+
+            Instantiate(button);
         }
 
     }
