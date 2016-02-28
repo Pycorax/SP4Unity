@@ -48,10 +48,10 @@ public class MultiLayerTile
 
     public bool CalculateWalkable()
     {
-        int i = 0;
+        int i = multiLayerTile.Count - 1;
         foreach (GameObject tile in multiLayerTile)
         {
-            tile.GetComponent<SpriteRenderer>().sortingOrder = i++;
+            tile.GetComponent<SpriteRenderer>().sortingOrder = i--;
             if (!tile.GetComponent<Tile>().IsWalkable())
             {
                 return false;
@@ -451,7 +451,6 @@ public abstract class TileMap : MonoBehaviour
 		colCount = numCol;
 
 		// Calculate data needed
-		Vector3 size = new Vector3(tileSize, tileSize, 1); // Size of tile (Scale)
 		Vector3 startPos = generateStartPos(numRow, numCol); // Calculate start position
 
 		// Generate map
@@ -479,7 +478,10 @@ public abstract class TileMap : MonoBehaviour
 					for (int layerIndex = 0; layerIndex < layers.Length; ++layerIndex)
 					{
 						int tileType = Int32.Parse(layers[layerIndex]);
-						tile = createTile((Tile.TILE_TYPE)tileType, startPos, size);
+                        float scaleRatio = tileBlueprints[tileType].GetComponent<Tile>().ScaleRatio;
+                        Vector3 offset = new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
+                        Vector3 size = new Vector3(tileSize * scaleRatio, tileSize * scaleRatio, 1); // Size of tile (Scale)
+                        tile = createTile((Tile.TILE_TYPE)tileType, startPos + offset, size);
 
                         if (tile)
                         {
@@ -497,7 +499,8 @@ public abstract class TileMap : MonoBehaviour
 				else // Data not within file, empty tile
 				{
 					MultiLayerTile multiLayerTile = new MultiLayerTile();
-					tile = createTile(DefaultTile, startPos, size);
+                    Vector3 size = new Vector3(tileSize, tileSize, 1); // Size of tile (Scale)
+                    tile = createTile(DefaultTile, startPos, size);
 
                     if (tile)
                     {
