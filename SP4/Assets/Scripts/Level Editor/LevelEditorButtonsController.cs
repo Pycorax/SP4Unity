@@ -24,6 +24,9 @@ public class LevelEditorButtonsController : MonoBehaviour
     [Tooltip("If true, this is treated as a template and Start() will not load the buttons.")]
     public bool IsTemplate = false;
 
+    [Tooltip("The transparency level of tiles buttons which have no colliders on the tiles.")]
+    public float PassThroughTileAlphaLevel = 0.75f;
+
     // Components
     private RectTransform templateTileButtonRTf;
 
@@ -66,6 +69,26 @@ public class LevelEditorButtonsController : MonoBehaviour
             // Update the button's image
             tileButtonImage.sprite = tileSpriteRenderer.sprite;
             tileButtonImage.color = tileSpriteRenderer.color;
+
+            // Update the button's alpha based on collision
+            if (t.GetComponent<Collider2D>() == null)
+            {
+                // First, I have to get the color block, ok....
+                var newCols = tileButton.colors;
+                // Then I have to get the color from the color block?????
+                var newNormalCol = newCols.normalColor;
+                // Finally I can set the alpha level
+                newNormalCol.a = PassThroughTileAlphaLevel;
+                // And let's do it all over again for the highlights
+                var newHighlightCol = newCols.highlightedColor;
+                // Set the alpha level.. sigh...
+                newHighlightCol.a = PassThroughTileAlphaLevel;
+                // I HAVE TO STORE IT INTO THE COLOR BLOCK AGAIN?
+                newCols.normalColor = newNormalCol;
+                newCols.highlightedColor = newHighlightCol;
+                // -.- All this just to set the alpha dynamically. Such a pain.
+                tileButton.colors = newCols;
+            }
 
             // Make this a child of this controller
             tileButton.transform.SetParent(transform);
