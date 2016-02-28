@@ -19,9 +19,4 @@ public class Box : Destroyables
     {
         base.Update();
     }
-
-    public void Onhit()
-    {
-        anim.enabled = true;
-    }
 }

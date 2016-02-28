@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Coin : Destroyables
+public class Coin : Collectible
 {
     public int CoinAmount = 2;
     public float AnimSpeed = 0.5f;
@@ -14,11 +14,17 @@ public class Coin : Destroyables
         anim.speed = AnimSpeed;
     }
 
-    public void OnHit()
+    protected override void OnTriggerEnter2D(Collider2D other)
     {
-        anim.enabled = true;
-
-        // Notify reached exit
-        Manager.NotifyCoinCollected(CoinAmount);
+        RPGPlayer player = other.gameObject.GetComponent<RPGPlayer>();
+        if (player != null)
+        {
+            if (Manager)
+            {
+                Manager.NotifyCoinCollected(CoinAmount);
+            }
+            player.PlayerSettingsReference.AddCoins(CoinAmount);
+        }
+        base.OnTriggerEnter2D(other);
     }
 }

@@ -19,9 +19,4 @@ public class Pot : Destroyables
     {
         base.Update();
     }
-
-    public void Onhit()
-    {
-        anim.enabled = true;
-    }
 }
