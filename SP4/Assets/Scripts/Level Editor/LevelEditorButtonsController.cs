@@ -56,12 +56,16 @@ public class LevelEditorButtonsController : MonoBehaviour
             // Get a reference tot he button's RectTransform
             var tileButtonRTf = tileButton.GetComponent<RectTransform>();
 
+            // Get a reference to the tile Template's Sprite Renderer
+            var tileSpriteRenderer = t.GetComponent<SpriteRenderer>();
+
             // Register the Callback
             Tile thisTile = t;
             tileButtonBtn.onClick.AddListener(delegate { LevelEditorReference.TileSelected(thisTile); });
 
             // Update the button's image
-            tileButtonImage.sprite = t.GetComponent<SpriteRenderer>().sprite;
+            tileButtonImage.sprite = tileSpriteRenderer.sprite;
+            tileButtonImage.color = tileSpriteRenderer.color;
 
             // Make this a child of this controller
             tileButton.transform.SetParent(transform);
