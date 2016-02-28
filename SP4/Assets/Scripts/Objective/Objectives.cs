@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public abstract class Objectives : MonoBehaviour
@@ -40,6 +41,13 @@ public abstract class Objectives : MonoBehaviour
         }
     }
 
+    public bool ParseParamString(string str)
+    {
+        var parameters = str.Split(new string[] {","}, StringSplitOptions.RemoveEmptyEntries);
+
+        return parseParamString(parameters);
+    }
+
     /// <summary>
     /// This function should define the end conditons of this objective.
     /// </summary>
@@ -50,5 +58,12 @@ public abstract class Objectives : MonoBehaviour
     /// Call this function to do any clean up on the Objective once it has been completed
     /// </summary>
     protected abstract void finish();
+
+    /// <summary>
+    /// This function should initialize a Objective using a string provided.
+    /// </summary>
+    /// <param name="str">Initialization string.</param>
+    /// <returns>Whether initialization was successful.</returns>
+    protected abstract bool parseParamString(string[] parameters);
 }
  

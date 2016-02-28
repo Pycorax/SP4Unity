@@ -132,6 +132,12 @@ public abstract class TileMap : MonoBehaviour
 
     protected List<Tile> tiles = new List<Tile>();
 
+    // Objective
+    protected Objectives.Type objectiveType = Objectives.Type.KillAll;
+    protected string objectiveParams;
+    public Objectives.Type ObjectiveType { get { return objectiveType; } }
+    public string ObjectiveParams { get { return objectiveParams; } }
+
     // Map
     protected List<Row> map = new List<Row>();
 
@@ -394,8 +400,25 @@ public abstract class TileMap : MonoBehaviour
             else if (line.StartsWith(TILE_OBJECTILE_IDENTIFIER.ToString()))
             {
                 // Objective
+                var fullStr = line.Substring(TILE_OBJECTILE_IDENTIFIER.ToString().Length);
+                
+                // Tokenize
+                var objectiveStrs = fullStr.Split(new string[] {","}, StringSplitOptions.RemoveEmptyEntries);
 
+                if (objectiveStrs.Length > 0)
+                {
+                    // Get the type
+                    objectiveType = (Objectives.Type) Convert.ToInt32(objectiveStrs[0]);
+
+                    if (objectiveStrs.Length > 1)
+                    {
+                        // Get the params and store them for another class to handle
+                        objectiveParams = fullStr.Substring(objectiveStrs[0].Length);
+                    }
+                }
+                continue;
             }
+
 			string[] tokens = line.Split(',');
 			int newLength = tokens.Length;
 			if (newLength > numCol)

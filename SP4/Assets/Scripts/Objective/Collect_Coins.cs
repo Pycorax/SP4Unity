@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class Collect_Coins : Objectives
@@ -8,18 +9,23 @@ public class Collect_Coins : Objectives
 
     public override bool IsAchieved()
     {
-        if (Manager.CoinsCollected >= RequiredCoins)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return (Manager.CoinsCollected >= RequiredCoins);
     }
 
     protected override void finish()
     {
         Debug.Log("Collect_Coins Complete()");
+    }
+
+    protected override bool parseParamString(string[] parameters)
+    {
+        if (parameters.Length == 1)
+        {
+            RequiredCoins = Convert.ToInt32(parameters[0]);
+
+            return true;
+        }
+
+        return false;
     }
 }

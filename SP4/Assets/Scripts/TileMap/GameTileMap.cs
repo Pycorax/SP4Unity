@@ -17,7 +17,11 @@ public class GameTileMap : TileMap
     {
         TotalSize = ScreenData.GetScreenSize();
         tileSize = calculateTileSize(TotalSize);
-        base.Start();
+        base.Start();  
+    }
+
+    public void Load()
+    {
         Load(Name, NumOfTiles);
         // Sync waypoints
         WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();

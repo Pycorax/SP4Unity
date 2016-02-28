@@ -83,6 +83,7 @@
     <Compile Include="Assets\Scripts\BackgroundScroller.cs" />
     <Compile Include="Assets\Scripts\Characters\Character.cs" />
     <Compile Include="Assets\Scripts\EnemyManager.cs" />
+    <Compile Include="Assets\Scripts\Framework\ISavable.cs" />
     <Compile Include="Assets\Scripts\Framework\MultiPlayerCamera.cs" />
     <Compile Include="Assets\Scripts\Framework\ResourceController.cs" />
     <Compile Include="Assets\Scripts\Framework\ResourceControllerEditor.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Assets\Scripts\Objective\No_Dmg_Taken.cs" />
     <Compile Include="Assets\Scripts\Objective\ObjectiveManager.cs" />
     <Compile Include="Assets\Scripts\Objective\Objectives.cs" />
+    <Compile Include="Assets\Scripts\Players\PlayerSettings.cs" />
     <Compile Include="Assets\Scripts\Players\Skin.cs" />
     <Compile Include="Assets\Scripts\ProjectileManager.cs" />
     <Compile Include="Assets\Scripts\RPGPlayer.cs" />

@@ -23,4 +23,9 @@ public class No_Dmg_Taken : Objectives
     {
         Debug.Log("No_Dmg_Taken Complete()");
     }
+
+    protected override bool parseParamString(string[] parameters)
+    {
+        return true;
+    }
 }
