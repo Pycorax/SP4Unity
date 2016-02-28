@@ -4,7 +4,11 @@ using System.Collections;
 public class Exit : Destroyables
 {
     public float AnimSpeed = 0.5f;
-    public GameManager gamemanager;
+
+    // For tracking leave
+    private bool playerIsIn = false;
+    private float timeSincePlayerEntered = 0.0f;
+    private const float MAX_TIME_BEFORE_LEAVE = 0.5f;
 
     // Use this for initialization
     protected override void Start()
@@ -19,16 +23,39 @@ public class Exit : Destroyables
     protected override void Update()
     {
         base.Update();
+
+        // If player is marked as entered, we start tracking if player had left
+        if (playerIsIn)
+        {
+            // Update the leave timer
+            timeSincePlayerEntered += (float) TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+
+            // If player has left too long, then we inform the Game Manager
+            if (timeSincePlayerEntered > MAX_TIME_BEFORE_LEAVE)
+            {
+                OnLeave();
+            }
+        }
     }
 
     public void Onhit()
     {
         anim.enabled = true;
+
+        // Track player enter/leave
+        playerIsIn = true;
+        timeSincePlayerEntered = 0.0f;
+
+        // Notify reached exit
+        Manager.NotifyReachedExit();
     }
 
-    private void LevelEnded()
+    public void OnLeave()
     {
-        Debug.Log("LevelEnded");
-        gamemanager.LevelEnded = true;
+        // Keep track ourselves
+        playerIsIn = false;
+
+        // Notify left exit
+        Manager.NotifyLeftExit();
     }
 }

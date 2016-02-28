@@ -1,27 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour, ISavable
+public class Inventory : ISavable
 {
-    private List<Weapon> inventory = new List<Weapon>();
+    private readonly List<Weapon> inventory = new List<Weapon>();
 
     // ISavable
     private string invPrefixKey = "inventory_";
 
     // Getters
     public List<Weapon> PlayerInventory { get { return inventory; } }
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public bool AddItem(Weapon weapon)
     {

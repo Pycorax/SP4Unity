@@ -14,9 +14,11 @@ public class Coin : Destroyables
         anim.speed = AnimSpeed;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnHit()
     {
+        anim.enabled = true;
 
+        // Notify reached exit
+        Manager.NotifyCoinCollected(CoinAmount);
     }
 }

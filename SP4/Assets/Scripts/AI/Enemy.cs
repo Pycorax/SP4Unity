@@ -5,6 +5,8 @@ namespace Enemy
 {
     public class Enemy : Character
     {
+        [Tooltip("Reference to the enemy's manager to do statistic updates.")]
+        public EnemyManager Manager;
         [Tooltip("Parent GameObject that holds children GameObjects that act as waypoints on the level.")]
         public WaypointManager WaypointMap;
         [Tooltip("A list of references to the players in the game.")]

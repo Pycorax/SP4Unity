@@ -3,18 +3,12 @@ using System.Collections;
 
 public class Collect_Coins : Objectives
 {
-    private int coins = 0;
-    public int requiredCoins = 50;
-    private int coinsNeeded = 0;
-
-    public override void Start()
-    {
-        coinsNeeded = player.Coins + requiredCoins;
-    }
+    [Tooltip("The number of coins required to be collected.")]
+    public int RequiredCoins = 50;
 
     public override bool IsAchieved()
     {
-        if (coins >= coinsNeeded)
+        if (Manager.CoinsCollected >= RequiredCoins)
         {
             return true;
         }
@@ -24,14 +18,8 @@ public class Collect_Coins : Objectives
         }
     }
 
-    public override void Complete()
+    protected override void finish()
     {
         Debug.Log("Collect_Coins Complete()");
     }
-
-    public override void Update()
-    {
-        coins = player.Coins;
-    }
-
 }

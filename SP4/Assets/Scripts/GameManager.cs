@@ -1,16 +1,28 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Check if level has ended
-    private bool levelended = false;
+    [Tooltip("The current objective assigned to this level.")]
+    public Objectives CurrentObjective;
 
-    // Objective
-    private bool objectivestarted = false;
+    [Tooltip("A reference to the EnemyManager for tracking.")]
+    public EnemyManager EnemiesManager;
+
+    [Tooltip("Reference to a list of Players for tracking.")]
+    public List<RPGPlayer> PlayerList;
+
+    // Check if level has ended
+    private bool reachedExit = false;
+
+    // Number of Coins Collected
+    private int coins;
 
     //Getter and setter
-    public bool LevelEnded { get { return levelended; } set { levelended = value; } }
-    public bool ObjeciveStarted { get { return objectivestarted; } set { objectivestarted = value; } }
+    public bool LevelEnded { get { return CurrentObjective.IsAchieved(); } }
+    public int EnemiesKilled { get { return EnemiesManager.EnemiesKilled; } }
+    public bool ReachedExit { get { return reachedExit; } }
+    public int CoinsCollected { get { return coins; } }
 
     // Use this for initialization
     void Start()
@@ -23,5 +35,28 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    /// <summary>
+    /// Once the player has reached the exit, call this function to notify
+    /// GameManager.
+    /// </summary>
+    public void NotifyReachedExit()
+    {
+        reachedExit = true;
+    }
+
+    /// <summary>
+    /// If the player has left the exit, call this function to notify
+    /// GameManager.
+    /// </summary>
+    public void NotifyLeftExit()
+    {
+        reachedExit = false;
+    }
+
+    public void NotifyCoinCollected(int coinsCollected)
+    {
+        coins += coinsCollected;
     }
 }

@@ -13,8 +13,11 @@ namespace Enemy
 
         protected override void init()
         {
-            //Kill of enemy
+            // Kill the enemy
             parent.gameObject.SetActive(false);
+
+            // Notify the Manager of the kill
+            parent.Manager.ConfirmKill();
         }
 
         protected override void update()

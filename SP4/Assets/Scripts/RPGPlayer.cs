@@ -15,7 +15,7 @@ public class RPGPlayer : Character
     public float CurrentWeaponTimeDelay = 2.0f;
     [Tooltip("The skin of the player.")]
     public Skin PlayerSkin;
-    [Tooltip("A reference to the PlayerSettings that stores persistent info.")]
+    [Tooltip("A reference to the PlayerSettings that stores persistent info. Both players should use the same reference except in Multiplayer.")]
     public PlayerSettings PlayerSettingsReference;
 
     // Weapons
@@ -666,10 +666,12 @@ public class RPGPlayer : Character
         //Check if the items are destroyables
         if (other.gameObject.GetComponent<Destroyables>() != null)
         {
+            var exit = other.gameObject.GetComponent<Exit>();
+            var coin = other.gameObject.GetComponent<Coin>();
 
-            if (other.gameObject.GetComponent<Exit>() != null)
+            if (exit != null)
             {
-                other.gameObject.GetComponent<Exit>().Onhit();
+                exit.Onhit();
             }
             else if (other.gameObject.GetComponent<Pot>() != null)
             {
@@ -683,10 +685,12 @@ public class RPGPlayer : Character
             {
                 // Spike trap implementation is in the class itself
             }
-            else if (other.gameObject.GetComponent<Coin>() != null)
+            else if (coin != null)
             {
-                PlayerSettingsReference.AddCoins(other.GetComponent<Coin>().CoinAmount);
-                other.gameObject.SetActive(false);
+                PlayerSettingsReference.AddCoins(coin.CoinAmount);
+                coin.OnHit();
+
+                coin.gameObject.SetActive(false);
             }
             else if (other.gameObject.GetComponent<Box>() != null)
             {
@@ -697,7 +701,6 @@ public class RPGPlayer : Character
                 Heal(other.GetComponent<Heart>().Healing);
                 other.gameObject.SetActive(false);
             }
-
         }
 
         #region Handle Weapon Combine Use Conditions

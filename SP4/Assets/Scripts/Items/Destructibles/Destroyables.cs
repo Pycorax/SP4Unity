@@ -1,6 +1,11 @@
-﻿public abstract class Destroyables : Item {
+﻿using UnityEngine;
 
-	// Use this for initialization
+public abstract class Destroyables : Item
+{
+    [Tooltip("A reference to a GameManager for statistics tracking.")]
+    public GameManager Manager;
+
+    // Use this for initialization
     protected override void Start()
     {
         base.Start();

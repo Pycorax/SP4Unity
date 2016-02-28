@@ -19,17 +19,6 @@ public class ObjectiveManager : MonoBehaviour
 
     void Update()
     {
-        foreach (var objective in objectives)
-        {
-            if (manager.LevelEnded == true)
-            {
-                if (objective.IsAchieved() == true && objectivecompletedbefore == false)
-                {
-                    objective.Complete();
-                    objectivecompletedbefore = true;
-                    //Destroy(objective);
-                }
-            }
-        }
+        
     }
 }
