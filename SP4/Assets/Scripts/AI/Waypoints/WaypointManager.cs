@@ -45,38 +45,7 @@ public class WaypointManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Set up the Lines
-        
-        LineManager.ResetAll();
-
-        // Loop through each
-        foreach (Waypoint w in waypointList)
-        {
-            if (AutoScaleRadius)
-            {
-                w.SetUpConnections(waypointList, WaypointRadius);
-            }
-            else
-            {
-                w.SetUpConnections(waypointList, transform.localScale.x);
-            }
-
-            if (DrawConnections)
-            {
-                // Draw the connections
-                foreach (Waypoint neighbour in w.Neighbours)
-                {
-                    var rsc = LineManager.Fetch();
-                    if (rsc != null)
-                    {
-                        rsc.SetActive(true);
-                        var line = rsc.GetComponent<TrackerLine>();
-                        line.Init(w.gameObject, neighbour.gameObject);
-                    }
-                }
-            }
-        }
-
+        // Means that the Waypoints will be moving all the time, so we need to reorganize and such
         if (MessyWaypoints)
         {
             // Update Timer
@@ -104,6 +73,48 @@ public class WaypointManager : MonoBehaviour
             }
         }
 
+        // Set up the Lines
+        LineManager.ResetAll();
+
+        // Loop through each
+        foreach (Waypoint w in waypointList)
+        {
+            // Error Checking
+            if (w == null)
+            {
+                continue;
+            }
+
+            if (AutoScaleRadius)
+            {
+                w.SetUpConnections(waypointList, WaypointRadius);
+            }
+            else
+            {
+                w.SetUpConnections(waypointList, transform.localScale.x);
+            }
+
+            if (DrawConnections)
+            {
+                // Draw the connections
+                foreach (Waypoint neighbour in w.Neighbours)
+                {
+                    // Error Checking
+                    if (neighbour == null)
+                    {
+                        continue;
+                    }
+
+                    var rsc = LineManager.Fetch();
+                    if (rsc != null)
+                    {
+                        rsc.SetActive(true);
+                        var line = rsc.GetComponent<TrackerLine>();
+                        line.Init(w.gameObject, neighbour.gameObject);
+                    }
+                }
+            }
+        }
     }
     /// <summary>
     /// Function to draw the paths of the waypoints on the screen. However, it does not work as the Collider 

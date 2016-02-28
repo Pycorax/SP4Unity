@@ -196,6 +196,12 @@ public class Waypoint : MonoBehaviour
             return false;
         }
 
+        // Do not check with nulls
+        if (w1 == null || w2 == null)
+        {
+            return false;
+        }
+
         // Store the enabled status of the collider
         bool colliderEnabled = false;
         Collider2D w1Collider = w1.GetComponent<Collider2D>();
