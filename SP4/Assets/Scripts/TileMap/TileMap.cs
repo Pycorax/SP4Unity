@@ -254,7 +254,7 @@ public abstract class TileMap : MonoBehaviour
             IEnumerable<Tile> activeTiles = from tile in tiles where tile.gameObject.activeSelf select tile;
             foreach (Tile singleTile in activeTiles)
             {
-                singleTile.gameObject.SetActive(false);
+                //singleTile.gameObject.SetActive(false);
             }
 
             for (int rowIndex = rowIndexMin; rowIndex <= rowIndexMax; ++rowIndex)
