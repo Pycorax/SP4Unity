@@ -9,6 +9,7 @@ public class EditorTileMap : TileMap
     public float LineSize = 0.1f;
     public Color LineColor;
     public bool ShowLines = true;
+    public bool ShowWaypoints = true;
     private float lineSizeRatio;
 
     public float ZoomSensitivity = 1.0f;
@@ -140,6 +141,19 @@ public class EditorTileMap : TileMap
     public void ToggleWaypointLines()
     {
         waypointManager.DrawConnections = !waypointManager.DrawConnections;
+    }
+
+    public void ToggleWaypoints()
+    {
+        ShowWaypoints = !ShowWaypoints;
+        foreach (var w in waypointManager.Waypoints)
+        {
+            var spriteRenderer = w.gameObject.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.enabled = ShowWaypoints;
+            }
+        }
     }
 
     public void ActivateLines(bool active)
