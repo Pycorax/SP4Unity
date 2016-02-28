@@ -316,23 +316,15 @@ public class EditorTileMap : TileMap
             }
 
             // Adding the tile
-            GameObject newTile = Instantiate(blueprint);
-            Tile.TILE_TYPE type = newTile.GetComponent<Tile>().Type;
-            Vector3 pos = generateStartPos(RowCount, ColCount, (int)tileIndex.x, (int)tileIndex.y);
+            //GameObject newTile = Instantiate(blueprint);
+            Tile.TILE_TYPE type = blueprint.GetComponent<Tile>().Type;
+            Vector3 pos = generateStartPos(RowCount, ColCount, (int)tileIndex.x, (int)tileIndex.y) + new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
+            Vector3 size = new Vector3(TileSize * scaleRatio, TileSize * scaleRatio, 1.0f);
+            GameObject newTile = createTile(type, pos, size);
 
-            if (newTile.GetComponent<Item>() != null || type == Tile.TILE_TYPE.TILE_SPIKE_TRAP || type == Tile.TILE_TYPE.TILE_CANNON)
-            {
-                pos.z -= 1;
-                newTile.SetActive(true);
-            }
-            else
-            {
-                newTile.SetActive(false);
-            }
-
-            newTile.transform.position = pos + new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
-            newTile.transform.localScale = new Vector3(TileSize * scaleRatio, TileSize * scaleRatio, 1.0f);
-            newTile.transform.parent = transform;
+            /*newTile.transform.position = pos + ;
+            newTile.transform.localScale = size;
+            newTile.transform.parent = transform;*/
             tiles.Add(newTile.GetComponent<Tile>());
             multiTile.AddFront(newTile);
             return true;

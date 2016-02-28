@@ -664,6 +664,11 @@ public abstract class TileMap : MonoBehaviour
                         pos.z -= 1;
                         tile.SetActive(true);
                     }
+                    else if (type == Tile.TILE_TYPE.TILE_FIRST_PLAYER || type == Tile.TILE_TYPE.TILE_SECOND_PLAYER)
+                    {
+                        pos.z = 0;
+                        tile.SetActive(true);
+                    }
                     else
                     {
                         tile.SetActive(false);
