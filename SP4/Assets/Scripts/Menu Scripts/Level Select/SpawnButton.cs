@@ -6,18 +6,10 @@ using System.IO;
 public class SpawnButton : MonoBehaviour {
 
     public Transform button;
-
-    private int fileCount;
-
     
 	// Use this for initialization
 	void Start () {
-        var info = new DirectoryInfo("Assets/Scenes/GameScenes");
-        var files = info.GetFiles();
-        foreach (var i in files)
-        {
-            fileCount++;
-        }
+        LoadFiles();
 	}
 	
 	// Update is called once per frame
@@ -25,8 +17,10 @@ public class SpawnButton : MonoBehaviour {
 	
 	}
 
-    void LoadButtons()
+    void LoadFiles()
     {
-        Debug.Log(fileCount);
+        var info = new DirectoryInfo("Assets/Scenes/GameScenes");
+        var files = info.GetFiles();
     }
+
 }
