@@ -18,6 +18,9 @@ namespace Enemy
 
             // Notify the Manager of the kill
             parent.Manager.ConfirmKill();
+
+            // Notify the Animator
+            parent.animator.SetBool(parent.animAlive, false);
         }
 
         protected override void update()
