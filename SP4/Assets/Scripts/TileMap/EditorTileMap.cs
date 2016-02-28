@@ -332,8 +332,8 @@ public class EditorTileMap : TileMap
             // Adding the tile
             //GameObject newTile = Instantiate(blueprint);
             Tile.TILE_TYPE type = blueprint.GetComponent<Tile>().Type;
-            Vector3 pos = generateStartPos(RowCount, ColCount, (int)tileIndex.x, (int)tileIndex.y) + new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
-            Vector3 size = new Vector3(TileSize * scaleRatio, TileSize * scaleRatio, 1.0f);
+            Vector3 pos = generateStartPos(RowCount, ColCount, (int)tileIndex.x, (int)tileIndex.y);// + new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
+            Vector3 size = new Vector3(tileSize, tileSize);
             GameObject newTile = createTile(type, pos, size);
 
             /*newTile.transform.position = pos + ;
