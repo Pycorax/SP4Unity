@@ -99,8 +99,17 @@ public class GameTileMap : TileMap
                 {
                     tile = Instantiate(tileBlueprints[(int)type]);
 
+                    if (tile.GetComponent<Item>() != null || type == Tile.TILE_TYPE.TILE_SPIKE_TRAP || type == Tile.TILE_TYPE.TILE_CANNON)
+                    {
+                        pos.z -= 1;
+                        tile.SetActive(true);
+                    }
+                    else
+                    {
+                        tile.SetActive(false);
+                    }
+
                     // Set data for each tile
-                    tile.SetActive(false);
                     tile.transform.position = pos + new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
                     tile.transform.localScale = size * scaleRatio;
                     tile.transform.parent = this.transform;
