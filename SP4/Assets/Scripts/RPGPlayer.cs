@@ -5,7 +5,6 @@
 [RequireComponent(typeof(Animator))]
 public class RPGPlayer : Character
 {
-    Inventory inventory;
     public float Acceleration = 3500.0f;
     public float Deceleration = 3000.0f;
     public float MaxSpeed = 500.0f;
@@ -16,10 +15,8 @@ public class RPGPlayer : Character
     public float CurrentWeaponTimeDelay = 2.0f;
     [Tooltip("The skin of the player.")]
     public Skin PlayerSkin;
-
-    // Player Attributes
-    private int enemyKilled;
-    private int coin;
+    [Tooltip("A reference to the PlayerSettings that stores persistent info.")]
+    public PlayerSettings PlayerSettingsReference;
 
     // Weapons
     public Weapon LeftWeapon;
@@ -62,9 +59,9 @@ public class RPGPlayer : Character
 
     // Getters
     public Weapon CurrentWeapon { get { return currentWeapon; } }
-    public int EnemyKilled { get { return enemyKilled; } }
+    public int EnemyKilled { get { return PlayerSettingsReference.EnemiesKilled; } }
     public Vector2 CurrentDirection { get { return currentDir; } }
-    public int Coins { get { return coin; } set { coin = value; } }
+    public int Coins { get { return PlayerSettingsReference.Coins; } }
 
     //Projectile Controller
     public ProjectileManager ProjectileManager;
@@ -79,7 +76,6 @@ public class RPGPlayer : Character
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        inventory = GetComponent<Inventory>();
 
         // Align the weapons properly if they exist
         if (LeftWeapon != null)
@@ -486,7 +482,8 @@ public class RPGPlayer : Character
     }
 
     /// <summary>
-    /// Use this function to store weapons. It is a helper function for EquipLeftHand() and EquipRightHand().
+    /// Use this function to store weapons. It is a helper function for EquipLeftHand()
+    /// and EquipRightHand().
     /// </summary>
     /// <param name="weap">The "hand" holding the weapon to store</param>
     private bool storeWeapon(ref Weapon hand)
@@ -495,7 +492,7 @@ public class RPGPlayer : Character
         if (hand != null)
         {
             // Store the item in
-            if (inventory.AddItem(hand))
+            if (PlayerSettingsReference.AddItem(hand as Item))
             {
                 // Clear the hand
                 hand = null;
@@ -659,11 +656,10 @@ public class RPGPlayer : Character
             Weapon w = other.gameObject.GetComponent<Weapon>();
             if (w != null)
             {
-                EquipHand(w);
-            }
-            else if (!EquipHand(w) && w != null)
-            {
-                inventory.AddItem(w);
+                if (!EquipHand(w))
+                {
+                    PlayerSettingsReference.AddItem(w);
+                }
             }
         }
 
@@ -689,13 +685,9 @@ public class RPGPlayer : Character
             }
             else if (other.gameObject.GetComponent<Coin>() != null)
             {
-                coin += other.GetComponent<Coin>().CoinAmount;
+                PlayerSettingsReference.AddCoins(other.GetComponent<Coin>().CoinAmount);
                 other.gameObject.SetActive(false);
             }
-            //else if (other.gameObject.GetComponent<Cannon>() != null)
-            //{
-            //    Debug.Log("Cannon");
-            //}
             else if (other.gameObject.GetComponent<Box>() != null)
             {
                 other.gameObject.GetComponent<Box>().Onhit();
