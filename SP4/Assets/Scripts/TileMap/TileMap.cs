@@ -267,7 +267,10 @@ public abstract class TileMap : MonoBehaviour
                         for (int multiIndex = 0; multiIndex < multiTiles.multiLayerTile.Count; ++multiIndex)
                         {
                             GameObject goTile = multiTiles.multiLayerTile[multiIndex];
-                            goTile.SetActive(mode);
+                            if (!goTile.GetComponent<Tile>().IgnoreActive)
+                            {
+                                goTile.SetActive(mode);
+                            }
                         }
                     }
                 }
