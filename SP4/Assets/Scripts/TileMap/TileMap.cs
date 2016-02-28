@@ -452,9 +452,10 @@ public abstract class TileMap : MonoBehaviour
 
 		// Calculate data needed
 		Vector3 startPos = generateStartPos(numRow, numCol); // Calculate start position
+        Vector3 size = new Vector3(tileSize, tileSize, 1); // Size of tile (Scale)
 
-		// Generate map
-		for (int rowIndex = 0; rowIndex < numRow;) // Loop for rows
+        // Generate map
+        for (int rowIndex = 0; rowIndex < numRow;) // Loop for rows
 		{
 			// Data
 			string line = (string)sMap[rowIndex];
@@ -479,9 +480,7 @@ public abstract class TileMap : MonoBehaviour
 					{
 						int tileType = Int32.Parse(layers[layerIndex]);
                         float scaleRatio = tileBlueprints[tileType].GetComponent<Tile>().ScaleRatio;
-                        Vector3 offset = new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
-                        Vector3 size = new Vector3(tileSize * scaleRatio, tileSize * scaleRatio, 1); // Size of tile (Scale)
-                        tile = createTile((Tile.TILE_TYPE)tileType, startPos + offset, size);
+                        tile = createTile((Tile.TILE_TYPE)tileType, startPos, size);
 
                         if (tile)
                         {
@@ -499,7 +498,6 @@ public abstract class TileMap : MonoBehaviour
 				else // Data not within file, empty tile
 				{
 					MultiLayerTile multiLayerTile = new MultiLayerTile();
-                    Vector3 size = new Vector3(tileSize, tileSize, 1); // Size of tile (Scale)
                     tile = createTile(DefaultTile, startPos, size);
 
                     if (tile)
@@ -678,6 +676,9 @@ public abstract class TileMap : MonoBehaviour
                     }
 
                     // Set data for each tile
+                    float scaleRatio = tile.GetComponent<Tile>().ScaleRatio;
+                    pos += new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
+                    size += new Vector3((scaleRatio - 1) * tileSize, (scaleRatio - 1) * tileSize);
                     tile.transform.position = pos;
                     tile.transform.localScale = size;
                     tile.transform.parent = this.transform;
