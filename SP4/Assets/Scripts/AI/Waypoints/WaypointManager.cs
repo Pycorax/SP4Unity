@@ -58,9 +58,12 @@ public class WaypointManager : MonoBehaviour
                 foreach (Waypoint neighbour in w.Neighbours)
                 {
                     var rsc = LineManager.Fetch();
-                    rsc.SetActive(true);
-                    var line = rsc.GetComponent<TrackerLine>();
-                    line.Init(w.gameObject, neighbour.gameObject);
+                    if (rsc != null)
+                    {
+                        rsc.SetActive(true);
+                        var line = rsc.GetComponent<TrackerLine>();
+                        line.Init(w.gameObject, neighbour.gameObject);
+                    }
                 }
             }
         }

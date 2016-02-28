@@ -9,6 +9,7 @@ public class TrackerLine : MonoBehaviour
     public GameObject EndObject;
     public Color LineColor = Color.white;
     public float Width = 1.0f;
+    public bool IgnoreZ = false;
 
     // Components
     private LineRenderer line;
@@ -31,8 +32,16 @@ public class TrackerLine : MonoBehaviour
     {
         if (StartObject != null && EndObject != null)
         {
-            line.SetPosition(0, StartObject.transform.position);
-            line.SetPosition(1, EndObject.transform.position);
+            Vector3 startPos = StartObject.transform.position;
+            Vector3 endPos = EndObject.transform.position;
+
+            if (IgnoreZ)
+            {
+                startPos.z = endPos.z = transform.position.z;
+            }
+
+            line.SetPosition(0, startPos);
+            line.SetPosition(1, endPos);
         }
         else
         {
@@ -45,8 +54,17 @@ public class TrackerLine : MonoBehaviour
         StartObject = startObj;
         EndObject = endObj;
 
-        line.SetPosition(0, StartObject.transform.position);
-        line.SetPosition(1, EndObject.transform.position);
+        Vector3 startPos = StartObject.transform.position;
+        Vector3 endPos = EndObject.transform.position;
+
+        if (IgnoreZ)
+        {
+            startPos.z = endPos.z = transform.position.z;
+        }
+
+        line.SetPosition(0, startPos);
+        line.SetPosition(1, endPos);
+
         line.SetWidth(Width, Width);
         line.material = new Material(Shader.Find("Unlit/Color"));
         line.material.color = LineColor;
