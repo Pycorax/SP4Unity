@@ -659,8 +659,17 @@ public abstract class TileMap : MonoBehaviour
                 {
                     tile = Instantiate(tileBlueprints[(int)type]);
 
+                    if (tile.GetComponent<Item>() != null || type == Tile.TILE_TYPE.TILE_SPIKE_TRAP || type == Tile.TILE_TYPE.TILE_CANNON)
+                    {
+                        pos.z -= 1;
+                        tile.SetActive(true);
+                    }
+                    else
+                    {
+                        tile.SetActive(false);
+                    }
+
                     // Set data for each tile
-                    tile.SetActive(false);
                     tile.transform.position = pos;
                     tile.transform.localScale = size;
                     tile.transform.parent = this.transform;
