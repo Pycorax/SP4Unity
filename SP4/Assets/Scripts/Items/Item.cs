@@ -10,6 +10,11 @@ public abstract class Item : MonoBehaviour
     // Use this for initialization
     protected virtual void Start()
     {
+        Tile tile = GetComponent<Tile>();
+        if (tile)
+        {
+            tile.IgnoreActive = true;
+        }
         anim = GetComponent<Animator>();
     }
 

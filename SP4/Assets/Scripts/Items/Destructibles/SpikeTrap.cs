@@ -9,6 +9,11 @@ public class SpikeTrap : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Tile tile = GetComponent<Tile>();
+        if (tile)
+        {
+            tile.IgnoreActive = true;
+        }
         GetComponent<Animator>().speed = AnimSpeed;
     }
 
