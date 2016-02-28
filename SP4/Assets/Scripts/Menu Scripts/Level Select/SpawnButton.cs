@@ -5,7 +5,7 @@ using System.IO;
 
 public class SpawnButton : MonoBehaviour {
 
-    public Button button;
+    public Transform button;
     
 	// Use this for initialization
 	void Start () {
@@ -21,14 +21,6 @@ public class SpawnButton : MonoBehaviour {
     {
         var info = new DirectoryInfo("Assets/Scenes/GameScenes");
         var files = info.GetFiles();
-
-        foreach(var i in files)
-        {
-            button = GetComponent<Button>();
-            var text = button.GetComponentInChildren<Text>();
-            text.text = i.Name;
-        }
-
     }
 
 }
