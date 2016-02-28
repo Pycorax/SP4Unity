@@ -15,6 +15,8 @@ public class WaypointManager : MonoBehaviour
     public bool GizmoWaypointRadiusDraw = true;
     [Tooltip("If true, the raytrace between Waypoints will be drawn.")]
     public bool GizmoWaypointRayDraw = true;
+    [Tooltip("If true, the size of the Waypoints will automatically resize according to the specified radius. Else, the waypoint's local scale will be used.")]
+    public bool AutoScaleRadius = true;
     [Tooltip("If true, then recheck children for Waypoints every second.")]
     public bool MessyWaypoints = false;
     [Tooltip("The ResourceManager for a LineManager")]
@@ -50,7 +52,14 @@ public class WaypointManager : MonoBehaviour
         // Loop through each
         foreach (Waypoint w in waypointList)
         {
-            w.SetUpConnections(waypointList, WaypointRadius);
+            if (AutoScaleRadius)
+            {
+                w.SetUpConnections(waypointList, WaypointRadius);
+            }
+            else
+            {
+                w.SetUpConnections(waypointList, transform.localScale.x);
+            }
 
             if (DrawConnections)
             {
@@ -120,8 +129,11 @@ public class WaypointManager : MonoBehaviour
             // Recalculate all connections
             w.SetUpConnections(listOfWaypoints, WaypointRadius);
 
-            // Set the size of each Waypoint to the WaypointRayTraceRadius
-            w.transform.localScale = new Vector3(WaypointRadius * 2.0f, WaypointRadius * 2.0f, WaypointRadius * 2.0f);
+            if (AutoScaleRadius)
+            {
+                // Set the size of each Waypoint to the WaypointRayTraceRadius
+                w.transform.localScale = new Vector3(WaypointRadius * 2.0f, WaypointRadius * 2.0f, WaypointRadius * 2.0f);
+            }
 
             // Set colour according to number of associations
             if (w.Neighbours.Count > 0)
