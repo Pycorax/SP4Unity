@@ -51,6 +51,13 @@ public class TrackerLine : MonoBehaviour
 
     public void Init(GameObject startObj, GameObject endObj)
     {
+        // Check if line was initialized
+        if (line == null)
+        {
+            // If not, get a handle to the Line Renderer
+            line = GetComponent<LineRenderer>();
+        }
+
         StartObject = startObj;
         EndObject = endObj;
 
