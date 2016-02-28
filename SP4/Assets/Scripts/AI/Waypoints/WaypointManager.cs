@@ -24,7 +24,7 @@ public class WaypointManager : MonoBehaviour
 
     // MessyWaypoints timer
     private float messyWaypointsTimer = 0.0f;
-    private const float MESSY_WAYPOINTS_TIME_DELAY = 1.0f;
+    private const float MESSY_WAYPOINTS_TIME_DELAY = 0.5f;
 
     // Holds a list of waypoints that we set up in Start() to return later
     private List<Waypoint> waypointList;
