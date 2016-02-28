@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Exit : Destroyables
+public class Exit : MonoBehaviour
 {
+    [Tooltip("A reference to a GameManager for statistics tracking.")]
+    public GameManager Manager;
+
+    private Animator anim;
+
     public float AnimSpeed = 0.5f;
 
     // For tracking leave
@@ -11,19 +16,16 @@ public class Exit : Destroyables
     private const float MAX_TIME_BEFORE_LEAVE = 0.5f;
 
     // Use this for initialization
-    protected override void Start()
+    void Start()
     {
-        base.Start();
-
+        anim = GetComponent<Animator>();
         anim.speed = AnimSpeed;
         anim.enabled = false;
     }
 
     // Update is called once per frame
-    protected override void Update()
+    void Update()
     {
-        base.Update();
-
         // If player is marked as entered, we start tracking if player had left
         if (playerIsIn)
         {
