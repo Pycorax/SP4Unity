@@ -23,11 +23,17 @@ namespace Enemy
         private Waypoint currentTargetWaypoint;                             // Stores a reference to the current target waypoint
         private const float DISTANCE_CHECK_ACCURARCY = 10.0f;               // Used to do "reached position" checking
 
+        // Animation
+        internal int animAttack = Animator.StringToHash("Attack");
+        internal int animMoving = Animator.StringToHash("Moving");
+        internal int animAlive = Animator.StringToHash("Alive");
+        private Vector2 prevPosition;
+
         // Getters
         internal Waypoint CurrentWaypoint { get { return currentWaypoint; } }
 
         //Components
-        public Animator animator;
+        internal Animator animator;
 
         // Use this for initialization
         protected override void Start()
@@ -36,11 +42,15 @@ namespace Enemy
             base.Start();
 
             // Set the Waypoint that we are nearest to right now
-            currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);
+            if (WaypointMap != null)
+            {
+                currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);
+            }
 
             // Set the default state
             changeCurrentState(new PatrolState());
 
+            // Initialize Components
             animator = GetComponent<Animator>();
         }
 
@@ -61,8 +71,24 @@ namespace Enemy
 
                 // Update Waypoint movement if a target is specified
                 waypointUpdate();
+
+                // Update Movement Animation
+                if (prevPosition != (Vector2)transform.position)
+                {
+                    // Update the previous position
+                    prevPosition = transform.position;
+                    
+                    // Update the animator
+                    animator.SetBool(animMoving, true);
+                }
+                else
+                {
+                    // Update the animator
+                    animator.SetBool(animMoving, false);
+                }
             }
-            else
+            // Don't repeatedly go dead
+            else if (!(currentState is DeadState))
             {
                 changeCurrentState(new DeadState());
             }
