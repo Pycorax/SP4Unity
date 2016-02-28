@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-public abstract class Weapon : Item {
-
+public abstract class Weapon : Item
+{
     [Tooltip("The damage the weapon does.")]
     public int Damage;
     [Tooltip("The range of the weapon in tile map units.")]
@@ -17,8 +17,8 @@ public abstract class Weapon : Item {
     private ProjectileManager refProjectileManager;
 
     // Animation
-    static protected int animAttack = Animator.StringToHash("Attack");
-    static protected int animWithdraw = Animator.StringToHash("Withdraw");
+    protected static int animAttack = Animator.StringToHash("Attack");
+    protected static int animWithdraw = Animator.StringToHash("Withdraw");
 
     /// <summary>
     /// The actual recorded time between shots in milliseconds

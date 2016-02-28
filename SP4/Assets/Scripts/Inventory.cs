@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, ISavable
 {
-
     private List<Weapon> inventory = new List<Weapon>();
+
+    // ISavable
+    private string invPrefixKey = "inventory_";
 
     // Getters
     public List<Weapon> PlayerInventory { get { return inventory; } }
@@ -44,5 +46,18 @@ public class Inventory : MonoBehaviour
         {
             inventory.Remove(weapon);
         }
+    }
+
+    public void Save()
+    {
+        foreach (var weap in inventory)
+        {
+            
+        }
+    }
+
+    public void Load()
+    {
+        throw new System.NotImplementedException();
     }
 }
