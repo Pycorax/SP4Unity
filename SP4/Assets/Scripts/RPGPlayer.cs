@@ -673,34 +673,6 @@ public class RPGPlayer : Character
             {
                 exit.Onhit();
             }
-            else if (other.gameObject.GetComponent<Pot>() != null)
-            {
-                other.gameObject.GetComponent<Pot>().Onhit();
-            }
-            else if (other.gameObject.GetComponent<Table>() != null)
-            {
-                other.gameObject.GetComponent<Table>().Onhit();
-            }
-            else if (other.gameObject.GetComponent<SpikeTrap>() != null)
-            {
-                // Spike trap implementation is in the class itself
-            }
-            else if (coin != null)
-            {
-                PlayerSettingsReference.AddCoins(coin.CoinAmount);
-                coin.OnHit();
-
-                coin.gameObject.SetActive(false);
-            }
-            else if (other.gameObject.GetComponent<Box>() != null)
-            {
-                other.gameObject.GetComponent<Box>().Onhit();
-            }
-            else if (other.gameObject.GetComponent<Heart>() != null)
-            {
-                Heal(other.GetComponent<Heart>().Healing);
-                other.gameObject.SetActive(false);
-            }
         }
 
         #region Handle Weapon Combine Use Conditions
