@@ -12,30 +12,50 @@ public class GachaCapsuleButton : MonoBehaviour
     [Tooltip("Reference to the Player to get the player's number of coins.")]
     public PlayerSettings PlayerSetting;
 
-    // Stores the existing string
-    private string prevString;
+    // Original Text Color
+    private Color originalTextCol;
+
+    // Components
+    private RectTransform rectTransform;
+
+    void Start()
+    {
+        // Initialize Component References
+        rectTransform = GetComponent<RectTransform>();
+
+        // Store the colour for restoring later
+        originalTextCol = CoinText.color;
+    }
+
+    void Update()
+    {
+        if ((Input.mousePosition - rectTransform.position).sqrMagnitude < rectTransform.rect.width * rectTransform.rect.width * 0.25f)
+        {
+            OnMouseEnter();
+        }
+        else
+        {
+            OnMouseExit();
+        }
+
+        //GetComponent<RectTransform>().position = Input.mousePosition;
+    }
 
     void OnMouseEnter()
     {
-        // Save the string to restore later
-        prevString = CoinText.text;
-
         // Set the text
         CoinText.text = "Coins: " + (PlayerSetting.Coins - GachaponReference.Cost);
 
         // Set the text colour
-        CoinText.color = Color.red;
+        CoinText.color = Color.yellow;
     }
 
     void OnMouseExit()
     {
-        // Restore the string
-        CoinText.text = prevString;
-
         // Set the text
         CoinText.text = "Coins: " + PlayerSetting.Coins;
 
-        // Set the text colour
-        CoinText.color = Color.white;
+        // Reset the text colour
+        CoinText.color = originalTextCol;
     }
 }
