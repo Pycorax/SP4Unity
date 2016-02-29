@@ -17,7 +17,7 @@ namespace Enemy
         protected override void init()
         {
             // Alert speed is faster than normal speed
-            parent.Speed = 400.0f;
+            parent.Speed = 350.0f;
             // Previous waypoit will be enemy current waypoint
             previousWaypoint = parent.CurrentWaypoint;
             //Enemy will now move to its next destination
@@ -26,6 +26,8 @@ namespace Enemy
 
         protected override void update()
         {
+            //Debug.Log("AlertState()");
+
             changestatetimer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
             //After 10 seconds in alert state, enemy will go back to patrol state
             if (changestatetimer >= 10)
@@ -42,12 +44,6 @@ namespace Enemy
 
                 //set ur previous waypoint to current waypoint
                 previousWaypoint = parent.CurrentWaypoint;
-            }
-
-            float distance = Vector3.Distance(parent.transform.position, parent.getNearestPlayer().transform.position);
-            if (distance <= 120.0f)
-            {
-                parent.changeCurrentState(new ChaseState());
             }
         }
     }

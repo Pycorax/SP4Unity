@@ -26,8 +26,8 @@ public class GachaponEditor : Editor
         EditorGUILayout.Separator();
 
         // Skins
-        showSkins = EditorGUILayout.Foldout(showSkins, "Skin Directory");
-        gacha.SkinsManagerReference = (SkinsManager)EditorGUILayout.ObjectField(gacha.SkinsManagerReference, typeof(SkinsManager), false);
+        showSkins = EditorGUILayout.Foldout(showSkins, "Skins Manager");
+        gacha.SkinsManagerReference = (SkinsManager)EditorGUILayout.ObjectField(gacha.SkinsManagerReference, typeof(SkinsManager), true);
 ;
         EditorGUILayout.Separator();
 

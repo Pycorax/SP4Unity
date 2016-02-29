@@ -27,7 +27,6 @@ public class Gachapon : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	    GetRandomSkin();
 	}
 	
 	// Update is called once per frame
