@@ -19,21 +19,35 @@ public class SpawnButton : MonoBehaviour {
 
     void LoadFiles()
     {
-        var info = new DirectoryInfo("Assets/Scenes/GameScenes");
+        var info = new DirectoryInfo("Assets/Maps");
+
         var files = info.GetFiles();
+
+        float buttonSize = 0.5f;
+
+        float yOffset = 0;
 
         foreach(var i in files)
         {
-            //Get Button Component
-            button = GetComponent<Button>();
+            
+            if (i.Extension == ".map")
+            {
+                //Instantiate Button
+                var newButton = Instantiate(button);
 
-            //Set Button Parent
-            button.transform.parent = transform;
+                //Set Button Parent
+                newButton.transform.SetParent(this.transform);
 
-            var text = button.GetComponentInChildren<Text>();
-            text.text = i.Name;
+                newButton.transform.localPosition = new Vector3(0, yOffset, 0);
 
-            Instantiate(button);
+                newButton.transform.localScale = new Vector3(buttonSize, buttonSize - 0.2f, buttonSize);
+
+
+                var text = newButton.GetComponentInChildren<Text>();
+                text.text = Path.GetFileNameWithoutExtension(i.Name);
+
+                yOffset -= 120;
+            }
         }
 
     }
