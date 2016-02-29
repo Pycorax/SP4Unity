@@ -38,6 +38,20 @@ public class PlayerSettings : MonoBehaviour
         coins += coinsToAdd;
     }
 
+    public bool TakeCoins(int coinsToTake)
+    {
+        // Enough money
+        if (coinsToTake <= coins)
+        {
+            coins -= coinsToTake;
+
+            return true;
+        }
+
+        // Not enough money
+        return false;
+    }
+
     public void Save()
     {
         PlayerPrefs.SetInt(coinsKey, coins);
