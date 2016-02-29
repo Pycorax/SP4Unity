@@ -175,6 +175,28 @@ namespace Enemy
         }
 
         /// <summary>
+        /// Use this function to set the FinalTargetWaypoint. This function forces the calculation of currentTargetWaypoint.
+        /// </summary>
+        /// <param name="w">The final waypoint to go to</param>
+        internal void setFinalTargetWaypoint(Waypoint w)
+        {
+            // Null Checking
+            if (w == null)
+            {
+                return;
+            }
+
+            // Sets the FinalTargetWaypoint
+            FinalTargetWaypoint = w;
+
+            // Calculate the Waypoint to go to
+            currentTargetWaypoint = WaypointMap.GetNearestWaypointToGoTo(currentWaypoint, FinalTargetWaypoint);
+
+            // Reset Timer
+            waypointUpdateTimer = 0.0f;
+        }
+
+        /// <summary>
         /// Function to initialize the player position.
         /// </summary>
         /// <param name="position">The position on the map to spawn the enemy.</param>
