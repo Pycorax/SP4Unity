@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Linq;
 
 public class Skin : MonoBehaviour
 {
@@ -16,9 +17,11 @@ public class Skin : MonoBehaviour
     {
         get
         {
-            if (skinSubSprites != null && skinSubSprites.Length > 0)
+            if (skinSubSprites != null)
             {
-                return skinSubSprites[0];
+                // Find the idle sprite and give it
+                return (from s in skinSubSprites where s.name == "Idle" select s).First();
+
             }
 
             return null;

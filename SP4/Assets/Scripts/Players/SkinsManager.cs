@@ -12,6 +12,11 @@ public class SkinsManager : MonoBehaviour
 
     void Start()
     {
+        LoadSkins();
+    }
+
+    public void LoadSkins()
+    {
         // Clear the List in case
         instantiatedSkins.Clear();
 
@@ -21,7 +26,7 @@ public class SkinsManager : MonoBehaviour
             // Create a skin from the list
             var skin = Instantiate(s);
             skin.transform.parent = transform;
-            
+
             // Get the Skin componenet and load the skin
             var skinComp = skin.GetComponent<Skin>();
             if (skinComp != null)
@@ -36,6 +41,12 @@ public class SkinsManager : MonoBehaviour
 
     public Skin GetRandomSkin()
     {
+        // Ensure skins are loaded
+        if (instantiatedSkins.Count <= 0)
+        {
+            LoadSkins();   
+        }
+
         // Get a list of skin components
         var skins = (from skin in instantiatedSkins where skin.GetComponent<Skin>() != null select skin.GetComponent<Skin>()).ToList();
 
