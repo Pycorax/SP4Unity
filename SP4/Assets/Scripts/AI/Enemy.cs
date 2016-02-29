@@ -29,7 +29,7 @@ namespace Enemy
                 }
 
                 // Sets the FinalTargetWaypoint
-                FinalTargetWaypoint = value;
+                finalTargetWaypoint = value;
 
                 // Calculate the Waypoint to go to
                 currentTargetWaypoint = WaypointMap.GetNearestWaypointToGoTo(currentWaypoint, FinalTargetWaypoint);
