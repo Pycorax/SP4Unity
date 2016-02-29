@@ -11,6 +11,20 @@ public class Skin : MonoBehaviour
     // Stores the Sprite's Sub Sprites that will be loaded on Start()
     private Sprite[] skinSubSprites;
 
+    // Getters
+    public Sprite PreviewSprite
+    {
+        get
+        {
+            if (skinSubSprites != null && skinSubSprites.Length > 0)
+            {
+                return skinSubSprites[0];
+            }
+
+            return null;
+        }
+    }
+
     // Use this for initialization
     void Start()
     {

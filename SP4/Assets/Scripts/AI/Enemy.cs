@@ -11,15 +11,39 @@ namespace Enemy
         public WaypointManager WaypointMap;
         [Tooltip("A list of references to the players in the game.")]
         public List<GameObject> PlayerList;
-        [Tooltip("The target waypoint that the enemy will go towards.")]
-        public Waypoint FinalTargetWaypoint;
         [Tooltip("The time delay between waypoint updates.")]
         public float WaypointUpdateDelay = 5.0f;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Waypoint FinalTargetWaypoint
+        {
+            get { return finalTargetWaypoint; }
+            set
+            {
+                // Null Checking
+                if (value == null)
+                {
+                    return;
+                }
+
+                // Sets the FinalTargetWaypoint
+                finalTargetWaypoint = value;
+
+                // Calculate the Waypoint to go to
+                currentTargetWaypoint = WaypointMap.GetNearestWaypointToGoTo(currentWaypoint, FinalTargetWaypoint);
+
+                // Reset Timer
+                waypointUpdateTimer = 0.0f;
+            }
+        }
 
         // Movement
         public float Speed = 200.0f;
 
         // AI
+        private Waypoint finalTargetWaypoint = null;
         private FSMState currentState;                                      // Stores the current game state
         private Waypoint currentWaypoint;
         private Waypoint currentTargetWaypoint;                             // Stores a reference to the current target waypoint

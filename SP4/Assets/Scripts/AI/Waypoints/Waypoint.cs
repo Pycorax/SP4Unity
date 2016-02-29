@@ -89,14 +89,21 @@ public class Waypoint : MonoBehaviour
             // Check for exceptions if exceptions are provided
             if (exceptions != null)
             {
+                bool isException = false;
+
                 // Check if this waypoint is supposed to be exempted
                 foreach (Waypoint exception in exceptions)
                 {
                     // If this is an exception, skip to the next one
                     if (w == exception)
                     {
-                        continue;
+                        isException = true;
                     }
+                }
+
+                if (isException)
+                {
+                    continue;
                 }
             }
 
@@ -112,6 +119,54 @@ public class Waypoint : MonoBehaviour
         }
 
         return nearestWaypoint;
+    }
+
+
+    /// <summary>
+    /// Function to go through all neighbour waypoints and return a reference to the furthest waypoint
+    /// </summary>
+    /// <param name="exceptions">The list of Waypoints you wish to exclude from checking.</param>
+    /// <returns>The waypoint that is the furthest to this waypoint.</returns>
+    public Waypoint GetFurthestNeighbour(List<Waypoint> exceptions = null)
+    {
+        Waypoint furthestWaypoint = null;
+        float furthestDist = float.MinValue;
+
+        foreach (Waypoint w in neighbours)
+        {
+            // Check for exceptions if exceptions are provided
+            if (exceptions != null)
+            {
+                bool isException = false;
+
+                // Check if this waypoint is supposed to be exempted
+                foreach (Waypoint exception in exceptions)
+                {
+                    // If this is an exception, skip to the next one
+                    if (w == exception)
+                    {
+                        isException = true;
+                    }
+                }
+
+                if (isException)
+                {
+                    continue;
+                }
+            }
+
+            // Calculate the distance to the waypoint
+            float dist = (w.transform.position - transform.position).sqrMagnitude;
+
+            // Check if this is lower than the previous nearest
+            if (furthestWaypoint == null || dist > furthestDist)
+            {
+                furthestWaypoint = w;
+                furthestDist = (w.transform.position - transform.position).sqrMagnitude;
+            }
+        }
+
+        return furthestWaypoint;
     }
 
     /// <summary>
