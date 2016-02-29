@@ -6,6 +6,7 @@ namespace Enemy
     public class PatrolState : FSMState
     {
         private Waypoint previousWaypoint;
+        private double changestatetimer;
         private int Deciding;
 
         protected override void exit()
@@ -23,27 +24,36 @@ namespace Enemy
 
         protected override void update()
         {
-            //parent.getNearestPlayer()
+            //Debug.Log("PatrolState()");
+
+            //Check if the nearest player is within distance to attack
+            //float distanceSqr = (parent.transform.position - parent.getNearestPlayer().transform.position).sqrMagnitude;
+            //if (distanceSqr <= 50000.0f)
+            //{
+            //    parent.changeCurrentState(new ChaseState());
+            //    return;
+            //}
+
+            changestatetimer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+
             //Make sure the parent is at the final way point
             if (parent.FinalTargetWaypoint == null)
             {
-                //Enemy has now reached a waypoint, will randomize if he wants to change state
-                Changeofstates();
+                //Every 5 seconds, will check if the enemy want to change states
+                if (changestatetimer >= 5)
+                {
+                    Changeofstates();
+                    changestatetimer = 0;
+                }
 
                 if (Deciding == 0)
                 {
                     //MOVE!
                     parent.FinalTargetWaypoint = parent.CurrentWaypoint.GetRandomNeighbour(previousWaypoint);
-
                     //set ur previous waypoint to current waypoint
                     previousWaypoint = parent.CurrentWaypoint;
                 }
-            }
-            float distance = Vector3.Distance(parent.transform.position, parent.getNearestPlayer().transform.position);
-            if (distance <= 120.0f)
-            {
-                parent.changeCurrentState(new ChaseState());
-            }
+            }        
         }
 
         private void Changeofstates()

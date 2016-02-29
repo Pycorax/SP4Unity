@@ -12,7 +12,7 @@ namespace Enemy
         [Tooltip("A list of references to the players in the game.")]
         public List<GameObject> PlayerList;
         [Tooltip("The time delay between waypoint updates.")]
-        public float WaypointUpdateDelay = 5.0f;
+        public float WaypointUpdateDelay = 0.0f;
 
         /// <summary>
         /// 
