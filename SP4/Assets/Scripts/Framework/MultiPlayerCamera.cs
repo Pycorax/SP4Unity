@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MultiPlayerCamera : MonoBehaviour
@@ -79,12 +80,31 @@ public class MultiPlayerCamera : MonoBehaviour
             throw new UnityException("Too many players assigned to MultiPlayerCamera!");
         }
 
-        // Get the half distance between the players
-        Vector2 deltaPos = PlayerList[1].transform.position - PlayerList[0].transform.position;
-        deltaPos *= 0.5f; // PLAYER_COUNT
+        // Vector3 to store the center point
+        Vector3 centerPoint;
 
-        // Calculate the center point
-        Vector3 centerPoint = (Vector2)PlayerList[0].transform.position + deltaPos;
+        // Get a list of alive players
+        var alivePlayers = PlayerList.Where(x => x.GetComponent<RPGPlayer>().IsAlive).ToList();
+
+        // React accordingly to that
+        if (alivePlayers.Count > 1)
+        {
+            // Get the half distance between the players
+            Vector2 deltaPos = PlayerList[1].transform.position - PlayerList[0].transform.position;
+            deltaPos *= 0.5f; // PLAYER_COUNT
+
+            // Calculate the centerpoint
+            centerPoint = (Vector2) PlayerList[0].transform.position + deltaPos;
+        }
+        else if (alivePlayers.Count > 0)
+        {
+            centerPoint = alivePlayers.First().transform.position;
+        }
+        else
+        {
+            // Game over, they're all dead
+            return;
+        }
 
         if (DeadZoneEnabled && !moveTowardsCenterPoint)
         {
