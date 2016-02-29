@@ -6,9 +6,12 @@ using System.IO;
 public class SpawnButton : MonoBehaviour {
 
     public Button button;
-    
+
+    private RectTransform rtransform;
+
 	// Use this for initialization
 	void Start () {
+        rtransform = GetComponent<RectTransform>();
         LoadFiles();
 	}
 	
@@ -23,10 +26,12 @@ public class SpawnButton : MonoBehaviour {
 
         var files = info.GetFiles();
 
-        float buttonSize = 0.5f;
+        float buttonSize = 0.7f;
 
-        float yOffset = 0;
+        float yOffset = -50f;
 
+        rtransform.sizeDelta = new Vector2(100, 50 * files.Length);
+        
         foreach(var i in files)
         {
             
@@ -40,15 +45,21 @@ public class SpawnButton : MonoBehaviour {
 
                 newButton.transform.localPosition = new Vector3(0, yOffset, 0);
 
-                newButton.transform.localScale = new Vector3(buttonSize, buttonSize - 0.2f, buttonSize);
+                newButton.transform.localScale = new Vector3(buttonSize, buttonSize + 0.3f, buttonSize);
 
+                
 
+                
                 var text = newButton.GetComponentInChildren<Text>();
                 text.text = Path.GetFileNameWithoutExtension(i.Name);
 
                 yOffset -= 120;
             }
         }
+
+        
+
+        
 
     }
 
