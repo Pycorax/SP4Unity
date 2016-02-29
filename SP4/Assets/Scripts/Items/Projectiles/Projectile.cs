@@ -44,6 +44,8 @@ public class Projectile : MonoBehaviour
 
     public virtual void Activate(Transform data, Weapon shooter, Vector2 direction, Quaternion rotation, float distTillDespawn)
     {
+        // Assign damage
+        Damage = shooter.Damage;
         // Activate this Projectile
         gameObject.SetActive(true);
         // Initialize Transforms

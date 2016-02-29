@@ -106,7 +106,7 @@ public class GameTileMap : TileMap
                     }
                     else
                     {
-                        tile.SetActive(false);
+                        tile.SetActive(true);
                     }
 
                     // Set data for each tile

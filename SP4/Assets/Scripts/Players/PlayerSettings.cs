@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// PlayerSettings stores info about the player that is important
@@ -7,7 +7,13 @@ using System.Collections;
 /// </summary>
 public class PlayerSettings : MonoBehaviour
 {
+    // Storage
     private Inventory inventory = new Inventory();
+
+    // Skinnning
+    private List<Skin> skinsInventory = new List<Skin>();
+
+    // Statistics
     private int coins = 0;
     private int enemiesKilled = 0;
 
@@ -17,6 +23,8 @@ public class PlayerSettings : MonoBehaviour
 
     // Getters
     public Inventory PlayerInventory { get { return inventory; } }
+    public List<Skin> SkinsInventory { get { return skinsInventory; } } 
+    public Skin CurrentSkin { get; set; }
     public int Coins { get { return coins; } }
     public int EnemiesKilled { get { return enemiesKilled; } }
 
@@ -41,6 +49,14 @@ public class PlayerSettings : MonoBehaviour
     {
         coins = getPlayerPrefInt(coinsKey);
         enemiesKilled = getPlayerPrefInt(enemiesKey);
+    }
+
+    public void AddToSkinStorage(Skin skin)
+    {
+        if (!skinsInventory.Contains(skin))
+        {
+            skinsInventory.Add(skin);
+        }
     }
 
     private int getPlayerPrefInt(string key)
