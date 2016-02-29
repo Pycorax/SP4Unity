@@ -9,6 +9,8 @@ public class WaypointManager : MonoBehaviour
     public float WaypointRadius = 50.0f;
     [Tooltip("Set to true if you want to initialize immediately on start up. If not, you will need to call SyncWaypoints() manually.")]
     public bool SyncOnStartUp = true;
+    [Tooltip("Set to true if you want Waypoints to always recalculate their neighbours every frame.")]
+    public bool AlwaysRecalculate = false;
     [Tooltip("Design and debugging tool. When enabled, waypoint neighbours will be recalculated every frame and the connections will be rendered.")]
     public bool DrawConnections = false;
     [Tooltip("If true, the radius of the raytrace between Waypoints will be drawn.")]
@@ -73,8 +75,11 @@ public class WaypointManager : MonoBehaviour
             }
         }
 
-        // Set up the Lines
-        LineManager.ResetAll();
+        // Clear the Lines
+        if (DrawConnections)
+        {
+            LineManager.ResetAll();
+        }
 
         // Loop through each
         foreach (Waypoint w in waypointList)
@@ -85,13 +90,16 @@ public class WaypointManager : MonoBehaviour
                 continue;
             }
 
-            if (AutoScaleRadius)
+            if (AlwaysRecalculate)
             {
-                w.SetUpConnections(waypointList, WaypointRadius);
-            }
-            else
-            {
-                w.SetUpConnections(waypointList, transform.localScale.x);
+                if (AutoScaleRadius)
+                {
+                    w.SetUpConnections(waypointList, WaypointRadius);
+                }
+                else
+                {
+                    w.SetUpConnections(waypointList, transform.localScale.x);
+                }
             }
 
             if (DrawConnections)
@@ -138,7 +146,10 @@ public class WaypointManager : MonoBehaviour
         foreach (Waypoint w in listOfWaypoints)
         {
             // Recalculate all connections
-            w.SetUpConnections(listOfWaypoints, WaypointRadius);
+            if (AlwaysRecalculate)
+            {
+                w.SetUpConnections(listOfWaypoints, WaypointRadius);
+            }
 
             if (AutoScaleRadius)
             {

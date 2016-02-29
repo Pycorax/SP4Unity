@@ -13,6 +13,8 @@ namespace Enemy
         public List<GameObject> PlayerList;
         [Tooltip("The target waypoint that the enemy will go towards.")]
         public Waypoint FinalTargetWaypoint;
+        [Tooltip("The time delay between waypoint updates.")]
+        public float WaypointUpdateDelay = 5.0f;
 
         // Movement
         public float Speed = 200.0f;
@@ -21,6 +23,7 @@ namespace Enemy
         private FSMState currentState;                                      // Stores the current game state
         private Waypoint currentWaypoint;
         private Waypoint currentTargetWaypoint;                             // Stores a reference to the current target waypoint
+        private float waypointUpdateTimer = 0.0f;                           // Use to time the delays between Waypoint updates
         private const float DISTANCE_CHECK_ACCURARCY = 10.0f;               // Used to do "reached position" checking
 
         // Animation
@@ -134,7 +137,15 @@ namespace Enemy
             if (FinalTargetWaypoint != null)
             {
                 // Update the next waypoint to go to
-                currentTargetWaypoint = WaypointMap.GetNearestWaypointToGoTo(currentWaypoint, FinalTargetWaypoint);
+                // -- Update Timer
+                waypointUpdateTimer += (float) TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+                // -- Timer Check
+                if (waypointUpdateTimer > WaypointUpdateDelay)
+                {
+                    currentTargetWaypoint = WaypointMap.GetNearestWaypointToGoTo(currentWaypoint, FinalTargetWaypoint);
+                    // -- Reset Timer
+                    waypointUpdateTimer = 0.0f;
+                }
 
                 // Check if there is a path/Waypoint to go on
                 if (currentTargetWaypoint != null)

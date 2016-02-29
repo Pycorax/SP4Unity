@@ -5,6 +5,8 @@ public class Skin : MonoBehaviour
 {
     [Tooltip("The URL to the Skin Sprite.")]
     public string SkinSpriteUrl = "Sprites/Player/Skins";
+    [Tooltip("The chance to obtain this Skin.")]
+    public int Chance = 10;
 
     // Stores the Sprite's Sub Sprites that will be loaded on Start()
     private Sprite[] skinSubSprites;
