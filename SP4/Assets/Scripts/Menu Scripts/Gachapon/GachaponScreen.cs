@@ -7,8 +7,12 @@ public class GachaponScreen : MonoBehaviour
     public GameObject MerchantContainer;
     [Tooltip("The speed at which the MerchantContainer fades away.")]
     public float FadeSpeed = 10.0f;
-    [Tooltip("The GameObject that holds the Capsule items. This will be hidden at the start until the transition.")]
+    [Tooltip("The GameObject that holds the Reward item.")]
+    public GameObject Reward;
+    [Tooltip("The Reward GameObject. This will be hidden at the start until the transition.")]
     public GameObject CapsuleContainer;
+    [Tooltip("Reference to the Gachapon machine.")]
+    public Gachapon GachaponMachine;
 
     // State of this Screen
     private enum State
@@ -20,9 +24,13 @@ public class GachaponScreen : MonoBehaviour
         End
     }
 
+    // Reward
+    private Skin rewardSkin;                                        // The skin that the Gachapon gives to the player.
+
     // Animation
     private State menuState = State.Vanilla;
     private int animGachaOpen = Animator.StringToHash("OpenGacha"); // The hash for the Capsule animator's OpenGacha trigger
+    private int animRewardShow = Animator.StringToHash("Appear");   // The hash for the Reward animator's Appear trigger
 
     // Components
     // -- Merchant Container
@@ -31,6 +39,9 @@ public class GachaponScreen : MonoBehaviour
     // -- Capsule Container
     private Image capsuleImage;
     private Animator capsuleAnimator;
+    // -- Reward
+    private Animator rewardAnimator;
+    private Image rewardImage;
 
     // Use this for initialization
     void Start ()
@@ -44,6 +55,8 @@ public class GachaponScreen : MonoBehaviour
 
         // Get References for State.OpenCapsule
         capsuleAnimator = CapsuleContainer.GetComponentInChildren<Animator>();
+        rewardAnimator = Reward.GetComponent<Animator>();
+        rewardImage = Reward.GetComponent<Image>();
 
         // Set Up the Scene
         CapsuleContainer.SetActive(false);
@@ -91,7 +104,10 @@ public class GachaponScreen : MonoBehaviour
                 }
                 else
                 {
+                    // Go to the next state and play the unveiling anomation
                     capsuleAnimator.SetTrigger(animGachaOpen);
+                    rewardAnimator.SetTrigger(animRewardShow);
+
                     menuState = State.OpenCapsule;
                 }
                 break;
@@ -104,6 +120,13 @@ public class GachaponScreen : MonoBehaviour
 
     public void BuyGachapon()
     {
+        // Generate the skin
+        rewardSkin = GachaponMachine.GetRandomSkin();
+
+        // Set the reward image
+        rewardImage.sprite = rewardSkin.PreviewSprite;
+
+        // Kickstart the animation
         menuState = State.HideMerch;
     }
 

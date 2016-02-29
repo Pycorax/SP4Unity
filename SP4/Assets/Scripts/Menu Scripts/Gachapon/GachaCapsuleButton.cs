@@ -15,14 +15,6 @@ public class GachaCapsuleButton : MonoBehaviour
     // Stores the existing string
     private string prevString;
 
-    void Update()
-    {
-        if (GetComponent<RectTransform>().rect.Contains(Input.mousePosition))
-        {
-            Debug.Log("ADAS");
-        }
-    }
-
     void OnMouseEnter()
     {
         // Save the string to restore later

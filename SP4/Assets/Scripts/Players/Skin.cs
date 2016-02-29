@@ -25,11 +25,6 @@ public class Skin : MonoBehaviour
         }
     }
 
-    // Use this for initialization
-    void Start()
-    {
-    }
-
     /// <summary>
     /// Use this function to load the Skin Sprites before SwapSkin(). This only needs to be called once for
     /// the whole lifetime of Skin
@@ -37,9 +32,7 @@ public class Skin : MonoBehaviour
     public void Load()
     {
         // Load all the skin sub sprites
-        
-
-       
+        skinSubSprites = Resources.LoadAll<Sprite>(SkinSpriteUrl);
     }
 
     /// <summary>
