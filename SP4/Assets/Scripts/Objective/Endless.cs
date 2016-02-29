@@ -10,9 +10,12 @@ public class Endless : Objectives
     public float SpawnInterval = 2.0f;
     public int SpawnCount = 1;
 
+    private float elapsedTime = 0.0f;
+
     // Update is called once per frame
     protected override void Update ()
     {
+        elapsedTime += (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
         // TODO: Spawn enemy with time interval
         GameObject goEnemy = RefEnemyManager.GetComponent<ResourceManager>().Fetch();
         if (goEnemy)
