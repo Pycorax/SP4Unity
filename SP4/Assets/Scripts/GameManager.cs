@@ -61,6 +61,14 @@ public class GameManager : MonoBehaviour
             case Objectives.Type.NoDamage:
                 CurrentObjective = gameObject.AddComponent<No_Dmg_Taken>();
                 break;
+            case Objectives.Type.Endless:
+                CurrentObjective = gameObject.AddComponent<Endless>();
+                Endless mode = CurrentObjective.GetComponent<Endless>();
+                mode.RefPlayer1 = PlayerList[0];
+                mode.RefPlayer2 = PlayerList[1];
+                mode.RefEnemyManager = EnemiesManager;
+                mode.RefWaypointManager = GetComponentInChildren<WaypointManager>();
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
