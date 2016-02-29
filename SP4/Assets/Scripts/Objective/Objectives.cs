@@ -16,7 +16,8 @@ public abstract class Objectives : MonoBehaviour
     {
         KillAll,
         CollectCoins,
-        NoDamage
+        NoDamage,
+        Endless
     }
 
     /// <summary>
