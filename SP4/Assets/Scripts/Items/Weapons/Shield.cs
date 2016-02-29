@@ -121,6 +121,7 @@ public class Shield : Weapon
 
                         // Shoot the arrow
                         arrow.Activate(firePoint, this, dir, Quaternion.FromToRotation(Vector2.up, dir), BarrageRange * RefProjectileManager.GetComponent<TileMap>().TileSize);
+                        arrow.Damage = Damage;
                     }
                 }
             }
