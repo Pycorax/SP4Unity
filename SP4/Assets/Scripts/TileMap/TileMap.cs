@@ -673,7 +673,7 @@ public abstract class TileMap : MonoBehaviour
                     }
                     else
                     {
-                        tile.SetActive(false);
+                        tile.SetActive(true);
                     }
 
                     // Set data for each tile
