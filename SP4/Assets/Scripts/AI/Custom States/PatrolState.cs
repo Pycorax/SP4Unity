@@ -39,6 +39,11 @@ namespace Enemy
                     previousWaypoint = parent.CurrentWaypoint;
                 }
             }
+            float distance = Vector3.Distance(parent.transform.position, parent.getNearestPlayer().transform.position);
+            if (distance <= 120.0f)
+            {
+                parent.changeCurrentState(new ChaseState());
+            }
         }
 
         private void Changeofstates()

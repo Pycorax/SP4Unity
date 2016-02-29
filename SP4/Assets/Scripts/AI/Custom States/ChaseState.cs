@@ -1,4 +1,7 @@
-﻿namespace Enemy
+﻿using UnityEngine;
+using System.Collections;
+
+namespace Enemy
 {
     public class ChaseState : FSMState
     {
@@ -41,6 +44,12 @@
                         parent.FinalTargetWaypoint = parent.WaypointMap.GetNearestWaypointToGoTo(parent.CurrentWaypoint, playerWaypoint);
                     }    
                 }
+            }
+
+            float distance = Vector3.Distance(parent.transform.position, parent.getNearestPlayer().transform.position);
+            if (distance >= 200.0f)
+            {
+                parent.changeCurrentState(new AlertState());
             }
         }
     }
