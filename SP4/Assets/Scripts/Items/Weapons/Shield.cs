@@ -54,6 +54,7 @@ public class Shield : Weapon
         {
             shieldOut = true;
             anim.SetBool(animAttack, true);
+            anim.SetTrigger(animAttack);
         }
 
         return true;

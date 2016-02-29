@@ -8,6 +8,8 @@ public class Crossbow : Weapon
 	// Use this for initialization
     protected override void Start ()
     {
+        base.Start();
+
         firePoint = transform.FindChild("FirePoint");
 
         if(!firePoint)
