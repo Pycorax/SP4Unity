@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class Gachapon : MonoBehaviour
@@ -14,6 +15,9 @@ public class Gachapon : MonoBehaviour
     [Tooltip("The cost of a Gachapon capsule.")]
     public int Cost;
 
+    [Tooltip("A reference to a Skins Manager.")]
+    public SkinsManager SkinsManagerReference;
+
     [Tooltip("The list of weapon blueprints for the weapon to generate.")]
     public WeaponBlueprint[] WeaponBlueprints = new WeaponBlueprint[Enum.GetNames(typeof(Spawnable)).Length];
 
@@ -22,8 +26,8 @@ public class Gachapon : MonoBehaviour
 
 	// Use this for initialization
 	void Start ()
-    {
-	
+	{
+	    GetRandomSkin();
 	}
 	
 	// Update is called once per frame
@@ -31,14 +35,15 @@ public class Gachapon : MonoBehaviour
 	
 	}
 
+    public Skin GetRandomSkin()
+    {
+        return SkinsManagerReference.GetRandomSkin();
+    }
+
     public Weapon GetRandomWeapon()
     {
-        int totalProbability = 0;
         // Add up the total probabilties
-        foreach (var s in WeaponSpawnRates)
-        {
-            totalProbability += s;
-        }
+        int totalProbability = WeaponSpawnRates.Sum();
 
         // Calculate probability
         int probability = UnityEngine.Random.Range(0, totalProbability);
