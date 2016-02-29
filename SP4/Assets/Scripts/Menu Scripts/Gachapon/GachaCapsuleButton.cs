@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class GachaCapsuleButton : MonoBehaviour
@@ -11,7 +10,7 @@ public class GachaCapsuleButton : MonoBehaviour
     public Gachapon GachaponReference;
 
     [Tooltip("Reference to the Player to get the player's number of coins.")]
-    public RPGPlayer PlayerReference;
+    public PlayerSettings PlayerSetting;
 
     // Stores the existing string
     private string prevString;
@@ -30,7 +29,7 @@ public class GachaCapsuleButton : MonoBehaviour
         prevString = CoinText.text;
 
         // Set the text
-        CoinText.text = "Coins: " + (PlayerReference.Coins - GachaponReference.Cost);
+        CoinText.text = "Coins: " + (PlayerSetting.Coins - GachaponReference.Cost);
 
         // Set the text colour
         CoinText.color = Color.red;
@@ -42,7 +41,7 @@ public class GachaCapsuleButton : MonoBehaviour
         CoinText.text = prevString;
 
         // Set the text
-        CoinText.text = "Coins: " + PlayerReference.Coins;
+        CoinText.text = "Coins: " + PlayerSetting.Coins;
 
         // Set the text colour
         CoinText.color = Color.white;

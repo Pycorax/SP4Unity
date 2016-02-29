@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
-using System;
 
 public class GachaponScreen : MonoBehaviour
 {
@@ -49,7 +47,6 @@ public class GachaponScreen : MonoBehaviour
 
         // Set Up the Scene
         CapsuleContainer.SetActive(false);
-        setColorAlpha(capsuleImage, 0.0f);
     }
 	
 	// Update is called once per frame
