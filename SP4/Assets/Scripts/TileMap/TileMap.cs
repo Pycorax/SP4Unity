@@ -249,6 +249,7 @@ public abstract class TileMap : MonoBehaviour
     protected virtual void ActivateTiles(int rowIndexMin, int rowIndexMax, int colIndexMin, int colIndexMax, bool mode = true)
     {
         //if (!isActivated()) // Check if first update is required
+        if (minRowIndex != rowIndexMin || maxRowIndex != rowIndexMax || minColIndex != colIndexMin || maxColIndex != colIndexMax)
         {
             // First tile update is required (Full activation)
             IEnumerable<Tile> activeTiles = from tile in tiles where tile.gameObject.activeSelf select tile;
