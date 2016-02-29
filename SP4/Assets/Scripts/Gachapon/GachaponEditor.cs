@@ -4,6 +4,7 @@ using UnityEditor;
 [CustomEditor(typeof(Gachapon))]
 public class GachaponEditor : Editor
 {
+    private bool showSkins = true;
     private bool showWeapBlueprints = true;
     private bool showSpawnRates = true;
 
@@ -22,31 +23,34 @@ public class GachaponEditor : Editor
         gacha.Cost = EditorGUILayout.IntField(gacha.Cost);
         EditorGUILayout.EndHorizontal();
 
-        // Foldout Controllers
+        EditorGUILayout.Separator();
+
+        // Skins
+        showSkins = EditorGUILayout.Foldout(showSkins, "Skin Directory");
+        gacha.SkinsManagerReference = (SkinsManager)EditorGUILayout.ObjectField(gacha.SkinsManagerReference, typeof(SkinsManager), false);
+;
+        EditorGUILayout.Separator();
+
+        // Weapons
+        // -- Blueprints
         showWeapBlueprints = EditorGUILayout.Foldout(showWeapBlueprints, "Weapon Blueprints");
         if (showWeapBlueprints)
         {
             // Loop through all Weapon Blueprints and show a field to allow editing
             for (int i = 0; i < Enum.GetValues(weapType).Length; i++)
             {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PrefixLabel(weapEnumNames[i]);
-                gacha.WeaponBlueprints[i] = (WeaponBlueprint)EditorGUILayout.ObjectField(gacha.WeaponBlueprints[i], typeof(WeaponBlueprint), false);
-                EditorGUILayout.EndHorizontal();
+                gacha.WeaponBlueprints[i] = (WeaponBlueprint)EditorGUILayout.ObjectField(weapEnumNames[i], gacha.WeaponBlueprints[i], typeof(WeaponBlueprint), false);
             }
         }
 
-        // Foldout
+        // -- Chance
         showSpawnRates = EditorGUILayout.Foldout(showSpawnRates, "Spawn Rates");
         if (showSpawnRates)
         {
             // Loop through all probabilities and show a field to allow editing
             for (int i = 0; i < Enum.GetValues(weapType).Length; i++)
             {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PrefixLabel(weapEnumNames[i]);
-                gacha.WeaponSpawnRates[i] = EditorGUILayout.IntField(gacha.WeaponSpawnRates[i]);
-                EditorGUILayout.EndHorizontal();
+                gacha.WeaponSpawnRates[i] = EditorGUILayout.IntField(weapEnumNames[i], gacha.WeaponSpawnRates[i]);
             }
         }
     }
