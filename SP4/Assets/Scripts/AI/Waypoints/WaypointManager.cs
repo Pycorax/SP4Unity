@@ -146,7 +146,10 @@ public class WaypointManager : MonoBehaviour
         foreach (Waypoint w in listOfWaypoints)
         {
             // Recalculate all connections
-            w.SetUpConnections(listOfWaypoints, WaypointRadius);
+            if (AlwaysRecalculate)
+            {
+                w.SetUpConnections(listOfWaypoints, WaypointRadius);
+            }
 
             if (AutoScaleRadius)
             {
