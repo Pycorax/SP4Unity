@@ -18,7 +18,6 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.2.0f3</UnityVersion>
     <RootNamespace></RootNamespace>
-    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -83,6 +82,7 @@
     <Compile Include="Assets\Scripts\BackgroundScroller.cs" />
     <Compile Include="Assets\Scripts\Characters\Character.cs" />
     <Compile Include="Assets\Scripts\EnemyManager.cs" />
+    <Compile Include="Assets\Scripts\EnergyBar.cs" />
     <Compile Include="Assets\Scripts\Framework\ISavable.cs" />
     <Compile Include="Assets\Scripts\Framework\MultiPlayerCamera.cs" />
     <Compile Include="Assets\Scripts\Framework\ResourceController.cs" />
@@ -94,12 +94,14 @@
     <Compile Include="Assets\Scripts\Framework\TrackerLine.cs" />
     <Compile Include="Assets\Scripts\Gachapon\Gachapon.cs" />
     <Compile Include="Assets\Scripts\Gachapon\GachaponEditor.cs" />
+    <Compile Include="Assets\Scripts\Gachapon\MerchantScaler.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\Items\Destructibles\Box.cs" />
     <Compile Include="Assets\Scripts\Items\Destructibles\Cannon.cs" />
     <Compile Include="Assets\Scripts\Items\Destructibles\Coin.cs" />
+    <Compile Include="Assets\Scripts\Items\Destructibles\Collectible.cs" />
     <Compile Include="Assets\Scripts\Items\Destructibles\Destroyables.cs" />
     <Compile Include="Assets\Scripts\Items\Destructibles\Exit.cs" />
     <Compile Include="Assets\Scripts\Items\Destructibles\Heart.cs" />
@@ -130,18 +132,22 @@
     <Compile Include="Assets\Scripts\Level Editor\LevelEditorCategoryButtonsController.cs" />
     <Compile Include="Assets\Scripts\Level Editor\LevelEditorGemini.cs" />
     <Compile Include="Assets\Scripts\Level Editor\LevelEditorObjectiveDropdown.cs" />
+    <Compile Include="Assets\Scripts\Level Editor\LevelEditorRibbonController.cs" />
+    <Compile Include="Assets\Scripts\Menu Scripts\Gachapon\CoinsText.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\Gachapon\GachaCapsuleButton.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\Gachapon\GachaponScreen.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\Level Select\SpawnButton.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\SceneManager.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\SplashScreen.cs" />
     <Compile Include="Assets\Scripts\Objective\Collect_Coins.cs" />
+    <Compile Include="Assets\Scripts\Objective\Endless.cs" />
     <Compile Include="Assets\Scripts\Objective\Kill_Enemy.cs" />
     <Compile Include="Assets\Scripts\Objective\No_Dmg_Taken.cs" />
     <Compile Include="Assets\Scripts\Objective\ObjectiveManager.cs" />
     <Compile Include="Assets\Scripts\Objective\Objectives.cs" />
     <Compile Include="Assets\Scripts\Players\PlayerSettings.cs" />
     <Compile Include="Assets\Scripts\Players\Skin.cs" />
+    <Compile Include="Assets\Scripts\Players\SkinsManager.cs" />
     <Compile Include="Assets\Scripts\ProjectileManager.cs" />
     <Compile Include="Assets\Scripts\RPGPlayer.cs" />
     <Compile Include="Assets\Scripts\Score\HighScoreSystem.cs" />

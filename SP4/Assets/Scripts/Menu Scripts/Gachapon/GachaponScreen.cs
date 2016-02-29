@@ -13,6 +13,8 @@ public class GachaponScreen : MonoBehaviour
     public GameObject CapsuleContainer;
     [Tooltip("Reference to the Gachapon machine.")]
     public Gachapon GachaponMachine;
+    [Tooltip("Reference to the Player to get the player's number of coins.")]
+    public PlayerSettings PlayerSetting;
 
     // State of this Screen
     private enum State
@@ -120,6 +122,13 @@ public class GachaponScreen : MonoBehaviour
 
     public void BuyGachapon()
     {
+        // Check if there is not enough cash
+        if (!PlayerSetting.TakeCoins(GachaponMachine.Cost))
+        {
+            // Do not allow buying
+            return;
+        }
+
         // Generate the skin
         rewardSkin = GachaponMachine.GetRandomSkin();
 
