@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class LevelEditorObjectiveDropdown : MonoBehaviour
 {
+#if UNITY_5_2_0
     // Component
     private Dropdown dropdown;
 
@@ -22,8 +23,11 @@ public class LevelEditorObjectiveDropdown : MonoBehaviour
 	    }
 	}
 	
-	// Update is called once per frame
-	void Update () {
+#else
+    public Objectives.Type Objective { get { return Objectives.Type.CollectCoins; } }
+#endif
+    // Update is called once per frame
+    void Update () {
 	
 	}
 }
