@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 
 public class EditorTileMap : TileMap
 {
@@ -63,6 +63,7 @@ public class EditorTileMap : TileMap
     {
         base.Load(name, numOfTiles);
         lineSizeRatio = calculateLineSizeRatio();
+        drawGridLines();
     }
 
     public bool Save(Objectives.Type objective)
