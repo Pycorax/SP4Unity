@@ -28,14 +28,6 @@ public abstract class Weapon : Item
     // Getters
     public bool CanUse { get { return useTimeDelta >= FireRate; } }
 
-	// Use this for initialization
-	protected override void Start ()
-    {
-        base.Start();
-
-        // Initialize the fire rate based on the values provided
-    }
-	
 	// Update is called once per frame
 	protected override void Update ()
     {
