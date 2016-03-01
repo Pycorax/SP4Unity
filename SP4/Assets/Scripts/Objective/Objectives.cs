@@ -6,6 +6,7 @@ public abstract class Objectives : MonoBehaviour
 {
     [Tooltip("Reference to the GameManager for statistics.")]
     public GameManager Manager;
+    protected string description;
 
     private bool finished = false;
 
@@ -47,6 +48,15 @@ public abstract class Objectives : MonoBehaviour
         var parameters = str.Split(new string[] {","}, StringSplitOptions.RemoveEmptyEntries);
 
         return parseParamString(parameters);
+    }
+
+    protected virtual string GetDescription()
+    {
+        if (IsAchieved())
+        {
+            return "Find the exit!";
+        }
+        return description;
     }
 
     /// <summary>

@@ -7,6 +7,12 @@ public class Collect_Coins : Objectives
     [Tooltip("The number of coins required to be collected.")]
     public int RequiredCoins = 50;
 
+    protected override void Start()
+    {
+        base.Start();
+        description = "Collect " + RequiredCoins + " coins!";
+    }
+
     public override bool IsAchieved()
     {
         return (Manager.CoinsCollected >= RequiredCoins);

@@ -3,6 +3,12 @@ using System.Collections;
 
 public class No_Dmg_Taken : Objectives
 {
+    protected override void Start()
+    {
+        base.Start();
+        description = "Do not take any damage!";
+    }
+
     public override bool IsAchieved()
     {
         // Calculate the total health and max health

@@ -6,6 +6,12 @@ public class Kill_Enemy : Objectives
 {
     public int RequiredKills = 10;
 
+    protected override void Start()
+    {
+        base.Start();
+        description = "Kill " + RequiredKills + " enemies!";
+    }
+
     public override bool IsAchieved()
     {
         return (Manager.EnemiesKilled >= RequiredKills);
