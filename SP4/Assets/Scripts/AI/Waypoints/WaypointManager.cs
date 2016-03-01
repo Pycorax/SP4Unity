@@ -76,7 +76,7 @@ public class WaypointManager : MonoBehaviour
         }
 
         // Clear the Lines
-        if (DrawConnections)
+        if (LineManager.ActiveResourcesList.Count > 0)
         {
             LineManager.ResetAll();
         }
@@ -145,6 +145,12 @@ public class WaypointManager : MonoBehaviour
         // Loop through each
         foreach (Waypoint w in listOfWaypoints)
         {
+            // Error Checking
+            if (w == null)
+            {
+                continue;
+            }
+
             // Recalculate all connections
             if (AlwaysRecalculate)
             {
@@ -176,6 +182,12 @@ public class WaypointManager : MonoBehaviour
             // Draw the connections
             foreach (Waypoint neighbour in w.Neighbours)
             {
+                // Error Checking
+                if (neighbour == null)
+                {
+                    continue;
+                }
+
                 // Draw the radius lines
                 if (GizmoWaypointRadiusDraw)
                 {
