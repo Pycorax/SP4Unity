@@ -12,6 +12,8 @@ public abstract class Weapon : Item
     public bool HeldDownUsable = false;
     [Tooltip("If this weapon is always ready to trigger a combo attack.")]
     public bool AlwaysCombo = false;
+    [Tooltip("Energy needed to cast attack")]
+    public int EnergyNeeded = 0;
 
     public ProjectileManager RefProjectileManager { get { return refProjectileManager; } set { refProjectileManager = value; } }
     private ProjectileManager refProjectileManager;

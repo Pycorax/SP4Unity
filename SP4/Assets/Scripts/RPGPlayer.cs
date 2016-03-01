@@ -120,6 +120,9 @@ public class RPGPlayer : Character
 
         //HealthBar Testing
         HealthBarUpdate(Health);
+
+        // EnergyBar  Update
+        EnergyBarUpdate();
     }
 
     void LateUpdate()
