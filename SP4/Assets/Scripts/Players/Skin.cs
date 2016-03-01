@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Linq;
 
-public class Skin : MonoBehaviour, ISavable
+public class Skin : MonoBehaviour
 {
     [Tooltip("The URL to the Skin Sprite.")]
     public string SkinSpriteUrl = "Sprites/Player/Skins";

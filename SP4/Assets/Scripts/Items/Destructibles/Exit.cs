@@ -68,6 +68,7 @@ public class Exit : MonoBehaviour
         if (player = other.gameObject.GetComponent<RPGPlayer>())
         {
             Manager.NotifyReachedExit();
+            ScoreManager.AddCurrentScore(ScoreManager.ScoreType.ExitBonus);
         }
     }
 }

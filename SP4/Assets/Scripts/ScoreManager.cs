@@ -5,8 +5,9 @@ public class ScoreManager : MonoBehaviour
     public enum ScoreType
     {
         EnemyKill,
-        PowerUpPickUp,
-        PlayerDeath,
+        Destructables,
+        CombinedAtk,
+        ExitBonus,
     }
 
     private static int currentScore;
@@ -14,7 +15,8 @@ public class ScoreManager : MonoBehaviour
         {
             100,
             50,
-            -1000
+            1,
+            200,
         };
 
     // Saving and Loading
@@ -23,15 +25,17 @@ public class ScoreManager : MonoBehaviour
     // Getters
     public static int CurrentScore { get { return currentScore; } }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     public static void AddCurrentScore(ScoreType score)
     {

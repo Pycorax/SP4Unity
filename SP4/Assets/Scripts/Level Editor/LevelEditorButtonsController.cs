@@ -1,10 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.Events;
 using UnityEngine.UI;
-
-public class TileSelectedEvent : UnityEvent<Tile> { } //empty class; just needs to exist
-
 
 
 public class LevelEditorButtonsController : MonoBehaviour
