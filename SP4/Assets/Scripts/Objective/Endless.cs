@@ -9,18 +9,28 @@ public class Endless : Objectives
     public WaypointManager RefWaypointManager;
     public float SpawnInterval = 2.0f;
     public int SpawnCount = 1;
-
+    
     private float elapsedTime = 0.0f;
+    private float spawnTimer = 0.0f;
 
     // Update is called once per frame
     protected override void Update ()
     {
-        elapsedTime += (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
-        // TODO: Spawn enemy with time interval
-        GameObject goEnemy = RefEnemyManager.GetComponent<ResourceManager>().Fetch();
-        if (goEnemy)
+        float dt = (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+        elapsedTime += dt;
+        // TODO: Increase difficulty over time
+        
+        // Counting timer and spawning between intervals
+        if (spawnTimer < SpawnInterval)
         {
-            Enemy.Enemy e = goEnemy.GetComponent<Enemy.Enemy>();
+            spawnTimer += dt;
+        }
+        else
+        {
+            // Spawns an enemy
+            spawn();
+            // Reset spawn timer
+            spawnTimer = 0.0f;
         }
 	}
 
@@ -37,5 +47,28 @@ public class Endless : Objectives
     public override bool IsAchieved()
     {
         return !RefPlayer1.IsAlive && !RefPlayer2.IsAlive;
+    }
+
+    private void spawn()
+    {
+        // List of waypoints that enemies can spawn on
+        var Waypoints = RefWaypointManager.Waypoints;
+
+        // Loop for spawning multiple enemies
+        for (int spawnIndex = 0; spawnIndex < SpawnCount; ++spawnIndex)
+        {
+            GameObject goEnemy = RefEnemyManager.GetComponent<ResourceManager>().Fetch();
+            if (goEnemy)
+            {
+                int random = UnityEngine.Random.Range(0, Waypoints.Count - 1);
+                spawnSingle(goEnemy, Waypoints[random].transform.position);
+            }
+        }
+    }
+
+    private void spawnSingle(GameObject enemy, Vector3 pos)
+    {
+        enemy.SetActive(true);
+        enemy.transform.position = pos;
     }
 }
