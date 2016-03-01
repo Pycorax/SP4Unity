@@ -518,9 +518,10 @@ public class RPGPlayer : Character
             if ((LeftWeapon.HeldDownUsable &&  Input.GetKey(LeftAttackKey))|| Input.GetKeyDown(LeftAttackKey))
             {
             
-                if(attack(LeftWeapon))
+                if(checkEnergyLevel(LeftWeapon) && attack(LeftWeapon))
                 {
                     shot = true;
+                    UseEnergy(LeftWeapon.EnergyNeeded);
 
                     // Start animation
                     if (LeftWeapon.HeldDownUsable)
@@ -556,9 +557,10 @@ public class RPGPlayer : Character
         {
             if ((RightWeapon.HeldDownUsable && Input.GetKey(RightAttackKey)) || Input.GetKeyDown(RightAttackKey))
             {
-                if(attack(RightWeapon))
+                if(checkEnergyLevel(RightWeapon) && attack(RightWeapon))
                 {
                     shot = true;
+                    UseEnergy(RightWeapon.EnergyNeeded);
 
                     // Start animation
                     if (RightWeapon.HeldDownUsable)
@@ -717,5 +719,10 @@ public class RPGPlayer : Character
         }
 
         #endregion
+    }
+
+    private bool checkEnergyLevel(Weapon w)
+    {
+        return energy >= w.EnergyNeeded;
     }
 }

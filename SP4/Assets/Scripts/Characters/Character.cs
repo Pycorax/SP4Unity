@@ -36,6 +36,7 @@ public abstract class Character : MonoBehaviour
     {
         //HealthBar Testing
         HealthBarUpdate(Health);
+        EnergyBarUpdate();
     }
 
     #region Health
@@ -84,17 +85,23 @@ public abstract class Character : MonoBehaviour
 
     public void EnergyBarUpdate()
     {
+        if (!energyBar)
+        {
+            return;
+        }
         // Scaling of current energy
         float currentEnergy = (float)energy / (float)MaxEnergy;
 
         // if energy is not equal to max energy
-        if (energy != MaxEnergy)
+        if (energy < MaxEnergy)
         {
             // Regen energy every 2 seconds game time
             energyregen += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
             if (energyregen >= 1)
             {
-                currentEnergy += 10;
+                energy += 5;
+                energy = Mathf.Clamp(energy, 0, MaxEnergy);
+                currentEnergy += 5;
                 energyregen = 0;
             }
         }
