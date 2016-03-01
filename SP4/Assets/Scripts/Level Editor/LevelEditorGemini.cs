@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class LevelEditorGemini : MonoBehaviour
 {
@@ -88,6 +87,11 @@ public class LevelEditorGemini : MonoBehaviour
     public void UpdateName(Text text)
     {
         RefTileMap.Name = text.text;
+    }
+
+    public void Exit()
+    {
+        Application.LoadLevel("LevelSelectScene");
     }
 
     private bool mouseIsOnUi()
