@@ -10,6 +10,8 @@ public class GachaponScreen : MonoBehaviour
     [Tooltip("The GameObject that holds the Reward item.")]
     public GameObject Reward;
     [Tooltip("The Reward GameObject. This will be hidden at the start until the transition.")]
+    public GameObject RewardContainer;
+    [Tooltip("The Capsule GameObject. This will be hidden at the start until the transition.")]
     public GameObject CapsuleContainer;
     [Tooltip("Reference to the Gachapon machine.")]
     public Gachapon GachaponMachine;
@@ -23,6 +25,7 @@ public class GachaponScreen : MonoBehaviour
         HideMerch,
         ShowCapsule,
         OpenCapsule,
+        ShowEnd,
         End
     }
 
@@ -33,6 +36,7 @@ public class GachaponScreen : MonoBehaviour
     private State menuState = State.Vanilla;
     private int animGachaOpen = Animator.StringToHash("OpenGacha"); // The hash for the Capsule animator's OpenGacha trigger
     private int animRewardShow = Animator.StringToHash("Appear");   // The hash for the Reward animator's Appear trigger
+    private int animReset = Animator.StringToHash("Reset");         // The hash for animators' Reset triggers
 
     // Components
     // -- Merchant Container
@@ -41,13 +45,17 @@ public class GachaponScreen : MonoBehaviour
     // -- Capsule Container
     private Image capsuleImage;
     private Animator capsuleAnimator;
-    // -- Reward
+    // -- Reward Container
     private Animator rewardAnimator;
     private Image rewardImage;
+    private Image[] rewardChildImages;
+    private Text[] rewardChildTexts;
 
     // Use this for initialization
     void Start ()
     {
+        Time.timeScale = 0.5f;
+
         // Get References for State.HideMerch
         merchantChildImages = MerchantContainer.GetComponentsInChildren<Image>();
         merchantChildText = MerchantContainer.GetComponentsInChildren<Text>();
@@ -60,8 +68,12 @@ public class GachaponScreen : MonoBehaviour
         rewardAnimator = Reward.GetComponent<Animator>();
         rewardImage = Reward.GetComponent<Image>();
 
+        // Get References for State.EndShow
+        rewardChildImages = RewardContainer.GetComponentsInChildren<Image>();
+        rewardChildTexts = RewardContainer.GetComponentsInChildren<Text>();
+
         // Set Up the Scene
-        CapsuleContainer.SetActive(false);
+        reset(true);
     }
 	
 	// Update is called once per frame
@@ -77,12 +89,6 @@ public class GachaponScreen : MonoBehaviour
                 {
                     // Set the transparency of each image
                     setColorAlpha(img, img.color.a - FadeSpeed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game));
-                }
-
-                foreach (var txt in merchantChildText)
-                {
-                    // Set the transparency of each text
-                    setColorAlpha(txt, txt.color.a - FadeSpeed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game));
                 }
 
                 // If everything is invisible; Transition to the next scene
@@ -115,7 +121,29 @@ public class GachaponScreen : MonoBehaviour
                 break;
 
             case State.OpenCapsule:
-                
+                break;
+
+            case State.ShowEnd:
+                /*
+                 * Gradually make reward text and images visible
+                 */
+                foreach (var img in rewardChildImages)
+                {
+                    // Set the transparency of each image
+                    setColorAlpha(img, img.color.a + FadeSpeed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game));
+                }
+
+                foreach (var text in rewardChildTexts)
+                {
+                    // Set the transparency of each image
+                    setColorAlpha(text, text.color.a + FadeSpeed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game));
+                }
+
+                // Finish after ending the animation
+                if (rewardChildImages.Length > 0 && rewardChildImages[0].color.a >= 255.0f)
+                {
+                    menuState = State.End;
+                }
                 break;
         }
 	}
@@ -132,11 +160,91 @@ public class GachaponScreen : MonoBehaviour
         // Generate the skin
         rewardSkin = GachaponMachine.GetRandomSkin();
 
-        // Set the reward image
-        rewardImage.sprite = rewardSkin.PreviewSprite;
+        if (rewardSkin != null)
+        {
+            // Set the reward image
+            rewardImage.sprite = rewardSkin.PreviewSprite;
 
+            // Play the animation
+            startAnimation();
+        }
+    }
+
+    /// <summary>
+    /// Use this function at the end and finish up, reset.
+    /// </summary>
+    public void FinishGacha()
+    {
+        reset();
+    }
+
+    /// <summary>
+    /// Use this function in the Animator to inform us that the capsule has finished being opened
+    /// </summary>
+    public void NotifyFinishedOpeningCapsule()
+    {
+        if (menuState == State.OpenCapsule)
+        {
+            menuState = State.ShowEnd;
+        }
+    }
+
+    private void startAnimation()
+    {
         // Kickstart the animation
         menuState = State.HideMerch;
+
+        // Hide the text
+        foreach (var txt in merchantChildText)
+        {
+            txt.gameObject.SetActive(false);
+        }
+    }
+
+    private void reset(bool initial = false)
+    {
+        // Reset the State
+        menuState = State.Vanilla;
+
+        // Reset the skin
+        rewardSkin = null;
+
+        // Reset all the items in the scene
+        // -- Images
+        foreach (var img in merchantChildImages)
+        {
+            // Set the transparency of each image
+            setColorAlpha(img, 1.0f);
+        }
+        foreach (var img in rewardChildImages)
+        {
+            // Set the transparency of each image
+            setColorAlpha(img, 0.0f);
+        }
+        // -- Text
+        foreach (var txt in merchantChildText)
+        {
+            txt.gameObject.SetActive(true);
+        }
+        foreach (var txt in rewardChildTexts)
+        {
+            setColorAlpha(txt, 0.0f);
+        }
+
+        // -- Animations
+        if (!initial)
+        {
+            // ---- Ensure that they are enabled so that we can set them
+            CapsuleContainer.SetActive(true);
+            RewardContainer.SetActive(true);
+            // ---- Do the actual reset
+            rewardAnimator.SetTrigger(animReset);
+            capsuleAnimator.SetTrigger(animReset);
+        }
+
+        // -- Parent Containers
+        CapsuleContainer.SetActive(false);
+        MerchantContainer.SetActive(true);
     }
 
     private void setColorAlpha(Image imageToSet, float finalAlpha)

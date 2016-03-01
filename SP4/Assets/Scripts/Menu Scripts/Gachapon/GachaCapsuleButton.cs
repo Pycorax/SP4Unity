@@ -37,8 +37,6 @@ public class GachaCapsuleButton : MonoBehaviour
         {
             OnMouseExit();
         }
-
-        //GetComponent<RectTransform>().position = Input.mousePosition;
     }
 
     void OnMouseEnter()

@@ -14,7 +14,7 @@ public class PlayerSettings : MonoBehaviour
     private List<Skin> skinsInventory = new List<Skin>();
 
     // Statistics
-    private int coins = 0;
+    private int coins = 50;
     private int enemiesKilled = 0;
 
     // Save/Load Keys

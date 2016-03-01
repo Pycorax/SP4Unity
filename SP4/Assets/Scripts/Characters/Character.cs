@@ -64,7 +64,7 @@ public abstract class Character : MonoBehaviour
         if(health != null)
         {
             healthBar.transform.localScale = new Vector3(currentHP, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
-        }   
+        }
     }
 
     #endregion
