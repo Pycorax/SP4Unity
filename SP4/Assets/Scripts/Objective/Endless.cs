@@ -4,22 +4,37 @@ using System;
 
 public class Endless : Objectives
 {
+    [Tooltip("References to both players to determine the end of objective")]
     public RPGPlayer RefPlayer1, RefPlayer2;
     public EnemyManager RefEnemyManager;
     public WaypointManager RefWaypointManager;
     public float SpawnInterval = 2.0f;
-    public int SpawnCount = 1;
-    
+    public float TimeTillDifficultyIncrease = 5.0f;
+    public int InitialSpawnCount = 1;
+
+    private int spawnCount;
     private float elapsedTime = 0.0f;
     private float spawnTimer = 0.0f;
+
+    protected override void Start()
+    {
+        base.Start();
+        spawnCount = InitialSpawnCount;
+    }
 
     // Update is called once per frame
     protected override void Update ()
     {
+        if (IsAchieved())
+        {
+            // TODO: Call Manager to end game immediately
+        }
+
         float dt = (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
         elapsedTime += dt;
         // TODO: Increase difficulty over time
-        
+        spawnCount = (int)(elapsedTime % TimeTillDifficultyIncrease) + InitialSpawnCount;
+
         // Counting timer and spawning between intervals
         if (spawnTimer < SpawnInterval)
         {
@@ -55,7 +70,7 @@ public class Endless : Objectives
         var Waypoints = RefWaypointManager.Waypoints;
 
         // Loop for spawning multiple enemies
-        for (int spawnIndex = 0; spawnIndex < SpawnCount; ++spawnIndex)
+        for (int spawnIndex = 0; spawnIndex < spawnCount; ++spawnIndex)
         {
             int random = UnityEngine.Random.Range(0, Waypoints.Count - 1);
             spawnSingle(Waypoints[random].transform.position);
@@ -69,7 +84,6 @@ public class Endless : Objectives
         {
             enemy.SetActive(true);
             enemy.transform.position = pos;
-            Debug.Log("Spawned");
             return true;
         }
         return false;
