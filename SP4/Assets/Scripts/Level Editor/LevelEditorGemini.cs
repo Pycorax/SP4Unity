@@ -2,14 +2,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System;
 
 public class LevelEditorGemini : MonoBehaviour
 {
-    
     public EditorTileMap RefTileMap;
-    public Text MapName;
+    public InputField MapName;
     public LevelEditorObjectiveDropdown RefObjective;
-    public Text RefObjectiveParam;
+    public InputField RefObjectiveParam;
 
     private GameObject selectedTile = null;
 
@@ -25,8 +25,12 @@ public class LevelEditorGemini : MonoBehaviour
         // Initialize Components
 	    graphicRaycaster = GetComponent<GraphicRaycaster>();
 
-        // Send default name to tile map
-        RefTileMap.Name = MapName.text;
+        RefTileMap.Load("Full_Map");
+
+        // Assign current values to editor UI
+        MapName.text = RefTileMap.Name;
+        var parameters = RefTileMap.ObjectiveParams.Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+        RefObjectiveParam.text = parameters[0];
     }
 	
 	// Update is called once per frame

@@ -28,18 +28,6 @@ public class EditorTileMap : TileMap
         TotalSize = ScreenData.GetScreenSize();
         tileSize = calculateTileSize(TotalSize);
         base.Start();
-        Load("Full_Map");
-        /*CreateNew(50, 50);
-        MultiLayerTile multiLayerTile = FetchTile(0, 0);
-        GameObject temp = Instantiate(tileBlueprints[(int)Tile.TILE_TYPE.TILE_BARREL]);
-        temp.SetActive(false);
-        Vector3 newPos = generateStartPos(rowCount, colCount, 0, 0);
-        newPos.z = 0.0f;
-        temp.transform.position = newPos;
-        temp.transform.localScale = new Vector3(tileSize, tileSize);
-        temp.transform.parent = transform;
-        tiles.Add(temp.GetComponent<Tile>());
-        multiLayerTile.AddTile(temp);*/
 
         // Initialize Components
         waypointManager = GetComponent<WaypointManager>();
