@@ -34,7 +34,8 @@ public abstract class Character : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-
+        //HealthBar Testing
+        HealthBarUpdate(Health);
     }
 
     #region Health

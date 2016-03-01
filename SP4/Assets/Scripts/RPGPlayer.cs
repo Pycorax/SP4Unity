@@ -118,9 +118,6 @@ public class RPGPlayer : Character
             directionUpdate(rigidBody.velocity);
         }
 
-        //HealthBar Testing
-        HealthBarUpdate(Health);
-
         // EnergyBar  Update
         EnergyBarUpdate();
     }
