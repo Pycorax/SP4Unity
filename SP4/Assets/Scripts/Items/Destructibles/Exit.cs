@@ -38,6 +38,7 @@ public class Exit : MonoBehaviour
                 OnLeave();
             }
         }
+        Manager.NotifyLeftExit();
     }
 
     public void Onhit()
@@ -59,5 +60,14 @@ public class Exit : MonoBehaviour
 
         // Notify left exit
         Manager.NotifyLeftExit();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        RPGPlayer player;
+        if (player = other.gameObject.GetComponent<RPGPlayer>())
+        {
+            Manager.NotifyReachedExit();
+        }
     }
 }

@@ -44,7 +44,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (reachedExit && CurrentObjective.IsAchieved())
+        {
+            EndLevel();
+        }
     }
 
     private void setObjective()
@@ -54,12 +57,15 @@ public class GameManager : MonoBehaviour
         {
             case Objectives.Type.KillAll:
                 CurrentObjective = gameObject.AddComponent<Kill_Enemy>();
+                CurrentObjective.Manager = this;
                 break;
             case Objectives.Type.CollectCoins:
                 CurrentObjective = gameObject.AddComponent<Collect_Coins>();
+                CurrentObjective.Manager = this;
                 break;
             case Objectives.Type.NoDamage:
                 CurrentObjective = gameObject.AddComponent<No_Dmg_Taken>();
+                CurrentObjective.Manager = this;
                 break;
             case Objectives.Type.Endless:
                 CurrentObjective = gameObject.AddComponent<Endless>();
@@ -68,6 +74,7 @@ public class GameManager : MonoBehaviour
                 mode.RefPlayer2 = PlayerList[1];
                 mode.RefEnemyManager = EnemiesManager;
                 mode.RefWaypointManager = GetComponentInChildren<WaypointManager>();
+                CurrentObjective.Manager = this;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -104,5 +111,10 @@ public class GameManager : MonoBehaviour
     public void NotifyCoinCollected(int coinsCollected)
     {
         coins += coinsCollected;
+    }
+
+    public void EndLevel()
+    {
+        Debug.Log("Ended");
     }
 }

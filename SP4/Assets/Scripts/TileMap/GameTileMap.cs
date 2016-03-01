@@ -95,6 +95,48 @@ public class GameTileMap : TileMap
                     RefPlayer2.transform.localScale = playerSize;
                 }
                 break;
+            case Tile.TILE_TYPE.TILE_COIN:
+                {
+                    tile = Instantiate(tileBlueprints[(int)type]);
+
+                    if (tile.GetComponent<Item>() != null || type == Tile.TILE_TYPE.TILE_SPIKE_TRAP || type == Tile.TILE_TYPE.TILE_CANNON)
+                    {
+                        pos.z -= 1;
+                        tile.SetActive(true);
+                    }
+                    else
+                    {
+                        tile.SetActive(true);
+                    }
+
+                    // Set data for each tile
+                    tile.transform.position = pos + new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
+                    tile.transform.localScale = size * scaleRatio;
+                    tile.transform.parent = this.transform;
+                    tile.GetComponent<Coin>().Manager = transform.root.gameObject.GetComponent<GameManager>();
+                }
+                break;
+            case Tile.TILE_TYPE.TILE_EXIT:
+                {
+                    tile = Instantiate(tileBlueprints[(int)type]);
+
+                    if (tile.GetComponent<Item>() != null || type == Tile.TILE_TYPE.TILE_SPIKE_TRAP || type == Tile.TILE_TYPE.TILE_CANNON)
+                    {
+                        pos.z -= 1;
+                        tile.SetActive(true);
+                    }
+                    else
+                    {
+                        tile.SetActive(true);
+                    }
+
+                    // Set data for each tile
+                    tile.transform.position = pos + new Vector3((scaleRatio - 1) * tileSize * 0.5f, -((scaleRatio - 1) * tileSize * 0.5f));
+                    tile.transform.localScale = size * scaleRatio;
+                    tile.transform.parent = this.transform;
+                    tile.GetComponent<Exit>().Manager = transform.root.gameObject.GetComponent<GameManager>();
+                }
+                break;
             default:
                 {
                     tile = Instantiate(tileBlueprints[(int)type]);

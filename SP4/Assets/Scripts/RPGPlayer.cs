@@ -117,9 +117,6 @@ public class RPGPlayer : Character
             // Update the directional unit vector
             directionUpdate(rigidBody.velocity);
         }
-
-        // EnergyBar  Update
-        EnergyBarUpdate();
     }
 
     void LateUpdate()

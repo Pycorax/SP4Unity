@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Coin : Collectible
 {
-    public int CoinAmount = 2;
+    public int CoinAmount = 1;
     public float AnimSpeed = 0.5f;
 
     // Use this for initialization

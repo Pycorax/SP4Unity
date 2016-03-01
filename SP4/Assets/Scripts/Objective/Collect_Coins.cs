@@ -13,6 +13,12 @@ public class Collect_Coins : Objectives
         description = "Collect " + RequiredCoins + " coins!";
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        description = "Collect " + (RequiredCoins - Manager.CoinsCollected) + " coins!";
+    }
+
     public override bool IsAchieved()
     {
         return (Manager.CoinsCollected >= RequiredCoins);

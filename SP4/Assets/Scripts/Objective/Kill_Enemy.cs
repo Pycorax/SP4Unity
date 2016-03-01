@@ -12,6 +12,12 @@ public class Kill_Enemy : Objectives
         description = "Kill " + RequiredKills + " enemies!";
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        description = "Kill " + (RequiredKills - Manager.EnemiesKilled) + " enemies!";
+    }
+
     public override bool IsAchieved()
     {
         return (Manager.EnemiesKilled >= RequiredKills);

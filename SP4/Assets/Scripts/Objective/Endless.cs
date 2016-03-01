@@ -28,7 +28,7 @@ public class Endless : Objectives
     {
         if (IsAchieved())
         {
-            // TODO: Call Manager to end game immediately
+            Manager.EndLevel();
         }
 
         float dt = (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);

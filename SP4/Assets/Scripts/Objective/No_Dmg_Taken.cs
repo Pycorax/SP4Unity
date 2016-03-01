@@ -19,10 +19,16 @@ public class No_Dmg_Taken : Objectives
             totalMaxHealth += player.MaxHealth;
             totalHealth += player.health;
         }
+        bool result = (totalHealth == totalMaxHealth);
+        if (!result)
+        {
+            // Damage taken
+            Manager.EndLevel();
+        }
 
         // Only trigger the achievement if we have reached the exit and still have max health
         // I know this is buggy if the player regains health but this is a start
-        return Manager.ReachedExit && (totalHealth == totalMaxHealth);
+        return Manager.ReachedExit && result;
     }
 
     protected override void finish()
