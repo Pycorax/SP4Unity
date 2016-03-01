@@ -141,7 +141,11 @@ public class EditorTileMap : TileMap
 
     public void ToggleWaypointLines()
     {
+        // Toggle drawing
         waypointManager.DrawConnections = !waypointManager.DrawConnections;
+        
+        // IF Drawing, also need to recalculate
+        waypointManager.AlwaysRecalculate = waypointManager.DrawConnections;
     }
 
     public void ToggleWaypoints()
