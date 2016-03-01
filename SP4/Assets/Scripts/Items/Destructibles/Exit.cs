@@ -38,7 +38,10 @@ public class Exit : MonoBehaviour
                 OnLeave();
             }
         }
-        Manager.NotifyLeftExit();
+        if (Manager)
+        {
+            Manager.NotifyLeftExit();
+        }
     }
 
     public void Onhit()

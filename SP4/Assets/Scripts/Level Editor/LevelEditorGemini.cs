@@ -9,6 +9,7 @@ public class LevelEditorGemini : MonoBehaviour
     public EditorTileMap RefTileMap;
     public Text MapName;
     public LevelEditorObjectiveDropdown RefObjective;
+    public Text RefObjectiveParam;
 
     private GameObject selectedTile = null;
 
@@ -66,7 +67,7 @@ public class LevelEditorGemini : MonoBehaviour
 
     public void Save()
     {
-        RefTileMap.Save(RefObjective.Objective);
+        RefTileMap.Save(RefObjective.Objective, RefObjectiveParam.text);
     }
 
     public void TileSelected(Tile tile)

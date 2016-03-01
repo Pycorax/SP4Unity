@@ -66,17 +66,19 @@ public class EditorTileMap : TileMap
         drawGridLines();
     }
 
-    public bool Save(Objectives.Type objective)
+    public bool Save(Objectives.Type objective, string objectiveParam)
     {
         if (Name == "")
         {
             return false;
         }
+        // Replace all space with underscore as space will give some problems
+        Name = Name.Replace(' ', '_');
         string path = MAP_DIRECTORY + Name + MAP_EXTENSION;
         StreamWriter file = new StreamWriter(File.Create(path));
 
         // Save objective
-        file.WriteLine(TILE_OBJECTILE_IDENTIFIER.ToString() + ((int)objective));
+        file.WriteLine(TILE_OBJECTILE_IDENTIFIER.ToString() + ((int)objective) + ", " + objectiveParam);
 
         foreach (Row row in map)
         {
