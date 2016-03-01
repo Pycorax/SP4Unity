@@ -24,7 +24,8 @@ public class PlayerSettings : MonoBehaviour
     // Getters
     public Inventory PlayerInventory { get { return inventory; } }
     public List<Skin> SkinsInventory { get { return skinsInventory; } } 
-    public Skin CurrentSkin { get; set; }
+    public Skin CurrentFirstSkin { get; set; }
+    public Skin CurrentSecondSkin { get; set; }
     public int Coins { get { return coins; } }
     public int EnemiesKilled { get { return enemiesKilled; } }
 
