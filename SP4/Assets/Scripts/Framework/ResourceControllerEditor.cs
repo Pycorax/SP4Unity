@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+
+using System;
 using UnityEditor;
 
 [CustomEditor(typeof(ResourceController))]
@@ -28,3 +30,5 @@ public class ResourceControllerEditor : Editor
         }
     }
 }
+
+#endif
