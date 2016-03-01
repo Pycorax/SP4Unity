@@ -53,6 +53,7 @@ public class EnemyManager : MonoBehaviour
             e.WaypointMap = WaypointMap;
             e.PlayerList.Add(RefPlayer1.gameObject);
             e.PlayerList.Add(RefPlayer2.gameObject);
+            e.transform.localScale = RefPlayer1.transform.localScale;
         }
     }
 }
