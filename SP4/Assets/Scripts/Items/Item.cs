@@ -25,6 +25,7 @@ public abstract class Item : MonoBehaviour
         {
             tile.IgnoreActive = true;
         }
+        ScoreManager.AddCurrentScore(ScoreManager.ScoreType.Destructables);
         gameObject.SetActive(false);
     }
 

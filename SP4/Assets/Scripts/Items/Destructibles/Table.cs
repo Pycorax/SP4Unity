@@ -13,4 +13,10 @@ public class Table : Destroyables
         anim.speed = AnimSpeed;
         anim.enabled = false;
     }
+
+    // Update is called once per frame
+    protected override void Update()
+    {
+        base.Update();
+    }
 }
