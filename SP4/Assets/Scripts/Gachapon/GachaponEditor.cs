@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+
+using System;
 using UnityEditor;
 
 [CustomEditor(typeof(Gachapon))]
@@ -55,3 +57,5 @@ public class GachaponEditor : Editor
         }
     }
 }
+
+#endif
