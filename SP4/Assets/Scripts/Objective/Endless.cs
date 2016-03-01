@@ -20,7 +20,7 @@ public class Endless : Objectives
     {
         base.Start();
         spawnCount = InitialSpawnCount;
-        Description = "Survive as long as possible!";
+        description = "Survive as long as possible!";
     }
 
     // Update is called once per frame

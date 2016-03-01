@@ -14,7 +14,7 @@ public abstract class Destroyables : Item
     {
         if (other.GetComponent<Projectile>() != null)
         {
-            Deactivate();
+            anim.enabled = true;
         }
     }
 }
