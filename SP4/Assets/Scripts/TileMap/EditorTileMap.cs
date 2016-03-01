@@ -195,8 +195,10 @@ public class EditorTileMap : TileMap
             line.SetPosition(START, points[START]);
             line.SetPosition(END, points[END]);
             line.SetWidth(tileSize * LineSize, tileSize * LineSize);
-            line.material = new Material(Shader.Find("Unlit/Color"));
-            line.material.color = LineColor;
+            if (line.material)
+            {
+                line.material.color = LineColor;
+            }
             line.SetColors(LineColor, LineColor);
             line.gameObject.SetActive(ShowLines);
 
@@ -217,8 +219,10 @@ public class EditorTileMap : TileMap
             line.SetPosition(START, points[START]);
             line.SetPosition(END, points[END]);
             line.SetWidth(tileSize * LineSize, tileSize * LineSize);
-            line.material = new Material(Shader.Find("Unlit/Color"));
-            line.material.color = LineColor;
+            if (line.material)
+            {
+                line.material.color = LineColor;
+            }
             line.SetColors(LineColor, LineColor);
             line.gameObject.SetActive(ShowLines);
 

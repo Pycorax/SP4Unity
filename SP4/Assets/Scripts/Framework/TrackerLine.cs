@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class TrackerLine : MonoBehaviour
 {
@@ -73,8 +72,10 @@ public class TrackerLine : MonoBehaviour
         line.SetPosition(1, endPos);
 
         line.SetWidth(Width, Width);
-        line.material = new Material(Shader.Find("Unlit/Color"));
-        line.material.color = LineColor;
+        if (line.material)
+        {
+            line.material.color = LineColor;
+        }
         line.SetColors(LineColor, LineColor);
     }
 }
