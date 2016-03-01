@@ -50,7 +50,7 @@ public abstract class Objectives : MonoBehaviour
         return parseParamString(parameters);
     }
 
-    protected virtual string GetDescription()
+    public virtual string GetDescription()
     {
         if (IsAchieved())
         {
