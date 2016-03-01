@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Linq;
 
-public class Skin : MonoBehaviour
+public class Skin : MonoBehaviour, ISavable
 {
     [Tooltip("The URL to the Skin Sprite.")]
     public string SkinSpriteUrl = "Sprites/Player/Skins";
@@ -26,6 +26,11 @@ public class Skin : MonoBehaviour
 
             return null;
         }
+    }
+
+    public void Save(int id)
+    {
+        PlayerPrefs.SetString(SaveClass.GetKey(SaveClass.Save_Keys.Key_Skin_URL) + "_" + id, SkinSpriteUrl);
     }
 
     /// <summary>

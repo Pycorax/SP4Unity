@@ -5,7 +5,7 @@ using UnityEngine;
 /// PlayerSettings stores info about the player that is important
 /// during and outside gameplay.
 /// </summary>
-public class PlayerSettings : MonoBehaviour
+public class PlayerSettings : MonoBehaviour, ISavable
 {
     // Storage
     private Inventory inventory = new Inventory();
@@ -18,8 +18,10 @@ public class PlayerSettings : MonoBehaviour
     private int enemiesKilled = 0;
 
     // Save/Load Keys
-    private string coinsKey = "coins";
+    private string coinsKey = "coinsKey";
     private string enemiesKey = "enemiesKey";
+    private string skinSizeKey = "skinSizeKey";
+    private string skinKey = "skinKey";
 
     // Getters
     public Inventory PlayerInventory { get { return inventory; } }
@@ -54,15 +56,21 @@ public class PlayerSettings : MonoBehaviour
 
     public void Save()
     {
-        PlayerPrefs.SetInt(coinsKey, coins);
-        PlayerPrefs.SetInt(enemiesKey, enemiesKilled);
+        PlayerPrefs.SetInt(SaveClass.GetKey(SaveClass.Save_Keys.Key_Coins), coins);
+        PlayerPrefs.SetInt(SaveClass.GetKey(SaveClass.Save_Keys.Key_Enemy_Killed), enemiesKilled);
+        PlayerPrefs.SetInt(SaveClass.GetKey(SaveClass.Save_Keys.Key_Skin_Size), skinsInventory.Count);
+        for (int skinIndex = 0; skinIndex < skinsInventory.Count; ++skinIndex)
+        {
+            Skin skin = skinsInventory[skinIndex];
+            skin.Save(skinIndex);
+        }
         PlayerPrefs.Save();
     }
 
     public void Load()
     {
-        coins = getPlayerPrefInt(coinsKey);
-        enemiesKilled = getPlayerPrefInt(enemiesKey);
+        coins = SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Coins);
+        enemiesKilled = SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Enemy_Killed);
     }
 
     public void AddToSkinStorage(Skin skin)
