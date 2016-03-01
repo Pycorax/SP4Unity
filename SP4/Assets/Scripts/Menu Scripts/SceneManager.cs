@@ -21,41 +21,9 @@ public class SceneManager : MonoBehaviour
 
     //Load Up GameScene
     //CANCER INCOMING
-    public void LoadLevel1()
+    public void LoadLevel()
     {
-        Application.LoadLevel("Level1-1");
-    }
-    public void LoadLevel2()
-    {
-        Application.LoadLevel("Level1-2");
-    }
-    public void LoadLevel3()
-    {
-        Application.LoadLevel("Level1-3");
-    }
-    public void LoadLevel4()
-    {
-        Application.LoadLevel("Level2-1");
-    }
-    public void LoadLevel5()
-    {
-        Application.LoadLevel("Level2-2");
-    }
-    public void LoadLevel6()
-    {
-        Application.LoadLevel("Level2-3");
-    }
-    public void LoadLevel7()
-    {
-        Application.LoadLevel("Level3-1");
-    }
-    public void LoadLevel8()
-    {
-        Application.LoadLevel("Level3-2");
-    }
-    public void LoadLevel9()
-    {
-        Application.LoadLevel("Level3-3");
+        Application.LoadLevel("GameScene");
     }
 
     public void LoadOptions()
