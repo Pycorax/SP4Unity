@@ -183,7 +183,7 @@ public class ResourceManager : MonoBehaviour
             uint expandBy = ExpandSize;
 
             // Check if we are unable to expand
-            if (resourceList.Count > ResourceCap)
+            if (resourceList.Count >= ResourceCap)
             {
                 return false;
             }
