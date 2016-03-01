@@ -27,7 +27,7 @@ public class Endless : Objectives
         }
         else
         {
-            // Spawns an enemy
+            // Spawns enemy
             spawn();
             // Reset spawn timer
             spawnTimer = 0.0f;
@@ -57,18 +57,21 @@ public class Endless : Objectives
         // Loop for spawning multiple enemies
         for (int spawnIndex = 0; spawnIndex < SpawnCount; ++spawnIndex)
         {
-            GameObject goEnemy = RefEnemyManager.GetComponent<ResourceManager>().Fetch();
-            if (goEnemy)
-            {
-                int random = UnityEngine.Random.Range(0, Waypoints.Count - 1);
-                spawnSingle(goEnemy, Waypoints[random].transform.position);
-            }
+            int random = UnityEngine.Random.Range(0, Waypoints.Count - 1);
+            spawnSingle(Waypoints[random].transform.position);
         }
     }
 
-    private void spawnSingle(GameObject enemy, Vector3 pos)
+    private bool spawnSingle(Vector3 pos)
     {
-        enemy.SetActive(true);
-        enemy.transform.position = pos;
+        GameObject enemy = RefEnemyManager.GetComponent<ResourceManager>().Fetch();
+        if (enemy)
+        {
+            enemy.SetActive(true);
+            enemy.transform.position = pos;
+            Debug.Log("Spawned");
+            return true;
+        }
+        return false;
     }
 }
