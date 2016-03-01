@@ -54,8 +54,6 @@ public class GachaponScreen : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        Time.timeScale = 0.5f;
-
         // Get References for State.HideMerch
         merchantChildImages = MerchantContainer.GetComponentsInChildren<Image>();
         merchantChildText = MerchantContainer.GetComponentsInChildren<Text>();
@@ -167,6 +165,9 @@ public class GachaponScreen : MonoBehaviour
 
             // Play the animation
             startAnimation();
+
+            // Store the skin
+            PlayerSetting.SkinsInventory.Add(rewardSkin);
         }
     }
 
