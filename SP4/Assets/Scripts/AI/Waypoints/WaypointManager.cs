@@ -154,7 +154,14 @@ public class WaypointManager : MonoBehaviour
             // Recalculate all connections
             if (AlwaysRecalculate)
             {
-                w.SetUpConnections(listOfWaypoints, WaypointRadius);
+                if (AutoScaleRadius)
+                {
+                    w.SetUpConnections(listOfWaypoints, WaypointRadius);
+                }
+                else
+                {
+                    w.SetUpConnections(listOfWaypoints, transform.localScale.x);
+                }
             }
 
             if (AutoScaleRadius)
@@ -162,8 +169,6 @@ public class WaypointManager : MonoBehaviour
                 // Set the size of each Waypoint to the WaypointRayTraceRadius
                 w.transform.localScale = new Vector3(WaypointRadius * 2.0f, WaypointRadius * 2.0f, WaypointRadius * 2.0f);
             }
-
-            Debug.Log(w.Neighbours);
 
             // Set colour according to number of associations
             if (w.Neighbours.Count > 0)
@@ -254,7 +259,14 @@ public class WaypointManager : MonoBehaviour
         // Initialize all the waypoints with that list
         foreach (Waypoint w in waypointList)
         {
-            w.SetUpConnections(waypointList, WaypointRadius);
+            if (AutoScaleRadius)
+            {
+                w.SetUpConnections(waypointList, WaypointRadius);
+            }
+            else
+            {
+                w.SetUpConnections(waypointList, transform.localScale.x);
+            }
         }
     }
 
