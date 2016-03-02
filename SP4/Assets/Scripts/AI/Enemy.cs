@@ -15,6 +15,8 @@ namespace Enemy
         public float WaypointUpdateDelay = 0.0f;
         [Tooltip("Debug. To test Waypoint system. Allows setting of FinalTargetWaypoint at runtime.")]
         public Waypoint FinalTargetWaypointDebug;
+        [Tooltip("Debug. Enable this to use FinalTargetWaypointDebug to override FinalTargetWaypoint at runtime.")]
+        public bool InspectorDebugging = false;
 
         /// <summary>
         /// 
@@ -27,6 +29,7 @@ namespace Enemy
                 // Null Checking
                 if (value == null)
                 {
+                    finalTargetWaypoint = null;
                     return;
                 }
 
@@ -159,7 +162,11 @@ namespace Enemy
         /// </summary>
         internal void waypointUpdate()
         {
-            FinalTargetWaypoint = FinalTargetWaypointDebug;
+            // Set to Debug values for testing
+            if (InspectorDebugging && FinalTargetWaypointDebug != null)
+            {
+                FinalTargetWaypoint = FinalTargetWaypointDebug;
+            }
 
             // If we still have some place to go...
             if (FinalTargetWaypoint != null)
@@ -199,7 +206,11 @@ namespace Enemy
                     // If there is no more path, we stop deciding to go there
                     FinalTargetWaypoint = null;
                 }
+            }
 
+            // Update the Debug Values
+            if (InspectorDebugging)
+            {
                 FinalTargetWaypointDebug = FinalTargetWaypoint;
             }
         }

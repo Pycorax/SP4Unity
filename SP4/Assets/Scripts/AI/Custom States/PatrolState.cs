@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Enemy
 {
@@ -16,10 +15,7 @@ namespace Enemy
 
         protected override void init()
         {
-            // Previous waypoit will be enemy current waypoint
-            previousWaypoint = parent.CurrentWaypoint;
-            //Enemy will now move to its next destination
-            parent.FinalTargetWaypoint = parent.CurrentWaypoint.GetRandomNeighbour();
+            decideNextPatrolPoint();
         }
 
         protected override void update()
@@ -27,46 +23,50 @@ namespace Enemy
             //Debug.Log("PatrolState()");
 
             //Check if the nearest player is within distance to attack
-            //float distanceSqr = (parent.transform.position - parent.getNearestPlayer().transform.position).sqrMagnitude;
-            //if (distanceSqr <= 50000.0f)
-            //{
-            //    parent.changeCurrentState(new ChaseState());
-            //    return;
-            //}
+            /*
+            float distanceSqr = (parent.transform.position - parent.getNearestPlayer().transform.position).sqrMagnitude;
+            if (distanceSqr <= 50000.0f)
+            {
+                parent.changeCurrentState(new ChaseState());
+                return;
+            }
+            */
 
             changestatetimer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
 
-            //Make sure the parent is at the final way point
+            // If there is no target, we have reached that target
             if (parent.FinalTargetWaypoint == null)
             {
-                //Every 5 seconds, will check if the enemy want to change states
+                // Every 5 seconds, will check if the enemy want to change states
                 if (changestatetimer >= 5)
-                {
-                    Changeofstates();
-                    changestatetimer = 0;
-                }
-
-                if (Deciding == 0)
-                {
-                    //MOVE!
-                    parent.FinalTargetWaypoint = parent.CurrentWaypoint.GetRandomNeighbour(previousWaypoint);
-                    //set ur previous waypoint to current waypoint
-                    previousWaypoint = parent.CurrentWaypoint;
+                { 
+                changeOfStates();
+                changestatetimer = 0;
                 }
             }        
         }
 
-        private void Changeofstates()
+        private void changeOfStates()
         {
             Deciding = Random.Range(0, 2);
             switch (Deciding)
             {
                 case 0:
+                    decideNextPatrolPoint();
                     break;
                 case 1:
                     parent.changeCurrentState(new IdleState());
                     break;
             }
+        }
+
+        private void decideNextPatrolPoint()
+        {
+            // Keep track of the previous patrol point to prevent backtracking
+            previousWaypoint = parent.CurrentWaypoint;
+
+            // Set our target to go to
+            parent.FinalTargetWaypoint = parent.CurrentWaypoint.GetRandomNeighbour(previousWaypoint);
         }
     }
 }
