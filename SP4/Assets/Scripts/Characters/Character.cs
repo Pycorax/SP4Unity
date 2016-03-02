@@ -88,9 +88,7 @@ public abstract class Character : MonoBehaviour
         if (!energyBar)
         {
             return;
-        }
-        // Scaling of current energy
-        float currentEnergy = (float)energy / (float)MaxEnergy;
+        }  
 
         // if energy is not equal to max energy
         if (energy < MaxEnergy)
@@ -100,14 +98,14 @@ public abstract class Character : MonoBehaviour
             if (energyregen >= 1)
             {
                 energy += 5;
-                energy = Mathf.Clamp(energy, 0, MaxEnergy);
-                currentEnergy += 5;
                 energyregen = 0;
             }
         }
 
+        // Scaling of current energy
+        float currentEnergy = (float)energy / (float)MaxEnergy;
         // Energy does not overflow
-        currentEnergy = Mathf.Clamp(currentEnergy, 0, MaxEnergy);
+        energy = Mathf.Clamp(energy, 0, MaxEnergy);
         energyBar.transform.localScale = new Vector3(currentEnergy, energyBar.transform.localScale.y, energyBar.transform.localScale.z);
     }
 
