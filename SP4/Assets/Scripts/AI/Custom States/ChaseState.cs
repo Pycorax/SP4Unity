@@ -4,6 +4,8 @@ namespace Enemy
 {
     public class ChaseState : FSMState
     {
+        private const float speedy = 200.0f;
+
         protected override void exit()
         {
             
@@ -11,7 +13,7 @@ namespace Enemy
 
         protected override void init()
         {
-            parent.Speed = 200.0f;
+            parent.Speed = speedy;
         }
 
         protected override void update()

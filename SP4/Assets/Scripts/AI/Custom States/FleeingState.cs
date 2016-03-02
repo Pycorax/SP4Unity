@@ -6,6 +6,7 @@ namespace Enemy
     public class FleeingState : FSMState
     {
         private double timer;
+        private const float speedy = 50.0f;
 
         protected override void exit()
         {
@@ -14,7 +15,7 @@ namespace Enemy
 
         protected override void init()
         {
-            parent.Speed = 50.0f;
+            parent.Speed = speedy;
             parent.FinalTargetWaypoint = parent.CurrentWaypoint.GetFurthestNeighbour();
         }
 
@@ -24,7 +25,7 @@ namespace Enemy
             {
                 // If timer is more than 3 seconds, enemy will heal itself
                 timer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
-                if (timer >= 3)
+                if (timer >= 1)
                 {
                     healenemy();
                     timer = 0;
