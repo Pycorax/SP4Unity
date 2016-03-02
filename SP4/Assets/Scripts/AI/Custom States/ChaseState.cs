@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-namespace Enemy
+﻿namespace Enemy
 {
     public class ChaseState : FSMState
     {
@@ -38,7 +35,6 @@ namespace Enemy
                     if (parent.Health < 50)
                     {
                         parent.changeCurrentState(new FleeingState());
-                        return;
                     }
                     else
                     {

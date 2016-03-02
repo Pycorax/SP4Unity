@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-namespace Enemy
+﻿namespace Enemy
 {
     public class AlertState : FSMState
     {
@@ -18,16 +15,11 @@ namespace Enemy
         {
             // Alert speed is faster than normal speed
             parent.Speed = 350.0f;
-            // Previous waypoit will be enemy current waypoint
-            previousWaypoint = parent.CurrentWaypoint;
-            //Enemy will now move to its next destination
-            parent.FinalTargetWaypoint = parent.CurrentWaypoint.GetRandomNeighbour();
+            decideNextPatrolPoint();
         }
 
         protected override void update()
         {
-            //Debug.Log("AlertState()");
-
             changestatetimer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
             //After 10 seconds in alert state, enemy will go back to patrol state
             if (changestatetimer >= 10)
@@ -39,12 +31,17 @@ namespace Enemy
             //Make sure the parent is at the final way point
             if (parent.FinalTargetWaypoint == null)
             {
-                //MOVE!
-                parent.FinalTargetWaypoint = parent.CurrentWaypoint.GetRandomNeighbour(previousWaypoint);
-
-                //set ur previous waypoint to current waypoint
-                previousWaypoint = parent.CurrentWaypoint;
+                decideNextPatrolPoint();
             }
+        }
+
+        private void decideNextPatrolPoint()
+        {
+            // Keep track of the previous patrol point to prevent backtracking
+            previousWaypoint = parent.CurrentWaypoint;
+
+            // Set our target to go to
+            parent.FinalTargetWaypoint = parent.CurrentWaypoint.GetRandomNeighbour(previousWaypoint);
         }
     }
 }
