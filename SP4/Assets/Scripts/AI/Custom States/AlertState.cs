@@ -21,6 +21,14 @@
         protected override void update()
         {
 
+            //Check if the nearest player is within distance to attack
+            float distanceSqr = (parent.transform.position - parent.getNearestPlayer().transform.position).sqrMagnitude;
+            if (distanceSqr <= 50000.0f * 50000.0f)
+            {
+                parent.changeCurrentState(new ChaseState());
+                return;
+            }
+
             changestatetimer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
             //After 10 seconds in alert state, enemy will go back to patrol state
             if (changestatetimer >= 10)
