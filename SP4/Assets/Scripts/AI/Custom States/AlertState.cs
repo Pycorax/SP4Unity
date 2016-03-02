@@ -7,6 +7,7 @@ namespace Enemy
         private Waypoint previousWaypoint;
         private double changestatetimer;
         private int Deciding;
+        private const float speedy = 150.0f;
 
         protected override void exit()
         {
@@ -16,7 +17,7 @@ namespace Enemy
         protected override void init()
         {
             // Alert speed is faster than normal speed
-            parent.Speed = 150.0f;
+            parent.Speed = speedy;
             decideNextPatrolPoint();
         }
 

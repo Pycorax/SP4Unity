@@ -27,9 +27,9 @@ public class GameTileMap : TileMap
         base.Start();
     }
 
-    public void Load()
+    public override void Load(string name, int numOfTiles = 18)
     {
-        Load(Name, NumOfTiles);
+        base.Load(name, numOfTiles);
         // Sync waypoints
         WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
         refWaypointManager.SyncWaypoints();
