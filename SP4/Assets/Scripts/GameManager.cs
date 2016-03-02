@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         SoundManager.PlayBackgroundMusic(SoundManager.BackgroundMusic.Beep_Beepe);
 
         // Load the the tilemap file
-        GameTileMapReference.Load();
+        GameTileMapReference.Load(SaveClass.GetPlayerPrefString(SaveClass.Save_Keys.Key_Level), 15);
 
         // Set up the objective
         setObjective();
