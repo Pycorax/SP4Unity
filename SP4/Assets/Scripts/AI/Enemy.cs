@@ -45,7 +45,7 @@ namespace Enemy
         }
 
         // Movement
-        public float Speed = 200.0f;
+        public float Speed = 100.0f;
 
         // AI
         private Waypoint finalTargetWaypoint = null;

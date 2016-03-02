@@ -20,8 +20,6 @@ namespace Enemy
 
         protected override void update()
         {
-            //Debug.Log("FleeingState()");
-
             if (parent.FinalTargetWaypoint = null)
             {
                 // If timer is more than 3 seconds, enemy will heal itself

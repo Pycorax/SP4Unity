@@ -14,12 +14,13 @@
         protected override void init()
         {
             // Alert speed is faster than normal speed
-            parent.Speed = 350.0f;
+            parent.Speed = 200.0f;
             decideNextPatrolPoint();
         }
 
         protected override void update()
         {
+
             changestatetimer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
             //After 10 seconds in alert state, enemy will go back to patrol state
             if (changestatetimer >= 10)
