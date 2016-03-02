@@ -26,11 +26,11 @@ public class SpawnButton : MonoBehaviour {
 
         var files = info.GetFiles();
 
-        float buttonSize = 0.7f;
+        float buttonSize = 1f;
 
-        float yOffset = -50f;
+        float yOffset = -20;
 
-        rtransform.sizeDelta = new Vector2(100, 50 * files.Length);
+        rtransform.sizeDelta = new Vector2(50, 50 * files.Length);
         
         foreach(var i in files)
         {
@@ -41,19 +41,26 @@ public class SpawnButton : MonoBehaviour {
                 var newButton = Instantiate(button);
 
                 //Set Button Parent
-                newButton.transform.SetParent(this.transform);
+                newButton.transform.SetParent(this.transform, false);
 
-                newButton.transform.localPosition = new Vector3(0, yOffset, 0);
+                newButton.transform.localPosition = new Vector3(-120, yOffset, 0);
 
-                newButton.transform.localScale = new Vector3(buttonSize, buttonSize + 0.3f, buttonSize);
-
-                
-
-                
+                newButton.transform.localScale = new Vector3(buttonSize, buttonSize + .1f, buttonSize);
+                    
                 var text = newButton.GetComponentInChildren<Text>();
-                text.text = Path.GetFileNameWithoutExtension(i.Name);
 
-                yOffset -= 120;
+                text.text = Path.GetFileNameWithoutExtension(i.Name);
+                
+                newButton.onClick.AddListener(() =>
+                    {
+                        Application.LoadLevel("GameScene");
+                        PlayerPrefs.SetString(SaveClass.GetKey(SaveClass.Save_Keys.Key_Level), text.text);
+                    }
+                    );
+
+                
+
+                yOffset -= 100;
             }
         }
 

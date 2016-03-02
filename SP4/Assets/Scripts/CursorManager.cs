@@ -7,6 +7,7 @@ public class CursorManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
         Cursor.SetCursor(CursorTexture, Vector2.zero, CursorMode.ForceSoftware);
 	}
 	

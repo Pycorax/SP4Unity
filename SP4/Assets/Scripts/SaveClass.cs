@@ -8,7 +8,8 @@ public class SaveClass
         Key_Coins,
         Key_Enemy_Killed,
         Key_Skin_Size,
-        Key_Skin_URL
+        Key_Skin_URL,
+        Key_Level,
     };
 
     public static string[] Keys = Enum.GetNames(typeof(Save_Keys));
