@@ -223,6 +223,10 @@ namespace Enemy
         {
             // Set the enemy position
             transform.position = position;
+            gameObject.SetActive(true);
+            health = MaxHealth;
+
+            //Start();
 
             // TODO: Reset the current state
             // changeCurrentState(new IdleState());

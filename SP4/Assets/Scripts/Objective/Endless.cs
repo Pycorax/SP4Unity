@@ -83,8 +83,7 @@ public class Endless : Objectives
         GameObject enemy = RefEnemyManager.GetComponent<ResourceManager>().Fetch();
         if (enemy)
         {
-            enemy.SetActive(true);
-            enemy.transform.position = pos;
+            enemy.GetComponent<Enemy.Enemy>().Init(pos);
             return true;
         }
         return false;
