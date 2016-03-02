@@ -25,12 +25,24 @@ public class LevelEditorGemini : MonoBehaviour
         // Initialize Components
 	    graphicRaycaster = GetComponent<GraphicRaycaster>();
 
-        RefTileMap.Load("Full_Map");
+        int creation = SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Level_Editor_Creation);
+        if (creation == 1)
+        {
+            RefTileMap.CreateNew(SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Level_Editor_Row), SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Level_Editor_Col));
+        }
+        else if (creation == 0)
+        {
+            RefTileMap.Load(SaveClass.GetPlayerPrefString(SaveClass.Save_Keys.Key_Level));
 
-        // Assign current values to editor UI
-        MapName.text = RefTileMap.Name;
-        var parameters = RefTileMap.ObjectiveParams.Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
-        RefObjectiveParam.text = parameters[0];
+            // Assign current values to editor UI
+            MapName.text = RefTileMap.Name;
+            var parameters = RefTileMap.ObjectiveParams.Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+            RefObjectiveParam.text = parameters[0];
+        }
+        else
+        {
+            Application.LoadLevel("MainMenuScene");
+        }
     }
 	
 	// Update is called once per frame

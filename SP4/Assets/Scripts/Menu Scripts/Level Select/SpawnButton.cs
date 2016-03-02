@@ -53,7 +53,6 @@ public class SpawnButton : MonoBehaviour {
                 
                 newButton.onClick.AddListener(() =>
                     {
-                        Application.LoadLevel("GameScene");
                         PlayerPrefs.SetString(SaveClass.GetKey(SaveClass.Save_Keys.Key_Level), text.text);
                     }
                     );

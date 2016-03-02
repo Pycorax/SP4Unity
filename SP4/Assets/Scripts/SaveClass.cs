@@ -10,6 +10,11 @@ public class SaveClass
         Key_Skin_Size,
         Key_Skin_URL,
         Key_Level,
+
+        // Level editor (Create new)
+        Key_Level_Editor_Creation, // True for creating new, False for loading
+        Key_Level_Editor_Row,
+        Key_Level_Editor_Col,
     };
 
     public static string[] Keys = Enum.GetNames(typeof(Save_Keys));
