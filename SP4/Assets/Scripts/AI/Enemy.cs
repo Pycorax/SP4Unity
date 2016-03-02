@@ -12,7 +12,7 @@ namespace Enemy
         [Tooltip("A list of references to the players in the game.")]
         public List<GameObject> PlayerList;
         [Tooltip("The time delay between waypoint updates.")]
-        public float WaypointUpdateDelay = 0.0f;
+        public float WaypointUpdateDelay = 2.0f;
         [Tooltip("Debug. To test Waypoint system. Allows setting of FinalTargetWaypoint at runtime.")]
         public Waypoint FinalTargetWaypointDebug;
         [Tooltip("Debug. Enable this to use FinalTargetWaypointDebug to override FinalTargetWaypoint at runtime.")]
@@ -175,7 +175,7 @@ namespace Enemy
                 // -- Update Timer
                 waypointUpdateTimer += (float) TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
                 // -- Timer Check
-                //if (waypointUpdateTimer > WaypointUpdateDelay)
+                if (waypointUpdateTimer > WaypointUpdateDelay)
                 {
                     currentTargetWaypoint = WaypointMap.GetNearestWaypointToGoTo(currentWaypoint, FinalTargetWaypoint);
                     // -- Reset Timer
