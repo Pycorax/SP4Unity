@@ -28,13 +28,13 @@ namespace Enemy
                 {
                     healenemy();
                     timer = 0;
-                }
+                }                
+            }
 
-                if(parent.health == 100)
-                {
-                    parent.changeCurrentState(new PatrolState());
-                    return;
-                }
+            if (parent.health == 100)
+            {
+                parent.changeCurrentState(new PatrolState());
+                return;
             }
         }
 

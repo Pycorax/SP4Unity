@@ -30,7 +30,7 @@ public class SpawnButton : MonoBehaviour {
 
         float yOffset = -20;
 
-        rtransform.sizeDelta = new Vector2(50, 50 * files.Length);
+        rtransform.sizeDelta = new Vector2(40, 50 * files.Length);
         
         foreach(var i in files)
         {
