@@ -147,7 +147,7 @@ public class WaypointManager : MonoBehaviour
         {
             // Error Checking
             if (w == null)
-            {
+            {            
                 continue;
             }
 
@@ -162,6 +162,8 @@ public class WaypointManager : MonoBehaviour
                 // Set the size of each Waypoint to the WaypointRayTraceRadius
                 w.transform.localScale = new Vector3(WaypointRadius * 2.0f, WaypointRadius * 2.0f, WaypointRadius * 2.0f);
             }
+
+            Debug.Log(w.Neighbours);
 
             // Set colour according to number of associations
             if (w.Neighbours.Count > 0)

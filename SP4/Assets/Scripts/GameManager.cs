@@ -50,6 +50,11 @@ public class GameManager : MonoBehaviour
         {
             EndLevel();
         }
+
+        if(PlayersDead)
+        {
+            Application.LoadLevel("LoseScene");
+        }
     }
 
     private void setObjective()
@@ -118,5 +123,6 @@ public class GameManager : MonoBehaviour
     public void EndLevel()
     {
         Debug.Log("Ended");
+        Application.LoadLevel("WinScene");
     }
 }
