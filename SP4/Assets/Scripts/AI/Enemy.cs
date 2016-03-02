@@ -13,6 +13,8 @@ namespace Enemy
         public List<GameObject> PlayerList;
         [Tooltip("The time delay between waypoint updates.")]
         public float WaypointUpdateDelay = 0.0f;
+        [Tooltip("Debug. To test Waypoint system. Allows setting of FinalTargetWaypoint at runtime.")]
+        public Waypoint FinalTargetWaypointDebug;
 
         /// <summary>
         /// 
@@ -157,6 +159,8 @@ namespace Enemy
         /// </summary>
         internal void waypointUpdate()
         {
+            FinalTargetWaypoint = FinalTargetWaypointDebug;
+
             // If we still have some place to go...
             if (FinalTargetWaypoint != null)
             {
@@ -164,7 +168,7 @@ namespace Enemy
                 // -- Update Timer
                 waypointUpdateTimer += (float) TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
                 // -- Timer Check
-                if (waypointUpdateTimer > WaypointUpdateDelay)
+                //if (waypointUpdateTimer > WaypointUpdateDelay)
                 {
                     currentTargetWaypoint = WaypointMap.GetNearestWaypointToGoTo(currentWaypoint, FinalTargetWaypoint);
                     // -- Reset Timer
@@ -177,6 +181,11 @@ namespace Enemy
                     // Check if we have reached the Waypoint
                     if (reachedWaypoint(currentTargetWaypoint))
                     {
+                        // Update the current Waypoint
+                        currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);
+                    }
+                    else
+                    {
                         // Get direction to the target
                         Vector2 dir = currentTargetWaypoint.transform.position - transform.position;
                         dir.Normalize();
@@ -184,17 +193,14 @@ namespace Enemy
                         // Head to the target
                         transform.position += (Vector3)dir * Speed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
                     }
-                    else
-                    {
-                        // Update the current Waypoint
-                        currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);                        
-                    }
                 }
                 else
                 {
                     // If there is no more path, we stop deciding to go there
                     FinalTargetWaypoint = null;
                 }
+
+                FinalTargetWaypointDebug = FinalTargetWaypoint;
             }
         }
 
@@ -225,6 +231,8 @@ namespace Enemy
 
             currentState = state;
             currentState.Init(this);
+
+            Debug.Log(currentState.GetType().ToString());
         }
 
 
@@ -262,7 +270,7 @@ namespace Enemy
             float distToTargetSquared = (transform.position - w.transform.position).sqrMagnitude;
 
             // Check if we have reached the Waypoint
-            return distToTargetSquared > DISTANCE_CHECK_ACCURARCY * DISTANCE_CHECK_ACCURARCY;
+            return distToTargetSquared < DISTANCE_CHECK_ACCURARCY * DISTANCE_CHECK_ACCURARCY;
         }
         #endregion
 
