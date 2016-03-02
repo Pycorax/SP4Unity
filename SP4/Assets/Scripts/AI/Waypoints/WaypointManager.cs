@@ -163,7 +163,6 @@ public class WaypointManager : MonoBehaviour
                 w.transform.localScale = new Vector3(WaypointRadius * 2.0f, WaypointRadius * 2.0f, WaypointRadius * 2.0f);
             }
 
-            Debug.Log(w.Neighbours);
 
             // Set colour according to number of associations
             if (w.Neighbours.Count > 0)

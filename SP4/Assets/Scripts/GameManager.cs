@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
 
         if(PlayersDead)
         {
+            ScoreManager.SaveScore();
             Application.LoadLevel("LoseScene");
         }
     }
@@ -122,6 +123,8 @@ public class GameManager : MonoBehaviour
 
     public void EndLevel()
     {
+        ScoreManager.SaveScore();
+
         Debug.Log("Ended");
         Application.LoadLevel("WinScene");
     }

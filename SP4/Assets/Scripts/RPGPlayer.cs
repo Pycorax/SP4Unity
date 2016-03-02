@@ -645,7 +645,7 @@ public class RPGPlayer : Character
 
     #endregion
     
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
         string name = other.gameObject.name;
 
@@ -674,6 +674,11 @@ public class RPGPlayer : Character
             }
         }
 
+        //Check if other is an enemy
+        if(other.gameObject.GetComponent<Enemy.Enemy>())
+        {
+            Injure(10);
+        }
         #region Handle Weapon Combine Use Conditions
 
         Weapon weapon = other.gameObject.GetComponent<Weapon>();
