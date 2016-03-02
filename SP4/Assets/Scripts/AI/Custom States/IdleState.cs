@@ -20,7 +20,14 @@ namespace Enemy
 
         protected override void update()
         {
-            //Debug.Log("IdleState()");
+            //Check if the nearest player is within distance to attack
+            float distanceSqr = (parent.transform.position - parent.getNearestPlayer().transform.position).sqrMagnitude;
+            if (distanceSqr <= 50000.0f * 50000.0f)
+            {
+                parent.changeCurrentState(new ChaseState());
+                return;
+            }
+
 
             changestatetimer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
             //Enemy will rotate in idle state

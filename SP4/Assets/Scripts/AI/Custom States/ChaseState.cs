@@ -14,10 +14,16 @@
 
         protected override void update()
         {
-            //Debug.Log("ChaseState()");
-
             // Determine nearest player to chase
             var playerToChase = parent.getNearestPlayer();
+
+            //Check if the nearest player is within distance to attack
+            float distanceSqr = (parent.transform.position - parent.getNearestPlayer().transform.position).sqrMagnitude;
+            if (distanceSqr >= 80000.0f * 80000.0f)
+            {
+                parent.changeCurrentState(new PatrolState());
+                return;
+            }
 
             // Have we found one nearby?
             if (playerToChase != null)
@@ -35,6 +41,7 @@
                     if (parent.Health < 50)
                     {
                         parent.changeCurrentState(new FleeingState());
+                        return;
                     }
                     else
                     {
