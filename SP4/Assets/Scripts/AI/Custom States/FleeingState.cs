@@ -20,8 +20,6 @@ namespace Enemy
 
         protected override void update()
         {
-            //Debug.Log("FleeingState()");
-
             if (parent.FinalTargetWaypoint = null)
             {
                 // If timer is more than 3 seconds, enemy will heal itself
@@ -30,13 +28,13 @@ namespace Enemy
                 {
                     healenemy();
                     timer = 0;
-                }
+                }                
+            }
 
-                if(parent.health == 100)
-                {
-                    parent.changeCurrentState(new PatrolState());
-                    return;
-                }
+            if (parent.health == 100)
+            {
+                parent.changeCurrentState(new PatrolState());
+                return;
             }
         }
 

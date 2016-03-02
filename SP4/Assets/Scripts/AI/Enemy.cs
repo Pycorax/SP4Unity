@@ -45,7 +45,7 @@ namespace Enemy
         }
 
         // Movement
-        public float Speed = 200.0f;
+        public float Speed = 100.0f;
 
         // AI
         private Waypoint finalTargetWaypoint = null;
@@ -70,20 +70,11 @@ namespace Enemy
         // Use this for initialization
         protected override void Start()
         {
-            // Base Start
-            base.Start();
-
-            // Set the Waypoint that we are nearest to right now
-            if (WaypointMap != null)
-            {
-                currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);
-            }
-
-            // Set the default state
-            changeCurrentState(new PatrolState());
-
             // Initialize Components
             animator = GetComponent<Animator>();
+
+            // Set default values
+            Reset();
         }
 
         // Update is called once per frame
@@ -124,6 +115,59 @@ namespace Enemy
             {
                 changeCurrentState(new DeadState());
             }
+        }
+
+        /// <summary>
+        /// Function to initialize the Enemy from code.
+        /// </summary>
+        /// <param name="position">The position on the map to spawn the enemy.</param>
+        /// <param name="waypointMap">The object that manages the list of Waypoints and updates them.</param>
+        /// <param name="listOfPlayers">A list of all Players in the scene.</param>
+        /// <param name="enemyManager">The parent that manages this Enemy.</param>
+        public void Init(Vector3 position, WaypointManager waypointMap, List<GameObject> listOfPlayers, EnemyManager enemyManager)
+        {
+            // Set the WaypointMap
+            WaypointMap = waypointMap;
+
+            // Set the list of players
+            PlayerList = listOfPlayers;
+
+            // Set the Enemy Manager (parent manager)
+            Manager = enemyManager;
+
+            // Reset Values
+            Reset(position);
+        }
+
+        /// <summary>
+        /// Use this function to reset this enemy to it's default values except it's position.
+        /// </summary>
+        public void Reset()
+        {
+            // Base Start (Health)
+            base.Start();
+
+            // Set the Waypoint that we are nearest to right now
+            if (WaypointMap != null)
+            {
+                currentWaypoint = WaypointMap.FindNearestWaypoint(transform.position);
+            }
+
+            // Set the default state
+            changeCurrentState(new IdleState());
+        }
+
+        /// <summary>
+        /// Use this function to reset this enemy to it's default values at a specified position.
+        /// </summary>
+        /// <param name="position">The position you wish to spawn this enemy at.</param>
+        public void Reset(Vector2 position)
+        {
+            // Set the enemy position
+            transform.position = position;
+
+            // Reset enemy stats
+            Reset();
         }
 
         internal RPGPlayer getNearestPlayer()
@@ -216,19 +260,6 @@ namespace Enemy
         }
 
         /// <summary>
-        /// Function to initialize the player position.
-        /// </summary>
-        /// <param name="position">The position on the map to spawn the enemy.</param>
-        public void Init(Vector3 position)
-        {
-            // Set the enemy position
-            transform.position = position;
-
-            // TODO: Reset the current state
-            // changeCurrentState(new IdleState());
-        }
-
-        /// <summary>
         /// Function to change the state of this Enemy
         /// </summary>
         /// <param name="state"></param>
@@ -287,7 +318,7 @@ namespace Enemy
 
         #region Collision
 
-        private void OnTriggerEnter2D(Collider2D other)
+        private void OnCollisionEnter2D(Collision2D other)
         {
             RPGPlayer player = other.gameObject.GetComponent<RPGPlayer>();
             Projectile proj = other.gameObject.GetComponent<Projectile>();

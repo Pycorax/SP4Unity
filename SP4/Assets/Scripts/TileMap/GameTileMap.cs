@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameTileMap : TileMap
 {
@@ -12,12 +12,19 @@ public class GameTileMap : TileMap
     [Tooltip("Enemy Manager reference.")]
     public ResourceManager RefEnemyManager;
 
+    // List of players
+    private List<GameObject> playerList; 
+
     // Use this for initialization
     protected override void Start ()
     {
         TotalSize = ScreenData.GetScreenSize();
         tileSize = calculateTileSize(TotalSize);
-        base.Start();  
+
+        // Set up the player List
+        playerList = new List<GameObject> {RefPlayer1, RefPlayer2};
+
+        base.Start();
     }
 
     public void Load()
@@ -41,6 +48,8 @@ public class GameTileMap : TileMap
 
         GameObject tile = null;
         float scaleRatio = tileBlueprints[(int)type].GetComponent<Tile>().ScaleRatio;
+        WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
+        EnemyManager enemyManager = RefEnemyManager.GetComponent<EnemyManager>();
 
         switch (type)
         {
@@ -56,14 +65,19 @@ public class GameTileMap : TileMap
                         enemyPos.z = 1.0f;
                         Vector3 enemySize = size * scaleRatio;
                         enemy.SetActive(true);
-                        enemy.GetComponent<Enemy.Enemy>().Init(enemyPos);
+
+                        // Get a handle to the Enemy component
+                        var enemyComponent = enemy.GetComponent<Enemy.Enemy>();
+                        if (enemyComponent)
+                        {
+                            enemyComponent.Init(enemyPos, refWaypointManager, playerList, enemyManager);
+                        }
                         enemy.transform.localScale = enemySize;
                     }
                 }
                 break;
             case Tile.TILE_TYPE.TILE_WAYPOINT:
                 {
-                    WaypointManager refWaypointManager = this.transform.root.gameObject.GetComponentInChildren<WaypointManager>();
                     if (refWaypointManager)
                     {
                         // Create waypoint

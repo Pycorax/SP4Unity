@@ -18,6 +18,7 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.2.0f3</UnityVersion>
     <RootNamespace></RootNamespace>
+    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -81,6 +82,8 @@
     <Compile Include="Assets\Scripts\AI\Waypoints\WaypointManager.cs" />
     <Compile Include="Assets\Scripts\BackgroundScroller.cs" />
     <Compile Include="Assets\Scripts\Characters\Character.cs" />
+    <Compile Include="Assets\Scripts\CursorManager.cs" />
+    <Compile Include="Assets\Scripts\DisplayScore.cs" />
     <Compile Include="Assets\Scripts\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\EnergyBar.cs" />
     <Compile Include="Assets\Scripts\Framework\ISavable.cs" />
@@ -93,6 +96,7 @@
     <Compile Include="Assets\Scripts\Framework\TimeManager.cs" />
     <Compile Include="Assets\Scripts\Framework\TrackerLine.cs" />
     <Compile Include="Assets\Scripts\Gachapon\Gachapon.cs" />
+    <Compile Include="Assets\Scripts\Gachapon\GachaponCapsuleAnimationEventHandler.cs" />
     <Compile Include="Assets\Scripts\Gachapon\GachaponEditor.cs" />
     <Compile Include="Assets\Scripts\Gachapon\MerchantScaler.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -136,8 +140,10 @@
     <Compile Include="Assets\Scripts\Menu Scripts\Gachapon\CoinsText.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\Gachapon\GachaCapsuleButton.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\Gachapon\GachaponScreen.cs" />
+    <Compile Include="Assets\Scripts\Menu Scripts\Level Select\SkinMenu.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\Level Select\SpawnButton.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\SceneManager.cs" />
+    <Compile Include="Assets\Scripts\Menu Scripts\SkinSelectionButtonsController.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\SplashScreen.cs" />
     <Compile Include="Assets\Scripts\Objective\Collect_Coins.cs" />
     <Compile Include="Assets\Scripts\Objective\Endless.cs" />
@@ -145,15 +151,18 @@
     <Compile Include="Assets\Scripts\Objective\No_Dmg_Taken.cs" />
     <Compile Include="Assets\Scripts\Objective\ObjectiveManager.cs" />
     <Compile Include="Assets\Scripts\Objective\Objectives.cs" />
+    <Compile Include="Assets\Scripts\Objective\PrintObjective.cs" />
     <Compile Include="Assets\Scripts\Players\PlayerSettings.cs" />
     <Compile Include="Assets\Scripts\Players\Skin.cs" />
     <Compile Include="Assets\Scripts\Players\SkinsManager.cs" />
     <Compile Include="Assets\Scripts\ProjectileManager.cs" />
     <Compile Include="Assets\Scripts\RPGPlayer.cs" />
+    <Compile Include="Assets\Scripts\SaveClass.cs" />
     <Compile Include="Assets\Scripts\Score\HighScoreSystem.cs" />
     <Compile Include="Assets\Scripts\Score\ScoreDisplay.cs" />
     <Compile Include="Assets\Scripts\Score\ScoreEntry.cs" />
     <Compile Include="Assets\Scripts\Score\ScoreTest.cs" />
+    <Compile Include="Assets\Scripts\Score\StageScoreDisplay.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\ScreenData.cs" />
     <Compile Include="Assets\Scripts\Sound\BGMScript.cs" />

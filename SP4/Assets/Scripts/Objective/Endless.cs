@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using System;
 
 public class Endless : Objectives
@@ -12,6 +12,7 @@ public class Endless : Objectives
     public float TimeTillDifficultyIncrease = 5.0f;
     public int InitialSpawnCount = 1;
 
+    private List<GameObject> playerList = new List<GameObject>();
     private int spawnCount;
     private float elapsedTime = 0.0f;
     private float spawnTimer = 0.0f;
@@ -21,6 +22,9 @@ public class Endless : Objectives
         base.Start();
         spawnCount = InitialSpawnCount;
         description = "Survive as long as possible!";
+
+        playerList.Add(RefPlayer1.gameObject);
+        playerList.Add(RefPlayer2.gameObject);
     }
 
     // Update is called once per frame
@@ -83,8 +87,7 @@ public class Endless : Objectives
         GameObject enemy = RefEnemyManager.GetComponent<ResourceManager>().Fetch();
         if (enemy)
         {
-            enemy.SetActive(true);
-            enemy.transform.position = pos;
+            enemy.GetComponent<Enemy.Enemy>().Init(pos, RefWaypointManager, playerList, RefEnemyManager);
             return true;
         }
         return false;

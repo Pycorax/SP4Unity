@@ -1,4 +1,6 @@
-﻿namespace Enemy
+﻿using UnityEngine;
+
+namespace Enemy
 {
     public class AlertState : FSMState
     {
@@ -14,19 +16,31 @@
         protected override void init()
         {
             // Alert speed is faster than normal speed
-            parent.Speed = 350.0f;
+            parent.Speed = 150.0f;
             decideNextPatrolPoint();
         }
 
         protected override void update()
         {
             changestatetimer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+
             //After 10 seconds in alert state, enemy will go back to patrol state
             if (changestatetimer >= 10)
             {
                 parent.changeCurrentState(new PatrolState());
                 return;
             }
+            else
+            {
+                //Check if the nearest player is within distance to attack
+                float distanceSqr = (parent.transform.position - parent.getNearestPlayer().transform.position).sqrMagnitude;
+                if (distanceSqr <= 50000.0f)
+                {
+                    parent.changeCurrentState(new ChaseState());
+                    return;
+                }
+            }
+
 
             //Make sure the parent is at the final way point
             if (parent.FinalTargetWaypoint == null)
