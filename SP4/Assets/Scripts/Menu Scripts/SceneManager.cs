@@ -38,7 +38,7 @@ public class SceneManager : MonoBehaviour
 
     public void LoadShops()
     {
-        Application.LoadLevel("StoreScene");
+        Application.LoadLevel("GachaponScene");
     }
 
     public void LoadScores()

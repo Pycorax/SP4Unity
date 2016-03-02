@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     //Getter and setter
     public bool LevelEnded { get { return CurrentObjective.IsAchieved(); } }
+    public bool PlayersDead { get { return PlayerList.Count(p => !p.IsAlive) == PlayerList.Count; } }
     public int EnemiesKilled { get { return EnemiesManager.EnemiesKilled; } }
     public bool ReachedExit { get { return reachedExit; } }
     public int CoinsCollected { get { return coins; } }
