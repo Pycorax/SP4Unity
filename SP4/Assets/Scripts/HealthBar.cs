@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class HealthBar : MonoBehaviour {
 
@@ -9,7 +8,8 @@ public class HealthBar : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate ()
+    {
         transform.rotation = Quaternion.identity;
 	}
 }

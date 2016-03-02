@@ -512,12 +512,15 @@ public class RPGPlayer : Character
         // Shoot Left
         if (LeftWeapon != null)
         {
-            if ((LeftWeapon.HeldDownUsable &&  Input.GetKey(LeftAttackKey))|| Input.GetKeyDown(LeftAttackKey))
+            if ((LeftWeapon.HeldDownUsable && Input.GetKey(LeftAttackKey))|| Input.GetKeyDown(LeftAttackKey))
             {
-            
+                // If have enough energy and able to attack
                 if(checkEnergyLevel(LeftWeapon) && attack(LeftWeapon))
                 {
+                    // Flag that an attack was done
                     shot = true;
+                    
+                    // Deplete energy
                     UseEnergy(LeftWeapon.EnergyNeeded);
 
                     // Start animation
@@ -534,6 +537,12 @@ public class RPGPlayer : Character
 
                     // Withdraw other weapon
                     RightWeapon.Withdraw();
+                }
+                // Being held down but not enough energy, so we stop it
+                else if (LeftWeapon.HeldDownUsable)
+                {
+                    LeftWeapon.Unuse(RightWeapon);
+                    animator.SetBool(animShootingLeft, false);
                 }
             }
             else
@@ -573,6 +582,12 @@ public class RPGPlayer : Character
 
                     // Withdraw other weapon
                     LeftWeapon.Withdraw();
+                }
+                // Being held down but not enough energy, so we stop it
+                else if (RightWeapon.HeldDownUsable)
+                {
+                    RightWeapon.Unuse(LeftWeapon);
+                    animator.SetBool(animShootingRight, false);
                 }
             }
             else

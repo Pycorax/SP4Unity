@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-namespace Enemy
+﻿namespace Enemy
 {
     public class FleeingState : FSMState
     {
@@ -21,7 +18,7 @@ namespace Enemy
 
         protected override void update()
         {
-            if (parent.FinalTargetWaypoint = null)
+            if (parent.FinalTargetWaypoint == null)
             {
                 // If timer is more than 3 seconds, enemy will heal itself
                 timer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
