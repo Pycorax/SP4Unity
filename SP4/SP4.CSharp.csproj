@@ -140,6 +140,7 @@
     <Compile Include="Assets\Scripts\Menu Scripts\Gachapon\CoinsText.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\Gachapon\GachaCapsuleButton.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\Gachapon\GachaponScreen.cs" />
+    <Compile Include="Assets\Scripts\Menu Scripts\Level Select\LevelSelect.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\Level Select\SkinMenu.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\Level Select\SpawnButton.cs" />
     <Compile Include="Assets\Scripts\Menu Scripts\SceneManager.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Assets\Scripts\Objective\ObjectiveManager.cs" />
     <Compile Include="Assets\Scripts\Objective\Objectives.cs" />
     <Compile Include="Assets\Scripts\Objective\PrintObjective.cs" />
+    <Compile Include="Assets\Scripts\PauseMenuScript.cs" />
     <Compile Include="Assets\Scripts\Players\PlayerSettings.cs" />
     <Compile Include="Assets\Scripts\Players\Skin.cs" />
     <Compile Include="Assets\Scripts\Players\SkinsManager.cs" />
