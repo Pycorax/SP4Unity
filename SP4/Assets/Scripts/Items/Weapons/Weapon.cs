@@ -92,6 +92,7 @@ public abstract class Weapon : Item
             // Update weapon animation
             if (anim != null)
             {
+                anim.SetBool(animAttack, true);
                 anim.SetTrigger(animAttack);
             }
 
