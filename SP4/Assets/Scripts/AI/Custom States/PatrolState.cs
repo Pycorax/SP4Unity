@@ -22,7 +22,7 @@ namespace Enemy
         {
             //Check if the nearest player is within distance to attack
             float distanceSqr = (parent.transform.position - parent.getNearestPlayer().transform.position).sqrMagnitude;
-            if (distanceSqr <= 50000.0f * 50000.0f)
+            if (distanceSqr <= 50000.0f)
             {
                 parent.changeCurrentState(new ChaseState());
                 return;
