@@ -16,6 +16,12 @@ public class SaveClass
         Key_Level_Editor_Creation, // True for creating new, False for loading
         Key_Level_Editor_Row,
         Key_Level_Editor_Col,
+
+        // Weapon
+        Key_Player1_Left,
+        Key_Player1_Right,
+        Key_Player2_Left,
+        Key_Player2_Right,
     };
 
     public static string[] Keys = Enum.GetNames(typeof(Save_Keys));
