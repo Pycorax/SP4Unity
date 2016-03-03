@@ -118,6 +118,7 @@ namespace Enemy
             else if (!(currentState is DeadState))
             {
                 changeCurrentState(new DeadState());
+                Debug.Log("NOPE");
             }
         }
 
@@ -174,12 +175,29 @@ namespace Enemy
             Reset();
         }
 
+        /// <summary>
+        /// Use this function in the animator to deactive the enemy.
+        /// </summary>
+        public void Deactivate()
+        {
+            gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// Use this function to get the nearest player.
+        /// </summary>
+        /// <returns>A reference to the player nearest to this enemy.</returns>
         internal RPGPlayer getNearestPlayer()
         {
             float dist;
             return getNearestPlayer(out dist);
         }
 
+        /// <summary>
+        /// Use this function to get the nearest player.
+        /// </summary>
+        /// <param name="distSqrToPlayer">An out parameter that allows you to obtain the square distance to the player.</param>
+        /// <returns>A reference to the player nearest to this enemy.</returns>
         internal RPGPlayer getNearestPlayer(out float distSqrToPlayer)
         {
             // Determine nearest player to chase
@@ -203,6 +221,10 @@ namespace Enemy
             return nearestPlayer.GetComponent<RPGPlayer>();
         }
 
+        /// <summary>
+        /// This function will set the enemy's rotation based on the direction passed in.
+        /// </summary>
+        /// <param name="dir">The direction you want the enemy to rotate to look at.</param>
         internal void updateRotation(Vector2 dir)
         {
             // Ensure an actual direction is provided
