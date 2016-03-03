@@ -25,7 +25,6 @@ public class Kill_Enemy : Objectives
 
     protected override void finish()
     {
-        Debug.Log("Kill_Enemy Complete()");
     }
 
     protected override bool parseParamString(string[] parameters)

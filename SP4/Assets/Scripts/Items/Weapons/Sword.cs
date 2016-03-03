@@ -42,7 +42,6 @@ public class Sword : Weapon
             if (bigSwordTimer >= 0.0f)
             {
                 bigSwordTimer += (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
-                Debug.Log(bigSwordTimer);
                 if (bigSwordTimer >= BigSwordDuration)
                 {
                     bigSwordTimer = 0.0f;

@@ -11,10 +11,6 @@ public class ObjectiveManager : MonoBehaviour
     void Start()
     {
         objectives = GetComponentsInChildren<Objectives>();
-        //if(objectives != null)
-        //{
-        //    Debug.Log("OBJECTIVE GIVEN");
-        //}
     }
 
     void Update()

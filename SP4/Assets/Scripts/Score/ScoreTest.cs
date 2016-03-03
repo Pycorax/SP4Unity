@@ -10,13 +10,6 @@ public class ScoreTest : MonoBehaviour {
         //HighScoreSystem.Instance.SendScore(new ScoreEntry("Test", 64));
         //HighScoreSystem.Instance.SendScore(new ScoreEntry("Test", 24));
         HighScoreSystem.Instance.DownloadScores();
-        if (HighScoreSystem.Instance.Scores != null)
-        {
-            foreach (var i in HighScoreSystem.Instance.Scores)
-            {
-                Debug.Log(i.Name + ": " + i.Score);
-            }
-        }
     }
 	
 	// Update is called once per frame

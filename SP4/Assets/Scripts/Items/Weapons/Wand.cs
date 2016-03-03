@@ -13,11 +13,6 @@ public class Wand : Weapon
         base.Start();
 
         firePoint = transform.FindChild("FirePoint");
-
-        if (!firePoint)
-        {
-            Debug.LogError("No FirePoint");
-        }
     }
 
     // Update is called once per frame

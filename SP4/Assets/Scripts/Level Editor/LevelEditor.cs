@@ -42,11 +42,6 @@ public class LevelEditor : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        /*float canvasWidth = GetComponent<RectTransform>().rect.width;
-        float panelWidth = GetUI(UI_TYPE.UI_SIDEBAR).rect.width;
-        Debug.Log(canvasWidth - panelWidth);*/
-        //Debug.Log(GetUI(UI_TYPE.UI_CLOSE_SIDEBAR).position.x);
-
         // Update tile map scrolling
         if (RefTileMap)
         {

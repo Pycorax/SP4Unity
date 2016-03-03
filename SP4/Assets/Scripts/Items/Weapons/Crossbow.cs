@@ -16,18 +16,13 @@ public class Crossbow : Weapon
     [Tooltip("The set of animations to use for empowered mode.")]
     public RuntimeAnimatorController EmpoweredAnimationSet;
 
-	// Use this for initialization
-    protected override void Start ()
+    // Use this for initialization
+    protected override void Start()
     {
         base.Start();
 
         firePoint = transform.FindChild("FirePoint");
-
-        if(!firePoint)
-        {
-            Debug.LogError("No FirePoint");
-        }
-	}
+    }
 
     public override bool Use(Vector2 direction)
     {

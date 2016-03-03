@@ -174,6 +174,7 @@ public class GameManager : MonoBehaviour
 
     public void EndLevel(bool win)
     {
+        playerSetting.Save();
         if (win)
         {
             Application.LoadLevel("WinScene");

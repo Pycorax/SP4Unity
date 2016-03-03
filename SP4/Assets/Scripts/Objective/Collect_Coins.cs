@@ -26,7 +26,6 @@ public class Collect_Coins : Objectives
 
     protected override void finish()
     {
-        Debug.Log("Collect_Coins Complete()");
     }
 
     protected override bool parseParamString(string[] parameters)
