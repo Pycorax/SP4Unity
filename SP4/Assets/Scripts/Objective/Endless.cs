@@ -30,11 +30,6 @@ public class Endless : Objectives
     // Update is called once per frame
     protected override void Update ()
     {
-        if (IsAchieved())
-        {
-            Manager.EndLevel();
-        }
-
         float dt = (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
         elapsedTime += dt;
         // TODO: Increase difficulty over time

@@ -48,12 +48,16 @@ public class GameManager : MonoBehaviour
     {
         if (reachedExit && CurrentObjective.IsAchieved())
         {
-            EndLevel();
+            EndLevel(true);
         }
 
         if(PlayersDead)
         {
-            Application.LoadLevel("LoseScene");
+            if (CurrentObjective.GetComponent<Endless>() != null)
+            {
+                EndLevel(true);
+            }
+            EndLevel(false);
         }
     }
 
@@ -120,9 +124,15 @@ public class GameManager : MonoBehaviour
         coins += coinsCollected;
     }
 
-    public void EndLevel()
+    public void EndLevel(bool win)
     {
-        Debug.Log("Ended");
-        Application.LoadLevel("WinScene");
+        if (win)
+        {
+            Application.LoadLevel("WinScene");
+        }
+        else
+        {
+            Application.LoadLevel("LoseScene");
+        }
     }
 }
