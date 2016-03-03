@@ -57,6 +57,16 @@ public class MultiPlayerCamera : MonoBehaviour
     {
         camera = GetComponent<Camera>();
         updateBounds();
+
+        // Set position to the center of both players at the start
+        // Get the half distance between the players
+        Vector2 deltaPos = PlayerList[1].transform.position - PlayerList[0].transform.position;
+        deltaPos *= 0.5f; // PLAYER_COUNT
+
+        // Calculate the centerpoint
+        Vector3 centerpoint = (Vector2)PlayerList[0].transform.position + deltaPos;
+        centerpoint.z = -10;
+        transform.position = centerpoint;
     }
 	
     void OnDrawGizmos()
