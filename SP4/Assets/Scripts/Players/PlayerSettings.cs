@@ -113,15 +113,23 @@ public class PlayerSettings : MonoBehaviour, ISavable
         // Current Skins
         string firstSkinURL = PlayerPrefs.GetString(SaveClass.GetKey(SaveClass.Save_Keys.Key_Player1_Skin));
         string secondSkinURL = PlayerPrefs.GetString(SaveClass.GetKey(SaveClass.Save_Keys.Key_Player2_Skin));
-        if (firstSkinURL != null)
+        if (firstSkinURL != "")
         {
             CurrentFirstSkin = Instantiate(SkinBlueprint).GetComponent<Skin>();
             CurrentFirstSkin.SkinSpriteUrl = firstSkinURL;
         }
-        if (secondSkinURL != null)
+        else
+        {
+            CurrentFirstSkin = null;
+        }
+        if (secondSkinURL != "")
         {
             CurrentSecondSkin = Instantiate(SkinBlueprint).GetComponent<Skin>();
             CurrentSecondSkin.SkinSpriteUrl = secondSkinURL;
+        }
+        else
+        {
+            CurrentSecondSkin = null;
         }
     }
 

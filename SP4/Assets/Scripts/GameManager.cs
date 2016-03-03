@@ -86,7 +86,11 @@ public class GameManager : MonoBehaviour
         weapon.transform.localScale = new Vector3(1, 1, 1);
         player.RightWeapon = weapon;
         // Load Skin
-        player.PlayerSkin = playerSetting.CurrentSecondSkin;
+        // -- Special Case for Second Player as we don't want to override the default skin
+        if (playerSetting.CurrentSecondSkin != null)
+        {
+            player.PlayerSkin = playerSetting.CurrentSecondSkin;
+        }
     }
 
     // Update is called once per frame
