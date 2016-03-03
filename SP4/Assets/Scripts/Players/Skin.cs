@@ -33,6 +33,12 @@ public class Skin : MonoBehaviour
         PlayerPrefs.SetString(SaveClass.GetKey(SaveClass.Save_Keys.Key_Skin_URL) + "_" + id, SkinSpriteUrl);
     }
 
+    public void Load(int id)
+    {
+        SkinSpriteUrl = SaveClass.GetPlayerPrefString(SaveClass.Save_Keys.Key_Skin_URL, "_" + id);
+        Load();
+    }
+
     /// <summary>
     /// Use this function to load the Skin Sprites before SwapSkin(). This only needs to be called once for
     /// the whole lifetime of Skin

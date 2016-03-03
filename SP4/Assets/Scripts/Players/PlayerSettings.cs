@@ -11,6 +11,7 @@ public class PlayerSettings : MonoBehaviour, ISavable
     private Inventory inventory = new Inventory();
 
     // Skinnning
+    public GameObject SkinBlueprint;
     private List<Skin> skinsInventory = new List<Skin>();
 
     // Statistics
@@ -72,6 +73,17 @@ public class PlayerSettings : MonoBehaviour, ISavable
     {
         coins = SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Coins);
         enemiesKilled = SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Enemy_Killed);
+        int skinCount = SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Skin_Size);
+        for (int skinIndex = 0; skinIndex < skinCount; ++skinIndex)
+        {
+            GameObject goSkin = Instantiate(SkinBlueprint);
+            Skin skin = goSkin.GetComponent<Skin>();
+            if (skin)
+            {
+                skin.Load(skinIndex);
+                skinsInventory.Add(skin);
+            }
+        }
     }
 
     public void AddToSkinStorage(Skin skin)

@@ -41,14 +41,14 @@ public class SaveClass
         return PlayerPrefs.GetInt(type.ToString());
     }
 
-    public static string GetPlayerPrefString(Save_Keys type)
+    public static string GetPlayerPrefString(Save_Keys type, string extra = "")
     {
-        if (!PlayerPrefs.HasKey(type.ToString()))
+        if (!PlayerPrefs.HasKey(type.ToString() + extra))
         {
             throw new UnityException("Key '" + type + "' does not exist!");
         }
 
-        return PlayerPrefs.GetString(type.ToString());
+        return PlayerPrefs.GetString(type.ToString() + extra);
     }
 
     public static float GetPlayerPrefFloat(Save_Keys type)
