@@ -19,17 +19,20 @@ public class PrintObjective : MonoBehaviour
     {
         // Set up the reference.
         text = GetComponent<Text>();
-        objectivetextsize = manager.CurrentObjective.GetDescription().ToString().Length;
 
-        if(objectivetextsize >= 25)
+        if(manager.CurrentObjective)
         {
-            text.fontSize = 20;
-            text.text = manager.CurrentObjective.GetDescription().ToString();
-        }
-        else if(objectivetextsize <=24)
-        {
-            text.fontSize = 25;
-            text.text = manager.CurrentObjective.GetDescription().ToString();
-        }
+            objectivetextsize = manager.CurrentObjective.GetDescription().ToString().Length;
+            if (objectivetextsize >= 25)
+            {
+                text.fontSize = 20;
+                text.text = manager.CurrentObjective.GetDescription().ToString();
+            }
+            else if (objectivetextsize <= 24)
+            {
+                text.fontSize = 25;
+                text.text = manager.CurrentObjective.GetDescription().ToString();
+            }
+        }    
     }
 }
