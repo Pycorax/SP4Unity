@@ -38,4 +38,16 @@ public class PauseMenuScript : MonoBehaviour {
         Time.timeScale = 0;
         isPaused = true;
     }
+
+    public void RestartRound()
+    {
+        Resume();
+        Application.LoadLevel("GameScene");
+    }
+
+    public void ReturnToMainMenu()
+    {
+        Resume();
+        Application.LoadLevel("MainMenuScene");
+    }
 }
