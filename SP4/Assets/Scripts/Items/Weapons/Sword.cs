@@ -14,11 +14,9 @@ public class Sword : Weapon
 
     //Animation
     //private readonly int animBigSword = Animator.StringToHash("")
-
-    private SpriteRenderer spriteRenderer;
-    public Sprite BigSword;
-    public Sprite NormalSword;
-
+    
+    public RuntimeAnimatorController Normal;
+    public RuntimeAnimatorController Big;
 
     // Use this for initialization
     protected override void Start()
@@ -26,31 +24,39 @@ public class Sword : Weapon
 
         base.Start();
         Damage = 10;
-
-        spriteRenderer = (SpriteRenderer) GetComponent<Renderer>();
-
-        //1 Tile
-
-        //1 per second
-
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
+
         if (isBigSword)
         {
             if (bigSwordTimer >= 0.0f)
             {
                 bigSwordTimer += (float) TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+
                 if (bigSwordTimer >= BigSwordDuration)
                 {
-                    bigSwordTimer = 0.0f;
-                    spriteRenderer.sprite = NormalSword;
-                    isBigSword = false;
+                    setBigSword(false);
                 }
             }
+        }
+    }
+
+    private void setBigSword(bool big)
+    {
+        isBigSword = big;
+
+        if (big)
+        {
+            anim.runtimeAnimatorController = Big;
+        }
+        else
+        {
+            bigSwordTimer = 0.0f;
+            anim.runtimeAnimatorController = Normal;
         }
     }
 
@@ -98,6 +104,7 @@ public class Sword : Weapon
         else if (other is Wand)
         {
             // Set the sword to be larger
+            setBigSword(true);
             // Play the sound
             SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Combo_Enchant);
         }
