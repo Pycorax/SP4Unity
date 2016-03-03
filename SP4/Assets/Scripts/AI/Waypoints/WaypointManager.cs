@@ -154,7 +154,14 @@ public class WaypointManager : MonoBehaviour
             // Recalculate all connections
             if (AlwaysRecalculate)
             {
-                w.SetUpConnections(listOfWaypoints, WaypointRadius);
+                if (AutoScaleRadius)
+                {
+                    w.SetUpConnections(listOfWaypoints, WaypointRadius);
+                }
+                else
+                {
+                    w.SetUpConnections(listOfWaypoints, transform.localScale.x);
+                }
             }
 
             if (AutoScaleRadius)
@@ -252,7 +259,14 @@ public class WaypointManager : MonoBehaviour
         // Initialize all the waypoints with that list
         foreach (Waypoint w in waypointList)
         {
-            w.SetUpConnections(waypointList, WaypointRadius);
+            if (AutoScaleRadius)
+            {
+                w.SetUpConnections(waypointList, WaypointRadius);
+            }
+            else
+            {
+                w.SetUpConnections(waypointList, transform.localScale.x);
+            }
         }
     }
 

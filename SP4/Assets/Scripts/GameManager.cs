@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     [Tooltip("A reference to the TileMap")]
     public GameTileMap GameTileMapReference;
 
+    public Weapon[] LeftWeapons = new Weapon[Enum.GetNames(typeof(Weapon.Weapon_Type)).Length];
+    public Weapon[] RightWeapons = new Weapon[Enum.GetNames(typeof(Weapon.Weapon_Type)).Length];
+
     // Check if level has ended
     private bool reachedExit = false;
 
@@ -41,6 +44,38 @@ public class GameManager : MonoBehaviour
 
         // Set up the objective
         setObjective();
+
+        // Load weapons on player
+        // Player 1
+        RPGPlayer player = PlayerList[0];
+        Weapon weapon = null;
+        // Left weapon
+        weapon = Instantiate(LeftWeapons[SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Player1_Left)]);
+        weapon.transform.parent = player.transform;
+        weapon.transform.position = player.transform.position;
+        weapon.transform.localScale = new Vector3(1, 1, 1);
+        player.LeftWeapon = weapon;
+        // Right weapon
+        weapon = Instantiate(RightWeapons[SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Player1_Right)]);
+        weapon.transform.parent = player.transform;
+        weapon.transform.position = player.transform.position;
+        weapon.transform.localScale = new Vector3(1, 1, 1);
+        player.RightWeapon = weapon;
+
+        // Player 2
+        player = PlayerList[1];
+        // Left weapon
+        weapon = Instantiate(LeftWeapons[SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Player2_Left)]);
+        weapon.transform.parent = player.transform;
+        weapon.transform.position = player.transform.position;
+        weapon.transform.localScale = new Vector3(1, 1, 1);
+        player.LeftWeapon = weapon;
+        // Right weapon
+        weapon = Instantiate(RightWeapons[SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Player2_Right)]);
+        weapon.transform.parent = player.transform;
+        weapon.transform.position = player.transform.position;
+        weapon.transform.localScale = new Vector3(1, 1, 1);
+        player.RightWeapon = weapon;
     }
 
     // Update is called once per frame
@@ -48,11 +83,13 @@ public class GameManager : MonoBehaviour
     {
         if (reachedExit && CurrentObjective.IsAchieved())
         {
+            ScoreManager.SaveScore();
             EndLevel(true);
         }
 
         if(PlayersDead)
         {
+            ScoreManager.SaveScore();
             if (CurrentObjective.GetComponent<Endless>() != null)
             {
                 EndLevel(true);

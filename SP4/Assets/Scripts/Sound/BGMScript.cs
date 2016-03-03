@@ -1,18 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 
-public class BGMScript : MonoBehaviour {
+public class BGMScript : MonoBehaviour
+{
+    [Tooltip("A handle to the slider to load default values.")]
+    public Slider BGMSlider;
 
-    
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    // Use this for initialization
+    void Start()
+    {
+        BGMSlider.value = SoundManager.BGMVolume;
+    }
 
     public void ChangeVolume(float volume)
     {

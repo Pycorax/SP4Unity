@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 
-public class SFXScript : MonoBehaviour {
+public class SFXScript : MonoBehaviour
+{
+    [Tooltip("A handle to the slider to load default values.")]
+    public Slider SFXSlider;
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start ()
+	{
+	    SFXSlider.value = SoundManager.SFXVolume;
 	}
 	
 	// Update is called once per frame

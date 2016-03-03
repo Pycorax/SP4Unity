@@ -30,13 +30,12 @@ public class Lightning : Projectile
             {
                 // Projectile on target
                 //Reduce Enemy HP (currently no function for that)
-                Enemy.Enemy enemy = target.gameObject.GetComponent<Enemy.Enemy>();
 
                 // Find new target
-                if (prevTarget && enemy != prevTarget)
+                if (prevTarget && target != prevTarget)
                 {
-                    enemy.Injure(Damage);
-                    prevTarget = enemy;
+                    target.Injure(Damage);
+                    prevTarget = target;
                     target = findNearestEnemy();
                     if (!target)
                     {
@@ -46,7 +45,8 @@ public class Lightning : Projectile
                 }
                 else if (!prevTarget)
                 {
-                    prevTarget = enemy;
+                    target.Injure(Damage);
+                    prevTarget = target;
                     // No previous target
                     target = findNearestEnemy();
                     if (!target)

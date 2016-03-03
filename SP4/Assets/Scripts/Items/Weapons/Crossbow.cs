@@ -1,9 +1,20 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 
 public class Crossbow : Weapon
 {
-    Transform firePoint;
+    // State of the Crossbow
+    private bool empowered = false;
+
+    // Shooting
+    private Transform firePoint;
+
+    // Animation
+    [Tooltip("The set of animations to use for normal mode.")]
+    public RuntimeAnimatorController NormalAnimationSet;
+    [Tooltip("The set of animations to use for empowered mode.")]
+    public RuntimeAnimatorController EmpoweredAnimationSet;
 
 	// Use this for initialization
     protected override void Start ()
@@ -17,21 +28,32 @@ public class Crossbow : Weapon
             Debug.LogError("No FirePoint");
         }
 	}
-	
-	// Update is called once per frame
-	protected override void Update ()
-    {
-        base.Update();
-	}
 
     public override bool Use(Vector2 direction)
     {
         if (base.Use(direction))
         {
-            GameObject p = RefProjectileManager.FetchArrow();
-            if (p)
+            Projectile toShoot = null;
+
+            // Decide which type of arrow to shoot
+            if (empowered)
             {
-                p.GetComponent<Arrow>().Activate(firePoint, this, direction, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
+                // Fetch an Empowered Arrow
+                toShoot = RefProjectileManager.FetchEmpoweredArrow().GetComponent<EmpoweredArrow>();
+
+                // Turn off the empowerment
+                setEmpowered(false);
+            }
+            else
+            {
+                // Fetch an Arrow
+                toShoot = RefProjectileManager.FetchArrow().GetComponent<Arrow>();
+            }
+
+            // Error Checking
+            if (toShoot != null) 
+            {
+                toShoot.Activate(firePoint, this, direction, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
                 return true;
             }
         }
@@ -44,19 +66,8 @@ public class Crossbow : Weapon
 
         if (other is Wand)
         {
-            Projectile arrow = null;
-
             // Find the projectile
-            foreach (var o in details)
-            {
-                // We found it
-                if (o is Projectile)
-                {
-                    // Store it
-                    arrow = o as Projectile;
-                    break;
-                }
-            }
+            var arrow = details.OfType<Projectile>().FirstOrDefault();
 
             // Check if we found it
             if (arrow != null)
@@ -64,21 +75,27 @@ public class Crossbow : Weapon
                 // Destroy the existing Arrow
                 arrow.Disable();
 
-                // Create the Empowered Arrow
-                var empoweredArrow = RefProjectileManager.FetchEmpoweredArrow().GetComponent<EmpoweredArrow>();
-
-                // Get a handle to the owner of this weapon to get shoot direction
-                var parent = GetComponentInParent<RPGPlayer>();
-
-                // Initialize and fire the Empowered Arrow
-                if (empoweredArrow && parent)
-                {
-                    // Fire the Empowered Arrow
-                    empoweredArrow.Activate(firePoint, this, parent.CurrentDirection, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
-                }
+                // Set the crossbow as an empowered crossbow
+                setEmpowered(true);
             }
         }
 
         #endregion
+    }
+
+    private void setEmpowered(bool empowerment)
+    {
+        // Set the bool
+        empowered = empowerment;
+
+        // Update the controller
+        if (empowered)
+        {
+            anim.runtimeAnimatorController = EmpoweredAnimationSet;
+        }
+        else
+        {
+            anim.runtimeAnimatorController = NormalAnimationSet;
+        }
     }
 }

@@ -261,4 +261,12 @@ public class GachaponScreen : MonoBehaviour
         newCol.a = finalAlpha;
         txtToSet.color = newCol;
     }
+
+    public void ReturnToMenu()
+    {
+        // Save settings before leaving
+        PlayerSetting.Save();
+
+        Application.LoadLevel("MainMenuScene");
+    }
 }

@@ -2,6 +2,14 @@
 
 public abstract class Weapon : Item
 {
+    public enum Weapon_Type
+    {
+        Crossbow,
+        Shield,
+        Sword,
+        Wand,
+    }
+
     [Tooltip("The damage the weapon does.")]
     public int Damage;
     [Tooltip("The range of the weapon in tile map units.")]
