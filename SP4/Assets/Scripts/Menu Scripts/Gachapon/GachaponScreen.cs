@@ -177,7 +177,7 @@ public class GachaponScreen : MonoBehaviour
             startAnimation();
 
             // Store the skin
-            PlayerSetting.SkinsInventory.Add(rewardSkin);
+            PlayerSetting.AddToSkinStorage(rewardSkin);
         }
     }
 

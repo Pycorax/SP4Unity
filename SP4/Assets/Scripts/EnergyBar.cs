@@ -1,16 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class EnergyBar : MonoBehaviour {
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
+public class EnergyBar : MonoBehaviour
+{
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         transform.rotation = Quaternion.identity;
     }
