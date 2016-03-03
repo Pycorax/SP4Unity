@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class PauseMenuScript : MonoBehaviour {
 
@@ -22,7 +21,6 @@ public class PauseMenuScript : MonoBehaviour {
         {
             Resume();
         }
-        Debug.Log(isPaused);
 	}
 
     public void Resume()
