@@ -10,11 +10,16 @@ public abstract class Destroyables : Item
         return true;
 	}
 
+    public void Destroy()
+    {
+        anim.enabled = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<Projectile>() != null)
+        if (other.GetComponent<Projectile>() != null || other.GetComponent<Explosion>() != null)
         {
-            anim.enabled = true;
+            Destroy();
         }
     }
 }
