@@ -48,10 +48,10 @@ public class MultiLayerTile
 
     public bool CalculateWalkable()
     {
-        int i = multiLayerTile.Count - 1;
+        //int i = multiLayerTile.Count - 1;
         foreach (GameObject tile in multiLayerTile)
         {
-            tile.GetComponent<SpriteRenderer>().sortingOrder = i--;
+            //tile.GetComponent<SpriteRenderer>().sortingOrder = i--;
             if (!tile.GetComponent<Tile>().IsWalkable())
             {
                 return false;

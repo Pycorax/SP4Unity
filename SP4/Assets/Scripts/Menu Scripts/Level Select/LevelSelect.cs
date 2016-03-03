@@ -93,6 +93,11 @@ public class LevelSelect : MonoBehaviour
         currentToggle = activeToggle.Current;
         PlayerPrefs.SetInt(SaveClass.GetKey(SaveClass.Save_Keys.Key_Player2_Right), (int)currentToggle.GetComponent<WeaponIdentifier>().Type);
 
+        string name = SaveClass.GetPlayerPrefString(SaveClass.Save_Keys.Key_Level);
+        if (name == "")
+        {
+            return;
+        }
         Application.LoadLevel("GameScene");
     }
 }
