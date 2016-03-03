@@ -13,6 +13,8 @@ public class MainMenu : MonoBehaviour
 	void Start ()
     {
         InputNamePanel.gameObject.SetActive(InputNamePanelView);
+        // Start the music
+        SoundManager.PlayBackgroundMusic(SoundManager.BackgroundMusic.Menu_Screen_Music);
 	}
 	
 	// Update is called once per frame

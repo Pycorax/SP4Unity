@@ -5,9 +5,11 @@ public class SoundManager : MonoBehaviour
 {
 	public enum BackgroundMusic
 	{
-		Beep_Beepe,
-        RPG_Battle,
-        RPGM_Battle,
+		Battle_Music,
+        Credit_Music,
+        Menu_Screen_Music,
+        Stage_Clear,
+        Stage_Fail,
 	}
 
 	public enum SoundEffect

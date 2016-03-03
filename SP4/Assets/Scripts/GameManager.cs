@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // Start the music
-        SoundManager.PlayBackgroundMusic(SoundManager.BackgroundMusic.Beep_Beepe);
+        SoundManager.PlayBackgroundMusic(SoundManager.BackgroundMusic.Battle_Music);
 
         // Load the the tilemap file
         GameTileMapReference.Load(SaveClass.GetPlayerPrefString(SaveClass.Save_Keys.Key_Level), 15);
