@@ -15,8 +15,12 @@ namespace Enemy
         public float WaypointUpdateDelay = 2.0f;
         [Tooltip("Debug. To test Waypoint system. Allows setting of FinalTargetWaypoint at runtime.")]
         public Waypoint FinalTargetWaypointDebug;
+        [Tooltip("The rotation offset from the original sprite direction to get the sprite to face right. This is used for calculating the correct direction of the player sprite.")]
+        public float RotationSpriteOffset = -90.0f;
         [Tooltip("Debug. Enable this to use FinalTargetWaypointDebug to override FinalTargetWaypoint at runtime.")]
         public bool InspectorDebugging = false;
+        [Tooltip("Enemy Damage to the player.")]
+        public int EnemyDamage = 1;
 
         /// <summary>
         /// 
@@ -199,6 +203,19 @@ namespace Enemy
             return nearestPlayer.GetComponent<RPGPlayer>();
         }
 
+        internal void updateRotation(Vector2 dir)
+        {
+            // Ensure an actual direction is provided
+            if (dir != Vector2.zero)
+            {
+                // Calculate the angle using Atan2 and add RotationSpriteOffset due to realign with original sprite direction
+                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + RotationSpriteOffset;
+
+                // Set the rotation according to a calculation based on the angle
+                transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            }
+        }
+
         #region Waypoint
 
         /// <summary>
@@ -243,6 +260,9 @@ namespace Enemy
 
                         // Head to the target
                         transform.position += (Vector3)dir * Speed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+
+                        // Update Rotation
+                        updateRotation(dir);
                     }
                 }
                 else
@@ -298,6 +318,9 @@ namespace Enemy
 
                 // Move there
                 transform.Translate(movement);
+
+                // Update rotation
+                updateRotation(dir);
             }
         }
 
@@ -323,7 +346,7 @@ namespace Enemy
             RPGPlayer player = other.gameObject.GetComponent<RPGPlayer>();
             if (player != null)
             {
-                player.Injure(5);
+                player.Injure(EnemyDamage);
             }
         }
 
@@ -335,7 +358,7 @@ namespace Enemy
 
             if (player != null)
             {
-                player.Injure(5);
+                player.Injure(EnemyDamage);
             }
             else if (proj != null)
             {

@@ -72,9 +72,6 @@ public class Crossbow : Weapon
             // Check if we found it
             if (arrow != null)
             {
-                // Destroy the existing Arrow
-                arrow.Disable();
-
                 // Set the crossbow as an empowered crossbow
                 setEmpowered(true);
             }
