@@ -6,7 +6,7 @@ namespace Enemy
     {
         private Waypoint previousWaypoint;
         private double changestatetimer;
-        private int Deciding;
+        private int deciding;
 
         protected override void exit()
         {
@@ -21,14 +21,13 @@ namespace Enemy
         protected override void update()
         {
             //Check if the nearest player is within distance to attack
-            float distance = Vector3.Distance(parent.transform.position , parent.getNearestPlayer().transform.position);
-            if (distance <= 800.0f)
+            var nearestPlayer = parent.getNearestPlayer();
+            if (nearestPlayer != null && parent.CurrentWaypoint == parent.WaypointMap.FindNearestWaypoint(nearestPlayer.transform.position))
             {
                 parent.changeCurrentState(new ChaseState());
                 return;
             }
             
-
             changestatetimer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
             // If there is no target, we have reached that target
             if (parent.FinalTargetWaypoint == null)
@@ -36,16 +35,16 @@ namespace Enemy
                 // Every 5 seconds, will check if the enemy want to change states
                 if (changestatetimer >= 5)
                 { 
-                changeOfStates();
-                changestatetimer = 0;
+                    changeOfStates();
+                    changestatetimer = 0;
                 }
             }        
         }
 
         private void changeOfStates()
         {
-            Deciding = Random.Range(0, 2);
-            switch (Deciding)
+            deciding = Random.Range(0, 2);
+            switch (deciding)
             {
                 case 0:
                     decideNextPatrolPoint();
