@@ -41,6 +41,10 @@ public class Crossbow : Weapon
                 // Fetch an Empowered Arrow
                 toShoot = RefProjectileManager.FetchEmpoweredArrow().GetComponent<EmpoweredArrow>();
 
+
+                // Play the sound
+                SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Weapon_Attack_1);
+
                 // Turn off the empowerment
                 setEmpowered(false);
             }
@@ -48,6 +52,9 @@ public class Crossbow : Weapon
             {
                 // Fetch an Arrow
                 toShoot = RefProjectileManager.FetchArrow().GetComponent<Arrow>();
+
+                // Play the sound
+                SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Weapon_Attack_3);
             }
 
             // Error Checking
@@ -75,6 +82,9 @@ public class Crossbow : Weapon
                 // Set the crossbow as an empowered crossbow
                 setEmpowered(true);
             }
+
+            // Play the sound
+            SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Combo_ArcaneShot);
         }
 
         #endregion

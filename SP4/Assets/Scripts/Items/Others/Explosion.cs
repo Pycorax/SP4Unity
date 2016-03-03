@@ -23,7 +23,10 @@ public class Explosion : MonoBehaviour
     {
         // Set up Components
         collider = GetComponent<Collider2D>();
-	}
+
+        // Play the sound
+        SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Explosion);
+    }
 
     public void Disable()
     {
