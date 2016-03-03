@@ -10,6 +10,8 @@ public class GachaponScreen : MonoBehaviour
     public float FadeSpeed = 10.0f;
     [Tooltip("The GameObject that holds the Reward item.")]
     public GameObject Reward;
+    [Tooltip("The text object that holds the Reward name")]
+    public Text RewardText;
     [Tooltip("The Reward GameObject. This will be hidden at the start until the transition.")]
     public GameObject RewardContainer;
     [Tooltip("The Capsule GameObject. This will be hidden at the start until the transition.")]
@@ -73,6 +75,7 @@ public class GachaponScreen : MonoBehaviour
 
         // Load the PlayerSettings
         PlayerSetting.Load();
+        PlayerSetting.AddCoins(10);
 
         // Set Up the Scene
         reset(true);
@@ -172,6 +175,9 @@ public class GachaponScreen : MonoBehaviour
         {
             // Set the reward image
             rewardImage.sprite = rewardSkin.PreviewSprite;
+
+            // Set the reward name
+            RewardText.text = rewardSkin.SkinName;
 
             // Play the animation
             startAnimation();

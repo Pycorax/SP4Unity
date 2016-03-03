@@ -1,9 +1,11 @@
 ﻿using System;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class Skin : MonoBehaviour
 {
+    [Tooltip("The name of the Skin.")]
+    public string SkinName = "Skin";
     [Tooltip("The URL to the Skin Sprite.")]
     public string SkinSpriteUrl = "Sprites/Player/Skins";
     [Tooltip("The chance to obtain this Skin.")]
