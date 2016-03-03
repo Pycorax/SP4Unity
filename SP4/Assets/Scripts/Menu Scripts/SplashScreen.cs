@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class SplashScreen : MonoBehaviour {
@@ -13,9 +12,13 @@ public class SplashScreen : MonoBehaviour {
     public int FadeOutSeconds = 2;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         //Set Alpha to zero for fade in
         Splash.canvasRenderer.SetAlpha(0f);
+
+        // Start the SoundEngine
+        SoundManager.PlayBackgroundMusic(SoundManager.BackgroundMusic.RPG_Battle);
 	}
 	
 	// Update is called once per frame
