@@ -662,8 +662,6 @@ public class RPGPlayer : Character
     
     private void OnCollisionEnter2D(Collision2D other)
     {
-        string name = other.gameObject.name;
-
         //Check wether the object is a weapon
         if (other.gameObject.GetComponent<Weapon>() != null)
         {
@@ -692,13 +690,14 @@ public class RPGPlayer : Character
         //Check if other is an enemy
         if(other.gameObject.GetComponent<Enemy.Enemy>())
         {
+            // TODO: REMOVE HARDCODED VALUE
             Injure(10);
         }
+
         #region Handle Weapon Combine Use Conditions
 
         Weapon weapon = other.gameObject.GetComponent<Weapon>();
         Projectile proj = other.gameObject.GetComponent<Projectile>();
-        RPGPlayer player = other.gameObject.GetComponent<RPGPlayer>();
 
         if (weapon != null)
         {
@@ -729,10 +728,6 @@ public class RPGPlayer : Character
                 // If not doing a CombinedUse(), handle the arrow
                 proj.Disable();
             }
-        }
-        else if (player != null)
-        {
-            //do nothing yet
         }
 
         #endregion
