@@ -14,7 +14,6 @@ public class StageScoreDisplay : MonoBehaviour {
         //text = GetComponent<Text>();
 
         score = ScoreManager.CurrentScore;
-
 	}
 	
 	// Update is called once per frame
