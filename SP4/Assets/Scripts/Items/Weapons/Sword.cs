@@ -19,29 +19,30 @@ public class Sword : Weapon
     public Sprite NormalSword;
 
 
-	// Use this for initialization
-	protected override void Start () {
+    // Use this for initialization
+    protected override void Start()
+    {
 
         base.Start();
         Damage = 10;
 
-        spriteRenderer = (SpriteRenderer)GetComponent<Renderer>();
+        spriteRenderer = (SpriteRenderer) GetComponent<Renderer>();
 
         //1 Tile
 
         //1 per second
 
-	}
-	
-	// Update is called once per frame
-	protected override void Update ()
+    }
+
+    // Update is called once per frame
+    protected override void Update()
     {
         base.Update();
         if (isBigSword)
         {
             if (bigSwordTimer >= 0.0f)
             {
-                bigSwordTimer += (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+                bigSwordTimer += (float) TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
                 if (bigSwordTimer >= BigSwordDuration)
                 {
                     bigSwordTimer = 0.0f;
@@ -60,7 +61,8 @@ public class Sword : Weapon
         return true;
     }
 
-    protected override void combinedUse(Weapon other, params object[] details)
+    protected override void combinedUse(Weapon other,
+        params object[] details)
     {
         // Destroy the projectile
         // -- Find Projectile
@@ -89,7 +91,8 @@ public class Sword : Weapon
 
                 if (flyingsword && parent)
                 {
-                    flyingsword.Activate(transform, this, parent.CurrentDirection, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
+                    flyingsword.Activate(transform, this, parent.CurrentDirection,
+                        Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
                 }
 
                 // Play the sound
@@ -97,9 +100,9 @@ public class Sword : Weapon
             }
         }
 
-        #endregion
+            #endregion
 
-        #region Big Sword
+            #region Big Sword
 
         else if (other is Wand)
         {
@@ -112,5 +115,16 @@ public class Sword : Weapon
         }
 
         #endregion
+    }
+
+    public virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<Enemy.Enemy>() != null)
+        {
+            //If Collided with Enemy Unit
+            //Reduce Enemy HP (currently no function for that)
+            Enemy.Enemy enemy = collision.gameObject.GetComponent<Enemy.Enemy>();
+            enemy.Injure(Damage);
+        }
     }
 }
