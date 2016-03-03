@@ -17,7 +17,7 @@ public abstract class Destroyables : Item
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<Projectile>() != null || other.GetComponent<Explosion>() != null)
+        if (other.GetComponent<Projectile>() != null || other.GetComponent<Explosion>() != null || other.GetComponent<Sword>() != null)
         {
             Destroy();
         }

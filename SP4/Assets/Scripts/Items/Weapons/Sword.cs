@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class Sword : Weapon
 {
@@ -66,17 +67,7 @@ public class Sword : Weapon
     {
         // Destroy the projectile
         // -- Find Projectile
-        Projectile projectile = null;
-        foreach (var o in details)
-        {
-            // We found it
-            if (o is Projectile)
-            {
-                // Store it
-                projectile = o as Projectile;
-                break;
-            }
-        }
+        Projectile projectile = details.OfType<Projectile>().Select(o => o).FirstOrDefault();
 
         #region Flying Sword
 
@@ -100,16 +91,13 @@ public class Sword : Weapon
             }
         }
 
-            #endregion
+        #endregion
 
-            #region Big Sword
+        #region Big Sword
 
         else if (other is Wand)
         {
             // Set the sword to be larger
-            spriteRenderer.sprite = BigSword;
-            Damage = 20;
-            isBigSword = true;
             // Play the sound
             SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Combo_Enchant);
         }

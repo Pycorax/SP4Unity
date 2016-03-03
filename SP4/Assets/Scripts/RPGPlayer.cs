@@ -663,17 +663,17 @@ public class RPGPlayer : Character
     private void OnTriggerEnter2D(Collider2D other)
     {
         //Check wether the object is a weapon
-        if (other.gameObject.GetComponent<Weapon>() != null)
-        {
-            Weapon w = other.gameObject.GetComponent<Weapon>();
-            if (w != null)
-            {
-                if (!EquipHand(w))
-                {
-                    PlayerSettingsReference.AddItem(w);
-                }
-            }
-        }
+        //if (other.gameObject.GetComponent<Weapon>() != null)
+        //{
+        //    Weapon w = other.gameObject.GetComponent<Weapon>();
+        //    if (w != null)
+        //    {
+        //        if (!EquipHand(w))
+        //        {
+        //            PlayerSettingsReference.AddItem(w);
+        //        }
+        //    }
+        //}
 
         //Check if the items are destroyables
         if (other.gameObject.GetComponent<Destroyables>() != null)
@@ -688,15 +688,10 @@ public class RPGPlayer : Character
         }
 
         #region Handle Weapon Combine Use Conditions
-
-        Weapon weapon = other.gameObject.GetComponent<Weapon>();
+        
         Projectile proj = other.gameObject.GetComponent<Projectile>();
 
-        if (weapon != null)
-        {
-            currentWeapon.CombinedUse(weapon);
-        }
-        else if (proj != null)
+        if (proj != null)
         {
             if (currentWeapon != null)
             {

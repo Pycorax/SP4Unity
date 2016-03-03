@@ -36,7 +36,6 @@ public class Explosion : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         var enemy = other.gameObject.GetComponent<Enemy.Enemy>();
-        var destru = other.gameObject.GetComponent<Destroyables>();
 
         // Damage
         if (enemy)
