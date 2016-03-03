@@ -687,13 +687,6 @@ public class RPGPlayer : Character
             }
         }
 
-        //Check if other is an enemy
-        if(other.gameObject.GetComponent<Enemy.Enemy>())
-        {
-            // TODO: REMOVE HARDCODED VALUE
-            Injure(10);
-        }
-
         #region Handle Weapon Combine Use Conditions
 
         Weapon weapon = other.gameObject.GetComponent<Weapon>();
