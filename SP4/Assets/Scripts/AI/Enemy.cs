@@ -118,7 +118,6 @@ namespace Enemy
             else if (!(currentState is DeadState))
             {
                 changeCurrentState(new DeadState());
-                Debug.Log("NOPE");
             }
         }
 
