@@ -1,4 +1,6 @@
-﻿namespace Enemy
+﻿using UnityEngine;
+
+namespace Enemy
 {
     public class AlertState : FSMState
     {
@@ -30,9 +32,9 @@
             }
             else
             {
-                //Check if the nearest player is within distance to attack
-                float distanceSqr = (parent.transform.position - parent.getNearestPlayer().transform.position).sqrMagnitude;
-                if (distanceSqr <= 50000.0f)
+                ///Check if the nearest player is within distance to attack
+                float distance = Vector3.Distance(parent.transform.position, parent.getNearestPlayer().transform.position);
+                if (distance <= 800.0f)
                 {
                     parent.changeCurrentState(new ChaseState());
                     return;
