@@ -94,6 +94,11 @@ public class PlayerSettings : MonoBehaviour, ISavable
         coins = SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Coins);
         enemiesKilled = SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Enemy_Killed);
         int skinCount = SaveClass.GetPlayerPrefInt(SaveClass.Save_Keys.Key_Skin_Size);
+
+        // Before we add more to it, let's clear it
+        skinsInventory.Clear();
+
+        // Load in the skins
         for (int skinIndex = 0; skinIndex < skinCount; ++skinIndex)
         {
             GameObject goSkin = Instantiate(SkinBlueprint);
