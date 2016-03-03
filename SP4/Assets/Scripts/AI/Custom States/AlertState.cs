@@ -1,12 +1,9 @@
-﻿using UnityEngine;
-
-namespace Enemy
+﻿namespace Enemy
 {
     public class AlertState : FSMState
     {
         private Waypoint previousWaypoint;
         private double changestatetimer;
-        private int Deciding;
         private const float speedy = 150.0f;
 
         protected override void exit()
