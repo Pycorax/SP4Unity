@@ -75,7 +75,6 @@ public class GachaponScreen : MonoBehaviour
 
         // Load the PlayerSettings
         PlayerSetting.Load();
-        PlayerSetting.AddCoins(10);
 
         // Set Up the Scene
         reset(true);
