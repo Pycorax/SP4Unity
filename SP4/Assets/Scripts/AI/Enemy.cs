@@ -293,8 +293,6 @@ namespace Enemy
 
             currentState = state;
             currentState.Init(this);
-
-            Debug.Log(currentState.GetType().ToString());
         }
 
 
