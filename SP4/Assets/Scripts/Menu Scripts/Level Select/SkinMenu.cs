@@ -12,6 +12,8 @@ public class SkinMenu : MonoBehaviour
     public Color UnselectedColor;
     [Tooltip("Reference to the PlayerSettings to make changes.")]
     public PlayerSettings PlayerSetting;
+    [Tooltip("A reference to the Skin UI Canvas")]
+    public GameObject HandleToSkinUI;
 
     // Current Player to set Skins on
     private GameObject currentPlayer;               // Stores the current player button selected
@@ -124,6 +126,17 @@ public class SkinMenu : MonoBehaviour
         var childComponenets = go.GetComponentsInChildren<Image>();
 
         return childComponenets.FirstOrDefault(child => child.gameObject != go);
+    }
 
+    public void ShowSkinUI()
+    {
+        HandleToSkinUI.SetActive(true);
+        PlayerSetting.Load();
+    }
+
+    public void HideSkinUI()
+    {
+        HandleToSkinUI.SetActive(false);
+        PlayerSetting.Save();
     }
 }

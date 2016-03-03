@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GachaponScreen : MonoBehaviour
@@ -69,6 +70,9 @@ public class GachaponScreen : MonoBehaviour
         // Get References for State.EndShow
         rewardChildImages = RewardContainer.GetComponentsInChildren<Image>();
         rewardChildTexts = RewardContainer.GetComponentsInChildren<Text>();
+
+        // Load the PlayerSettings
+        PlayerSetting.Load();
 
         // Set Up the Scene
         reset(true);
@@ -143,8 +147,14 @@ public class GachaponScreen : MonoBehaviour
                     menuState = State.End;
                 }
                 break;
+            case State.Vanilla:
+                break;
+            case State.End:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
-	}
+    }
 
     public void BuyGachapon()
     {
@@ -248,14 +258,16 @@ public class GachaponScreen : MonoBehaviour
         MerchantContainer.SetActive(true);
     }
 
-    private void setColorAlpha(Image imageToSet, float finalAlpha)
+    private void setColorAlpha(Image imageToSet,
+        float finalAlpha)
     {
         Color newCol = imageToSet.color;
         newCol.a = finalAlpha;
         imageToSet.color = newCol;
     }
 
-    private void setColorAlpha(Text txtToSet, float finalAlpha)
+    private void setColorAlpha(Text txtToSet,
+        float finalAlpha)
     {
         Color newCol = txtToSet.color;
         newCol.a = finalAlpha;

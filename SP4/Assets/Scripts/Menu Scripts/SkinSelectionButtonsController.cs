@@ -1,5 +1,4 @@
-﻿#define DEBUG_BUTTONS
-using System.Collections.Generic;
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +16,8 @@ public class SkinSelectionButtonsController : MonoBehaviour
 
     [Tooltip("The horizontal distance between tile buttons.")]
     public float ButtonXMargin = 10;
+
+    public int MaxSkins = 5;
 
 #if DEBUG_BUTTONS
     public List<Skin> LoadSkins;
@@ -36,7 +37,6 @@ public class SkinSelectionButtonsController : MonoBehaviour
             PlayerSetting.AddToSkinStorage(skin);
         }
 #endif
-
         Load();
     }
 
@@ -49,7 +49,7 @@ public class SkinSelectionButtonsController : MonoBehaviour
         float buttonSpawnPosX = templateButtonRTf.rect.min.x + templateButtonRTf.rect.width * 0.5f;
 
         // Create a button for each tile in the Skin Inventory
-        foreach (var skin in PlayerSetting.SkinsInventory)
+        foreach (var skin in PlayerSetting.SkinsInventory.Take(MaxSkins))
         {
             // Create a button for this skin
             var skinButton = Instantiate(TemplateSkinButton);

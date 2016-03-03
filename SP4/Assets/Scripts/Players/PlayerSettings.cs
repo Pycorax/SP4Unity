@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -61,11 +62,30 @@ public class PlayerSettings : MonoBehaviour, ISavable
         PlayerPrefs.SetInt(SaveClass.GetKey(SaveClass.Save_Keys.Key_Coins), coins);
         PlayerPrefs.SetInt(SaveClass.GetKey(SaveClass.Save_Keys.Key_Enemy_Killed), enemiesKilled);
         PlayerPrefs.SetInt(SaveClass.GetKey(SaveClass.Save_Keys.Key_Skin_Size), skinsInventory.Count);
+
+        // Skins Inventory
         for (int skinIndex = 0; skinIndex < skinsInventory.Count; ++skinIndex)
         {
             Skin skin = skinsInventory[skinIndex];
             skin.Save(skinIndex);
         }
+
+        // Current Skins
+        // -- First Player
+        string firstSkinURL = null;
+        if (CurrentFirstSkin != null)
+        {
+            firstSkinURL = CurrentFirstSkin.SkinSpriteUrl;
+        }
+        PlayerPrefs.SetString(SaveClass.GetKey(SaveClass.Save_Keys.Key_Player1_Skin), firstSkinURL);
+        // -- Second Player
+        string secondSkinURL = null;
+        if (CurrentFirstSkin != null)
+        {
+            secondSkinURL = CurrentSecondSkin.SkinSpriteUrl;
+        }
+        PlayerPrefs.SetString(SaveClass.GetKey(SaveClass.Save_Keys.Key_Player2_Skin), secondSkinURL);
+
         PlayerPrefs.Save();
     }
 
@@ -84,14 +104,36 @@ public class PlayerSettings : MonoBehaviour, ISavable
                 skinsInventory.Add(skin);
             }
         }
+
+        // Current Skins
+        string firstSkinURL = PlayerPrefs.GetString(SaveClass.GetKey(SaveClass.Save_Keys.Key_Player1_Skin));
+        string secondSkinURL = PlayerPrefs.GetString(SaveClass.GetKey(SaveClass.Save_Keys.Key_Player2_Skin));
+        if (firstSkinURL != null)
+        {
+            CurrentFirstSkin = Instantiate(SkinBlueprint).GetComponent<Skin>();
+            CurrentFirstSkin.SkinSpriteUrl = firstSkinURL;
+        }
+        if (secondSkinURL != null)
+        {
+            CurrentSecondSkin = Instantiate(SkinBlueprint).GetComponent<Skin>();
+            CurrentSecondSkin.SkinSpriteUrl = secondSkinURL;
+        }
     }
 
     public void AddToSkinStorage(Skin skin)
     {
-        if (!skinsInventory.Contains(skin))
+        // Do not allow readding to a similar skin
+        if (skinsInventory.Any(s => s.SkinSpriteUrl == skin.SkinSpriteUrl))
         {
-            skinsInventory.Add(skin);
+            return;
         }
+
+        skinsInventory.Add(skin);
+    }
+
+    public void Reset()
+    {
+        PlayerPrefs.DeleteAll();
     }
 
     private int getPlayerPrefInt(string key)

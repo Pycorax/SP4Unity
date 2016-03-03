@@ -2,8 +2,6 @@
 
 public class SceneManager : MonoBehaviour
 {
-    public GameObject HandleToSkinUI;
-
 	// Use this for initialization
 	void Start () {
 	
@@ -59,15 +57,5 @@ public class SceneManager : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
-    }
-
-    public void ShowSkinUI()
-    {
-        HandleToSkinUI.SetActive(true);
-    }
-
-    public void HideSkinUI()
-    {
-        HandleToSkinUI.SetActive(false);
     }
 }
