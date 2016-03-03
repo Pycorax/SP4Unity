@@ -19,6 +19,8 @@ namespace Enemy
         public float RotationSpriteOffset = -90.0f;
         [Tooltip("Debug. Enable this to use FinalTargetWaypointDebug to override FinalTargetWaypoint at runtime.")]
         public bool InspectorDebugging = false;
+        [Tooltip("Enemy Damage to the player.")]
+        public int EnemyDamage = 1;
 
         /// <summary>
         /// 
@@ -336,7 +338,7 @@ namespace Enemy
             RPGPlayer player = other.gameObject.GetComponent<RPGPlayer>();
             if (player != null)
             {
-                player.Injure(5);
+                player.Injure(EnemyDamage);
             }
         }
 
@@ -348,7 +350,7 @@ namespace Enemy
 
             if (player != null)
             {
-                player.Injure(5);
+                player.Injure(EnemyDamage);
             }
             else if (proj != null)
             {
