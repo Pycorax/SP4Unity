@@ -30,6 +30,9 @@ public class SkinMenu : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        // Load the player setting
+        PlayerSetting.Load();
+
         // Initialize the components
         firstPlayerButtonImage = FirstPlayer.GetComponent<Image>();
         secondPlayerButtonImage = SecondPlayer.GetComponent<Image>();
