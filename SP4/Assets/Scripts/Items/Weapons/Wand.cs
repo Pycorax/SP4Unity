@@ -34,6 +34,10 @@ public class Wand : Weapon
             if (p)
             {
                 p.GetComponent<Lightning>().Activate(firePoint, this, direction, LightningChainTimes, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
+
+                // Play the sound
+                SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Weapon_Attack_4);
+
                 return true;
             }
         }

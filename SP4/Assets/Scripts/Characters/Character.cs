@@ -53,6 +53,18 @@ public abstract class Character : MonoBehaviour
 
         // Clamp the health so we don't go crazy with the health accidentally
         health = Mathf.Clamp(health, 0, MaxHealth);
+
+        if (this is Enemy.Enemy)
+        {
+            // Play the sound
+            SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Hit_3);
+        }
+        else if (this is RPGPlayer)
+        {
+
+            // Play the sound
+            SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Hit_2);
+        }
     }
 
     public void Heal(int healing)

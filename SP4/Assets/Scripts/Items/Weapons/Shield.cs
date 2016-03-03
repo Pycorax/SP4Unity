@@ -55,6 +55,9 @@ public class Shield : Weapon
             shieldOut = true;
             anim.SetBool(animAttack, true);
             anim.SetTrigger(animAttack);
+
+            // Play the sound
+            SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Weapon_Attack_2);
         }
 
         return true;
@@ -125,6 +128,8 @@ public class Shield : Weapon
                     }
                 }
             }
+
+            SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Combo_ArrowBarrage);
             
         }
         #endregion  
@@ -140,6 +145,9 @@ public class Shield : Weapon
 
                 // Trigger the Shield
                 anim.SetBool(animBigShield, true);
+                
+                // Play the sound
+                SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Combo_Enchant);
             }
             
         }

@@ -56,6 +56,8 @@ public class Sword : Weapon
     public override bool Use(Vector2 direction)
     {
         anim.SetBool(animAttack, true);
+        // Play the sound
+        SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Weapon_Attack_5);
         return true;
     }
 
@@ -90,6 +92,9 @@ public class Sword : Weapon
                 {
                     flyingsword.Activate(transform, this, parent.CurrentDirection, Range * RefProjectileManager.GetComponent<TileMap>().TileSize);
                 }
+
+                // Play the sound
+                SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Combo_PiercingSword);
             }
         }
 
@@ -103,6 +108,8 @@ public class Sword : Weapon
             spriteRenderer.sprite = BigSword;
             Damage = 20;
             isBigSword = true;
+            // Play the sound
+            SoundManager.PlaySoundEffect(SoundManager.SoundEffect.Combo_Enchant);
         }
 
         #endregion
