@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelSelect : MonoBehaviour
 {
@@ -23,7 +23,7 @@ public class LevelSelect : MonoBehaviour
         LevelEditorPanel.gameObject.SetActive(LevelEditorPanelView);
         WeaponSelectionPanel.gameObject.SetActive(WeaponSelectionPanelView);
         PlayerPrefs.SetString(SaveClass.GetKey(SaveClass.Save_Keys.Key_Level), "");
-	}
+    }
 	
 	// Update is called once per frame
 	void Update ()

@@ -22,6 +22,10 @@ public class SaveClass
         Key_Player1_Right,
         Key_Player2_Left,
         Key_Player2_Right,
+
+        // Current Skin
+        Key_Player1_Skin,
+        Key_Player2_Skin
     };
 
     public static string[] Keys = Enum.GetNames(typeof(Save_Keys));

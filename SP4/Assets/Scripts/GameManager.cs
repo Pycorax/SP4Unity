@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     // Number of Coins Collected
     private int coins;
 
+    // Components
+    private PlayerSettings playerSetting;
+
     //Getter and setter
     public bool LevelEnded { get { return CurrentObjective.IsAchieved(); } }
     public bool PlayersDead { get { return PlayerList.Count(p => !p.IsAlive) == PlayerList.Count; } }
@@ -45,6 +48,10 @@ public class GameManager : MonoBehaviour
         // Set up the objective
         setObjective();
 
+        // Load Player Settings
+        playerSetting = GetComponent<PlayerSettings>();
+        playerSetting.Load();
+
         // Load weapons on player
         // Player 1
         RPGPlayer player = PlayerList[0];
@@ -61,6 +68,8 @@ public class GameManager : MonoBehaviour
         weapon.transform.position = player.transform.position;
         weapon.transform.localScale = new Vector3(1, 1, 1);
         player.RightWeapon = weapon;
+        // Load Skin
+        player.PlayerSkin = playerSetting.CurrentFirstSkin;
 
         // Player 2
         player = PlayerList[1];
@@ -76,6 +85,8 @@ public class GameManager : MonoBehaviour
         weapon.transform.position = player.transform.position;
         weapon.transform.localScale = new Vector3(1, 1, 1);
         player.RightWeapon = weapon;
+        // Load Skin
+        player.PlayerSkin = playerSetting.CurrentSecondSkin;
     }
 
     // Update is called once per frame
