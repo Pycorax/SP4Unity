@@ -42,6 +42,11 @@ public class SkinMenu : MonoBehaviour
         // Save the original color
         originalButtonColor = firstPlayerButtonImage.color;
 
+        // Initialize the sprites
+        PlayerSetting.CurrentFirstSkin = null;
+        PlayerSetting.CurrentSecondSkin = null;
+        PlayerSetting.Save();
+
         // Save the original sprites
         originalFirstPlayerSprite = getChildImage(FirstPlayer).sprite;
         originalSecondPlayerSprite = getChildImage(SecondPlayer).sprite;

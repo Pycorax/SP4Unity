@@ -80,7 +80,7 @@ public class PlayerSettings : MonoBehaviour, ISavable
         PlayerPrefs.SetString(SaveClass.GetKey(SaveClass.Save_Keys.Key_Player1_Skin), firstSkinURL);
         // -- Second Player
         string secondSkinURL = null;
-        if (CurrentFirstSkin != null)
+        if (CurrentSecondSkin != null)
         {
             secondSkinURL = CurrentSecondSkin.SkinSpriteUrl;
         }
