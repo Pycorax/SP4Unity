@@ -12,13 +12,13 @@ public abstract class Character : MonoBehaviour
     public int health;
 
     // Energy
-    public int energy;
+    public float energy;
     private double energyregen;
 
     // Getters
     public int Health { get { return health; } }
     public bool IsAlive { get { return health > 0; } }
-    public int Energy { get { return energy; } }
+    public float Energy { get { return energy; } }
 
     public GameObject healthBar;
     public GameObject energyBar;
@@ -109,7 +109,7 @@ public abstract class Character : MonoBehaviour
         energyBar.transform.localScale = new Vector3(currentEnergy, energyBar.transform.localScale.y, energyBar.transform.localScale.z);
     }
 
-    public void UseEnergy(int energyused)
+    public void UseEnergy(float energyused)
     {
         // Error checks
         if (energyused < 0)
