@@ -51,6 +51,7 @@ public class ScoreManager : MonoBehaviour
     {
         PlayerPrefs.SetInt(currentScoreKey, currentScore);
         PlayerPrefs.Save();
+        HighScoreSystem.Instance.SendScore(new ScoreEntry(SaveClass.GetPlayerPrefString(SaveClass.Save_Keys.Key_Name), currentScore));
     }
 
     public static void LoadScore()
