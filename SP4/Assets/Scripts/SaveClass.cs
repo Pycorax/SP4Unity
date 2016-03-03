@@ -39,7 +39,19 @@ public class SaveClass
     {
         if (!PlayerPrefs.HasKey(type.ToString()))
         {
-            throw new UnityException("Key '" + type + "' does not exist!");
+            switch (type)
+            {
+                case Save_Keys.Key_Coins:
+                    {
+                        return 10;
+                    }
+                    break;
+                default:
+                    {
+                        return 0;
+                    }
+            }
+            //throw new UnityException("Key '" + type + "' does not exist!");
         }
 
         return PlayerPrefs.GetInt(type.ToString());
@@ -49,7 +61,8 @@ public class SaveClass
     {
         if (!PlayerPrefs.HasKey(type.ToString() + extra))
         {
-            throw new UnityException("Key '" + type + "' does not exist!");
+            return "";
+            //throw new UnityException("Key '" + type + "' does not exist!");
         }
 
         return PlayerPrefs.GetString(type.ToString() + extra);
@@ -59,6 +72,7 @@ public class SaveClass
     {
         if (!PlayerPrefs.HasKey(type.ToString()))
         {
+            return 0.0f;
             throw new UnityException("Key '" + type + "' does not exist!");
         }
 
