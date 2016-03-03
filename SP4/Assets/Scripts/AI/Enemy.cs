@@ -203,6 +203,19 @@ namespace Enemy
             return nearestPlayer.GetComponent<RPGPlayer>();
         }
 
+        internal void updateRotation(Vector2 dir)
+        {
+            // Ensure an actual direction is provided
+            if (dir != Vector2.zero)
+            {
+                // Calculate the angle using Atan2 and add RotationSpriteOffset due to realign with original sprite direction
+                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + RotationSpriteOffset;
+
+                // Set the rotation according to a calculation based on the angle
+                transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            }
+        }
+
         #region Waypoint
 
         /// <summary>
@@ -249,15 +262,7 @@ namespace Enemy
                         transform.position += (Vector3)dir * Speed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
 
                         // Update Rotation
-                        // Ensure an actual direction is provided
-                        if (dir != Vector2.zero)
-                        {
-                            // Calculate the angle using Atan2 and add RotationSpriteOffset due to realign with original sprite direction
-                            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + RotationSpriteOffset;
-
-                            // Set the rotation according to a calculation based on the angle
-                            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                        }
+                        updateRotation(dir);
                     }
                 }
                 else
@@ -313,6 +318,9 @@ namespace Enemy
 
                 // Move there
                 transform.Translate(movement);
+
+                // Update rotation
+                updateRotation(dir);
             }
         }
 
