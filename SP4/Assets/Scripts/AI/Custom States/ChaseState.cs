@@ -4,7 +4,9 @@ namespace Enemy
 {
     public class ChaseState : FSMState
     {
-        private const float speedy = 200.0f;
+        private float damageDelayDuration = 0.0f;
+        private const float damageDelay = 1.0f;
+        private const float CHASE_SPEED = 200.0f;
 
         protected override void exit()
         {
@@ -13,11 +15,14 @@ namespace Enemy
 
         protected override void init()
         {
-            parent.Speed = speedy;
+            parent.Speed = CHASE_SPEED;
         }
 
         protected override void update()
         {
+            // Update damage delay
+            damageDelayDuration += (float) TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+
             // Determine nearest player to chase
             var playerToChase = parent.getNearestPlayer();
 
@@ -37,8 +42,23 @@ namespace Enemy
                 // If we are near the same waypoint
                 if (playerWaypoint == parent.CurrentWaypoint)
                 {
-                    // Just go after him
-                    parent.moveTo(playerToChase.transform.position);
+                    // We reached, attack
+                    if (parent.reachedPoint(playerToChase.transform.position))
+                    {
+                        // Check if delay is long enough
+                        if (damageDelayDuration > damageDelay)
+                        {
+                            playerToChase.Injure(parent.EnemyDamage);
+
+                            // Reset timer
+                            damageDelayDuration = 0.0f;
+                        }
+                    }
+                    else // We still have to go to it
+                    {
+                        // Just go after it
+                        parent.moveTo(playerToChase.transform.position);
+                    }
                 }
                 else
                 {
@@ -47,7 +67,7 @@ namespace Enemy
                 }
             }
 
-            if (parent.Health < 50)
+            if (parent.Health < parent.MaxHealth * 0.5f)
             {
                 parent.changeCurrentState(new FleeingState());
                 return;

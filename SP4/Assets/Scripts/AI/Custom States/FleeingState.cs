@@ -3,7 +3,8 @@
     public class FleeingState : FSMState
     {
         private double timer;
-        private const float speedy = 50.0f;
+        private const float FLEE_SPEED = 50.0f;
+        private const float HEAL_SPEED = 30.0f;
 
         protected override void exit()
         {
@@ -12,7 +13,7 @@
 
         protected override void init()
         {
-            parent.Speed = speedy;
+            parent.Speed = FLEE_SPEED;
             parent.FinalTargetWaypoint = parent.CurrentWaypoint.GetFurthestNeighbour();
         }
 
@@ -29,7 +30,7 @@
                 }                
             }
 
-            if (parent.health == 100)
+            if (parent.Health == parent.MaxHealth)
             {
                 parent.changeCurrentState(new PatrolState());
                 return;
@@ -39,7 +40,7 @@
         private void healenemy()
         {
             // Will heal the enemy for a certain amount
-            parent.Heal(2);
+            parent.Heal((int)(HEAL_SPEED * TimeManager.GetDeltaTime(TimeManager.TimeType.Game)));
         }
     }
 }

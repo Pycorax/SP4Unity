@@ -27,8 +27,8 @@ namespace Enemy
                 return;
             }
 
-
             changestatetimer += TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
+
             //Enemy will rotate in idle state
             parent.gameObject.transform.Rotate(0, 0, 0.4f);
 

@@ -314,6 +314,8 @@ namespace Enemy
 
             currentState = state;
             currentState.Init(this);
+
+            Debug.Log("Changed to " + currentState.GetType().ToString());
         }
 
 
@@ -326,8 +328,8 @@ namespace Enemy
             // Calculate the direction to this position
             Vector2 dir = (pos - (Vector2)transform.position);
 
-            // Only attempt to move if we are not on the same position already
-            if (dir != Vector2.zero)
+            // Only attempt to move if we are not near the same position already
+            if (dir.sqrMagnitude > DISTANCE_CHECK_ACCURARCY * DISTANCE_CHECK_ACCURARCY)
             {
                 // Get the unit directional vector
                 dir.Normalize();
@@ -350,8 +352,19 @@ namespace Enemy
         /// <returns>If Enemy has reached Waypoint w</returns>
         internal bool reachedWaypoint(Waypoint w)
         {
+            // Check if we have reached the Waypoint
+            return reachedPoint(w.transform.position);
+        }
+
+        /// <summary>
+        /// Function to check if the Enemy has reached a particular point in the world
+        /// </summary>
+        /// <param name="point">The point to check with.</param>
+        /// <returns>If Enemy has reached the point</returns>
+        internal bool reachedPoint(Vector3 point)
+        {
             // Determine the distance
-            float distToTargetSquared = (transform.position - w.transform.position).sqrMagnitude;
+            float distToTargetSquared = (transform.position - point).sqrMagnitude;
 
             // Check if we have reached the Waypoint
             return distToTargetSquared < DISTANCE_CHECK_ACCURARCY * DISTANCE_CHECK_ACCURARCY;
