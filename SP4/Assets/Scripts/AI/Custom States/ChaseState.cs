@@ -58,7 +58,7 @@ namespace Enemy
                     else // We still have to go to it
                     {
                         // Just go after it
-                        parent.moveTo(playerToChase.transform.position);
+                        parent.moveTo(playerToChase.transform.position - playerToChase.transform.lossyScale * 0.5f);
                     }
                 }
                 else

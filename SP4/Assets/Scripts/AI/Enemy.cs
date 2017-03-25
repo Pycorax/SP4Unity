@@ -65,6 +65,9 @@ namespace Enemy
         internal int animAlive = Animator.StringToHash("Alive");
         private Vector2 prevPosition;
 
+        // Debug
+        private Vector3 lastTargetPosition;
+
         // Getters
         internal Waypoint CurrentWaypoint { get { return currentWaypoint; } }
 
@@ -79,6 +82,26 @@ namespace Enemy
 
             // Set default values
             Reset();
+        }
+
+        protected void OnDrawGizmos()
+        {
+            if (currentTargetWaypoint != null)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawLine(transform.position, currentTargetWaypoint.transform.position);
+                Gizmos.DrawSphere(currentTargetWaypoint.transform.position, 1.0f);
+            }
+            if (finalTargetWaypoint != null)
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(transform.position, finalTargetWaypoint.transform.position);
+                Gizmos.DrawSphere(finalTargetWaypoint.transform.position, 1.0f);
+            }
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, lastTargetPosition);
+            Gizmos.DrawSphere(lastTargetPosition, 1.0f);
         }
 
         // Update is called once per frame
@@ -329,7 +352,7 @@ namespace Enemy
             Vector2 dir = (pos - (Vector2)transform.position);
 
             // Only attempt to move if we are not near the same position already
-            if (dir.sqrMagnitude > DISTANCE_CHECK_ACCURARCY * DISTANCE_CHECK_ACCURARCY)
+            if (dir.sqrMagnitude > transform.lossyScale.x * transform.lossyScale.x)
             {
                 // Get the unit directional vector
                 dir.Normalize();
@@ -338,11 +361,16 @@ namespace Enemy
                 Vector2 movement = dir * Speed * (float)TimeManager.GetDeltaTime(TimeManager.TimeType.Game);
 
                 // Move there
-                transform.Translate(movement);
+                transform.position += new Vector3(movement.x, movement.y, 0.0f);
 
                 // Update rotation
                 updateRotation(dir);
+
+                Debug.Log(dir.sqrMagnitude);
             }
+
+            // Update the last targeted position to move to
+            lastTargetPosition = pos;
         }
 
         /// <summary>
