@@ -63,7 +63,16 @@ public class HighScoreSystem
         HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(ServerAPIAddress);
 
         // Obtain the Result Handle from the API
-        var getResult = webReq.GetResponse();
+        WebResponse getResult;
+        try
+        {
+            getResult = webReq.GetResponse();
+        }
+        catch (WebException)
+        {
+            Debug.Log("Unable to connect to  server!");
+            return;
+        }
 
         // Obtain the Stream from the Result Handle
         Stream receiveStream = getResult.GetResponseStream();

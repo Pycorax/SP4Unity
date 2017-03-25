@@ -4,6 +4,7 @@ namespace Enemy
 {
     public class ChaseState : FSMState
     {
+        private const float PATROL_THRESHOLD = 2000.0f;
         private float damageDelayDuration = 0.0f;
         private const float damageDelay = 1.0f;
         private const float CHASE_SPEED = 200.0f;
@@ -28,7 +29,7 @@ namespace Enemy
 
             //Check if the nearest player is within distance to attack
             float distance = Vector3.Distance(parent.transform.position, parent.getNearestPlayer().transform.position);
-            if (distance  >= 2000.0f)
+            if (distance  >= PATROL_THRESHOLD)
             {
                 parent.changeCurrentState(new PatrolState());
                 return;
