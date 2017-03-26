@@ -365,8 +365,6 @@ namespace Enemy
 
                 // Update rotation
                 updateRotation(dir);
-
-                Debug.Log(dir.sqrMagnitude);
             }
 
             // Update the last targeted position to move to

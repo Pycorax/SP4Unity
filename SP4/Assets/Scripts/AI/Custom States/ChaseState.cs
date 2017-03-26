@@ -8,6 +8,7 @@ namespace Enemy
         private float damageDelayDuration = 0.0f;
         private const float damageDelay = 1.0f;
         private const float CHASE_SPEED = 200.0f;
+        private int lineOfSightLayerMask = 1;
 
         protected override void exit()
         {
@@ -17,6 +18,7 @@ namespace Enemy
         protected override void init()
         {
             parent.Speed = CHASE_SPEED;
+            lineOfSightLayerMask = (1 << LayerMask.NameToLayer("Player")) | (1 << LayerMask.NameToLayer("Environment"));
         }
 
         protected override void update()
@@ -57,8 +59,18 @@ namespace Enemy
                     }
                     else // We still have to go to it
                     {
+                        // If we cannot see the bugger, go back to patrolling
+                        const float ViewRange = 10000.0f;
+                        var chaseDir = (playerToChase.transform.position - parent.transform.position).normalized;
+                        var hit = Physics2D.Raycast(parent.transform.position, chaseDir, ViewRange, lineOfSightLayerMask);
+                        if (hit.rigidbody != null && hit.rigidbody.gameObject == playerToChase.gameObject)
+                        {
+                            // Go back to patrolling
+                            //parent.changeCurrentState(new PatrolState());
+                            parent.moveTo(playerToChase.transform.position - playerToChase.transform.lossyScale * 0.5f);
+                        }
+
                         // Just go after it
-                        parent.moveTo(playerToChase.transform.position - playerToChase.transform.lossyScale * 0.5f);
                     }
                 }
                 else
