@@ -30,8 +30,7 @@ public class SpawnButton : MonoBehaviour {
 
         float yOffset = -20;
 
-        rtransform.sizeDelta = new Vector2(40, 50 * files.Length);
-        
+        int fileCount = 0;
         foreach(var i in files)
         {
             
@@ -57,15 +56,17 @@ public class SpawnButton : MonoBehaviour {
                     }
                     );
 
-                
+
+                ++fileCount;
 
                 yOffset -= 100;
             }
         }
 
-        
+        // Set scroll rect to proper size
+        rtransform.sizeDelta = new Vector2(40, 100 * fileCount);
 
-        
+
 
     }
 

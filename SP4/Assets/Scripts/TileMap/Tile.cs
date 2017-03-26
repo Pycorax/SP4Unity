@@ -270,6 +270,11 @@ public class Tile : MonoBehaviour
 				return true;
 			}
 		}
+        else if (GetComponent<Collectible>())
+        {
+            // Can walk on collectible
+            return true;
+        }
 		return false;
 	}
 
