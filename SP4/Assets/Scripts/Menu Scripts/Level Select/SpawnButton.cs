@@ -28,7 +28,7 @@ public class SpawnButton : MonoBehaviour {
 
         float buttonSize = 1f;
 
-        float yOffset = 0;//-20;
+        float yOffset = -20;
 
         int fileCount = 0;
         foreach(var i in files)
